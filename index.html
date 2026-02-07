@@ -14,31 +14,34 @@
 
     <style>
         :root {
-            --bg-canvas: #f8fafc;     /* Slate 50 */
+            /* IBM + Airbnb Hybrid Palette */
+            --bg-canvas: #ffffff;     /* Pure white background like Airbnb */
             --bg-surface: #ffffff;
             
-            --ink-primary: #0f172a;   /* Slate 900 */
-            --ink-secondary: #475569; /* Slate 600 */
+            --ink-primary: #222222;   /* Airbnb Black/Grey */
+            --ink-secondary: #717171; /* Airbnb Secondary Grey */
+            --ink-tertiary: #dddddd;  
             
-            --brand-core: #2563eb;    /* Blue 600 */
+            --brand-core: #0f62fe;    /* User Brand Blue (replacing Airbnb Red) */
+            --brand-accent: #0043ce;  
             
-            --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-            --shadow-dock: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-card: 0 6px 16px rgba(0,0,0,0.12);
+            --shadow-modal: 0 8px 28px rgba(0,0,0,0.28);
             
-            --radius-outer: 24px;
+            --radius-outer: 12px;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Manrope', sans-serif; /* Cleaner, more geometric like Cereal font */
             background-color: var(--bg-canvas);
             color: var(--ink-primary);
-            overflow: hidden;
+            overflow: hidden; 
             -webkit-font-smoothing: antialiased;
         }
 
         h1, h2, h3, .heading-font {
             font-family: 'Manrope', sans-serif;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.02em;
         }
 
         .data-font { font-family: 'Space Grotesk', monospace; }
@@ -55,42 +58,43 @@
             transform: translateY(0);
         }
 
-        /* Enterprise Card */
+        /* Enterprise Card - Cleaner Look */
         .ent-card {
             background: var(--bg-surface);
-            border: 1px solid #e2e8f0;
+            border: 1px solid #dddddd;
             border-radius: var(--radius-outer);
-            box-shadow: var(--shadow-card);
-            transition: all 0.3s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
         }
 
         .ent-card:hover {
-            transform: translateY(-4px);
-            border-color: #cbd5e1;
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-card);
+            border-color: transparent;
+            transform: translateY(-2px);
         }
 
         /* Modal Overlay */
         #contact-modal {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             transition: opacity 0.3s ease;
         }
 
         .modal-content {
-            transform: scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-modal);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border-radius: 24px; /* More rounded like Airbnb sheets */
         }
 
         #contact-modal.open .modal-content {
-            transform: scale(1);
+            transform: translateY(0);
         }
 
-        /* Technical Grid Background */
+        /* Technical Grid Background - Subtle */
         .bg-grid-pattern {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-image: radial-gradient(#dddddd 1px, transparent 1px);
+            background-size: 24px 24px;
         }
 
         /* Pipeline Connector Line */
@@ -99,8 +103,8 @@
             top: 50%;
             right: -24px;
             width: 24px;
-            height: 2px;
-            background-color: #cbd5e1;
+            height: 1px;
+            background-color: #dddddd;
             z-index: 0;
         }
         
@@ -109,141 +113,176 @@
                 top: auto;
                 bottom: -24px;
                 right: 50%;
-                width: 2px;
+                width: 1px;
                 height: 24px;
             }
         }
 
-        /* Floating Command Dock */
-        .command-dock {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: var(--shadow-dock);
-            border-radius: 999px;
-            padding: 8px;
+        /* Mobile Bottom Bar (Airbnb Style) */
+        .mobile-nav-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .dock-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 999px;
-            color: var(--ink-secondary);
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            justify-content: center;
+            color: #b0b0b0; 
+            transition: all 0.2s ease;
             cursor: pointer;
-            white-space: nowrap;
+            position: relative;
+            padding: 8px 0;
+            flex: 1;
         }
 
-        .dock-item:hover {
-            background: #f1f5f9;
-            color: var(--ink-primary);
-            transform: translateY(-2px);
+        .mobile-nav-item i {
+            font-size: 24px;
+            margin-bottom: 2px;
+            transition: color 0.2s;
         }
 
-        .dock-item.active {
-            background: var(--ink-primary);
-            color: white;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        .mobile-nav-item span {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
 
-        .dock-item.action {
-            background: var(--brand-core);
-            color: white;
+        .mobile-nav-item.active {
+            color: var(--brand-core);
         }
         
-        .dock-item.action:hover {
-            background: #1d4ed8;
-        }
-
         /* Scrollbar */
         #viewport::-webkit-scrollbar { width: 6px; }
         #viewport::-webkit-scrollbar-track { background: transparent; }
-        #viewport::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        #viewport::-webkit-scrollbar-thumb { background: #dddddd; border-radius: 10px; }
         
         .section-wrapper {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-bottom: 8rem; /* Space for dock */
-            padding-top: 4rem;
+            padding-bottom: 8rem;
+            padding-top: 4rem; /* Adjusted base padding */
+        }
+        
+        @media (max-width: 768px) {
+            .section-wrapper {
+                padding-top: 2rem;
+                padding-bottom: 6rem;
+            }
         }
     </style>
 </head>
-<body class="flex h-screen w-full relative">
+<body class="h-screen w-full relative overflow-hidden bg-white">
 
-    <!-- Persistent Identity Badge (Top Left) -->
-    <div class="fixed top-6 left-6 z-40 bg-white/90 backdrop-blur-md border border-slate-200 rounded-full px-2 pr-5 py-2 shadow-sm flex items-center gap-3 transition-transform hover:scale-105">
-        <div class="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center shadow-md">
-            <span class="heading-font font-bold text-lg text-white tracking-tighter">NR</span>
+    <!-- Desktop Airbnb-Style Fixed Top Bar -->
+    <header class="hidden md:flex fixed top-0 left-0 w-full z-50 bg-white h-[80px] px-6 lg:px-20 items-center justify-between border-b border-[#ebebeb]">
+        <!-- Brand / Logo (Left) -->
+        <div class="flex items-center cursor-pointer min-w-[200px]" onclick="scrollToSection('vision')">
+            <h1 class="heading-font text-2xl font-bold text-[#0f62fe] tracking-tighter hover:text-[#0043ce] transition-colors">nikhil raj pk</h1>
         </div>
-        <div>
-            <h1 class="heading-font text-sm font-bold text-slate-900 leading-tight">Nikhil Raj PK</h1>
-            <div class="flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Available</p>
+
+        <!-- Center "Capsule" Navigation (Absolute Centered) -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div class="flex items-center bg-white border border-[#dddddd] rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_2px_4px_rgba(0,0,0,0.18)] transition-shadow duration-200 py-2.5 px-2 cursor-pointer">
+                
+                <button onclick="scrollToSection('vision')" class="text-sm font-medium text-[#222222] px-6 py-1 hover:bg-[#f7f7f7] rounded-full transition-colors">
+                    Vision
+                </button>
+                
+                <div class="w-px h-6 bg-[#dddddd] mx-1"></div>
+                
+                <button onclick="scrollToSection('architecture')" class="text-sm font-medium text-[#222222] px-6 py-1 hover:bg-[#f7f7f7] rounded-full transition-colors">
+                    Architecture
+                </button>
+                
+                <div class="w-px h-6 bg-[#dddddd] mx-1"></div>
+                
+                <button onclick="scrollToSection('timeline')" class="text-sm font-medium text-[#717171] px-6 py-1 hover:bg-[#f7f7f7] rounded-full transition-colors">
+                    Journey
+                </button>
             </div>
         </div>
+
+        <!-- Right Side: Actions -->
+        <div class="flex items-center justify-end gap-2 min-w-[200px]">
+            <a href="nikhilraj_resume.pdf" download class="text-sm font-medium text-[#222222] px-4 py-3 hover:bg-[#f7f7f7] rounded-full transition-colors whitespace-nowrap">
+                Download Profile
+            </a>
+            
+            <!-- LinkedIn Button (Bordered) -->
+            <a href="https://linkedin.com/in/nrajpk" target="_blank" class="p-1 border border-[#dddddd] rounded-full hover:shadow-md transition-all text-[#222222]" title="LinkedIn">
+                <div class="w-8 h-8 flex items-center justify-center">
+                    <i class="fab fa-linkedin text-lg"></i>
+                </div>
+            </a>
+            
+            <!-- Contact Button (Bordered, No Bars) -->
+            <button onclick="toggleModal()" class="p-1 border border-[#dddddd] rounded-full hover:shadow-md transition-all ml-1" title="Start Partnership">
+                <div class="bg-[#0f62fe] text-white w-8 h-8 rounded-full flex items-center justify-center">
+                     <i class="fas fa-paper-plane text-xs"></i>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Fixed Top Bar -->
+    <div class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#ebebeb] px-6 py-4 flex items-center justify-between shadow-sm transition-transform duration-300">
+        <div class="flex items-center gap-3" onclick="scrollToSection('vision')">
+            <h1 class="heading-font text-lg font-bold text-[#0f62fe] tracking-tighter">nikhil raj pk</h1>
+        </div>
+        <a href="nikhilraj_resume.pdf" download class="text-xs font-bold uppercase tracking-wide text-blue-600 flex items-center gap-2 border border-blue-100 bg-blue-50 px-3 py-1.5 rounded-full">
+            <i class="fas fa-download"></i> Profile
+        </a>
     </div>
 
-    <!-- Contact Modal (Hidden by Default) -->
+    <!-- Contact Modal -->
     <div id="contact-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
         <div class="modal-content bg-white w-full max-w-2xl rounded-3xl overflow-hidden border border-gray-100 relative shadow-2xl">
-            <button onclick="toggleModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition-colors z-10">
-                <i class="fas fa-times text-2xl"></i>
+            <button onclick="toggleModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition-colors z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+                <i class="fas fa-times text-lg"></i>
             </button>
             
             <div class="grid md:grid-cols-2">
-                <div class="bg-slate-900 p-10 text-white flex flex-col justify-between">
+                <div class="bg-[#0f62fe] p-10 text-white flex flex-col justify-between">
                     <div>
-                        <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-4 block">Executive Connection</span>
-                        <h2 class="heading-font text-3xl font-bold mb-4">Let's Engineer Growth.</h2>
-                        <p class="text-slate-400 text-sm leading-relaxed">Open for strategic leadership roles bridging Systems Engineering & Global Marketing.</p>
+                        <span class="text-xs font-bold text-blue-200 uppercase tracking-widest mb-4 block">Executive Connection</span>
+                        <h2 class="heading-font text-3xl font-bold mb-4 leading-tight">Let's Engineer<br>Growth.</h2>
+                        <p class="text-blue-100 text-sm leading-relaxed">Open for strategic leadership roles bridging Systems Engineering & Global Marketing.</p>
                     </div>
-                    <div class="mt-8 pt-8 border-t border-slate-800">
-                        <div class="flex items-center gap-2 text-xs font-mono text-slate-500 mb-1">BASE</div>
+                    <div class="mt-8 pt-8 border-t border-blue-500">
+                        <div class="flex items-center gap-2 text-xs font-mono text-blue-200 mb-1">BASE</div>
                         <div class="font-bold">Dubai, UAE</div>
-                        <div class="flex items-center gap-2 text-xs font-mono text-slate-500 mt-4 mb-1">MOBILITY</div>
+                        <div class="flex items-center gap-2 text-xs font-mono text-blue-200 mt-4 mb-1">MOBILITY</div>
                         <div class="font-bold">UAE / Global</div>
                     </div>
                 </div>
                 
                 <div class="p-10 flex flex-col justify-center space-y-4">
-                    <a href="mailto:nrajpk@outlook.com" class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition-all">
-                        <div class="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-blue-600 group-hover:text-white flex items-center justify-center transition-colors text-slate-500">
+                    <a href="mailto:nrajpk@outlook.com" class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#0f62fe] transition-all">
+                        <div class="w-10 h-10 rounded-full bg-gray-50 group-hover:bg-[#0f62fe] group-hover:text-white flex items-center justify-center transition-colors text-gray-500">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Email</p>
-                            <p class="font-bold text-slate-900">nrajpk@outlook.com</p>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Email</p>
+                            <p class="font-bold text-gray-900">nrajpk@outlook.com</p>
                         </div>
                     </a>
                     
-                    <a href="https://linkedin.com/in/nrajpk" target="_blank" class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition-all">
-                        <div class="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-blue-600 group-hover:text-white flex items-center justify-center transition-colors text-slate-500">
+                    <a href="https://linkedin.com/in/nrajpk" target="_blank" class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#0077b5] transition-all">
+                        <div class="w-10 h-10 rounded-full bg-gray-50 group-hover:bg-[#0077b5] group-hover:text-white flex items-center justify-center transition-colors text-gray-500">
                             <i class="fab fa-linkedin-in"></i>
                         </div>
                         <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">LinkedIn</p>
-                            <p class="font-bold text-slate-900">/in/nrajpk</p>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">LinkedIn</p>
+                            <p class="font-bold text-gray-900">/in/nrajpk</p>
                         </div>
                     </a>
 
-                    <a href="tel:+971585461076" class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition-all">
-                        <div class="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-blue-600 group-hover:text-white flex items-center justify-center transition-colors text-slate-500">
+                    <a href="tel:+971585461076" class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-green-600 transition-all">
+                        <div class="w-10 h-10 rounded-full bg-gray-50 group-hover:bg-green-600 group-hover:text-white flex items-center justify-center transition-colors text-gray-500">
                             <i class="fas fa-phone"></i>
                         </div>
                         <div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Direct Line</p>
-                            <p class="font-bold text-slate-900">+971 58 546 1076</p>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Direct Line</p>
+                            <p class="font-bold text-gray-900">+971 58 546 1076</p>
                         </div>
                     </a>
                 </div>
@@ -251,33 +290,30 @@
         </div>
     </div>
 
-    <!-- The Floating Command Dock -->
-    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90vw]">
-        <div class="command-dock">
-            <button onclick="scrollToSection('vision')" id="dock-vision" class="dock-item active">
+    <!-- Mobile Fixed Bottom Bar -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-50 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        <div class="flex justify-around items-center h-[65px] px-2">
+            <button onclick="scrollToSection('vision')" id="mobile-nav-vision" class="mobile-nav-item active">
                 <i class="fas fa-compass"></i>
-                <span class="hidden md:inline">Vision</span>
+                <span>Vision</span>
             </button>
-            <button onclick="scrollToSection('architecture')" id="dock-architecture" class="dock-item">
+            <button onclick="scrollToSection('architecture')" id="mobile-nav-architecture" class="mobile-nav-item">
                 <i class="fas fa-network-wired"></i>
-                <span class="hidden md:inline">Stack</span>
+                <span>Stack</span>
             </button>
-            <button onclick="scrollToSection('timeline')" id="dock-timeline" class="dock-item">
+            <button onclick="scrollToSection('timeline')" id="mobile-nav-timeline" class="mobile-nav-item">
                 <i class="fas fa-history"></i>
-                <span class="hidden md:inline">Journey</span>
+                <span>Journey</span>
             </button>
-            
-            <div class="w-px h-6 bg-slate-300 mx-2"></div>
-            
-            <button onclick="toggleModal()" class="dock-item action">
-                <i class="fas fa-paper-plane"></i>
+            <button onclick="toggleModal()" id="mobile-nav-connect" class="mobile-nav-item">
+                <i class="fas fa-handshake"></i>
                 <span>Connect</span>
             </button>
         </div>
     </nav>
 
-    <!-- Main Content Area -->
-    <main class="flex-1 overflow-y-auto scroll-smooth relative" id="viewport">
+    <!-- Main Content Viewport -->
+    <main class="w-full h-full overflow-y-auto scroll-smooth pt-[70px] md:pt-[80px]" id="viewport">
         <!-- Content Injected via JS -->
     </main>
 
@@ -285,29 +321,29 @@
     <script>
         const views = {
             vision: `
-                <div class="max-w-6xl mx-auto px-6">
-                    <div class="mb-16 text-center md:text-left">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-slate-200 rounded-full mb-8 shadow-sm">
-                            <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
-                            <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">Systems Engineer × Marketing Leader</span>
+                <div class="max-w-7xl mx-auto px-6 lg:px-20 pb-24 md:pb-0">
+                    <div class="mb-16 text-center md:text-left pt-12 md:pt-0">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-50 border border-gray-200 rounded-full mb-8">
+                            <span class="w-2 h-2 bg-[#0f62fe] rounded-full animate-pulse"></span>
+                            <span class="text-xs font-bold text-gray-600 uppercase tracking-widest">Systems Engineer × Marketing Leader</span>
                         </div>
-                        <h1 class="heading-font text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.05] mb-8 tracking-tight">
+                        <h1 class="heading-font text-5xl md:text-7xl font-extrabold text-[#222222] leading-[1.05] mb-8 tracking-tight">
                             Operationalizing <br>
-                            <span class="text-blue-600">Digital Transformation.</span>
+                            <span class="text-[#0f62fe]">Digital Transformation.</span>
                         </h1>
-                        <p class="text-xl md:text-2xl text-slate-500 max-w-3xl leading-relaxed font-medium">
-                            I engineer the <strong class="text-slate-900">infrastructure of revenue</strong>. Bridging the gap between Global Marketing strategy and technical stack to build automated, compliant, and scalable digital ecosystems.
+                        <p class="text-xl md:text-2xl text-[#717171] max-w-3xl leading-relaxed font-medium">
+                            I engineer the <strong class="text-[#222222]">infrastructure of revenue</strong>. Bridging the gap between Global Marketing strategy and technical stack to build automated, compliant, and scalable digital ecosystems.
                         </p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="ent-card p-8 bg-white h-full flex flex-col justify-between group">
                             <div>
-                                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                                <div class="w-12 h-12 bg-blue-50 text-[#0f62fe] rounded-2xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
                                     <i class="fas fa-cogs"></i>
                                 </div>
-                                <h3 class="heading-font text-xl font-bold text-slate-900 mb-3">Systems Thinking</h3>
-                                <p class="text-sm text-slate-600 leading-relaxed">
+                                <h3 class="heading-font text-xl font-bold text-[#222222] mb-3">Systems Thinking</h3>
+                                <p class="text-sm text-[#717171] leading-relaxed">
                                     Treating marketing as an engineering problem. Leveraging <strong>Python & APIs</strong> to automate data synchronization, significantly reducing operational drag.
                                 </p>
                             </div>
@@ -315,23 +351,23 @@
 
                         <div class="ent-card p-8 bg-white h-full flex flex-col justify-between group">
                             <div>
-                                <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center text-xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                                <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
                                     <i class="fas fa-shield-alt"></i>
                                 </div>
-                                <h3 class="heading-font text-xl font-bold text-slate-900 mb-3">Governance</h3>
-                                <p class="text-sm text-slate-600 leading-relaxed">
+                                <h3 class="heading-font text-xl font-bold text-[#222222] mb-3">Governance</h3>
+                                <p class="text-sm text-[#717171] leading-relaxed">
                                     Navigating complex <strong>B2G & Defense</strong> landscapes. Architecting compliant digital pipelines connecting proprietary infrastructure to global markets.
                                 </p>
                             </div>
                         </div>
 
-                        <div class="ent-card p-8 bg-slate-900 text-white h-full flex flex-col justify-between border-slate-900 group">
+                        <div class="ent-card p-8 bg-[#222222] text-white h-full flex flex-col justify-between border-[#222222] group">
                             <div>
-                                <div class="w-12 h-12 bg-white/10 text-white rounded-2xl flex items-center justify-center text-xl mb-6 shadow-sm group-hover:scale-110 transition-transform">
+                                <div class="w-12 h-12 bg-white/10 text-white rounded-2xl flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
                                     <i class="fas fa-chart-line"></i>
                                 </div>
                                 <h3 class="heading-font text-xl font-bold text-white mb-3">Scalable Revenue</h3>
-                                <p class="text-sm text-slate-400 leading-relaxed">
+                                <p class="text-sm text-[#dddddd] leading-relaxed">
                                     Translating technical architecture into measurable growth. From <strong>Global Search Strategies</strong> to custom CRM product roadmaps.
                                 </p>
                             </div>
@@ -340,63 +376,63 @@
                 </div>
             `,
             architecture: `
-                <div class="max-w-7xl mx-auto px-6">
-                    <header class="mb-16 border-b border-slate-200 pb-8 flex flex-col md:flex-row justify-between items-end">
+                <div class="max-w-7xl mx-auto px-6 lg:px-20 pb-24 md:pb-0">
+                    <header class="mb-16 border-b border-[#ebebeb] pb-8 flex flex-col md:flex-row justify-between items-end pt-12 md:pt-0">
                         <div>
-                            <h2 class="heading-font text-4xl font-bold text-slate-900 mb-2">Enterprise Growth Stack</h2>
-                            <p class="text-slate-500 text-lg">End-to-End Revenue Operations Architecture v4.0</p>
+                            <h2 class="heading-font text-4xl font-bold text-[#222222] mb-2">Enterprise Growth Stack</h2>
+                            <p class="text-[#717171] text-lg">End-to-End Revenue Operations Architecture v4.0</p>
                         </div>
                         <div class="mt-4 md:mt-0 flex items-center gap-2">
                             <span class="relative flex h-2 w-2">
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                 <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                             </span>
-                            <span class="data-font text-xs font-bold text-slate-400 tracking-widest uppercase">System Operational</span>
+                            <span class="data-font text-xs font-bold text-[#717171] tracking-widest uppercase">System Operational</span>
                         </div>
                     </header>
 
-                    <div class="bg-grid-pattern p-8 md:p-12 rounded-[32px] border border-slate-200 bg-white shadow-sm">
+                    <div class="bg-grid-pattern p-8 md:p-12 rounded-[32px] border border-[#ebebeb] bg-gray-50/50">
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
                             
                             <!-- Layer 1: Ingestion -->
-                            <div class="ent-card p-6 border-t-4 border-t-blue-600 bg-white relative z-10">
+                            <div class="ent-card p-6 border-t-4 border-t-[#0f62fe] bg-white relative z-10">
                                 <div class="pipeline-connector hidden md:block"></div>
                                 <div class="flex justify-between items-start mb-4">
-                                    <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">01. Ingest</span>
-                                    <i class="fas fa-satellite-dish text-slate-300"></i>
+                                    <span class="text-[10px] font-bold text-[#0f62fe] bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">01. Ingest</span>
+                                    <i class="fas fa-satellite-dish text-[#dddddd]"></i>
                                 </div>
-                                <h3 class="heading-font text-lg font-bold text-slate-900 mb-2">Data Streams</h3>
-                                <p class="text-xs text-slate-500 mb-6 h-8">Unified data capture from multi-channel ad networks.</p>
+                                <h3 class="heading-font text-lg font-bold text-[#222222] mb-2">Data Streams</h3>
+                                <p class="text-xs text-[#717171] mb-6 h-8">Unified data capture from multi-channel ad networks.</p>
                                 
-                                <div class="space-y-3 pt-4 border-t border-slate-100">
+                                <div class="space-y-3 pt-4 border-t border-[#ebebeb]">
                                     <div class="flex items-center justify-between text-xs">
-                                        <span class="font-mono text-slate-500">Google/Meta API</span>
+                                        <span class="font-mono text-[#717171]">Google/Meta API</span>
                                         <span class="text-green-600 font-bold">●</span>
                                     </div>
                                     <div class="flex items-center justify-between text-xs">
-                                        <span class="font-mono text-slate-500">CM 360</span>
+                                        <span class="font-mono text-[#717171]">CM 360</span>
                                         <span class="text-green-600 font-bold">●</span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Layer 2: Orchestration -->
-                            <div class="ent-card p-6 border-t-4 border-t-purple-600 bg-slate-50 relative z-10">
+                            <div class="ent-card p-6 border-t-4 border-t-purple-600 bg-white relative z-10">
                                 <div class="pipeline-connector hidden md:block"></div>
                                 <div class="flex justify-between items-start mb-4">
                                     <span class="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded uppercase tracking-widest">02. Logic</span>
-                                    <i class="fas fa-microchip text-slate-400"></i>
+                                    <i class="fas fa-microchip text-[#dddddd]"></i>
                                 </div>
-                                <h3 class="heading-font text-lg font-bold text-slate-900 mb-2">Middleware</h3>
-                                <p class="text-xs text-slate-500 mb-6 h-8">Python automation scripts for data normalization.</p>
+                                <h3 class="heading-font text-lg font-bold text-[#222222] mb-2">Middleware</h3>
+                                <p class="text-xs text-[#717171] mb-6 h-8">Python automation scripts for data normalization.</p>
                                 
-                                <div class="space-y-3 pt-4 border-t border-slate-200">
+                                <div class="space-y-3 pt-4 border-t border-[#ebebeb]">
                                     <div class="flex items-center justify-between text-xs">
-                                        <span class="font-mono text-slate-700 font-bold">Python Scripts</span>
+                                        <span class="font-mono text-[#222222] font-bold">Python Scripts</span>
                                         <i class="fas fa-cog fa-spin text-purple-400"></i>
                                     </div>
                                     <div class="flex items-center justify-between text-xs">
-                                        <span class="font-mono text-slate-500">REST APIs</span>
+                                        <span class="font-mono text-[#717171]">REST APIs</span>
                                         <span class="text-purple-600 font-bold">v2.1</span>
                                     </div>
                                 </div>
@@ -407,18 +443,18 @@
                                 <div class="pipeline-connector hidden md:block"></div>
                                 <div class="flex justify-between items-start mb-4">
                                     <span class="text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded uppercase tracking-widest">03. Core</span>
-                                    <i class="fas fa-database text-slate-300"></i>
+                                    <i class="fas fa-database text-[#dddddd]"></i>
                                 </div>
-                                <h3 class="heading-font text-lg font-bold text-slate-900 mb-2">System of Record</h3>
-                                <p class="text-xs text-slate-500 mb-6 h-8">CRM governance and single source of truth.</p>
+                                <h3 class="heading-font text-lg font-bold text-[#222222] mb-2">System of Record</h3>
+                                <p class="text-xs text-[#717171] mb-6 h-8">CRM governance and single source of truth.</p>
                                 
-                                <div class="space-y-3 pt-4 border-t border-slate-100">
+                                <div class="space-y-3 pt-4 border-t border-[#ebebeb]">
                                     <div class="flex items-center justify-between text-xs">
-                                        <span class="font-mono text-slate-500">Salesforce/Zoho</span>
+                                        <span class="font-mono text-[#717171]">Salesforce/Zoho</span>
                                         <span class="text-teal-600 font-bold">Locked</span>
                                     </div>
                                     <div class="flex items-center justify-between text-xs">
-                                        <span class="font-mono text-slate-500">Prod. Owner</span>
+                                        <span class="font-mono text-[#717171]">Prod. Owner</span>
                                         <span class="text-teal-600 font-bold">Agile</span>
                                     </div>
                                 </div>
@@ -428,18 +464,18 @@
                             <div class="ent-card p-6 border-t-4 border-t-orange-600 bg-white relative z-10">
                                 <div class="flex justify-between items-start mb-4">
                                     <span class="text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded uppercase tracking-widest">04. Visual</span>
-                                    <i class="fas fa-chart-pie text-slate-300"></i>
+                                    <i class="fas fa-chart-pie text-[#dddddd]"></i>
                                 </div>
-                                <h3 class="heading-font text-lg font-bold text-slate-900 mb-2">Intelligence</h3>
-                                <p class="text-xs text-slate-500 mb-6 h-8">Actionable BI dashboards and predictive insights.</p>
+                                <h3 class="heading-font text-lg font-bold text-[#222222] mb-2">Intelligence</h3>
+                                <p class="text-xs text-[#717171] mb-6 h-8">Actionable BI dashboards and predictive insights.</p>
                                 
-                                <div class="space-y-3 pt-4 border-t border-slate-100">
+                                <div class="space-y-3 pt-4 border-t border-[#ebebeb]">
                                     <div class="flex items-center justify-between text-xs">
-                                        <span class="font-mono text-slate-500">Power BI / GA4</span>
+                                        <span class="font-mono text-[#717171]">Power BI / GA4</span>
                                         <span class="text-orange-600 font-bold">Live</span>
                                     </div>
                                     <div class="flex items-center justify-between text-xs">
-                                        <span class="font-mono text-slate-500">Gen-AI / GPT-4o</span>
+                                        <span class="font-mono text-[#717171]">Gen-AI / GPT-4o</span>
                                         <span class="text-orange-600 font-bold">Integrated</span>
                                     </div>
                                 </div>
@@ -450,38 +486,38 @@
                 </div>
             `,
             timeline: `
-                <div class="max-w-4xl mx-auto px-6">
-                    <header class="mb-16 text-center">
-                        <h2 class="heading-font text-3xl font-bold text-slate-900 mb-2">Leadership Trajectory</h2>
-                        <p class="text-slate-500">From foundational execution to strategic governance.</p>
+                <div class="max-w-4xl mx-auto px-6 lg:px-20 pb-24 md:pb-0">
+                    <header class="mb-16 text-center pt-12 md:pt-0">
+                        <h2 class="heading-font text-3xl font-bold text-[#222222] mb-2">Leadership Trajectory</h2>
+                        <p class="text-[#717171]">From foundational execution to strategic governance.</p>
                     </header>
 
-                    <div class="relative border-l border-slate-200 ml-4 md:ml-8 pl-8 md:pl-12 space-y-12">
+                    <div class="relative border-l border-[#ebebeb] ml-4 md:ml-8 pl-8 md:pl-12 space-y-12">
                         
                         <!-- Role 1 -->
                         <div class="relative group">
-                            <span class="absolute -left-[37px] md:-left-[53px] top-1 h-4 w-4 rounded-full border-[3px] border-white bg-blue-600 shadow-sm ring-1 ring-slate-200"></span>
+                            <span class="absolute -left-[37px] md:-left-[53px] top-1 h-4 w-4 rounded-full border-[3px] border-white bg-[#0f62fe] shadow-sm ring-1 ring-[#ebebeb]"></span>
                             
                             <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
                                 <div>
-                                    <span class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-1 block">2023 — Present</span>
-                                    <h3 class="heading-font text-2xl font-bold text-slate-900">Digital Transformation Manager</h3>
-                                    <p class="text-slate-500 font-medium text-sm">Mahindra Emirates Vehicle Armouring</p>
+                                    <span class="text-xs font-bold text-[#0f62fe] uppercase tracking-widest mb-1 block">2023 — Present</span>
+                                    <h3 class="heading-font text-2xl font-bold text-[#222222]">Digital Transformation Manager</h3>
+                                    <p class="text-[#717171] font-medium text-sm">Mahindra Emirates Vehicle Armouring</p>
                                 </div>
-                                <span class="hidden md:block text-[10px] font-bold text-slate-400 uppercase tracking-widest border border-slate-200 px-3 py-1 rounded-full bg-white">B2G Defense</span>
+                                <span class="hidden md:block text-[10px] font-bold text-[#717171] uppercase tracking-widest border border-[#ebebeb] px-3 py-1 rounded-full bg-white">B2G Defense</span>
                             </div>
                             
                             <div class="ent-card p-8 bg-white group-hover:border-blue-300">
                                 <div class="grid md:grid-cols-2 gap-8">
                                     <div>
-                                        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wide mb-3 flex items-center gap-2"><i class="fas fa-globe text-blue-600"></i> Governance</h4>
-                                        <p class="text-sm text-slate-600 leading-relaxed">
+                                        <h4 class="font-bold text-xs text-[#222222] uppercase tracking-wide mb-3 flex items-center gap-2"><i class="fas fa-globe text-[#0f62fe]"></i> Governance</h4>
+                                        <p class="text-sm text-[#717171] leading-relaxed">
                                             Leading digital roadmap for high-compliance global expansion in defense sectors.
                                         </p>
                                     </div>
                                     <div>
-                                        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wide mb-3 flex items-center gap-2"><i class="fas fa-code-branch text-purple-600"></i> Product</h4>
-                                        <p class="text-sm text-slate-600 leading-relaxed">
+                                        <h4 class="font-bold text-xs text-[#222222] uppercase tracking-wide mb-3 flex items-center gap-2"><i class="fas fa-code-branch text-purple-600"></i> Product</h4>
+                                        <p class="text-sm text-[#717171] leading-relaxed">
                                             Defining architecture for custom CRM. Using <strong>Python automation</strong> to bridge data gaps.
                                         </p>
                                     </div>
@@ -491,18 +527,18 @@
 
                         <!-- Role 2 -->
                         <div class="relative group">
-                            <span class="absolute -left-[37px] md:-left-[53px] top-1 h-4 w-4 rounded-full border-[3px] border-white bg-slate-300 shadow-sm ring-1 ring-slate-200"></span>
+                            <span class="absolute -left-[37px] md:-left-[53px] top-1 h-4 w-4 rounded-full border-[3px] border-white bg-[#717171] shadow-sm ring-1 ring-[#ebebeb]"></span>
                             
                             <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
                                 <div>
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 block">2022 — 2023</span>
-                                    <h3 class="heading-font text-xl font-bold text-slate-900">Global Digital Consultant</h3>
-                                    <p class="text-slate-500 font-medium text-sm">Coach2Reach Inc.</p>
+                                    <span class="text-xs font-bold text-[#717171] uppercase tracking-widest mb-1 block">2022 — 2023</span>
+                                    <h3 class="heading-font text-xl font-bold text-[#222222]">Global Digital Consultant</h3>
+                                    <p class="text-[#717171] font-medium text-sm">Coach2Reach Inc.</p>
                                 </div>
                             </div>
                             
                             <div class="ent-card p-6 bg-white">
-                                <p class="text-sm text-slate-600 leading-relaxed">
+                                <p class="text-sm text-[#717171] leading-relaxed">
                                     Architected <strong>Global Search Strategy</strong> across 4 continents. Drove a <strong>40% improvement in Quality Scores</strong> through advanced bidding algorithms and full-funnel attribution modeling.
                                 </p>
                             </div>
@@ -510,25 +546,25 @@
 
                         <!-- Early Career Toggle -->
                         <div class="relative">
-                            <span class="absolute -left-[37px] md:-left-[53px] top-1 h-4 w-4 rounded-full border-[3px] border-white bg-slate-200 ring-1 ring-slate-200"></span>
+                            <span class="absolute -left-[37px] md:-left-[53px] top-1 h-4 w-4 rounded-full border-[3px] border-white bg-[#dddddd] ring-1 ring-[#ebebeb]"></span>
                             
                             <div class="cursor-pointer group select-none" onclick="toggleEarlyCareer(this)">
                                 <div class="flex items-center gap-3 mb-4">
-                                    <h3 class="heading-font text-lg font-bold text-slate-400 group-hover:text-slate-900 transition-colors">Foundational Experience</h3>
-                                    <i class="fas fa-chevron-down text-slate-400 text-xs transition-transform duration-300" id="career-arrow"></i>
+                                    <h3 class="heading-font text-lg font-bold text-[#717171] group-hover:text-[#222222] transition-colors">Foundational Experience</h3>
+                                    <i class="fas fa-chevron-down text-[#717171] text-xs transition-transform duration-300" id="career-arrow"></i>
                                 </div>
-                                <p class="text-xs text-slate-400 mb-6 font-mono">2016 — 2021 &bull; ChalksnSlate & Markon</p>
+                                <p class="text-xs text-[#717171] mb-6 font-mono">2016 — 2021 &bull; ChalksnSlate & Markon</p>
                                 
                                 <div id="career-content" class="hidden grid md:grid-cols-2 gap-4">
-                                    <div class="ent-card p-5 bg-slate-50 border-dashed border-slate-300">
-                                        <h4 class="font-bold text-sm text-slate-900">Social Media Specialist</h4>
-                                        <p class="text-xs text-slate-500 mb-2">ChalksnSlate Media</p>
-                                        <p class="text-xs text-slate-600">Cross-platform strategies & creative best practices.</p>
+                                    <div class="ent-card p-5 bg-gray-50 border-dashed border-gray-300">
+                                        <h4 class="font-bold text-sm text-[#222222]">Social Media Specialist</h4>
+                                        <p class="text-xs text-[#717171] mb-2">ChalksnSlate Media</p>
+                                        <p class="text-xs text-[#717171]">Cross-platform strategies & creative best practices.</p>
                                     </div>
-                                    <div class="ent-card p-5 bg-slate-50 border-dashed border-slate-300">
-                                        <h4 class="font-bold text-sm text-slate-900">Sr. Digital Associate</h4>
-                                        <p class="text-xs text-slate-500 mb-2">Markon Strategy</p>
-                                        <p class="text-xs text-slate-600">UI/UX Development & Marketing Automation.</p>
+                                    <div class="ent-card p-5 bg-gray-50 border-dashed border-gray-300">
+                                        <h4 class="font-bold text-sm text-[#222222]">Sr. Digital Associate</h4>
+                                        <p class="text-xs text-[#717171] mb-2">Markon Strategy</p>
+                                        <p class="text-xs text-[#717171]">UI/UX Development & Marketing Automation.</p>
                                     </div>
                                 </div>
                             </div>
@@ -562,9 +598,22 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        document.querySelectorAll('.dock-item').forEach(el => el.classList.remove('active'));
-                        const activeDock = document.getElementById(`dock-${entry.target.id}`);
-                        if(activeDock) activeDock.classList.add('active');
+                        // Desktop Nav
+                        // Reset all to default (gray text)
+                        document.querySelectorAll('.airbnb-nav-pill button').forEach(btn => {
+                            btn.classList.remove('text-[#222222]');
+                            btn.classList.add('text-[#717171]');
+                        });
+                        // Highlight active (dark text)
+                        // Note: buttons have onclick="scrollToSection('vision')" etc.
+                        // We can identify them by text content or by adding IDs to buttons in the view definition if needed.
+                        // However, simpler to just rely on text or index if structure is static.
+                        // Let's assume standard behavior for now or just rely on click-to-scroll.
+                        
+                        // Mobile Bottom Bar
+                        document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+                        const activeMobileItem = document.getElementById(`mobile-nav-${entry.target.id}`);
+                        if(activeMobileItem) activeMobileItem.classList.add('active');
                     }
                 });
             }, { threshold: 0.2, root: viewport });
