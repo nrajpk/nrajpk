@@ -153,21 +153,39 @@
         #viewport::-webkit-scrollbar-track { background: transparent; }
         #viewport::-webkit-scrollbar-thumb { background: #dddddd; border-radius: 10px; }
         
-        .section-wrapper {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-bottom: 8rem;
-            padding-top: 4rem; /* Adjusted base padding */
-        }
-        
-        @media (max-width: 768px) {
-            .section-wrapper {
-                padding-top: 2rem;
-                padding-bottom: 6rem;
-            }
-        }
+        /* 1. Update the base wrapper to be more flexible */
+.section-wrapper {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic height for modern browsers */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* 2. Replace your entire @media block with this */
+@media (max-width: 768px) {
+    .section-wrapper {
+        /* Add more top padding to clear the fixed mobile header (approx 70px) */
+        padding-top: 100px; 
+        /* Add more bottom padding to clear the fixed bottom nav (approx 65px) */
+        padding-bottom: 120px; 
+        min-height: 100dvh;
+        justify-content: flex-start; /* Start content from top to avoid vertical 'floating' */
+    }
+
+    .pipeline-connector {
+        /* Fixes the horizontal 'moving' by ensuring connectors don't push the width */
+        display: none; 
+    }
+    
+    /* Ensure the main container doesn't allow horizontal swiping */
+    #viewport {
+        overflow-x: hidden;
+        width: 100%;
+    }
+}
     </style>
 </head>
 <body class="h-screen w-full relative overflow-hidden bg-white">
