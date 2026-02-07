@@ -28,7 +28,6 @@
         .heading-font { font-family: 'Manrope', sans-serif; }
         .data-font { font-family: 'Space Grotesk', sans-serif; }
 
-        /* Smooth Reveal Animation */
         .reveal {
             opacity: 0;
             transform: translateY(20px);
@@ -39,7 +38,6 @@
             transform: translateY(0);
         }
 
-        /* Airbnb Style Glassmorphism */
         .glass-header {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
@@ -47,7 +45,6 @@
             transition: all 0.3s ease;
         }
 
-        /* High-Fidelity Cards (Adobe Style) */
         .premium-card {
             background: #ffffff;
             border: 1px solid rgba(0, 0, 0, 0.08);
@@ -60,7 +57,40 @@
             transform: translateY(-4px);
         }
 
-        /* Custom Scrollbar */
+        .bg-grid-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .pipeline-connector {
+            position: absolute;
+            top: 50%;
+            right: -16px;
+            width: 32px;
+            height: 2px;
+            background: linear-gradient(90deg, #e2e8f0, transparent);
+            z-index: 0;
+        }
+
+        .tool-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.2s ease;
+        }
+        .tool-badge:hover {
+            border-color: var(--brand-core);
+            color: var(--brand-core);
+            transform: scale(1.05);
+        }
+
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
@@ -69,7 +99,6 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
         }
         
-        /* Modal Transitions */
         #contact-modal {
             opacity: 0;
             pointer-events: none;
@@ -86,6 +115,10 @@
         #contact-modal.open .modal-inner {
             transform: scale(1) translateY(0);
         }
+
+        @media (max-width: 768px) {
+            .pipeline-connector { display: none; }
+        }
     </style>
 </head>
 <body class="relative">
@@ -93,13 +126,11 @@
     <!-- Header / Navigation -->
     <header class="fixed top-0 left-0 w-full z-50 glass-header border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Brand -->
             <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
                 <div class="w-10 h-10 bg-[#0f62fe] rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:rotate-6 transition-transform">N</div>
                 <h1 class="heading-font text-xl font-extrabold tracking-tighter hidden md:block">nikhil raj pk</h1>
             </div>
 
-            <!-- Airbnb Nav Capsule -->
             <nav class="hidden md:flex items-center nav-capsule bg-white border border-gray-200 rounded-full px-2 py-1.5 gap-1">
                 <button onclick="scrollToSection('vision')" class="px-5 py-2 text-sm font-semibold rounded-full hover:bg-gray-50 transition-colors text-gray-900">Vision</button>
                 <div class="w-px h-4 bg-gray-200"></div>
@@ -108,7 +139,6 @@
                 <button onclick="scrollToSection('timeline')" class="px-5 py-2 text-sm font-semibold rounded-full hover:bg-gray-50 transition-colors text-gray-600">Journey</button>
             </nav>
 
-            <!-- Actions -->
             <div class="flex items-center gap-3">
                 <a href="#" class="hidden sm:flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition-all">
                     <i class="fas fa-file-download text-xs"></i> Profile
@@ -120,29 +150,32 @@
         </div>
     </header>
 
-    <!-- Hero Section (McKinsey Style) -->
+    <!-- Hero Section -->
     <section id="vision" class="min-h-screen pt-40 pb-20 px-6 flex items-center">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 items-center">
             <div class="lg:col-span-8 reveal active">
                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-100 rounded-full mb-6">
                     <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
-                    <span class="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Systems-Led Strategy v4.0</span>
+                    <span class="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Growth × Systems Engineering</span>
                 </div>
                 <h2 class="heading-font text-5xl md:text-8xl font-extrabold tracking-tight leading-[0.95] mb-8">
-                    Architecting <br>
-                    <span class="text-blue-600">Performance.</span>
+                    Operationalizing <br>
+                    <span class="text-blue-600 text-6xl md:text-8xl">Digital Transformation.</span>
                 </h2>
                 <p class="text-xl md:text-2xl text-gray-500 max-w-2xl leading-relaxed font-medium mb-10">
-                    Bridging the divide between <span class="text-gray-900">Systems Engineering</span> and <span class="text-gray-900">Global Marketing Operations</span> to build resilient revenue engines.
+                    I engineer the <span class="text-gray-900">infrastructure of revenue</span>. Bridging high-performance marketing stacks with automated, compliant system architectures.
                 </p>
                 <div class="flex flex-wrap gap-4">
                     <button onclick="scrollToSection('architecture')" class="px-8 py-4 bg-[#0f62fe] text-white rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
                         View Ecosystem
                     </button>
-                    <div class="flex -space-x-3">
-                        <div class="w-12 h-12 rounded-full border-4 border-white bg-gray-100 flex items-center justify-center text-xs font-bold">Python</div>
-                        <div class="w-12 h-12 rounded-full border-4 border-white bg-gray-100 flex items-center justify-center text-xs font-bold">CRM</div>
-                        <div class="w-12 h-12 rounded-full border-4 border-white bg-gray-100 flex items-center justify-center text-xs font-bold">BI</div>
+                    <div class="flex items-center gap-4 ml-2">
+                        <div class="flex -space-x-3">
+                            <div class="w-12 h-12 rounded-full border-4 border-white bg-blue-50 flex items-center justify-center text-blue-600"><i class="fab fa-google text-xs"></i></div>
+                            <div class="w-12 h-12 rounded-full border-4 border-white bg-blue-50 flex items-center justify-center text-blue-600"><i class="fab fa-linkedin-in text-xs"></i></div>
+                            <div class="w-12 h-12 rounded-full border-4 border-white bg-blue-50 flex items-center justify-center text-blue-600"><i class="fab fa-python text-xs"></i></div>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">Full-Stack<br>Performance</span>
                     </div>
                 </div>
             </div>
@@ -150,58 +183,147 @@
     </section>
 
     <!-- Architecture Section -->
-    <section id="architecture" class="py-32 bg-gray-50/50 border-y border-gray-100">
+    <section id="architecture" class="py-32 bg-gray-50/50 border-y border-gray-100 bg-grid-pattern">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-20 text-center">
-                <h2 class="heading-font text-4xl font-extrabold mb-4">The Enterprise Stack</h2>
-                <p class="text-gray-500 max-w-xl mx-auto">A unified framework for managing complex B2G and Defense digital landscapes with absolute data integrity.</p>
+            <header class="mb-20 flex flex-col md:flex-row justify-between items-end gap-6 reveal">
+                <div class="text-left">
+                    <h2 class="heading-font text-4xl font-extrabold mb-4">The Performance Stack</h2>
+                    <p class="text-gray-500 max-w-xl">Integrating high-scale performance marketing with deep systems governance for Defense & B2G markets.</p>
+                </div>
+                <div class="flex items-center gap-3 px-4 py-2 bg-white rounded-2xl border border-gray-200 shadow-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span class="data-font text-xs font-bold text-gray-500 tracking-widest uppercase">Ecosystem Integrated</span>
+                </div>
+            </header>
+
+            <!-- 4 Column Pipeline -->
+            <div class="grid md:grid-cols-4 gap-6 relative mb-16">
+                <!-- Layer 1: Ingestion -->
+                <div class="premium-card p-8 reveal relative z-10 border-t-blue-600 border-t-2">
+                    <div class="pipeline-connector hidden md:block"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">01. Growth</span>
+                        <i class="fas fa-chart-line text-gray-300"></i>
+                    </div>
+                    <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">Performance Ingest</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">High-performance search & social strategy (Google/Meta/LinkedIn) focused on ROAS and Quality Score.</p>
+                    
+                    <div class="space-y-3 pt-4 border-t border-gray-100">
+                        <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
+                            <span class="text-gray-400">Search Strategy</span>
+                            <span class="text-green-500">Scaled</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 2: Orchestration -->
+                <div class="premium-card p-8 reveal relative z-10 border-t-purple-600 border-t-2">
+                    <div class="pipeline-connector hidden md:block"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded uppercase tracking-widest">02. Logic</span>
+                        <i class="fas fa-microchip text-gray-300"></i>
+                    </div>
+                    <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">Automation Layer</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">Custom Python scripts and REST APIs normalizing campaign data across fragmented global environments.</p>
+                    
+                    <div class="space-y-3 pt-4 border-t border-gray-100">
+                        <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
+                            <span class="text-gray-900">Python ETL</span>
+                            <i class="fas fa-cog fa-spin text-purple-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 3: Governance -->
+                <div class="premium-card p-8 bg-gray-900 text-white border-none reveal relative z-10">
+                    <div class="pipeline-connector hidden md:block"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] font-bold text-blue-400 bg-white/10 px-2 py-1 rounded uppercase tracking-widest">03. Core</span>
+                        <i class="fas fa-shield-halved text-gray-600"></i>
+                    </div>
+                    <h3 class="heading-font text-lg font-bold text-white mb-2">CRM Governance</h3>
+                    <p class="text-xs text-gray-400 mb-6 h-12 leading-relaxed">Salesforce & Zoho architecture as the 'System of Record' for multi-market B2G lead management.</p>
+                    
+                    <div class="space-y-3 pt-4 border-t border-white/10">
+                        <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
+                            <span class="text-gray-400">Data Integrity</span>
+                            <span class="text-blue-400">99%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 4: Intelligence -->
+                <div class="premium-card p-8 reveal relative z-10 border-t-orange-500 border-t-2">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded uppercase tracking-widest">04. Visual</span>
+                        <i class="fas fa-chart-pie text-gray-300"></i>
+                    </div>
+                    <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">BI Dashboards</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">Actionable intelligence via Power BI & GA4, translating technical data into revenue-driven insights.</p>
+                    
+                    <div class="space-y-3 pt-4 border-t border-gray-100">
+                        <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
+                            <span class="text-gray-400">Revenue BI</span>
+                            <span class="text-orange-600">Live</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Data Layer -->
-                <div class="premium-card p-10 reveal">
-                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-8">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <h3 class="heading-font text-2xl font-bold mb-4">Ingestion</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
-                        Treating every touchpoint as a sensor. Automated pipelines for Google, Meta, and CM360 normalization using Python middleware.
-                    </p>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3 text-xs font-bold text-gray-400">
-                            <i class="fas fa-check text-green-500"></i> API SYNC
-                        </li>
-                        <li class="flex items-center gap-3 text-xs font-bold text-gray-400">
-                            <i class="fas fa-check text-green-500"></i> REAL-TIME ATTRIBUTION
-                        </li>
-                    </ul>
+            <!-- Strategic Toolchain Section -->
+            <div class="reveal mt-20 p-10 bg-white border border-gray-100 rounded-[32px] shadow-sm">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-10 h-1 h-px bg-gray-200"></div>
+                    <h3 class="data-font text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Integrated Core Toolchain</h3>
+                    <div class="flex-1 h-px bg-gray-200"></div>
                 </div>
 
-                <!-- Core Governance -->
-                <div class="premium-card p-10 bg-gray-900 text-white border-none reveal">
-                    <div class="w-14 h-14 bg-white/10 text-white rounded-2xl flex items-center justify-center text-2xl mb-8">
-                        <i class="fas fa-shield-halved"></i>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+                    <!-- Column 1: Media & Performance -->
+                    <div class="space-y-4">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Media Performance</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tool-badge"><i class="fab fa-google text-blue-500"></i> Google Ads</div>
+                            <div class="tool-badge"><i class="fab fa-linkedin text-blue-700"></i> LinkedIn</div>
+                            <div class="tool-badge"><i class="fab fa-facebook text-blue-600"></i> Meta Ads</div>
+                            <div class="tool-badge"><i class="fas fa-bullseye text-red-500"></i> CM360</div>
+                        </div>
                     </div>
-                    <h3 class="heading-font text-2xl font-bold mb-4">Governance</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-8">
-                        B2G-ready CRM architecture (Salesforce/Zoho) with custom field mapping designed for high-compliance defense environments.
-                    </p>
-                    <div class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl">
-                        <span class="data-font text-[10px] text-blue-400 font-bold uppercase tracking-tighter">System Health: 99.9%</span>
-                    </div>
-                </div>
 
-                <!-- Intelligence -->
-                <div class="premium-card p-10 reveal">
-                    <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-8">
-                        <i class="fas fa-chart-pie"></i>
+                    <!-- Column 2: MarTech & Governance -->
+                    <div class="space-y-4">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">MarTech & Ops</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tool-badge"><i class="fab fa-salesforce text-blue-400"></i> Salesforce</div>
+                            <div class="tool-badge"><i class="fas fa-cloud text-orange-400"></i> Zoho CRM</div>
+                            <div class="tool-badge"><i class="fas fa-envelope text-yellow-600"></i> MailChimp</div>
+                            <div class="tool-badge"><i class="fab fa-hubspot text-orange-500"></i> Marketing Hub</div>
+                        </div>
                     </div>
-                    <h3 class="heading-font text-2xl font-bold mb-4">Intelligence</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
-                        Predictive insights through Power BI and custom GPT-4o integrations for executive decision-making and forecasting.
-                    </p>
-                    <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-orange-500 w-[85%] animate-pulse"></div>
+
+                    <!-- Column 3: Intelligence & SEO -->
+                    <div class="space-y-4">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Intelligence & SEO</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tool-badge"><i class="fas fa-chart-bar text-yellow-500"></i> Power BI</div>
+                            <div class="tool-badge"><i class="fab fa-google text-green-500"></i> GA4 / GSC</div>
+                            <div class="tool-badge"><i class="fas fa-search text-purple-500"></i> Ahrefs / SEMrush</div>
+                            <div class="tool-badge"><i class="fas fa-fire text-red-400"></i> Hotjar / Clarity</div>
+                        </div>
+                    </div>
+
+                    <!-- Column 4: Creative & Tech -->
+                    <div class="space-y-4">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6">Creative & Systems</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tool-badge"><i class="fab fa-python text-blue-500"></i> Python / API</div>
+                            <div class="tool-badge"><i class="fab fa-adobe text-red-600"></i> Adobe Suite</div>
+                            <div class="tool-badge"><i class="fab fa-figma text-purple-500"></i> Figma / UI</div>
+                            <div class="tool-badge"><i class="fab fa-github text-gray-900"></i> GitHub</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,37 +333,75 @@
     <!-- Journey / Timeline -->
     <section id="timeline" class="py-32">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="heading-font text-4xl font-extrabold mb-20">Career Trajectory</h2>
+            <h2 class="heading-font text-4xl font-extrabold mb-20 text-center">Leadership Trajectory</h2>
             
             <div class="relative border-l-2 border-gray-100 ml-6 pl-12 space-y-24">
-                <!-- Role -->
+                
+                <!-- Role 1: Mahindra -->
                 <div class="relative reveal">
                     <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-blue-600 shadow-sm"></div>
                     <div>
-                        <span class="data-font text-sm font-bold text-blue-600 mb-2 block">2023 — PRESENT</span>
-                        <h3 class="heading-font text-3xl font-extrabold mb-1">Digital Transformation Manager</h3>
-                        <p class="text-lg font-medium text-gray-400 mb-6">Mahindra Emirates Vehicle Armouring</p>
-                        <div class="grid sm:grid-cols-2 gap-4">
-                            <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
-                                <h4 class="font-bold text-xs uppercase tracking-widest mb-2">Strategy</h4>
-                                <p class="text-sm text-gray-500">Operationalizing the global roadmap for defense-grade expansion.</p>
-                            </div>
-                            <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
-                                <h4 class="font-bold text-xs uppercase tracking-widest mb-2">Technical</h4>
-                                <p class="text-sm text-gray-500">Architecting full-stack Python integrations for proprietary ERP-CRM sync.</p>
-                            </div>
+                        <span class="data-font text-sm font-bold text-blue-600 mb-2 block tracking-widest">2023 — PRESENT</span>
+                        <h3 class="heading-font text-3xl font-extrabold mb-1">Marketing & Digital Transformation Manager</h3>
+                        <p class="text-lg font-medium text-gray-400 mb-6">Mahindra Emirates Vehicle Armouring (UAE)</p>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6 max-w-2xl">
+                            Architecting the digital roadmap for global expansion. Virtual Product Owner for a custom-built CRM, bridging B2G defense sales pipelines with API-led automation.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold uppercase">B2G Strategy</span>
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold uppercase">Product Owner</span>
+                            <span class="px-3 py-1 bg-gray-50 border border-gray-100 rounded-full text-[10px] font-bold uppercase">API / Python</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Role 2 -->
+                <!-- Role 2: Coach2Reach -->
+                <div class="relative reveal">
+                    <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-gray-300"></div>
+                    <div>
+                        <span class="data-font text-sm font-bold text-gray-400 mb-2 block tracking-widest">2022 — 2023</span>
+                        <h3 class="heading-font text-2xl font-bold mb-1">Global Digital Consultant</h3>
+                        <p class="text-gray-400 mb-4 font-medium">Coach2Reach Inc. (USA/India Remote)</p>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-4 max-w-2xl">
+                            Designed end-to-end Google Ads strategies globally. Focused on performance optimization, scaling budgets, and attribution modeling to improve Quality Scores and ROAS.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Role 3: ChalksnSlate -->
                 <div class="relative reveal">
                     <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-gray-200"></div>
                     <div>
-                        <span class="data-font text-sm font-bold text-gray-400 mb-2 block">2022 — 2023</span>
-                        <h3 class="heading-font text-2xl font-bold mb-1">Global Digital Consultant</h3>
-                        <p class="text-gray-400 mb-6 font-medium">Coach2Reach Inc.</p>
-                        <p class="text-gray-500 leading-relaxed">Scaled search strategies across four continents, optimizing ad spend through advanced bidding algorithms.</p>
+                        <span class="data-font text-sm font-bold text-gray-400 mb-2 block tracking-widest">2020 — 2021</span>
+                        <h3 class="heading-font text-2xl font-bold mb-1">Social Media Specialist</h3>
+                        <p class="text-gray-400 mb-4 font-medium">ChalksnSlate Media (India)</p>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-2xl">
+                            Engineered cross-platform social strategies for B2B startups, focusing on ROI and creative direction to align with lead generation goals.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Role 4: Markon -->
+                <div class="relative reveal">
+                    <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-gray-200"></div>
+                    <div>
+                        <span class="data-font text-sm font-bold text-gray-400 mb-2 block tracking-widest">2016 — 2020</span>
+                        <h3 class="heading-font text-2xl font-bold mb-1">Sr. Digital Marketing Associate</h3>
+                        <p class="text-gray-400 mb-4 font-medium">Markon Strategy Consulting (India)</p>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-2xl">
+                            Foundation in UI/UX development and marketing automation. Built conversion-driven landing pages and automated lead-to-conversion funnels for B2B clientele.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="relative reveal">
+                    <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-gray-900"></div>
+                    <div>
+                        <span class="data-font text-sm font-bold text-gray-900 mb-2 block tracking-widest">TECHNICAL FOUNDATION</span>
+                        <h3 class="heading-font text-2xl font-bold mb-1">B.Tech in Computer Science Engineering</h3>
+                        <p class="text-gray-400 font-medium">Mar Athanasius College of Engineering</p>
+                        <p class="text-xs text-gray-400 mt-2 font-bold uppercase tracking-widest">Systems Engineering • Logic Design • Software Architecture</p>
                     </div>
                 </div>
             </div>
@@ -250,7 +410,8 @@
 
     <!-- Footer -->
     <footer class="py-20 border-t border-gray-100 text-center">
-        <p class="text-sm text-gray-400">&copy; 2024 Nikhil Raj PK &bull; Built with Precision & Systems Thinking</p>
+        <p class="text-xs font-bold text-gray-300 uppercase tracking-widest mb-4">Engineering Growth v4.0</p>
+        <p class="text-sm text-gray-400">&copy; 2024 Nikhil Raj PK &bull; System of Records Confirmed</p>
     </footer>
 
     <!-- Contact Modal -->
@@ -261,8 +422,8 @@
                 <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-8">
                     <i class="fas fa-paper-plane"></i>
                 </div>
-                <h2 class="heading-font text-3xl font-bold mb-4">Let's build together.</h2>
-                <p class="text-gray-500 mb-10">Available for strategic consulting and leadership roles in digital infrastructure.</p>
+                <h2 class="heading-font text-3xl font-bold mb-4">Engineer Your Growth.</h2>
+                <p class="text-gray-500 mb-10">Currently open for strategic leadership roles bridging Systems Engineering & Performance Marketing.</p>
                 
                 <div class="space-y-4 text-left">
                     <a href="mailto:nrajpk@outlook.com" class="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 hover:border-blue-600 transition-all group">
@@ -271,39 +432,34 @@
                         </div>
                         <span class="font-bold text-gray-900">nrajpk@outlook.com</span>
                     </a>
-                    <a href="#" target="_blank" class="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 hover:border-blue-600 transition-all group">
+                    <a href="https://linkedin.com/in/nrajpk" target="_blank" class="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 hover:border-blue-600 transition-all group">
                         <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
                             <i class="fab fa-linkedin-in"></i>
                         </div>
-                        <span class="font-bold text-gray-900">linkedin.com/in/nrajpk</span>
+                        <span class="font-bold text-gray-900">/in/nrajpk</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Mobile Nav Bar -->
+    <!-- Mobile Nav -->
     <nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] bg-white border border-gray-200 rounded-full h-16 flex items-center justify-around px-6 shadow-xl z-50">
         <button onclick="scrollToSection('vision')" class="flex flex-col items-center gap-1 text-blue-600">
             <i class="fas fa-compass text-lg"></i>
             <span class="text-[10px] font-bold uppercase">Vision</span>
         </button>
         <button onclick="scrollToSection('architecture')" class="flex flex-col items-center gap-1 text-gray-400">
-            <i class="fas fa-microchip text-lg"></i>
+            <i class="fas fa-layer-group text-lg"></i>
             <span class="text-[10px] font-bold uppercase">Stack</span>
         </button>
         <button onclick="scrollToSection('timeline')" class="flex flex-col items-center gap-1 text-gray-400">
-            <i class="fas fa-route text-lg"></i>
+            <i class="fas fa-history text-lg"></i>
             <span class="text-[10px] font-bold uppercase">Journey</span>
-        </button>
-        <button onclick="toggleModal()" class="flex flex-col items-center gap-1 text-gray-400">
-            <i class="fas fa-at text-lg"></i>
-            <span class="text-[10px] font-bold uppercase">Connect</span>
         </button>
     </nav>
 
     <script>
-        // Intersection Observer for Reveal Effects
         const observerOptions = { threshold: 0.15 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -315,11 +471,10 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Scroll to Section Function
         function scrollToSection(id) {
             const el = document.getElementById(id);
             if (el) {
-                const offset = 100; // Account for fixed header
+                const offset = 100;
                 const bodyRect = document.body.getBoundingClientRect().top;
                 const elementRect = el.getBoundingClientRect().top;
                 const elementPosition = elementRect - bodyRect;
@@ -332,22 +487,18 @@
             }
         }
 
-        // Modal Logic
         function toggleModal() {
             const modal = document.getElementById('contact-modal');
             modal.classList.toggle('open');
             document.body.style.overflow = modal.classList.contains('open') ? 'hidden' : '';
         }
 
-        // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 50) {
                 header.classList.add('py-2');
-                header.querySelector('.nav-capsule').style.transform = 'scale(0.95)';
             } else {
                 header.classList.remove('py-2');
-                header.querySelector('.nav-capsule').style.transform = 'scale(1)';
             }
         });
     </script>
