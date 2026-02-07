@@ -120,6 +120,25 @@
         @media (max-width: 768px) {
             .pipeline-connector { display: none; }
         }
+
+
+        /* Custom subtle animation for system icons */
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* This triggers the animation only when the parent card is hovered */
+.premium-card:hover .system-icon-anim {
+    animation: iconFloat 3s ease-in-out infinite;
+    color: var(--brand-core); /* Optional: makes icon pop on hover */
+    opacity: 1;
+}
+
+/* Ensures smooth transition for color/opacity */
+.system-icon-anim {
+    transition: all 0.5s ease;
+}
     </style>
 </head>
 <body class="relative">
@@ -213,7 +232,7 @@
                     <div class="pipeline-connector hidden md:block"></div>
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">01. Growth</span>
-                        <i class="fas fa-chart-line text-blue-600/40"></i>
+                        <i class="fas fa-chart-line text-blue-600/40 system-icon-anim"></i>
                     </div>
                     <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">Performance Ingest</h3>
                     <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">High-performance search & social strategy (Google/Meta/LinkedIn) focused on ROAS and Quality Score.</p>
@@ -231,7 +250,7 @@
                     <div class="pipeline-connector hidden md:block"></div>
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">02. Logic</span>
-                        <i class="fas fa-microchip text-blue-600/40"></i>
+                        <i class="fas fa-microchip text-blue-600/40 system-icon-anim"></i>
                     </div>
                     <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">Automation Layer</h3>
                     <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">Custom Python scripts and REST APIs normalizing campaign data across fragmented global environments.</p>
@@ -249,7 +268,7 @@
                     <div class="pipeline-connector hidden md:block"></div>
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">03. System</span>
-                        <i class="fas fa-shield-halved text-blue-600/40"></i>
+                        <i class="fas fa-shield-halved text-blue-600/40 system-icon-anim"></i>
                     </div>
                     <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">CRM Governance</h3>
                     <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">Salesforce & Zoho architecture as the 'System of Record' for multi-market B2G lead management.</p>
@@ -266,7 +285,7 @@
                 <div class="premium-card p-8 reveal relative z-10 border-t-blue-600 border-t-2">
                     <div class="flex justify-between items-start mb-6">
                         <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">04. Visual</span>
-                        <i class="fas fa-chart-pie text-blue-600/40"></i>
+                        <i class="fas fa-chart-pie text-blue-600/40 system-icon-anim"></i>
                     </div>
                     <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">BI Dashboards</h3>
                     <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">Actionable intelligence via Power BI & GA4, translating technical data into revenue-driven insights.</p>
