@@ -11,182 +11,135 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-canvas: #ffffff;
+        --bg-surface: #ffffff;
+        --ink-primary: #222222;
+        --ink-secondary: #717171;
+        --ink-tertiary: #dddddd;
+        --brand-core: #0f62fe;
+        --brand-accent: #0043ce;
+        --shadow-card: 0 6px 16px rgba(0,0,0,0.12);
+        --shadow-modal: 0 8px 28px rgba(0,0,0,0.28);
+        --radius-outer: 12px;
+    }
 
-    <style>
-        :root {
-            /* IBM + Airbnb Hybrid Palette */
-            --bg-canvas: #ffffff;     /* Pure white background like Airbnb */
-            --bg-surface: #ffffff;
-            
-            --ink-primary: #222222;   /* Airbnb Black/Grey */
-            --ink-secondary: #717171; /* Airbnb Secondary Grey */
-            --ink-tertiary: #dddddd;  
-            
-            --brand-core: #0f62fe;    /* User Brand Blue (replacing Airbnb Red) */
-            --brand-accent: #0043ce;  
-            
-            --shadow-card: 0 6px 16px rgba(0,0,0,0.12);
-            --shadow-modal: 0 8px 28px rgba(0,0,0,0.28);
-            
-            --radius-outer: 12px;
-        }
+    /* FIX 1: Body is the scroll container now. No more h-screen or overflow:hidden */
+    body {
+        font-family: 'Manrope', sans-serif;
+        background-color: var(--bg-canvas);
+        color: var(--ink-primary);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden; 
+        width: 100%;
+        margin: 0;
+    }
 
-        body {
-            font-family: 'Manrope', sans-serif; /* Cleaner, more geometric like Cereal font */
-            background-color: var(--bg-canvas);
-            color: var(--ink-primary);
-            overflow: hidden; 
-            -webkit-font-smoothing: antialiased;
-        }
+    h1, h2, h3, .heading-font {
+        font-family: 'Manrope', sans-serif;
+        letter-spacing: -0.02em;
+    }
 
-        h1, h2, h3, .heading-font {
-            font-family: 'Manrope', sans-serif;
-            letter-spacing: -0.02em;
-        }
+    .data-font { font-family: 'Space Grotesk', monospace; }
 
-        .data-font { font-family: 'Space Grotesk', monospace; }
+    .reveal-node {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
 
-        /* Smooth Transition Engine */
-        .reveal-node {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
+    .reveal-node.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-        .reveal-node.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .ent-card {
+        background: var(--bg-surface);
+        border: 1px solid #dddddd;
+        border-radius: var(--radius-outer);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        transition: all 0.2s ease;
+    }
 
-        /* Enterprise Card - Cleaner Look */
-        .ent-card {
-            background: var(--bg-surface);
-            border: 1px solid #dddddd;
-            border-radius: var(--radius-outer);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-            transition: box-shadow 0.2s ease, transform 0.2s ease;
-        }
+    .ent-card:hover {
+        box-shadow: var(--shadow-card);
+        transform: translateY(-2px);
+    }
 
-        .ent-card:hover {
-            box-shadow: var(--shadow-card);
-            border-color: transparent;
-            transform: translateY(-2px);
-        }
+    #contact-modal {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        transition: opacity 0.3s ease;
+    }
 
-        /* Modal Overlay */
-        #contact-modal {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            transition: opacity 0.3s ease;
-        }
+    .modal-content {
+        box-shadow: var(--shadow-modal);
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        border-radius: 24px;
+    }
 
-        .modal-content {
-            box-shadow: var(--shadow-modal);
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border-radius: 24px; /* More rounded like Airbnb sheets */
-        }
+    #contact-modal.open .modal-content { transform: translateY(0); }
 
-        #contact-modal.open .modal-content {
-            transform: translateY(0);
-        }
-
-        /* Technical Grid Background - Subtle */
-        .bg-grid-pattern {
-            background-image: radial-gradient(#dddddd 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-
-        /* Pipeline Connector Line */
-        .pipeline-connector {
-            position: absolute;
-            top: 50%;
-            right: -24px;
-            width: 24px;
-            height: 1px;
-            background-color: #dddddd;
-            z-index: 0;
-        }
-        
-        @media (max-width: 768px) {
-            .pipeline-connector {
-                top: auto;
-                bottom: -24px;
-                right: 50%;
-                width: 1px;
-                height: 24px;
-            }
-        }
-
-        /* Mobile Bottom Bar (Airbnb Style) */
-        .mobile-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #b0b0b0; 
-            transition: all 0.2s ease;
-            cursor: pointer;
-            position: relative;
-            padding: 8px 0;
-            flex: 1;
-        }
-
-        .mobile-nav-item i {
-            font-size: 24px;
-            margin-bottom: 2px;
-            transition: color 0.2s;
-        }
-
-        .mobile-nav-item span {
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-        }
-
-        .mobile-nav-item.active {
-            color: var(--brand-core);
-        }
-        
-        /* Scrollbar */
-        #viewport::-webkit-scrollbar { width: 6px; }
-        #viewport::-webkit-scrollbar-track { background: transparent; }
-        #viewport::-webkit-scrollbar-thumb { background: #dddddd; border-radius: 10px; }
-        
-        /* 1. Update the base wrapper to be more flexible */
-.section-wrapper {
-    min-height: 100vh;
-    min-height: 100dvh; /* Dynamic height for modern browsers */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-}
-
-/* 2. Replace your entire @media block with this */
-@media (max-width: 768px) {
-    .section-wrapper {
-        /* Add more top padding to clear the fixed mobile header (approx 70px) */
-        padding-top: 100px; 
-        /* Add more bottom padding to clear the fixed bottom nav (approx 65px) */
-        padding-bottom: 120px; 
-        min-height: 100dvh;
-        justify-content: flex-start; /* Start content from top to avoid vertical 'floating' */
+    .bg-grid-pattern {
+        background-image: radial-gradient(#dddddd 1px, transparent 1px);
+        background-size: 24px 24px;
     }
 
     .pipeline-connector {
-        /* Fixes the horizontal 'moving' by ensuring connectors don't push the width */
-        display: none; 
+        position: absolute;
+        top: 50%;
+        right: -24px;
+        width: 24px;
+        height: 1px;
+        background-color: #dddddd;
+        z-index: 0;
     }
-    
-    /* Ensure the main container doesn't allow horizontal swiping */
-    #viewport {
-        overflow-x: hidden;
-        width: 100%;
+
+    /* Mobile Bottom Bar Items */
+    .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #b0b0b0;
+        transition: all 0.2s ease;
+        padding: 8px 0;
+        flex: 1;
+        background: none;
+        border: none;
     }
-}
-    </style>
+
+    .mobile-nav-item i { font-size: 22px; margin-bottom: 2px; }
+    .mobile-nav-item span { font-size: 10px; font-weight: 600; }
+    .mobile-nav-item.active { color: var(--brand-core); }
+
+    /* FIX 2: Dynamic Viewport Height and Section Logic */
+    .section-wrapper {
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 4rem 1.5rem 8rem 1.5rem;
+        box-sizing: border-box;
+    }
+
+    /* FIX 3: Robust Mobile Overrides */
+    @media (max-width: 768px) {
+        .section-wrapper {
+            padding-top: 100px;
+            padding-bottom: 120px;
+            justify-content: flex-start; /* Prevents vertical 'popping' */
+        }
+        
+        /* Stop hidden elements from causing horizontal wobble */
+        .pipeline-connector { display: none; }
+        
+        h1 { font-size: 2.75rem !important; } /* Tighter heading for mobile */
+    }
+</style>
 </head>
 <body class="h-screen w-full relative overflow-hidden bg-white">
 
