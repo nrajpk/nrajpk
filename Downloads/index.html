@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikhil Raj PK | Systems-Led Digital Strategy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-core: #0f62fe;
+            --brand-accent: #0043ce;
+            --ink-primary: #1a1a1a;
+            --ink-secondary: #5e5e5e;
+            --surface-subtle: #f8faff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--ink-primary);
+            background-color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .heading-font { font-family: 'Manrope', sans-serif; }
+        .data-font { font-family: 'Space Grotesk', sans-serif; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        .glass-header {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.3s ease;
+        }
+
+        .premium-card {
+            background: linear-gradient(to bottom right, #ffffff, var(--surface-subtle));
+            border: 1px solid rgba(15,98,254,0.15);
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .premium-card:hover {
+            border-color: var(--brand-core);
+            box-shadow: 0 12px 30px -10px rgba(15,98,254,0.15);
+            transform: translateY(-4px);
+        }
+
+        .bg-grid-pattern {
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .pipeline-connector {
+            position: absolute;
+            top: 50%; right: -16px;
+            width: 32px; height: 2px;
+            background: linear-gradient(90deg, rgba(15,98,254,0.25), transparent);
+            z-index: 0;
+        }
+
+        .tool-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+        .tool-badge:hover {
+            border-color: var(--brand-core);
+            color: var(--brand-core);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(15,98,254,0.1);
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+        .nav-capsule { box-shadow: 0 1px 2px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05); }
+
+        .nav-btn { transition: all 0.2s ease; }
+        .nav-btn.active-nav { background: #0f62fe; color: white !important; }
+
+        .stat-card { position: relative; overflow: hidden; }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at center, rgba(15,98,254,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        #contact-modal { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        #contact-modal.open { opacity: 1; pointer-events: auto; }
+        .modal-inner {
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        #contact-modal.open .modal-inner { transform: scale(1) translateY(0); }
+
+        @keyframes iconFloat {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .premium-card:hover .system-icon-anim {
+            animation: iconFloat 3s ease-in-out infinite;
+            color: var(--brand-core); opacity: 1;
+        }
+        .system-icon-anim { transition: all 0.5s ease; }
+
+        @keyframes orbPulse {
+            0%,100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.08); opacity: 0.7; }
+        }
+        .hero-orb { animation: orbPulse 6s ease-in-out infinite; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #0f62fe 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dot-pulse { position: relative; }
+        .dot-pulse::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid #0f62fe;
+            animation: ringPulse 2s ease-out infinite;
+        }
+        @keyframes ringPulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.8); }
+        }
+
+        .win-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            border: 1px solid rgba(15,98,254,0.12);
+            background: #fff;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .win-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(15,98,254,0.15);
+            border-color: rgba(15,98,254,0.35);
+        }
+        .win-card-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+
+        .copy-feedback {
+            position: fixed;
+            bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #0f62fe;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 13px; font-weight: 600;
+            opacity: 0; pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 200;
+        }
+        .copy-feedback.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        @media (max-width: 768px) { .pipeline-connector { display: none; } }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-header border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                <div class="w-10 h-10 bg-[#0f62fe] rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:rotate-6 transition-transform shadow-lg shadow-blue-200">N</div>
+                <h1 class="heading-font text-xl font-extrabold tracking-tighter hidden md:block">nikhil raj pk</h1>
+            </div>
+            <nav class="hidden md:flex items-center nav-capsule bg-white border border-gray-200 rounded-full px-2 py-1.5 gap-1">
+                <button data-section="vision"       onclick="scrollToSection('vision')"       class="nav-btn px-5 py-2 text-sm font-semibold rounded-full transition-colors text-gray-900">Vision</button>
+                <div class="w-px h-4 bg-gray-200"></div>
+                <button data-section="architecture" onclick="scrollToSection('architecture')" class="nav-btn px-5 py-2 text-sm font-semibold rounded-full transition-colors text-gray-600">Architecture</button>
+                <div class="w-px h-4 bg-gray-200"></div>
+                <button data-section="wins"         onclick="scrollToSection('wins')"         class="nav-btn px-5 py-2 text-sm font-semibold rounded-full transition-colors text-gray-600">Impact</button>
+                <div class="w-px h-4 bg-gray-200"></div>
+                <button data-section="timeline"     onclick="scrollToSection('timeline')"     class="nav-btn px-5 py-2 text-sm font-semibold rounded-full transition-colors text-gray-600">Journey</button>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="Download/nikhilraj_resume.pdf" download class="hidden sm:flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-full bg-gray-900 text-white hover:bg-gray-700 transition-all shadow-md">
+                    <i class="fas fa-file-download text-xs"></i> Resume
+                </a>
+                <button onclick="toggleModal()" class="hidden sm:flex w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:border-blue-600 hover:text-blue-600 transition-all">
+                    <i class="fas fa-paper-plane text-sm"></i>
+                </button>
+                <a href="Download/nikhilraj_resume.pdf" download class="flex sm:hidden w-10 h-10 items-center justify-center rounded-full border border-gray-200 text-gray-900">
+                    <i class="fas fa-file-download text-sm"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="vision" class="relative min-h-screen pt-36 pb-24 px-6 flex items-center overflow-hidden">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-orb absolute pointer-events-none" style="width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(15,98,254,0.06) 0%,transparent 65%);right:-200px;top:10%;"></div>
+
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-16 items-center relative z-10">
+            <div class="lg:col-span-7 reveal active">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-100 rounded-full mb-8">
+                    <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+                    <span class="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Open to Strategic Leadership Roles</span>
+                </div>
+                <h2 class="heading-font text-5xl md:text-[80px] font-extrabold tracking-tight leading-[0.92] mb-8">
+                    Operationalizing<br>
+                    <span class="gradient-text">Digital<br>Transformation.</span>
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-500 max-w-xl leading-relaxed font-medium mb-10">
+                    I engineer the <span class="text-gray-900 font-semibold">infrastructure of revenue</span> — bridging high-performance marketing stacks with automated, compliant system architectures.
+                </p>
+                <div class="flex flex-wrap gap-4 items-center">
+                    <button onclick="scrollToSection('architecture')" class="px-8 py-4 bg-[#0f62fe] text-white rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 flex items-center gap-2">
+                        View Ecosystem <i class="fas fa-arrow-right text-sm"></i>
+                    </button>
+                    <button onclick="toggleModal()" class="px-8 py-4 bg-white text-gray-900 rounded-2xl font-bold border border-gray-200 hover:border-blue-600 hover:text-blue-600 transition-all flex items-center gap-2">
+                        <i class="fas fa-paper-plane text-sm"></i> Get in Touch
+                    </button>
+                </div>
+                <div class="flex items-center gap-5 mt-10 pt-8 border-t border-gray-100">
+                    <a href="mailto:nrajpk@outlook.com" class="text-gray-400 hover:text-blue-600 transition-colors text-sm font-semibold flex items-center gap-2">
+                        <i class="fas fa-envelope"></i> nrajpk@outlook.com
+                    </a>
+                    <span class="text-gray-200">|</span>
+                    <a href="https://linkedin.com/in/nrajpk" target="_blank" class="text-gray-400 hover:text-blue-600 transition-colors text-sm font-semibold flex items-center gap-2">
+                        <i class="fab fa-linkedin-in"></i> /in/nrajpk
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stat cards -->
+            <div class="lg:col-span-5 grid grid-cols-2 gap-4 reveal active reveal-delay-2">
+                <div class="stat-card col-span-2 p-6 rounded-2xl bg-[#0f62fe] text-white shadow-xl shadow-blue-200">
+                    <p class="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-2">Current Role</p>
+                    <p class="heading-font text-4xl font-extrabold"><span class="counter" data-target="2">0</span>+ Years</p>
+                    <p class="text-sm opacity-70 mt-1">Marketing &amp; Digital Transformation · Mahindra UAE</p>
+                </div>
+                <div class="stat-card p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Platforms</p>
+                    <p class="heading-font text-4xl font-extrabold text-gray-900"><span class="counter" data-target="15">0</span>+</p>
+                    <p class="text-xs text-gray-400 mt-1">Tools &amp; Integrations</p>
+                </div>
+                <div class="stat-card p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Experience</p>
+                    <p class="heading-font text-4xl font-extrabold text-gray-900"><span class="counter" data-target="9">0</span>+</p>
+                    <p class="text-xs text-gray-400 mt-1">Years Full-Stack Digital</p>
+                </div>
+                <div class="stat-card col-span-2 p-5 rounded-2xl bg-gray-50 border border-gray-100 flex items-center gap-4">
+                    <div class="flex -space-x-2">
+                        <div class="w-9 h-9 rounded-full border-2 border-white bg-blue-50 flex items-center justify-center text-blue-600 text-xs"><i class="fab fa-google"></i></div>
+                        <div class="w-9 h-9 rounded-full border-2 border-white bg-blue-50 flex items-center justify-center text-blue-700 text-xs"><i class="fab fa-linkedin-in"></i></div>
+                        <div class="w-9 h-9 rounded-full border-2 border-white bg-orange-50 flex items-center justify-center text-orange-500 text-xs"><i class="fab fa-salesforce"></i></div>
+                        <div class="w-9 h-9 rounded-full border-2 border-white bg-blue-50 flex items-center justify-center text-blue-500 text-xs"><i class="fab fa-python"></i></div>
+                        <div class="w-9 h-9 rounded-full border-2 border-white bg-yellow-50 flex items-center justify-center text-yellow-600 text-xs"><i class="fas fa-chart-bar"></i></div>
+                    </div>
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest leading-snug">Full-Stack<br>Core Stack</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARCHITECTURE -->
+    <section id="architecture" class="py-32 bg-gray-50/50 border-y border-gray-100 bg-grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <header class="mb-20 flex flex-col md:flex-row justify-between items-end gap-6 reveal">
+                <div>
+                    <p class="data-font text-xs font-bold text-blue-600 uppercase tracking-[0.2em] mb-3">Core Stack</p>
+                    <h2 class="heading-font text-4xl font-extrabold mb-4 text-gray-900">The Unified Revenue Pipeline</h2>
+                    <p class="text-gray-500 max-w-xl">Every layer is engineered for absolute reliability in high-stakes B2G &amp; Defence markets — from media ingestion to board-level intelligence.</p>
+                </div>
+                <div class="flex items-center gap-3 px-4 py-2 bg-white rounded-2xl border border-blue-100 shadow-sm shrink-0">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+                    </span>
+                    <span class="data-font text-xs font-bold text-blue-600 tracking-widest uppercase">Pipeline Active</span>
+                </div>
+            </header>
+
+            <div class="grid md:grid-cols-4 gap-6 relative mb-16">
+                <div class="premium-card p-8 reveal reveal-delay-1 relative z-10 border-t-2 border-t-blue-600">
+                    <div class="pipeline-connector hidden md:block"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">01 · Growth</span>
+                        <i class="fas fa-chart-line text-2xl text-blue-600/30 system-icon-anim"></i>
+                    </div>
+                    <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">Performance Ingest</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">High-performance search &amp; social strategy (Google / Meta / LinkedIn) focused on ROAS and Quality Score.</p>
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
+                        <span class="text-gray-400">Search Strategy</span>
+                        <span class="text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Core</span>
+                    </div>
+                </div>
+                <div class="premium-card p-8 reveal reveal-delay-2 relative z-10 border-t-2 border-t-blue-600">
+                    <div class="pipeline-connector hidden md:block"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">02 · Logic</span>
+                        <i class="fas fa-microchip text-2xl text-blue-600/30 system-icon-anim"></i>
+                    </div>
+                    <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">Automation Layer</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">Custom Python scripts and REST APIs normalizing campaign data across fragmented global environments.</p>
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
+                        <span class="text-gray-400">Python ETL</span>
+                        <span class="text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Core</span>
+                    </div>
+                </div>
+                <div class="premium-card p-8 reveal reveal-delay-3 relative z-10 border-t-2 border-t-blue-600">
+                    <div class="pipeline-connector hidden md:block"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">03 · System</span>
+                        <i class="fas fa-shield-halved text-2xl text-blue-600/30 system-icon-anim"></i>
+                    </div>
+                    <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">CRM Governance</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">Salesforce &amp; Zoho architecture as the System of Record for multi-market B2G lead management.</p>
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
+                        <span class="text-gray-400">Data Integrity</span>
+                        <span class="text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Core</span>
+                    </div>
+                </div>
+                <div class="premium-card p-8 reveal reveal-delay-4 relative z-10 border-t-2 border-t-blue-600">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-widest">04 · Visual</span>
+                        <i class="fas fa-chart-pie text-2xl text-blue-600/30 system-icon-anim"></i>
+                    </div>
+                    <h3 class="heading-font text-lg font-bold text-gray-900 mb-2">BI Dashboards</h3>
+                    <p class="text-xs text-gray-500 mb-6 h-12 leading-relaxed">Actionable intelligence via Power BI &amp; GA4, translating technical data into revenue-driven board insights.</p>
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
+                        <span class="text-gray-400">Revenue BI</span>
+                        <span class="text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Core</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal mt-20 p-10 bg-white border border-blue-50 rounded-[32px] shadow-sm">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-10 h-px bg-blue-100"></div>
+                    <h3 class="data-font text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Unified Core Toolchain</h3>
+                    <div class="flex-1 h-px bg-blue-100"></div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-10">
+                    <div>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Media Performance</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tool-badge"><i class="fab fa-google text-blue-500"></i> Google Ads</div>
+                            <div class="tool-badge"><i class="fab fa-linkedin text-blue-700"></i> LinkedIn</div>
+                            <div class="tool-badge"><i class="fab fa-facebook text-blue-600"></i> Meta Ads</div>
+                            <div class="tool-badge"><i class="fas fa-bullseye text-red-500"></i> CM360</div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">MarTech &amp; Ops</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tool-badge"><i class="fab fa-salesforce text-blue-400"></i> Salesforce</div>
+                            <div class="tool-badge"><i class="fas fa-cloud text-orange-400"></i> Zoho CRM</div>
+                            <div class="tool-badge"><i class="fas fa-envelope text-yellow-600"></i> Mailchimp</div>
+                            <div class="tool-badge"><i class="fab fa-hubspot text-orange-500"></i> HubSpot</div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Intelligence &amp; SEO</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tool-badge"><i class="fas fa-chart-bar text-yellow-500"></i> Power BI</div>
+                            <div class="tool-badge"><i class="fab fa-google text-green-500"></i> GA4 / GSC</div>
+                            <div class="tool-badge"><i class="fas fa-search text-purple-500"></i> Ahrefs</div>
+                            <div class="tool-badge"><i class="fas fa-fire text-red-400"></i> Hotjar</div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Creative &amp; Systems</p>
+                        <div class="flex flex-wrap gap-2">
+                            <div class="tool-badge"><i class="fab fa-python text-blue-500"></i> Python / API</div>
+                            <div class="tool-badge"><i class="fab fa-adobe text-red-600"></i> Adobe Suite</div>
+                            <div class="tool-badge"><i class="fab fa-figma text-purple-500"></i> Figma / UI</div>
+                            <div class="tool-badge"><i class="fab fa-github text-gray-900"></i> GitHub</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEY WINS -->
+    <section id="wins" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <header class="mb-16 reveal">
+                <p class="data-font text-xs font-bold text-blue-600 uppercase tracking-[0.2em] mb-3">Proven Impact</p>
+                <h2 class="heading-font text-4xl font-extrabold text-gray-900 mb-4">Key Wins</h2>
+                <p class="text-gray-500 max-w-lg">Measurable outcomes from systems built to perform under pressure.</p>
+            </header>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="win-card p-8 reveal reveal-delay-1">
+                    <div class="win-card-accent" style="background:linear-gradient(90deg,#0f62fe,#6366f1);"></div>
+                    <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6 mt-2"><i class="fas fa-rocket text-xl"></i></div>
+                    <p class="data-font text-4xl font-bold text-gray-900 mb-2">3× <span class="text-blue-600">ROAS</span></p>
+                    <h3 class="heading-font text-lg font-bold text-gray-800 mb-3">Performance Uplift</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Scaled Google &amp; LinkedIn paid campaigns with restructured bidding strategy, tripling return on ad spend across B2G segments.</p>
+                </div>
+                <div class="win-card p-8 reveal reveal-delay-2">
+                    <div class="win-card-accent" style="background:linear-gradient(90deg,#6366f1,#8b5cf6);"></div>
+                    <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-6 mt-2"><i class="fas fa-cogs text-xl"></i></div>
+                    <p class="data-font text-4xl font-bold text-gray-900 mb-2">60% <span class="text-indigo-500">Saved</span></p>
+                    <h3 class="heading-font text-lg font-bold text-gray-800 mb-3">Ops Automation</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Custom Python ETL pipeline eliminated manual reporting, reclaiming 60% of ops bandwidth and reducing data latency to near-zero.</p>
+                </div>
+                <div class="win-card p-8 reveal reveal-delay-3">
+                    <div class="win-card-accent" style="background:linear-gradient(90deg,#0ea5e9,#22d3ee);"></div>
+                    <div class="w-12 h-12 bg-sky-50 rounded-2xl flex items-center justify-center text-sky-600 mb-6 mt-2"><i class="fas fa-database text-xl"></i></div>
+                    <p class="data-font text-4xl font-bold text-gray-900 mb-2">1 <span class="text-sky-500">Source</span></p>
+                    <h3 class="heading-font text-lg font-bold text-gray-800 mb-3">CRM as System of Record</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Architected a unified CRM layer across Salesforce &amp; Zoho, consolidating 5+ data silos into one governed revenue pipeline.</p>
+                </div>
+                <div class="win-card p-8 reveal reveal-delay-1">
+                    <div class="win-card-accent" style="background:linear-gradient(90deg,#f59e0b,#f97316);"></div>
+                    <div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6 mt-2"><i class="fas fa-globe text-xl"></i></div>
+                    <p class="data-font text-4xl font-bold text-gray-900 mb-2">4 <span class="text-amber-500">Markets</span></p>
+                    <h3 class="heading-font text-lg font-bold text-gray-800 mb-3">Global Expansion</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Drove digital GTM across UAE, EU, SEA, and South Asia — tailored paid media and compliance frameworks for each jurisdiction.</p>
+                </div>
+                <div class="win-card p-8 reveal reveal-delay-2">
+                    <div class="win-card-accent" style="background:linear-gradient(90deg,#10b981,#34d399);"></div>
+                    <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6 mt-2"><i class="fas fa-eye text-xl"></i></div>
+                    <p class="data-font text-4xl font-bold text-gray-900 mb-2">Real-time <span class="text-emerald-500">BI</span></p>
+                    <h3 class="heading-font text-lg font-bold text-gray-800 mb-3">Board-Level Dashboards</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Delivered live Power BI dashboards with GA4 integration, enabling C-suite decisions backed by revenue-attributed data.</p>
+                </div>
+                <div class="win-card p-8 reveal reveal-delay-3">
+                    <div class="win-card-accent" style="background:linear-gradient(90deg,#ec4899,#f43f5e);"></div>
+                    <div class="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-pink-600 mb-6 mt-2"><i class="fas fa-shield-halved text-xl"></i></div>
+                    <p class="data-font text-4xl font-bold text-gray-900 mb-2">Zero <span class="text-pink-500">Gaps</span></p>
+                    <h3 class="heading-font text-lg font-bold text-gray-800 mb-3">Defence Compliance</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Maintained 100% compliance across B2G defence marketing — all digital assets and campaigns aligned to sector-specific regulations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline" class="py-32 bg-gray-50/50 border-t border-gray-100">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <p class="data-font text-xs font-bold text-blue-600 uppercase tracking-[0.2em] mb-3">Career Arc</p>
+                <h2 class="heading-font text-4xl font-extrabold text-gray-900">Leadership Trajectory</h2>
+            </div>
+            <div class="relative border-l-2 border-gray-100 ml-6 pl-12 space-y-24">
+                <div class="relative reveal">
+                    <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-blue-600 shadow-md dot-pulse"></div>
+                    <span class="data-font text-sm font-bold text-blue-600 mb-2 block tracking-widest">2023 — PRESENT</span>
+                    <h3 class="heading-font text-3xl font-extrabold mb-1">Marketing &amp; Digital Transformation Manager</h3>
+                    <p class="text-lg font-medium text-gray-400 mb-6">Mahindra Emirates Vehicle Armouring · UAE</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6 max-w-2xl">Architecting the digital roadmap for global expansion. Virtual Product Owner for a custom-built CRM, bridging B2G defence sales pipelines with API-led automation and performance-first media.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] font-bold uppercase tracking-widest bg-blue-50 text-blue-600 px-3 py-1 rounded-full">B2G Defence</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest bg-blue-50 text-blue-600 px-3 py-1 rounded-full">CRM Architecture</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest bg-blue-50 text-blue-600 px-3 py-1 rounded-full">Global GTM</span>
+                    </div>
+                </div>
+                <div class="relative reveal">
+                    <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-gray-300 shadow-sm"></div>
+                    <span class="data-font text-sm font-bold text-gray-400 mb-2 block tracking-widest">2022 — 2023</span>
+                    <h3 class="heading-font text-2xl font-bold mb-1">Global Digital Consultant</h3>
+                    <p class="text-gray-400 mb-4 font-medium">Coach2Reach Inc. · USA / India (Remote)</p>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-4 max-w-2xl">Designed end-to-end Google Ads strategies globally. Focused on performance optimization, scaling budgets, and attribution modeling to improve Quality Scores and ROAS.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Google Ads</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Attribution</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-gray-500 px-3 py-1 rounded-full">ROAS Optimization</span>
+                    </div>
+                </div>
+                <div class="relative reveal">
+                    <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-gray-200 shadow-sm"></div>
+                    <span class="data-font text-sm font-bold text-gray-400 mb-2 block tracking-widest">2020 — 2021</span>
+                    <h3 class="heading-font text-2xl font-bold mb-1">Social Media Specialist</h3>
+                    <p class="text-gray-400 mb-4 font-medium">ChalksnSlate Media · India</p>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-2xl">Engineered cross-platform social strategies for B2B startups, focusing on ROI and creative direction to align with lead generation goals.</p>
+                </div>
+                <div class="relative reveal">
+                    <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-gray-200 shadow-sm"></div>
+                    <span class="data-font text-sm font-bold text-gray-400 mb-2 block tracking-widest">2016 — 2020</span>
+                    <h3 class="heading-font text-2xl font-bold mb-1">Sr. Digital Marketing Associate</h3>
+                    <p class="text-gray-400 mb-4 font-medium">Markon Strategy Consulting · India</p>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-2xl">Foundation in UI/UX development and marketing automation. Built conversion-driven landing pages and automated lead-to-conversion funnels for B2B clientele.</p>
+                </div>
+                <div class="relative reveal">
+                    <div class="absolute -left-[61px] top-0 w-6 h-6 rounded-full border-4 border-white bg-gray-900 shadow-md"></div>
+                    <span class="data-font text-sm font-bold text-gray-900 mb-2 block tracking-widest">TECHNICAL FOUNDATION</span>
+                    <h3 class="heading-font text-2xl font-bold mb-1">B.Tech — Computer Science Engineering</h3>
+                    <p class="text-gray-400 font-medium">Mar Athanasius College of Engineering</p>
+                    <p class="text-xs text-gray-400 mt-2 font-bold uppercase tracking-widest">Systems Engineering · Logic Design · Software Architecture</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-16 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-[#0f62fe] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-200">N</div>
+                    <div>
+                        <p class="heading-font font-extrabold text-gray-900 tracking-tight">Nikhil Raj PK</p>
+                        <p class="text-xs text-gray-400 font-medium">Systems-Led Digital Strategy</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="mailto:nrajpk@outlook.com" onclick="copyEmail(event,'nrajpk@outlook.com')"
+                       class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-all" title="Copy Email">
+                        <i class="fas fa-envelope text-sm"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/nrajpk" target="_blank"
+                       class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-all">
+                        <i class="fab fa-linkedin-in text-sm"></i>
+                    </a>
+                    <a href="Download/nikhilraj_resume.pdf" download
+                       class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-900 text-white text-sm font-bold hover:bg-gray-700 transition-all">
+                        <i class="fas fa-file-download text-xs"></i> Resume
+                    </a>
+                </div>
+            </div>
+            <div class="mt-10 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs font-bold text-gray-300 uppercase tracking-widest">Engineering Revenue &amp; Growth</p>
+                <p class="text-xs text-gray-400">&copy; 2025 Nikhil Raj PK &bull; All Systems Operational</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CONTACT MODAL -->
+    <div id="contact-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-6">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-md" onclick="toggleModal()"></div>
+        <div class="modal-inner relative bg-white w-full max-w-lg rounded-[32px] overflow-hidden shadow-2xl">
+            <div class="p-12 text-center">
+                <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-8">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <h2 class="heading-font text-3xl font-bold mb-3">Engineer Your Growth.</h2>
+                <p class="text-gray-500 mb-10">Open for strategic leadership roles bridging Systems Engineering &amp; Performance Marketing.</p>
+                <div class="space-y-4 text-left">
+                    <a href="mailto:nrajpk@outlook.com" class="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 hover:border-blue-600 transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <p class="font-bold text-gray-900">nrajpk@outlook.com</p>
+                            <p class="text-xs text-gray-400">Drop me a line</p>
+                        </div>
+                    </a>
+                    <a href="https://linkedin.com/in/nrajpk" target="_blank" class="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 hover:border-blue-600 transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors"><i class="fab fa-linkedin-in"></i></div>
+                        <div>
+                            <p class="font-bold text-gray-900">/in/nrajpk</p>
+                            <p class="text-xs text-gray-400">Connect on LinkedIn</p>
+                        </div>
+                    </a>
+                </div>
+                <button onclick="toggleModal()" class="mt-8 text-xs text-gray-400 hover:text-gray-600 transition-colors font-semibold tracking-wide">Close &times;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE NAV -->
+    <nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] bg-white border border-gray-200 rounded-full h-16 flex items-center justify-around px-6 shadow-xl z-50">
+        <button onclick="scrollToSection('vision')" class="flex flex-col items-center gap-0.5 text-blue-600">
+            <i class="fas fa-compass text-lg"></i><span class="text-[9px] font-bold uppercase">Vision</span>
+        </button>
+        <button onclick="scrollToSection('architecture')" class="flex flex-col items-center gap-0.5 text-gray-400">
+            <i class="fas fa-layer-group text-lg"></i><span class="text-[9px] font-bold uppercase">Stack</span>
+        </button>
+        <button onclick="scrollToSection('wins')" class="flex flex-col items-center gap-0.5 text-gray-400">
+            <i class="fas fa-trophy text-lg"></i><span class="text-[9px] font-bold uppercase">Impact</span>
+        </button>
+        <button onclick="scrollToSection('timeline')" class="flex flex-col items-center gap-0.5 text-gray-400">
+            <i class="fas fa-history text-lg"></i><span class="text-[9px] font-bold uppercase">Journey</span>
+        </button>
+    </nav>
+
+    <div id="copy-toast" class="copy-feedback"><i class="fas fa-check mr-2"></i> Email copied!</div>
+
+    <script>
+        /* Reveal */
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        /* Scroll */
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 100, behavior: 'smooth' });
+        }
+
+        /* Modal */
+        function toggleModal() {
+            const m = document.getElementById('contact-modal');
+            m.classList.toggle('open');
+            document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { const m = document.getElementById('contact-modal'); if (m.classList.contains('open')) toggleModal(); } });
+
+        /* Header shrink + active nav */
+        const sections = ['vision','architecture','wins','timeline'];
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('py-2', window.scrollY > 50);
+            let current = '';
+            sections.forEach(id => { const el = document.getElementById(id); if (el && window.scrollY >= el.offsetTop - 160) current = id; });
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active-nav', btn.dataset.section === current));
+        });
+
+        /* Counters */
+        let animated = false;
+        const heroCards = document.querySelector('#vision .lg\\:col-span-5');
+        if (heroCards) new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && !animated) {
+                animated = true;
+                document.querySelectorAll('.counter').forEach(c => {
+                    const t = parseInt(c.dataset.target, 10); let cur = 0;
+                    const step = Math.ceil(t / 30);
+                    const timer = setInterval(() => { cur = Math.min(cur + step, t); c.textContent = cur; if (cur >= t) clearInterval(timer); }, 40);
+                });
+            }
+        }, { threshold: 0.3 }).observe(heroCards);
+
+        /* Copy email */
+        function copyEmail(e, email) {
+            e.preventDefault();
+            navigator.clipboard.writeText(email).catch(() => {});
+            const toast = document.getElementById('copy-toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        /* Particles */
+        (function() {
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            let W, H, particles;
+            function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+            function Particle() {
+        ​​​​​​​                    this.reset = function() {
+                    this.x  = Math.random() * W;
+                    this.y  = Math.random() * H;
+                    this.r  = Math.random() * 1.5 + 0.5;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.vy = (Math.random() - 0.5) * 0.3;
+                    this.a  = Math.random() * 0.35 + 0.08;
+                };
+                this.reset();
+            }
+            function init() { resize(); particles = Array.from({ length: 60 }, () => new Particle()); }
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(15,98,254,${p.a})`;
+                    ctx.fill();
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0 || p.x > W || p.y < 0 || p.y > H) p.reset();
+                });
+                requestAnimationFrame(draw);
+            }
+            window.addEventListener('resize', resize);
+            init();
+            draw();
+        })();
+    </script>
+</body>
+</html>
+
