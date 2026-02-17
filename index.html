@@ -130,6 +130,31 @@
             border-radius: 2px;
         }
 
+         /* Tool Slider Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+        .tool-icon {
+            font-size: 1.75rem;
+            margin: 0 3rem;
+            color: var(--text-secondary);
+            opacity: 0.4;
+            transition: all 0.3s ease;
+            filter: grayscale(1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .tool-icon:hover { opacity: 1; filter: grayscale(0); color: var(--zapier-orange); }
+        .tool-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+
+
         /* Narrative Beats */
         .narrative-beat {
             opacity: 0.2; transform: translateY(20px); filter: blur(4px);
@@ -443,6 +468,42 @@
         </div>
     </section>
 
+
+
+<div class="py-12 border-b border-stone-100 bg-white overflow-hidden">
+            <div class="marquee-track">
+                <!-- Set 1 -->
+                <div class="tool-icon"><i class="fa-brands fa-linkedin"></i> <span class="tool-label">LinkedIn</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-google"></i> <span class="tool-label">Google Ads</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-meta"></i> <span class="tool-label">Meta</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-salesforce"></i> <span class="tool-label">Salesforce</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-mailchimp"></i> <span class="tool-label">Mailchimp</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-python"></i> <span class="tool-label">Python</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-figma"></i> <span class="tool-label">Figma</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-adobe"></i> <span class="tool-label">Adobe Suite</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-github"></i> <span class="tool-label">GitHub</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-jira"></i> <span class="tool-label">Jira</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-html5"></i> <span class="tool-label">HTML5</span></div>
+                <!-- Set 2 (for seamless loop) -->
+                <div class="tool-icon"><i class="fa-brands fa-linkedin"></i> <span class="tool-label">LinkedIn</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-google"></i> <span class="tool-label">Google Ads</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-meta"></i> <span class="tool-label">Meta</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-salesforce"></i> <span class="tool-label">Salesforce</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-mailchimp"></i> <span class="tool-label">Mailchimp</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-python"></i> <span class="tool-label">Python</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-figma"></i> <span class="tool-label">Figma</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-adobe"></i> <span class="tool-label">Adobe Suite</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-github"></i> <span class="tool-label">GitHub</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-jira"></i> <span class="tool-label">Jira</span></div>
+                <div class="tool-icon"><i class="fa-brands fa-html5"></i> <span class="tool-label">HTML5</span></div>
+            </div>
+        </div>
+
+
+
+
+
+    
     <!-- SECTION 5: PHILOSOPHY -->
     <section id="philosophy" class="py-32 px-6 bg-[#F3F2EE] border-y border-stone-200">
         <div class="max-w-6xl mx-auto">
