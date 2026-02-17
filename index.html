@@ -10,17 +10,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Palette */
             --bg-paper: #F9F8F6;
+            --bg-surface: #FFFFFF;
             --zapier-orange: #FF4F00;
-            --claude-text: #1d1d19;
-            --claude-secondary: #6B6B66;
+            --text-primary: #1d1d19;
+            --text-secondary: #5E5E5A;
             --border-soft: #E5E4E0;
-            --card-white: #FFFFFF;
+            
+            /* Shadows & Radius (Airbnb Style) */
+            --shadow-card: 0 6px 16px rgba(0,0,0,0.04);
+            --shadow-hover: 0 16px 32px rgba(0,0,0,0.08);
+            --radius-lg: 24px;
+            --radius-xl: 32px;
         }
 
         body {
             font-family: 'Instrument Sans', sans-serif;
-            color: var(--claude-text);
+            color: var(--text-primary);
             background-color: var(--bg-paper);
             -webkit-font-smoothing: antialiased;
         }
@@ -28,56 +35,64 @@
         .serif { font-family: 'Instrument Serif', serif; }
         .mono { font-family: 'JetBrains Mono', monospace; }
 
+        /* Technical Texture */
         .dot-grid {
             background-image: radial-gradient(#d1d0cb 0.8px, transparent 0.8px);
             background-size: 24px 24px;
         }
 
+        /* Navigation Pills (Airbnb/Claude Hybrid) */
         .tab-trigger {
-            padding: 0.6rem 1.25rem;
+            padding: 0.75rem 1.5rem;
             font-weight: 600;
-            font-size: 0.875rem;
-            color: var(--claude-secondary);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 99px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border-radius: 100px;
             white-space: nowrap;
+            border: 1px solid transparent;
         }
         .tab-trigger:hover {
-            color: var(--claude-text);
-            background: rgba(0, 0, 0, 0.04);
+            color: var(--text-primary);
+            background: rgba(0, 0, 0, 0.03);
         }
         .tab-trigger.active {
-            color: var(--zapier-orange);
+            color: var(--text-primary);
             background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-color: var(--border-soft);
         }
 
+        /* Pane Animation */
         .case-pane { display: none; }
-        .case-pane.active { display: block; animation: fadeIn 0.5s ease-out; }
+        .case-pane.active { display: block; animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.98) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
+        /* Card System (Artifact Style) */
         .artifact-card {
-            background: var(--card-white);
+            background: var(--bg-surface);
             border: 1px solid var(--border-soft);
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            border-radius: var(--radius-lg);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .artifact-card:hover {
-            border-color: #C5C4C0;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            border-color: #D4D4D0;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
         }
 
+        /* Accordion */
         .role-item {
             border-bottom: 1px solid var(--border-soft);
             transition: all 0.3s ease;
         }
         .accordion-content {
             max-height: 0; overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
         }
         .role-item.active .accordion-content {
@@ -85,110 +100,106 @@
         }
         .role-item.active .chevron { transform: rotate(180deg); color: var(--zapier-orange); }
 
-        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.7s ease-out; }
+        /* Reveal Logic */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Expandable Reality Section */
+        /* Expandable Section */
         #reality-expanded {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
             opacity: 0;
         }
-        #reality-expanded.open {
-            max-height: 2000px; /* Large enough to fit content */
-            opacity: 1;
-        }
-        .expand-btn i { transition: transform 0.3s ease; }
+        #reality-expanded.open { max-height: 2500px; opacity: 1; }
+        .expand-btn i { transition: transform 0.4s ease; }
         .expand-btn.open i { transform: rotate(180deg); }
 
+        /* Header Glass */
         .nav-blur {
-            background: rgba(249, 248, 246, 0.8);
-            backdrop-filter: blur(12px);
+            background: rgba(249, 248, 246, 0.9);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-soft);
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
         .accent-bar {
-            width: 40px; height: 3px;
+            width: 48px; height: 4px;
             background: var(--zapier-orange);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 2px;
         }
 
         /* Narrative Beats */
         .narrative-beat {
-            opacity: 0.3;
-            transform: translateY(20px);
-            transition: all 0.8s ease-out;
-            filter: blur(2px);
+            opacity: 0.2; transform: translateY(20px); filter: blur(4px);
+            transition: all 1s ease-out;
         }
-        .narrative-beat.active {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-        }
+        .narrative-beat.active { opacity: 1; transform: translateY(0); filter: blur(0); }
     </style>
 </head>
 <body class="selection:bg-orange-100 selection:text-orange-900 dot-grid">
 
     <!-- NAVIGATION -->
     <header class="fixed top-0 w-full z-50 nav-blur">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-10">
-                <a href="#" class="font-bold text-lg tracking-tight">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-12">
+                <!-- Logo Locked -->
+                <a href="#" class="font-bold text-xl tracking-tight text-stone-900">
                     nrajpk<span class="text-[var(--zapier-orange)]">_</span>
                 </a>
+                
                 <nav class="hidden md:flex gap-8">
-                    <a href="#expertise" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-stone-900 transition-colors">Expertise</a>
-                    <a href="#reality" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-stone-900 transition-colors">Proof</a>
-                    <a href="#philosophy" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-stone-900 transition-colors">Philosophy</a>
-                    <a href="#who" class="text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-stone-900 transition-colors">Fit</a>
+                    <a href="#expertise" class="text-sm font-semibold text-stone-500 hover:text-stone-900 transition-colors">Expertise</a>
+                    <a href="#reality" class="text-sm font-semibold text-stone-500 hover:text-stone-900 transition-colors">Proof</a>
+                    <a href="#philosophy" class="text-sm font-semibold text-stone-500 hover:text-stone-900 transition-colors">Philosophy</a>
+                    <a href="#who" class="text-sm font-semibold text-stone-500 hover:text-stone-900 transition-colors">Fit</a>
                 </nav>
             </div>
-            <a href="mailto:nrajpk@outlook.com" class="text-xs font-bold uppercase tracking-widest text-white bg-[var(--zapier-orange)] px-6 py-2.5 rounded-full hover:bg-black transition-all shadow-lg shadow-orange-500/20 active:scale-95">
+            <a href="mailto:nrajpk@outlook.com" class="text-xs font-bold uppercase tracking-widest text-white bg-[var(--zapier-orange)] px-6 py-3 rounded-full hover:bg-black transition-all shadow-lg shadow-orange-500/20 active:scale-95">
                 Contact
             </a>
         </div>
     </header>
 
     <!-- NARRATIVE HERO -->
-    <section class="pt-32 pb-32 px-6 flex flex-col items-center">
+    <section class="pt-40 pb-32 px-6 flex flex-col items-center">
         <div class="max-w-4xl w-full">
             
             <!-- BEAT 1: THE TENSION -->
-            <div class="narrative-beat active mb-48 md:mb-64 text-center md:text-left">
-                <h1 class="text-5xl md:text-8xl font-bold text-stone-900 mb-8 leading-[1.05] tracking-tight">
+            <div class="narrative-beat active mb-56 md:mb-72 text-center md:text-left">
+                <h1 class="text-6xl md:text-9xl font-bold text-stone-900 mb-10 leading-[0.95] tracking-tight">
                     Growth usually <br>fails <span class="serif italic font-normal text-stone-400">quietly</span>.
                 </h1>
-                <p class="text-xl md:text-2xl text-stone-500 font-medium leading-relaxed max-w-2xl">
+                <p class="text-2xl text-stone-500 font-medium leading-relaxed max-w-2xl">
                     When numbers stop lining up, sales stops trusting leads, and every report turns into a debate.
                 </p>
             </div>
 
             <!-- BEAT 2: THE REALIZATION -->
-            <div class="narrative-beat mb-48 md:mb-64 pl-0 md:pl-20 border-l-4 border-l-stone-200">
-                <h2 class="text-3xl md:text-5xl font-bold text-stone-900 mb-6 leading-tight">
+            <div class="narrative-beat mb-56 md:mb-72 pl-0 md:pl-20 border-l-4 border-stone-200">
+                <h2 class="text-4xl md:text-6xl font-bold text-stone-900 mb-8 leading-tight">
                     That’s not a marketing problem. <br>
                     It’s a <span class="text-[var(--zapier-orange)]">systems problem</span>.
                 </h2>
-                <p class="text-lg md:text-xl text-stone-600 font-medium leading-relaxed max-w-xl">
-                    Scale breaks infrastructure before it breaks revenue. Tracking decays, logic drifts, and automation creates errors instead of solving them.
-                </p>
+                <div class="space-y-6 text-xl text-stone-600 font-medium leading-relaxed max-w-xl">
+                    <p>Scale breaks infrastructure before it breaks revenue.</p>
+                    <p>Tracking decays, logic drifts, and automation creates errors instead of solving them.</p>
+                </div>
             </div>
 
             <!-- BEAT 3: THE IDENTITY -->
             <div class="narrative-beat text-center">
-                <div class="mb-8 flex justify-center">
-                    <div class="flex items-center gap-2 px-4 py-1.5 bg-white border border-stone-200 rounded-full shadow-sm">
-                        <div class="h-1.5 w-1.5 rounded-full bg-[var(--zapier-orange)] animate-pulse"></div>
-                        <span class="mono text-[10px] font-bold text-stone-500 uppercase tracking-widest">Growth Architect</span>
+                <div class="mb-10 flex justify-center">
+                    <div class="flex items-center gap-3 px-5 py-2 bg-white border border-stone-200 rounded-full shadow-sm">
+                        <div class="h-2 w-2 rounded-full bg-[var(--zapier-orange)] animate-pulse"></div>
+                        <span class="mono text-xs font-bold text-stone-500 uppercase tracking-widest">Growth Architect</span>
                     </div>
                 </div>
-                <h3 class="text-4xl md:text-6xl font-bold text-stone-900 mb-8 leading-tight">
+                <h3 class="text-5xl md:text-7xl font-bold text-stone-900 mb-10 leading-tight">
                     I start with systems, <br>then build demand on top.
                 </h3>
-                <p class="text-lg md:text-xl text-stone-500 font-medium leading-relaxed mb-12 max-w-2xl mx-auto">
+                <p class="text-xl md:text-2xl text-stone-500 font-medium leading-relaxed mb-12 max-w-3xl mx-auto">
                     So growth becomes measurable, predictable, and explainable.
                 </p>
             </div>
@@ -196,96 +207,118 @@
         </div>
     </section>
 
-    <!-- SECTION 1 & 2: WHY SYSTEMS & BREAKDOWN -->
-    <section id="systems" class="py-28 px-6 bg-white border-y border-stone-200">
-        <div class="max-w-5xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+    <!-- SECTION 1: SYSTEMS (Why & Breakdown) -->
+    <section id="systems" class="py-32 px-6 bg-white border-y border-stone-200">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-start">
                 <div class="lg:col-span-7 reveal">
                     <div class="accent-bar"></div>
-                    <h2 class="text-4xl font-bold tracking-tight text-stone-900 mb-8">Why I start with systems</h2>
-                    <div class="space-y-6 text-lg text-stone-600 font-medium leading-relaxed">
-                        <p>With a background in Computer Science, I learned early that scale doesn’t fail because of ambition—it fails because the underlying system can’t handle load. Data breaks, logic drifts, and decisions slow long before revenue does.</p>
-                        <p>When I entered digital marketing, I immediately saw the same pattern. Campaigns scaled faster than the systems supporting them. Tracking decayed quietly. CRM logic drifted. Reports existed — but none of them were credible enough to drive decisions.</p>
-                        <div class="p-6 bg-[#F9F8F6] border-l-4 border-[var(--zapier-orange)] mt-8">
-                            <p class="text-stone-900 font-bold italic serif text-xl">"If the system can’t be trusted, scaling demand only amplifies noise."</p>
+                    <h2 class="text-5xl font-bold tracking-tight text-stone-900 mb-10">Why I start with systems</h2>
+                    <div class="space-y-8 text-xl text-stone-600 font-medium leading-relaxed">
+                        <p>With a background in Computer Science, I learned early that scale doesn’t fail because of ambition.</p>
+                        <p>It fails because the underlying system can’t handle load.</p>
+                        <p>Data breaks, logic drifts, and decisions slow long before revenue does.</p>
+                        
+                        <div class="h-px bg-stone-100 w-full my-4"></div>
+
+                        <p>When I entered digital marketing, I immediately saw the same pattern.</p>
+                        <p>Campaigns scaled faster than the systems supporting them. Tracking decayed quietly. CRM logic drifted.</p>
+                        <p>Reports existed — but none of them were credible enough to drive decisions.</p>
+                        
+                        <div class="p-8 bg-[#F9F8F6] border-l-4 border-[var(--zapier-orange)] rounded-r-2xl mt-8">
+                            <p class="text-stone-900 font-bold italic serif text-2xl mb-4">"If the system can’t be trusted, scaling demand only amplifies noise."</p>
+                            <p class="text-sm font-bold text-stone-500 uppercase tracking-widest">A Core Philosophy</p>
                         </div>
                     </div>
                 </div>
                 <div class="lg:col-span-5 reveal sticky top-32">
-                    <div class="artifact-card p-10 bg-[#F3F2EE] border-stone-200">
+                    <div class="artifact-card p-10 bg-[#F9F8F6] border-stone-200 shadow-sm">
                         <h4 class="font-black text-xs uppercase tracking-widest text-stone-400 mb-8 pb-4 border-b border-stone-300">How Growth Breaks at Scale</h4>
-                        <ul class="space-y-5">
-                            <li class="flex gap-4">
-                                <i class="fa-solid fa-triangle-exclamation text-[var(--zapier-orange)] mt-1"></i>
+                        <ul class="space-y-8">
+                            <li class="flex gap-5">
+                                <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center shrink-0 text-[var(--zapier-orange)]">
+                                    <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+                                </div>
                                 <div>
-                                    <p class="text-sm font-bold text-stone-900">Attribution Drifts</p>
-                                    <p class="text-xs text-stone-500">Silently losing signal clarity.</p>
+                                    <p class="text-lg font-bold text-stone-900 mb-1">Attribution Drifts</p>
+                                    <p class="text-sm text-stone-500 font-medium">Silently losing signal clarity.</p>
                                 </div>
                             </li>
-                            <li class="flex gap-4">
-                                <i class="fa-solid fa-triangle-exclamation text-[var(--zapier-orange)] mt-1"></i>
+                            <li class="flex gap-5">
+                                <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center shrink-0 text-[var(--zapier-orange)]">
+                                    <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+                                </div>
                                 <div>
-                                    <p class="text-sm font-bold text-stone-900">Lead Quality Decays</p>
-                                    <p class="text-xs text-stone-500">Before sales ever touches it.</p>
+                                    <p class="text-lg font-bold text-stone-900 mb-1">Lead Quality Decays</p>
+                                    <p class="text-sm text-stone-500 font-medium">Before sales ever touches it.</p>
                                 </div>
                             </li>
-                            <li class="flex gap-4">
-                                <i class="fa-solid fa-triangle-exclamation text-[var(--zapier-orange)] mt-1"></i>
+                            <li class="flex gap-5">
+                                <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center shrink-0 text-[var(--zapier-orange)]">
+                                    <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+                                </div>
                                 <div>
-                                    <p class="text-sm font-bold text-stone-900">CRM Logic Fragments</p>
-                                    <p class="text-xs text-stone-500">Inconsistent across teams/regions.</p>
+                                    <p class="text-lg font-bold text-stone-900 mb-1">CRM Logic Fragments</p>
+                                    <p class="text-sm text-stone-500 font-medium">Inconsistent across teams/regions.</p>
                                 </div>
                             </li>
                         </ul>
-                        <p class="mt-10 text-[10px] mono text-stone-400 font-bold uppercase tracking-widest leading-relaxed">My role is to fix these failure points before performance collapses.</p>
+                        <p class="mt-12 text-[10px] mono text-stone-400 font-bold uppercase tracking-widest leading-relaxed text-center bg-white py-3 rounded-lg border border-stone-200">
+                            My role is to fix these failure points.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3 & 4: EXPERTISE (DEMAND & MERGE) -->
-    <section id="expertise" class="py-28 px-6 bg-[#F3F2EE] border-y border-stone-200">
+    <!-- SECTION 3: EXPERTISE (Tabs) -->
+    <section id="expertise" class="py-32 px-6 bg-[#F3F2EE] border-b border-stone-200">
         <div class="max-w-6xl mx-auto">
             <div class="max-w-2xl mb-16 reveal">
-                <h2 class="text-4xl font-bold mb-4 tracking-tight">Demand on top of Systems</h2>
-                <p class="text-stone-500 font-medium text-lg leading-relaxed">Once the foundation is clean, demand signals become visible early. Budgets scale based on signal, not assumption.</p>
+                <span class="mono text-[10px] font-bold text-stone-400 uppercase tracking-[0.3em] mb-4 block">The Stack</span>
+                <h2 class="text-5xl font-bold mb-6 tracking-tight text-stone-900">Demand on top of Systems</h2>
+                <div class="space-y-4 text-stone-500 font-medium text-xl leading-relaxed">
+                    <p>Once the foundation is clean, demand signals become visible early.</p>
+                    <p>Budgets scale based on signal, not assumption.</p>
+                </div>
             </div>
 
             <!-- Dashboard Tabs -->
-            <div class="flex justify-start border-b border-stone-200 mb-12 overflow-x-auto no-scrollbar gap-2 pb-2">
+            <div class="flex justify-start border-b border-stone-200 mb-16 overflow-x-auto no-scrollbar gap-3 pb-2">
                 <button class="tab-trigger active" onclick="switchDomain(event, 'demand')">Building Demand</button>
                 <button class="tab-trigger" onclick="switchDomain(event, 'merge')">The Merge Point</button>
                 <button class="tab-trigger" onclick="switchDomain(event, 'results')">What Changes</button>
             </div>
 
-            <div class="min-h-[400px]">
+            <div class="min-h-[500px]">
                 <!-- Demand Pane -->
                 <div id="demand" class="case-pane active reveal">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
                         <div class="lg:col-span-6">
-                            <h3 class="serif text-4xl mb-6 italic text-stone-700">Intent Engineering</h3>
-                            <p class="text-lg text-stone-500 font-medium leading-relaxed mb-8">
-                                I build demand intentionally. This isn't just traffic generation; it's high-precision acquisition targeting.
-                            </p>
+                            <h3 class="serif text-4xl mb-8 italic text-stone-700">Intent Engineering</h3>
+                            <div class="space-y-6 text-xl text-stone-600 font-medium leading-relaxed mb-10">
+                                <p>I build demand intentionally.</p>
+                                <p>This isn't just traffic generation; it's high-precision acquisition targeting.</p>
+                            </div>
                             <ul class="space-y-4">
-                                <li class="p-5 artifact-card flex justify-between items-center bg-white">
-                                    <span class="text-sm font-bold text-stone-800">Paid Acquisition (LinkedIn/Google/Meta)</span>
-                                    <i class="fa-solid fa-crosshairs text-[var(--zapier-orange)]"></i>
+                                <li class="p-6 artifact-card flex justify-between items-center bg-white group cursor-default">
+                                    <span class="text-base font-bold text-stone-800">Paid Acquisition (LinkedIn/Google/Meta)</span>
+                                    <i class="fa-solid fa-crosshairs text-stone-300 group-hover:text-[var(--zapier-orange)] transition-colors"></i>
                                 </li>
-                                <li class="p-5 artifact-card flex justify-between items-center bg-white">
-                                    <span class="text-sm font-bold text-stone-800">Audience & Intent Mapping</span>
-                                    <i class="fa-solid fa-map text-[var(--zapier-orange)]"></i>
+                                <li class="p-6 artifact-card flex justify-between items-center bg-white group cursor-default">
+                                    <span class="text-base font-bold text-stone-800">Audience & Intent Mapping</span>
+                                    <i class="fa-solid fa-map text-stone-300 group-hover:text-[var(--zapier-orange)] transition-colors"></i>
                                 </li>
-                                <li class="p-5 artifact-card flex justify-between items-center bg-white">
-                                    <span class="text-sm font-bold text-stone-800">Lead Quality Optimization</span>
-                                    <i class="fa-solid fa-filter text-[var(--zapier-orange)]"></i>
+                                <li class="p-6 artifact-card flex justify-between items-center bg-white group cursor-default">
+                                    <span class="text-base font-bold text-stone-800">Lead Quality Optimization</span>
+                                    <i class="fa-solid fa-filter text-stone-300 group-hover:text-[var(--zapier-orange)] transition-colors"></i>
                                 </li>
                             </ul>
                         </div>
-                        <div class="lg:col-span-6 bg-white artifact-card p-10 flex flex-col justify-center border-stone-200">
-                             <p class="mono text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-6">Outcome</p>
-                             <p class="text-2xl font-bold text-stone-900 leading-tight">
+                        <div class="lg:col-span-6 bg-white artifact-card p-12 flex flex-col justify-center border-stone-200">
+                             <p class="mono text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-8">Outcome</p>
+                             <p class="text-3xl font-bold text-stone-900 leading-tight">
                                 "Because the systems were clean, I could see what most teams can’t: which traffic actually turned into pipeline."
                              </p>
                         </div>
@@ -294,37 +327,40 @@
 
                 <!-- Merge Pane -->
                 <div id="merge" class="case-pane">
-                    <div class="max-w-3xl">
-                        <h3 class="serif text-4xl italic text-stone-700 mb-6">Where Systems & Marketing Merge</h3>
-                        <p class="text-xl text-stone-500 font-medium leading-relaxed mb-10">At scale, marketing and infrastructure stop being separate concerns. Traffic isn't separate from CRM logic. Engagement isn't separate from sales follow-up.</p>
-                        <div class="flex flex-wrap gap-4 items-center mono text-xs font-bold text-stone-900">
-                            <span class="px-6 py-3 border border-stone-200 rounded-lg bg-white">INTENT</span>
-                            <i class="fa-solid fa-arrow-right text-stone-300"></i>
-                            <span class="px-6 py-3 border border-stone-200 rounded-lg bg-white">DATA</span>
-                            <i class="fa-solid fa-arrow-right text-stone-300"></i>
-                            <span class="px-6 py-3 border border-stone-200 rounded-lg bg-white">DECISION</span>
-                            <i class="fa-solid fa-arrow-right text-stone-300"></i>
-                            <span class="px-6 py-3 bg-black text-white rounded-lg">REVENUE</span>
+                    <div class="max-w-4xl">
+                        <h3 class="serif text-4xl italic text-stone-700 mb-8">Where Systems & Marketing Merge</h3>
+                        <div class="space-y-6 text-2xl text-stone-600 font-medium leading-relaxed mb-12">
+                            <p>At scale, marketing and infrastructure stop being separate concerns.</p>
+                            <p>Traffic isn't separate from CRM logic. Engagement isn't separate from sales follow-up.</p>
                         </div>
-                        <p class="mt-8 text-sm text-stone-400 font-bold uppercase tracking-widest">This intersection is where I operate.</p>
+                        <div class="flex flex-wrap gap-4 items-center mono text-sm font-bold text-stone-900">
+                            <span class="px-8 py-4 border border-stone-200 rounded-2xl bg-white shadow-sm">INTENT</span>
+                            <i class="fa-solid fa-arrow-right text-stone-300 text-xl"></i>
+                            <span class="px-8 py-4 border border-stone-200 rounded-2xl bg-white shadow-sm">DATA</span>
+                            <i class="fa-solid fa-arrow-right text-stone-300 text-xl"></i>
+                            <span class="px-8 py-4 border border-stone-200 rounded-2xl bg-white shadow-sm">DECISION</span>
+                            <i class="fa-solid fa-arrow-right text-stone-300 text-xl"></i>
+                            <span class="px-8 py-4 bg-stone-900 text-white rounded-2xl shadow-lg">REVENUE</span>
+                        </div>
+                        <p class="mt-12 text-sm text-stone-400 font-bold uppercase tracking-widest">This intersection is where I operate.</p>
                     </div>
                 </div>
 
                 <!-- Results Pane -->
                 <div id="results" class="case-pane">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                         <div>
-                            <h3 class="serif text-4xl italic text-stone-700 mb-6">What Stability Enables</h3>
-                            <ul class="space-y-4 text-stone-600 font-medium">
-                                <li class="flex gap-3"><i class="fa-solid fa-check text-[var(--zapier-orange)] mt-1"></i> Sales trusted inbound leads and acted faster.</li>
-                                <li class="flex gap-3"><i class="fa-solid fa-check text-[var(--zapier-orange)] mt-1"></i> Pipeline visibility improved across channels.</li>
-                                <li class="flex gap-3"><i class="fa-solid fa-check text-[var(--zapier-orange)] mt-1"></i> Offline and digital efforts aligned.</li>
+                            <h3 class="serif text-4xl italic text-stone-700 mb-8">What Stability Enables</h3>
+                            <ul class="space-y-6 text-stone-600 font-medium text-lg">
+                                <li class="flex gap-4"><i class="fa-solid fa-check text-[var(--zapier-orange)] mt-1.5"></i> Sales trusted inbound leads and acted faster.</li>
+                                <li class="flex gap-4"><i class="fa-solid fa-check text-[var(--zapier-orange)] mt-1.5"></i> Pipeline visibility improved across channels.</li>
+                                <li class="flex gap-4"><i class="fa-solid fa-check text-[var(--zapier-orange)] mt-1.5"></i> Offline and digital efforts aligned.</li>
                             </ul>
                         </div>
-                        <div class="p-8 bg-stone-900 rounded-2xl flex items-center justify-center text-center">
+                        <div class="p-12 bg-stone-900 rounded-3xl flex items-center justify-center text-center shadow-2xl">
                             <div>
-                                <p class="text-stone-400 text-sm font-bold uppercase tracking-widest mb-4">Leadership Shift</p>
-                                <p class="text-white text-xl font-medium italic">"Conversations shifted from 'which number is right?' to 'what should we do next?'"</p>
+                                <p class="text-stone-400 text-sm font-bold uppercase tracking-widest mb-6">Leadership Shift</p>
+                                <p class="text-white text-2xl font-medium italic serif leading-relaxed">"Conversations shifted from 'which number is right?' to 'what should we do next?'"</p>
                             </div>
                         </div>
                     </div>
@@ -333,69 +369,72 @@
         </div>
     </section>
 
-    <!-- SECTION 5: PRESSURE-TESTED REALITY (INDUSTRY ANONYMIZED) -->
-    <section id="reality" class="py-28 px-6 bg-white">
+    <!-- SECTION 4: REALITY (Pressure Tested) -->
+    <section id="reality" class="py-32 px-6 bg-white border-b border-stone-200">
         <div class="max-w-6xl mx-auto">
-            <div class="mb-12 reveal">
+            <div class="mb-16 reveal">
                 <span class="mono text-[10px] font-bold text-[var(--zapier-orange)] uppercase tracking-[0.3em] mb-4 block">Pressure-Tested Reality</span>
-                <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-stone-900 mb-4 leading-tight">High-Ticket Manufacturing · Long-Cycle B2B</h2>
-                <p class="text-sm font-bold text-stone-400 uppercase tracking-widest mb-8">Multi-Source Demand Environment</p>
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tight text-stone-900 mb-6 leading-none">High-Ticket Manufacturing · Long-Cycle B2B</h2>
+                <p class="text-sm font-bold text-stone-400 uppercase tracking-widest mb-10">Multi-Source Demand Environment</p>
                 
                 <div class="max-w-3xl">
-                    <p class="text-xl text-stone-500 font-medium leading-relaxed mb-8">
-                        Growth in these environments isn’t limited by interest — it’s limited by <span class="text-stone-800 underline decoration-[var(--zapier-orange)]">coherence</span>. When demand (digital, direct, events, partners) converges, systems must keep signals consistent from first touch to pipeline. 
-                        <br><br>
-                        <span class="text-stone-900 font-bold">That’s why I start with systems before scaling demand.</span>
-                    </p>
+                    <div class="space-y-8 text-2xl text-stone-500 font-medium leading-relaxed mb-12">
+                        <p>Growth in these environments isn’t limited by interest — it’s limited by <span class="text-stone-800 underline decoration-[var(--zapier-orange)] decoration-2">coherence</span>.</p>
+                        <p>When demand converges, systems must keep signals consistent.</p>
+                        <p class="text-stone-900 font-bold">That’s why I start with systems before scaling demand.</p>
+                    </div>
                     
-                    <button onclick="toggleReality()" class="expand-btn flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[var(--zapier-orange)] hover:text-stone-900 transition-colors">
-                        <span></span>
+                    <button onclick="toggleReality()" class="expand-btn flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-[var(--zapier-orange)] hover:text-stone-900 transition-colors bg-orange-50 px-6 py-3 rounded-full w-fit">
+                        <span>Read Full Case Study</span>
                         <i class="fa-solid fa-chevron-down" id="reality-chevron"></i>
                     </button>
                 </div>
             </div>
 
             <!-- EXPANDABLE CONTENT -->
-            <div id="reality-expanded" class="border-t border-stone-100 mt-12 pt-12">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                    <div class="artifact-card p-10 border-stone-200 bg-[#F9F8F6]">
-                        <h4 class="mono text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-6 pb-2 border-b border-stone-200">The Context</h4>
-                        <p class="text-stone-600 font-medium mb-6 leading-relaxed">
-                            This work was shaped inside a high-ticket manufacturing environment with long sales cycles, multiple stakeholders, and demand coming from both digital and offline channels.
-                        </p>
-                        <p class="text-stone-600 font-medium mb-6 leading-relaxed">
-                            In industries like this, volume is not the bottleneck. <span class="serif italic text-stone-800">Continuity</span> is. As channels and regions expand, precision and governance become essential — not for efficiency, but for trust.
-                        </p>
+            <div id="reality-expanded" class="border-t border-stone-100 mt-16 pt-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                    <div class="artifact-card p-12 border-stone-200 bg-[#F9F8F6]">
+                        <h4 class="mono text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-8 pb-4 border-b border-stone-200">The Context</h4>
+                        <div class="space-y-8 text-stone-600 font-medium text-lg leading-relaxed">
+                            <p>This work was shaped inside a high-ticket manufacturing environment with long sales cycles, multiple stakeholders, and demand coming from both digital and offline channels.</p>
+                            <p>In industries like this, volume is not the bottleneck. <span class="serif italic text-stone-800 font-bold">Continuity</span> is.</p>
+                            <p>As channels and regions expand, precision and governance become essential — not for efficiency, but for trust.</p>
+                            <p>Like most established industries, the operating model had evolved organically.</p>
+                            <p>The work wasn’t replacing it — it was <span class="text-stone-900 font-bold">strengthening it</span> so it could support digital scale.</p>
+                        </div>
                     </div>
                     
-                    <div class="artifact-card p-10 border-stone-200 bg-white">
-                        <h4 class="mono text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-6 pb-2 border-b border-stone-100">The Structural Approach</h4>
-                        <p class="text-stone-600 font-medium mb-6 leading-relaxed">The focus wasn’t “fixing problems.” It was designing an operating model that could hold under complexity.</p>
-                        <ul class="space-y-4">
-                            <li class="flex gap-4 items-start">
-                                <i class="fa-solid fa-crosshairs text-[var(--zapier-orange)] mt-1 text-xs"></i>
-                                <p class="text-sm font-bold text-stone-800 leading-relaxed">Unifying tracking definitions so attribution stayed consistent across sources and regions.</p>
+                    <div class="artifact-card p-12 border-stone-200 bg-white shadow-sm">
+                        <h4 class="mono text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-8 pb-4 border-b border-stone-100">The Structural Approach</h4>
+                        <p class="text-stone-600 font-medium text-lg mb-8 leading-relaxed">The focus wasn’t “fixing problems.” It was designing an operating model that could hold under complexity.</p>
+                        <ul class="space-y-6">
+                            <li class="flex gap-5 items-start">
+                                <div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center shrink-0 text-[var(--zapier-orange)] mt-1">
+                                    <i class="fa-solid fa-crosshairs text-xs"></i>
+                                </div>
+                                <p class="text-base font-bold text-stone-800 leading-relaxed">Unifying tracking definitions so attribution stayed consistent across sources and regions.</p>
                             </li>
-                            <li class="flex gap-4 items-start">
-                                <i class="fa-solid fa-filter text-[var(--zapier-orange)] mt-1 text-xs"></i>
-                                <p class="text-sm font-bold text-stone-800 leading-relaxed">Standardizing lead intake so every record entered the pipeline with clear context and structure.</p>
+                            <li class="flex gap-5 items-start">
+                                <div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center shrink-0 text-[var(--zapier-orange)] mt-1">
+                                    <i class="fa-solid fa-filter text-xs"></i>
+                                </div>
+                                <p class="text-base font-bold text-stone-800 leading-relaxed">Standardizing lead intake so every record entered the pipeline with clear context and structure.</p>
                             </li>
-                            <li class="flex gap-4 items-start">
-                                <i class="fa-solid fa-robot text-[var(--zapier-orange)] mt-1 text-xs"></i>
-                                <p class="text-sm font-bold text-stone-800 leading-relaxed">Designing automation to surface exceptions early, instead of letting edge cases leak downstream.</p>
-                            </li>
-                            <li class="flex gap-4 items-start">
-                                <i class="fa-solid fa-rotate text-[var(--zapier-orange)] mt-1 text-xs"></i>
-                                <p class="text-sm font-bold text-stone-800 leading-relaxed">Aligning lifecycle stages with real sales motion so reporting reflected reality, not platform bias.</p>
+                            <li class="flex gap-5 items-start">
+                                <div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center shrink-0 text-[var(--zapier-orange)] mt-1">
+                                    <i class="fa-solid fa-robot text-xs"></i>
+                                </div>
+                                <p class="text-base font-bold text-stone-800 leading-relaxed">Designing automation to surface exceptions early, instead of letting edge cases leak downstream.</p>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="mt-12 artifact-card p-12 bg-stone-900 text-stone-300">
-                    <span class="mono text-[10px] font-bold text-[var(--zapier-orange)] uppercase tracking-[0.3em] mb-4 block">Defining Insight</span>
-                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-6 serif italic leading-tight">“In high-stakes, long-cycle environments, clarity isn’t a nice-to-have — it’s the foundation growth depends on.”</h3>
-                    <div class="max-w-3xl space-y-4 text-stone-400 font-medium text-lg leading-relaxed">
+                <div class="mt-16 artifact-card p-16 bg-stone-900 text-stone-300">
+                    <span class="mono text-[10px] font-bold text-[var(--zapier-orange)] uppercase tracking-[0.3em] mb-6 block">Defining Insight</span>
+                    <h3 class="text-3xl md:text-5xl font-bold text-white mb-8 serif italic leading-tight">“In high-stakes, long-cycle environments, clarity isn’t a nice-to-have — it’s the foundation growth depends on.”</h3>
+                    <div class="max-w-4xl space-y-6 text-stone-400 font-medium text-xl leading-relaxed">
                         <p>In these industries, small inconsistencies compound quietly over months. There’s no room for “we’ll reconcile it later.”</p>
                         <p class="text-white">The work is to build systems that stay understandable and trustworthy as channels, markets, and volume increase. That’s why I start with systems before I scale demand — every time.</p>
                     </div>
@@ -404,38 +443,39 @@
         </div>
     </section>
 
-    <!-- SECTION 6 & 8: PHILOSOPHY -->
-    <section id="philosophy" class="py-28 px-6 bg-[#F3F2EE] border-y border-stone-200">
+    <!-- SECTION 5: PHILOSOPHY -->
+    <section id="philosophy" class="py-32 px-6 bg-[#F3F2EE] border-y border-stone-200">
         <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
                 <div class="reveal">
                     <span class="mono text-[10px] font-bold text-stone-400 uppercase tracking-[0.3em] mb-4 block">Philosophy</span>
-                    <h2 class="text-4xl font-bold tracking-tight text-stone-900 mb-8">Understanding <br><span class="serif italic font-normal text-stone-400">over Cost</span></h2>
-                    <p class="text-lg text-stone-600 font-medium leading-relaxed mb-8">
-                        Strong systems are not built by spending more. They’re built by understanding how data and intent flow. Most complexity comes from unclear logic layered on top of tools.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="p-4 border border-stone-200 rounded-lg bg-white">
-                            <p class="text-sm font-bold text-stone-800">Simple tracking > Bloated tracking</p>
+                    <h2 class="text-5xl font-bold tracking-tight text-stone-900 mb-10">Understanding <br><span class="serif italic font-normal text-stone-400">over Cost</span></h2>
+                    <div class="space-y-6 text-xl text-stone-600 font-medium leading-relaxed mb-10">
+                        <p>Strong systems are not built by spending more.</p>
+                        <p>They’re built by understanding how data and intent flow. Most complexity comes from unclear logic layered on top of tools.</p>
+                    </div>
+                    <div class="space-y-5">
+                        <div class="p-6 bg-white border border-stone-200 rounded-2xl shadow-sm">
+                            <p class="text-base font-bold text-stone-800">Simple tracking > Bloated tracking</p>
                         </div>
-                        <div class="p-4 border border-stone-200 rounded-lg bg-white">
-                            <p class="text-sm font-bold text-stone-800">Clean CRM logic > Advanced features</p>
+                        <div class="p-6 bg-white border border-stone-200 rounded-2xl shadow-sm">
+                            <p class="text-base font-bold text-stone-800">Clean CRM logic > Advanced features</p>
                         </div>
-                        <div class="p-4 border border-stone-200 rounded-lg bg-white">
-                            <p class="text-sm font-bold text-stone-800">Resilient automation > Fragile workflows</p>
+                        <div class="p-6 bg-white border border-stone-200 rounded-2xl shadow-sm">
+                            <p class="text-base font-bold text-stone-800">Resilient automation > Fragile workflows</p>
                         </div>
                     </div>
                 </div>
-                <div class="reveal">
-                    <div class="artifact-card p-10 bg-white h-full flex flex-col justify-center">
-                        <h4 class="font-bold text-xl text-stone-900 mb-6">How I define growth marketing</h4>
-                        <p class="text-stone-600 font-medium leading-relaxed mb-6">
-                            Growth marketing isn’t about channels, hacks, or tools. It’s about <span class="text-stone-900 underline decoration-[var(--zapier-orange)]">making demand repeatable</span>.
+                <div class="reveal h-full">
+                    <div class="artifact-card p-12 bg-white h-full flex flex-col justify-center border-stone-200 shadow-sm">
+                        <h4 class="font-bold text-2xl text-stone-900 mb-8">How I define growth marketing</h4>
+                        <p class="text-stone-500 font-medium leading-relaxed text-lg mb-8">
+                            Growth marketing isn’t about channels, hacks, or tools. It’s about <span class="text-stone-900 font-bold underline decoration-[var(--zapier-orange)] decoration-2">making demand repeatable</span>.
                         </p>
-                        <p class="text-stone-600 font-medium leading-relaxed">
+                        <p class="text-stone-500 font-medium leading-relaxed text-lg">
                             That only happens when:
                         </p>
-                        <ul class="list-disc pl-5 space-y-2 mt-4 text-stone-600 font-medium">
+                        <ul class="list-disc pl-6 space-y-4 mt-6 text-stone-800 font-bold text-lg">
                             <li>Systems can be trusted</li>
                             <li>Demand signals are clear</li>
                             <li>Infrastructure and execution reinforce each other</li>
@@ -446,79 +486,83 @@
         </div>
     </section>
 
-    <!-- SECTION 9: WHO THIS IS FOR -->
-    <section id="who" class="py-28 px-6 bg-white border-t border-stone-200">
+    <!-- SECTION 6: FIT -->
+    <section id="who" class="py-32 px-6 bg-white border-t border-stone-200">
         <div class="max-w-4xl mx-auto text-center reveal">
-            <h2 class="text-4xl font-bold mb-10 tracking-tight">Who I work best with</h2>
-            <p class="text-lg text-stone-500 font-medium leading-relaxed mb-12 max-w-2xl mx-auto">
+            <h2 class="text-5xl font-bold mb-12 tracking-tight">Who I work best with</h2>
+            <p class="text-2xl text-stone-500 font-medium leading-relaxed mb-16 max-w-3xl mx-auto">
                 Teams that already have traction, but feel friction. When growth is happening, but confidence is disappearing.
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <div class="px-6 py-4 border border-stone-200 bg-[#F9F8F6] rounded-xl text-sm font-bold text-stone-800">Multi-Market Operations</div>
-                <div class="px-6 py-4 border border-stone-200 bg-[#F9F8F6] rounded-xl text-sm font-bold text-stone-800">High-Ticket / Long Sales Cycles</div>
-                <div class="px-6 py-4 border border-stone-200 bg-[#F9F8F6] rounded-xl text-sm font-bold text-stone-800">Sales/Marketing Misalignment</div>
+            <div class="flex flex-wrap justify-center gap-6">
+                <div class="px-8 py-5 border border-stone-200 bg-[#F9F8F6] rounded-2xl text-base font-bold text-stone-800 shadow-sm">Multi-Market Operations</div>
+                <div class="px-8 py-5 border border-stone-200 bg-[#F9F8F6] rounded-2xl text-base font-bold text-stone-800 shadow-sm">High-Ticket / Long Sales Cycles</div>
+                <div class="px-8 py-5 border border-stone-200 bg-[#F9F8F6] rounded-2xl text-base font-bold text-stone-800 shadow-sm">Sales/Marketing Misalignment</div>
             </div>
-            <p class="mt-12 text-sm text-stone-400 font-bold uppercase tracking-widest">If you’re looking for tactics alone, I’m not the right fit.</p>
+            <p class="mt-16 text-sm text-stone-400 font-bold uppercase tracking-widest">If you’re looking for tactics alone, I’m not the right fit.</p>
         </div>
     </section>
 
-    <!-- TENURE & EXPERIENCE (Accordions) -->
-    <section id="journey" class="py-24 px-6 bg-[#F3F2EE] border-t border-stone-200">
+    <!-- TENURE -->
+    <section id="journey" class="py-32 px-6 bg-[#F3F2EE] border-t border-stone-200">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold mb-12 tracking-tight text-center text-stone-400 uppercase tracking-[0.2em]">Experience</h2>
-            <div class="reveal">
-                <div class="role-item active" onclick="toggleAccordion(this)">
-                    <div class="flex justify-between items-center py-6 cursor-pointer group">
-                        <div class="flex gap-6 items-baseline">
-                            <span class="mono text-xs font-bold text-[var(--zapier-orange)]">2023 - NOW</span>
-                            <h3 class="text-lg font-bold text-stone-900">Mahindra Emirates Vehicle Armouring</h3>
+            <h2 class="text-xl font-bold mb-16 tracking-widest text-center text-stone-400 uppercase tracking-[0.2em]">Experience</h2>
+            <div class="reveal space-y-4">
+                <div class="role-item active bg-white rounded-3xl border border-stone-200 px-8" onclick="toggleAccordion(this)">
+                    <div class="flex justify-between items-center py-8 cursor-pointer group">
+                        <div class="flex flex-col md:flex-row md:gap-10 md:items-baseline">
+                            <span class="mono text-xs font-bold text-[var(--zapier-orange)] mb-2 md:mb-0">2023 - NOW</span>
+                            <h3 class="text-xl font-bold text-stone-900">Mahindra Emirates Vehicle Armouring</h3>
                         </div>
-                        <i class="fa-solid fa-chevron-down text-stone-300 chevron text-sm"></i>
+                        <div class="w-10 h-10 rounded-full bg-stone-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors">
+                            <i class="fa-solid fa-chevron-down text-stone-400 chevron text-sm"></i>
+                        </div>
                     </div>
                     <div class="accordion-content">
-                        <p class="text-sm text-stone-600 font-medium pl-20 mb-4">Marketing & Digital Transformation Manager</p>
+                        <p class="text-base text-stone-600 font-medium md:pl-28 mb-8">Marketing & Digital Transformation Manager</p>
                     </div>
                 </div>
-                <div class="role-item" onclick="toggleAccordion(this)">
-                    <div class="flex justify-between items-center py-6 cursor-pointer group">
-                        <div class="flex gap-6 items-baseline">
-                            <span class="mono text-xs font-bold text-stone-400">2016 - 2023</span>
-                            <h3 class="text-lg font-bold text-stone-900">Consultancy & Specialist Roles</h3>
+                <div class="role-item bg-white rounded-3xl border border-stone-200 px-8" onclick="toggleAccordion(this)">
+                    <div class="flex justify-between items-center py-8 cursor-pointer group">
+                        <div class="flex flex-col md:flex-row md:gap-10 md:items-baseline">
+                            <span class="mono text-xs font-bold text-stone-400 mb-2 md:mb-0">2016 - 2023</span>
+                            <h3 class="text-xl font-bold text-stone-900">Consultancy & Specialist Roles</h3>
                         </div>
-                        <i class="fa-solid fa-chevron-down text-stone-300 chevron text-sm"></i>
+                        <div class="w-10 h-10 rounded-full bg-stone-50 flex items-center justify-center group-hover:bg-orange-50 transition-colors">
+                            <i class="fa-solid fa-chevron-down text-stone-400 chevron text-sm"></i>
+                        </div>
                     </div>
                     <div class="accordion-content">
-                        <p class="text-sm text-stone-600 font-medium pl-20 mb-4">Coach2Reach · ChalksnSlate · Markon Consulting</p>
+                        <p class="text-base text-stone-600 font-medium md:pl-28 mb-8">Coach2Reach · ChalksnSlate · Markon Consulting</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER / CLOSING -->
-    <footer class="py-32 px-6 bg-stone-900 text-stone-400 border-t border-stone-800">
+    <!-- FOOTER -->
+    <footer class="py-40 px-6 bg-stone-900 text-stone-400 border-t border-stone-800">
         <div class="max-w-4xl mx-auto text-center">
-            <div class="mb-16 reveal">
-                <h2 class="text-5xl font-bold tracking-tight mb-8 text-white">Growth isn't mysterious.</h2>
-                <p class="text-xl font-medium leading-relaxed max-w-xl mx-auto mb-10">It’s just a system under load — fed by demand, shaped by behavior, and sustained by structure. My job is to make that system hold.</p>
-                <div class="h-px w-20 bg-stone-700 mx-auto mb-10"></div>
-                <p class="mono text-[11px] font-bold text-stone-500 uppercase tracking-[0.2em] leading-relaxed max-w-lg mx-auto">
+            <div class="mb-20 reveal">
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tight mb-10 text-white">Growth isn't mysterious.</h2>
+                <p class="text-2xl font-medium leading-relaxed max-w-2xl mx-auto mb-16 text-stone-300">It’s just a system under load — fed by demand, shaped by behavior, and sustained by structure. My job is to make that system hold.</p>
+                <div class="h-px w-24 bg-stone-700 mx-auto mb-16"></div>
+                <p class="mono text-xs font-bold text-stone-500 uppercase tracking-[0.2em] leading-relaxed max-w-lg mx-auto">
                     I started with systems, learned demand generation, and now operate where both combine into scalable growth.
                 </p>
             </div>
             
-            <div class="flex flex-col md:flex-row justify-center gap-6 mb-24 reveal">
-                <a href="mailto:nrajpk@outlook.com" class="text-xs font-bold uppercase tracking-widest text-white bg-[var(--zapier-orange)] px-10 py-4 rounded-full hover:bg-white hover:text-black transition-all shadow-2xl shadow-orange-500/20 active:scale-95">
+            <div class="flex flex-col md:flex-row justify-center gap-8 mb-32 reveal">
+                <a href="mailto:nrajpk@outlook.com" class="text-xs font-bold uppercase tracking-widest text-white bg-[var(--zapier-orange)] px-12 py-5 rounded-full hover:bg-white hover:text-black transition-all shadow-2xl shadow-orange-500/20 active:scale-95">
                     Connect via Email
                 </a>
-                <a href="https://linkedin.com/in/nrajpk" target="_blank" class="text-xs font-bold uppercase tracking-widest text-stone-400 border border-stone-700 px-10 py-4 rounded-full hover:bg-stone-800 transition-all">
+                <a href="https://linkedin.com/in/nrajpk" target="_blank" class="text-xs font-bold uppercase tracking-widest text-stone-400 border border-stone-700 px-12 py-5 rounded-full hover:bg-stone-800 transition-all">
                     LinkedIn profile
                 </a>
             </div>
 
-            <div class="pt-20 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center gap-6 reveal">
-                <span class="mono text-[9px] text-stone-600 font-bold uppercase tracking-widest">© 2025 Nikhil Raj PK · Abu Dhabi, UAE</span>
-                <span class="mono text-[9px] text-stone-600 font-bold uppercase tracking-widest underline decoration-stone-700 underline-offset-4">Systems-Led Architect</span>
+            <div class="pt-24 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center gap-8 reveal">
+                <span class="mono text-[10px] text-stone-600 font-bold uppercase tracking-widest">© 2025 Nikhil Raj PK · Abu Dhabi, UAE</span>
+                <span class="mono text-[10px] text-stone-600 font-bold uppercase tracking-widest underline decoration-stone-700 underline-offset-4">Systems-Led Architect</span>
             </div>
         </div>
     </footer>
@@ -558,7 +602,6 @@
             }
         }
 
-        // Generic reveal observer
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
@@ -569,14 +612,13 @@
         
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Stronger observer for narrative beats (higher threshold)
         const storyObserver = new IntersectionObserver(entries => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     e.target.classList.add('active');
                 }
             });
-        }, { threshold: 0.3 }); // Increased threshold for beats
+        }, { threshold: 0.3 });
 
         document.querySelectorAll('.narrative-beat').forEach(el => storyObserver.observe(el));
     </script>
