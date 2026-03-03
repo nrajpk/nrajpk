@@ -626,15 +626,7 @@ export const defaultHTML = `
                 </table>
             </div>
         </div>
-        ```
-*(Note: I removed the image tags for the QR codes and icons to ensure the PDF/HTML doesn't break if the paths don't resolve, but left the complete data structure intact).*
-
----
-
-### Insertion 2: MEVA APC BR7 Ballistics & Features (Page 4 - Item 1)
-**Where to put this:** On **Page 4** (``), scroll to the end of the long compliance table (right after the `1.2.16.8` row and the closing `</table></div>`). **Insert this block right before the "Item 1 – Formal Certifications Required" sub-heading.**
-
-```html
+        
         <div style="padding: 8px 0px; border-bottom: 4px solid var(--brand-color); margin-top: 25px; margin-bottom: 10px;">
             <div style="font-size: 12px; color: var(--brand-color); text-transform: uppercase; font-weight: 800; margin: 0; padding: 0;">
                 STANDARD BALLISTIC CHART & ARMOR FEATURES (CEN BR 7)
