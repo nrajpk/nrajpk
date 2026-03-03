@@ -50,17 +50,14 @@ export const defaultHTML = `
       <a href="#vol2" class="toc-link">PART II — TAX, SOCIAL & LABOR QUALIFICATION</a><br>
       <a href="#vol3" class="toc-link">PART III — TECHNICAL QUALIFICATION</a><br>
       <a href="#item3-4" class="toc-sublink">↳ ITEM 1 – APC: Technical Compliance Matrix</a><br>
-      <a href="#apc-evidence" class="toc-sublink">↳ ITEM 1 – APC: Supporting Evidence & Images</a><br>
       <a href="#item3-7" class="toc-sublink">↳ ITEM 2 – CAV: Technical Compliance Matrix</a><br>
-      <a href="#cav-evidence" class="toc-sublink">↳ ITEM 2 – CAV: Supporting Evidence & Images</a><br>
+      <a href="#apc-evidence" class="toc-sublink">↳ Visual References & Evidence</a><br>
       <a href="#vol4" class="toc-link">PART IV — ECONOMIC & FINANCIAL QUALIFICATION</a><br>
       <a href="#vol5" class="toc-link">PART V — COMMERCIAL PROPOSAL</a><br>
       <a href="#vol6" class="toc-link">PART VI — SAMPLE & TESTING COMMITMENT</a><br>
-      <a href="#item6-5" class="toc-sublink">↳ Acceptance Test Compliance Statement (APC & CAV)</a><br>
       <a href="#vol7" class="toc-link">PART VII — POST-CONTRACT COMMITMENTS</a><br>
       <div class="toc-divider"></div>
       <a href="#final-declarations" class="toc-link">FINAL DECLARATIONS & SIGNATURES</a><br>
-      <a href="#annex2" class="toc-sublink">↳ Compliance with Annex II (Testing Committee) & Traceability</a><br>
       <div class="toc-divider"></div>
       <a href="#vol8" class="toc-link">PART VIII — ANNEXURES & CERTIFICATES</a>
     </div>
@@ -137,19 +134,23 @@ export const defaultHTML = `
       </thead>
       <tbody>
         <tr><th colspan="5" class="group-header">1. OF THE OBJECT</th></tr>
-        <tr><td>1.1.1</td><td>Acquisition of a light armored operational vehicle for the transport of 10 (ten) operational military personnel (driver; commander + 8).</td><td class="col-exec col-exec-tbd">TBD</td><td>Offered vehicle transports 1+1+8.</td><td>Tech Offer / Drawings</td></tr>
-        <tr><td>1.1.2</td><td>Manufactured in 2024 or later, never used, 0 (zero) kilometer condition, guaranteed by mfg.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm 2024+ and 0 km.</td><td>Mfg Declaration</td></tr>
-        <tr><td>1.1.3</td><td>Adaptations for signaling, comms, and transceivers may be installed in BR at specified location.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirmed installation support.</td><td>Contractual Statement</td></tr>
+        <tr><td>1.1.1</td><td>Acquisition of a light armored operational vehicle for the transport of 10 (ten) operational military personnel (driver; commander + 8).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>1.1.2</td><td>Manufactured in 2024 or later, never used, 0 (zero) kilometer condition, guaranteed by the manufacturer.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>1.1.3</td><td>Adaptations for visual and auditory signaling, communication, and transceivers may be installed in Brazilian territory.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
-        <tr><th colspan="5" class="group-header">2.1 CHASSIS & 2.2 ENGINE</th></tr>
-        <tr><td>2.1.1</td><td>Chassis: Mounted on a commercial chassis and reinforced with capacity to support armored structure.</td><td class="col-exec col-exec-tbd">TBD</td><td>Reinforced commercial chassis used.</td><td>OEM Chassis Specs</td></tr>
-        <tr><td>2.2.1</td><td>Engine type: Internal combustion, turbo diesel, Euro 4 or higher.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm turbo diesel Euro 4+.</td><td>OEM Engine Specs</td></tr>
-        <tr><td>2.2.2</td><td>Power: 300 HP.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm 300 HP.</td><td>OEM Engine Specs</td></tr>
-        <tr><td>2.2.3</td><td>Torque: Minimum torque 1,000 Nm / 1,200 to 2,200 rpm.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm torque meets/exceeds req.</td><td>OEM Torque Curve</td></tr>
-
-        <tr><th colspan="5" class="group-header">2.3 TRANSMISSION, STEERING, BRAKES & SUSPENSION</th></tr>
-        <tr><td>2.3.1</td><td>Gearbox: Auto transmission, min 6 fwd + 1 rev, torque converter, electronic management.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm gearbox spec.</td><td>OEM Transmission Specs</td></tr>
-        <tr><td>2.3.2</td><td>Wheel drive: 4X4 part-time; real-time electronic transfer case; auto/manual freewheel.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm 4x4 drivetrain spec.</td><td>OEM Drivetrain Specs</td></tr>
+        <tr><th colspan="5" class="group-header">2. TECHNICAL SPECIFICATIONS OF THE VEHICLES</th></tr>
+        <tr><td>2.1.1</td><td>Chassis: Mounted on a commercial chassis and reinforced with the capacity to support an armored structure.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.2.1</td><td>Engine type: Internal combustion engine, turbo diesel, Euro 4 or higher.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.2.2</td><td>Power: 300 HP.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.2.3</td><td>Torque: Minimum torque 1,000 Nm / 1,200 to 2,200 rpm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        
+        <tr><th colspan="5" class="group-header">2.3 TRANSMISSION, STEERING, BRAKES and SUSPENSION</th></tr>
+        <tr><td>2.3.1</td><td>Gearbox: Automatic transmission with at least six forward speeds and one reverse speed, torque converter and electronic management.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.2</td><td>Wheel drive: 4X4 part-time; real-time electronic transfer case; automatic/manual freewheel.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.3 (a)</td><td>Brakes: The braking system must have (ABS) on all wheels.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.3 (b)</td><td>Brakes: Electronic brake force distribution (EBD); Ventilated disc brakes on all four wheels.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.3 (c)</td><td>Brakes: The service brake system must keep the vehicle immobilized, even at its total weight, when parked on the asphalt surface up to 60%.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.3 (d)</td><td>Brakes: Electronic stability control (ESP) that can be activated or deactivated inside the cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
     <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
@@ -169,38 +170,147 @@ export const defaultHTML = `
         <tr><th style="width:8%">Ref. No</th><th style="width:36%">Details</th><th style="width:8%">Comply</th><th style="width:24%">MEVA Response</th><th style="width:24%">Supporting Documents</th></tr>
       </thead>
       <tbody>
-        <tr><td>2.3.3</td><td>Brakes: a) ABS on all wheels + EBD; b) Ventilated discs; c) Service brake holds 60% of weight; d) ESP activatable inside cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm brake / ESP specs.</td><td>OEM Brake Specs</td></tr>
-        <tr><td>2.3.4</td><td>Direction: a) Hydr/electric; b) Original factory LHD.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm LHD steering.</td><td>OEM Specs</td></tr>
-        <tr><td>2.3.5</td><td>Suspension: Axles reinforced to meet military requirements.</td><td class="col-exec col-exec-tbd">TBD</td><td>Heavy duty military axles.</td><td>Suspension Upgrade Doc</td></tr>
+        <tr><td>2.3.4 (a)</td><td>Direction: Hydraulic or electrical.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.4 (b)</td><td>Direction: Original factory steering wheel positioned on the left side of the cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.5</td><td>Suspension: The axles must be reinforced to meet military requirements.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
-        <tr><th colspan="5" class="group-header">2.4 ELECTRICAL, LIGHTING & AC</th></tr>
-        <tr><td>2.4.1</td><td>Electrical: a) Compatible capacity; b/c/d) Packaged/insulated wiring, ABNT 5410 compliant; e) 12V; f) At least two 12V batteries.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm wiring and dual 12V setup.</td><td>Electrical Schematic</td></tr>
-        <tr><td>2.4.2</td><td>Lighting: LED headlights and LED interior/exterior lamps.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm full LED spec.</td><td>Lighting Specs</td></tr>
-        <tr><td>2.4.3</td><td>Air Con: a/b) Cools cabin in >50°C environment without affecting engine; c) Hot and cold air.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm heavy duty HVAC.</td><td>HVAC Specs</td></tr>
+        <tr><th colspan="5" class="group-header">2.4 ELECTRICAL SYSTEMS, LIGHTING AND AIR CONDITIONING</th></tr>
+        <tr><td>2.4.1 (a)</td><td>Electrical: Compatible capacity to simultaneously power the vehicle's original consumers, adaptations, and comms equipment.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.1 (b)</td><td>Electrical: Harnesses, frames, and wiring must be packaged and insulated to prevent rust and friction/pinching damage.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.1 (c)</td><td>Electrical: Wiring protected against water, weather, and dirt by a conduit/similar type shield.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.1 (d)</td><td>Electrical: Wiring coding that meets ABNT 5410 or similar; cables not installed in locations subject to cuts/edges.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.1 (e)</td><td>Electrical: System voltage - 12 volts.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.1 (f)</td><td>Electrical: The vehicle must have at least 02 (two) 12-volt batteries.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.2 (a)</td><td>Lighting: LED headlights.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.2 (b)</td><td>Lighting: LED lamps – interior and exterior lighting (except headlights/turn signals).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.3 (a)</td><td>Air Cond: Cooling/ventilation with air outlets directed throughout the cabin (front/rear), without affecting engine performance.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.3 (b)</td><td>Air Cond: Capacity to cool the cabin in an environment where the outside temperature exceeds 50°C.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.3 (c)</td><td>Air Cond: The system must provide both hot and cold air.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
         <tr><th colspan="5" class="group-header">2.5 PERFORMANCE, 2.6 DIMENSIONS & 2.7 WEIGHT</th></tr>
-        <tr><td>2.5.1-3</td><td>Fuel tank 200L (S10 Diesel); Min range 500 km.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm tank and range.</td><td>Spec Sheet</td></tr>
-        <tr><td>2.5.4-5</td><td>Wheels/Tires: 18”+ rim; Run Flat on all tires (incl spare). Performance: Cruise 90 km/h; Max 100 km/h.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm Runflats and speed.</td><td>Runflat Cert / Specs</td></tr>
-        <tr><td>2.6.1-5</td><td>Dim: L ≤7000mm, W ≤3000mm, H ≤3000mm, WB ≤3600mm, Ground Clear ≥250mm.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm dimensions.</td><td>GA Drawing</td></tr>
-        <tr><td>2.7.1-3</td><td>Weight: GVWR ≤12000kg, Curb ≤10000kg, Payload ≥1500kg.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm weights.</td><td>Weight Statement</td></tr>
+        <tr><td>2.5.1</td><td>Minimum fuel tank capacity: 200 liters.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.2</td><td>Fuel: S10 Diesel.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.3</td><td>Minimum range: 500 km on mixed terrain and under normal driving conditions.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.4 (a)</td><td>Wheels and tires: 18” rim and larger.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.4 (b)</td><td>Wheels and tires: System Run Flat on all tires, including the spare tire.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.5 (a)</td><td>Performance: Cruising speed 90 km/h.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.5 (b)</td><td>Performance: Maximum speed 100 km/h.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.1</td><td>Maximum length: 7000 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.2</td><td>Maximum width: 3000 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.3</td><td>Height (VCW): 3000 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.4</td><td>Maximum wheelbase: 3600 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.5</td><td>Minimum distance from the ground (not less than): 250 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.7.1</td><td>Gross Vehicle Weight Rating (GVWR): up to 12000 kg.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.7.2</td><td>Curb weight (CW): up to 10,000 kg.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.7.3</td><td>Minimum payload: 1500 kg.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
-        <tr><th colspan="5" class="group-header">2.8 DRIVING CHAR. & 2.9 CONFIGURATION</th></tr>
-        <tr><td>2.8.1</td><td>Ascent 50%; tilt 30º; approach 30º; departure 30º.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm angles & grades.</td><td>Mobility Specs</td></tr>
-        <tr><td>2.9.1-2</td><td>Seats for 10 (1+1+8) with belts. 4 side doors, 1 rear door (outward), 1 roof hatch, exterior running boards.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm 10 seats & access.</td><td>Layout Drawing</td></tr>
-        <tr><td>2.9.3-5</td><td>11 windows (split windshield, side doors, rear) w/ blinds. 11 firing ports. Manual key locks.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm windows & ports.</td><td>Armoring Specs</td></tr>
+        <tr><th colspan="5" class="group-header">2.8 MINIMUM DRIVING CHARACTERISTICS</th></tr>
+        <tr><td>2.8.1 (a)</td><td>Gradual ascent/descent capacity: 50%.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.8.1 (b)</td><td>Static lateral tilt: 30º.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.8.1 (c)</td><td>Minimum approach/entry angle: 30º.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.8.1 (d)</td><td>Minimum start/departure angle: 30º.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+  </div>
+  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
+</div>
 
-        <tr><th colspan="5" class="group-header">2.10 BALLISTICS & 2.11 GRAPHICS</th></tr>
-        <tr><td>2.10</td><td>Police protection cell CEN BR 7 (Opaque/Transparent/Loopholes). Floor blast (DM51x2, HG85, DM31). Engine/radiator protection 7.62 NATO 60°N.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm CEN BR 7 & Blast protection.</td><td>Ballistic/Blast Certs</td></tr>
-        <tr><td>2.11</td><td>Graphics: CIELAB Standard Color Space compliant. PMES stickers applied.</td><td class="col-exec col-exec-tbd">TBD</td><td>Acknowledge PMES livery standard.</td><td>Paint Spec</td></tr>
+<div class="page">
+  <div class="header">
+    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
+  </div>
+  <div class="page-content">
+    <div class="main-heading" style="font-size: 13px;">3.4 Technical Compliance Report – Annex IB (Cont.)</div>
 
-        <tr><th colspan="5" class="group-header">2.12 MANUALS, ACCESSORIES & 2.13 ACOUSTICS</th></tr>
-        <tr><td>2.12</td><td>Accessories: 4 ext cameras, AM/FM radio, lifting tools, 4000kg front winch, electric mirrors. Manuals in PT. Training: 20 hrs locally.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm acc. & training delivery.</td><td>Equipment List</td></tr>
-        <tr><td>2.13</td><td>Siren: min 100W, 110 dB @ 1m, 3 tones, hidden installation, sealed driver, no RF interference.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm siren spec.</td><td>Siren Spec / Report</td></tr>
+    <table>
+      <thead>
+        <tr><th style="width:8%">Ref. No</th><th style="width:36%">Details</th><th style="width:8%">Comply</th><th style="width:24%">MEVA Response</th><th style="width:24%">Supporting Documents</th></tr>
+      </thead>
+      <tbody>
+        <tr><th colspan="5" class="group-header">2.9 CONFIGURATION</th></tr>
+        <tr><td>2.9.1 (a)</td><td>Seats for 10 (ten) police officers. Configuration 1+1+8 = 10.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.1 (b)</td><td>Driver and passenger seats in cloth, mounted on the floor and manually adjustable.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.1 (c)</td><td>All seats have seat belts.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.2 (a)</td><td>Vehicle configuration: 4 (four) side doors.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.2 (b)</td><td>1 (door) rear door hinged outwards from the vehicle.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.2 (c)</td><td>1 (one) escape hatch in the roof.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.2 (d)</td><td>Exterior running boards around all side doors and the rear door.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.3 (a)</td><td>Configuration of 11 (eleven) replaceable windows: Split windshield.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.3 (b)</td><td>Side doors with a single window in each door.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.3 (c)</td><td>Single window in the rear door.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.3 (d)</td><td>All windows must be covered with factory-installed blinds.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.4 (a)</td><td>Configuration of 11 (eleven) firing ports: side door below all windows.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.4 (b)</td><td>Firing ports: on the rear door below the window.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.4 (c)</td><td>Firing ports: on the side wall below the lower windows.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.4 (d)</td><td>Firing ports: at the top of the door below the window.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.5</td><td>Locks: Standard with manual key.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
-        <tr><th colspan="5" class="group-header">2.14 VISUAL SIGNALING & 2.15/2.16 COMMS</th></tr>
-        <tr><td>2.14</td><td>Visual: Weather resistant, PWM load management. Colors per SAE J595. Roof Lightbar (>90% width) with specific animations (ROUND, QTI, STOP, EMERGENCY). Secondary Grille/Rear modules. Traffic Advisor. 1-DIN Control Panel.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm lighting and panel functions.</td><td>Lighting Spec / Certs</td></tr>
-        <tr><td>2.15</td><td>TETRA Prep: 5A fused cable, Multifunction roof antenna (GPS/GSM/3G/WLAN/TETRA), IP66, 380-400 MHz (TETRA).</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm TETRA prep & specs.</td><td>Antenna Datasheet</td></tr>
-        <tr><td>2.16</td><td>Analog Prep (PRO5100): Remote mount kit prep. VHF Antenna (46-49 MHz, 50 Ohms, SWR ≤ 1.5:1). Cable RG58C. Impedance/SWR report required.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm Analog prep & SWR limits.</td><td>Antenna Report</td></tr>
+        <tr><th colspan="5" class="group-header">2.10 BALLISTIC PROTECTION</th></tr>
+        <tr><td>2.10 (a)</td><td>Police protection cell: CEN BR 7 (glazed areas and opaque).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.10 (b)</td><td>Arrow slits: Have the same ballistic protection as the police cell.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.10 (c)</td><td>Floor: Protection against simultaneous explosions of two DM51 grenades, one HG85, and one DM31 mine (certified by independent labs).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.10 (d)</td><td>Engine / Front mudguards: Critical components (batteries, ECU, ABS).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.10 (e)</td><td>Front radiator guard for 7.62 x 51mm ball NATO 60°N.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+
+        <tr><th colspan="5" class="group-header">2.11 GRAPHIC DESIGN</th></tr>
+        <tr><td>2.11 (I)</td><td>CIELAB Standard Color Space (D65/10º, A/10º, T84/10º compliant).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.11 (II)</td><td>Special paint identification stickers according to PMES standards.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+
+        <tr><th colspan="5" class="group-header">2.12 MANUALS & ACCESSORIES</th></tr>
+        <tr><td>2.12.1 (a)</td><td>At least 04 (four) external cameras for peripheral viewing of the car.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.1 (b)</td><td>AM/FM Stereo radio with digital clock and 2 speakers. Prepared for antenna.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.1 (c)</td><td>Sufficient lifting tools for changing the wheel.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.1 (d)</td><td>Electromechanical winch mounted on the front bumper with a capacity of 4,000 kg.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.1 (e)</td><td>The exterior rearview mirrors must have electric controls.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.2</td><td>Operating manual for driver and preventive maintenance manual in Portuguese.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.3</td><td>Training must be taught in Portuguese and conducted within the state of Espírito Santo.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+  </div>
+  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
+</div>
+
+<div class="page">
+  <div class="header">
+    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
+  </div>
+  <div class="page-content">
+    <div class="main-heading" style="font-size: 13px;">3.4 Technical Compliance Report – Annex IB (Cont.)</div>
+
+    <table>
+      <thead>
+        <tr><th style="width:8%">Ref. No</th><th style="width:36%">Details</th><th style="width:8%">Comply</th><th style="width:24%">MEVA Response</th><th style="width:24%">Supporting Documents</th></tr>
+      </thead>
+      <tbody>
+        <tr><th colspan="5" class="group-header">2.13 ACOUSTIC SIGNALING</th></tr>
+        <tr><td>2.13.1 (a)</td><td>Electronic siren: amplifier min 100W @ 11 Ohms. Single sound-emitting unit. At least 3 tones (Wail, Yelp, Horn). Sound pressure min 110 dB at 1 meter.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (b)</td><td>Siren installation must prioritize discretion, not visible through front grille. Lowest possible noise in driver's cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (c)</td><td>Installation of low-frequency siren permitted, provided it is in addition to main siren.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (d)</td><td>Driver must be sealed and specifically designed for police use (not musical).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (e)</td><td>Specific points on the body for attaching the horn (main audio output thread not permitted).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (f)</td><td>Must not generate electromagnetic noise interfering with transceivers/original audio.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (g)</td><td>Must follow ANATEL regulations.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+
+        <tr><th colspan="5" class="group-header">2.14 VISUAL SIGNALING</th></tr>
+        <tr><td>2.14.1 (I)</td><td>Withstand Brazilian weather: Rain, temps -10ºC to 45ºC, humidity 15% to 95%.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (II)</td><td>Withstand corrosive, abrasive (sand, dust) and similar elements.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (III)</td><td>Automatic load management (shuts down before voltage drops too low to start vehicle).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (IV)</td><td>Electronic circuit must manage current via PWM (Pulse Width Modulator). Protective metal casing.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (V)</td><td>COLORS: Red LED (610-660nm, 80 ANSI lumens peak); Blue LED (450-490nm, 60 ANSI lumens peak); Amber LED (585-595nm, 70 ANSI lumens peak); White LED (4500-6500K, 120 ANSI lumens peak).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (VI)</td><td>SECONDARY LIGHTING: Front (4x 3W LED modules, 6 alternating Red/Blue LEDs). Rear (4x 3W LED modules, 6 alternating Red/Blue LEDs). Distributed uniformly.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (VIII)</td><td>WHITE LIGHTS WITH STROBOSCOPIC EFFECTS: High-intensity white lights installed inside headlights/taillights, synchronized face-to-face (min 350 ANSI lumens). Or equivalent strobe lights nearby.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+
+        <tr><th colspan="5" class="group-header">2.15 COMMUNICATION EQUIPMENT (TETRA)</th></tr>
+        <tr><td>2.15 (a-c)</td><td>Power: 5A fused cable to battery. Routed to dashboard/trunk. Operates without ignition key.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.15 (d)</td><td>Radiating System: Roof antenna, multifunctional (GPS, GSM, 3G, WLAN, TETRA) in single unit. IP66. 12x12 cm plastic cover under ceiling lining.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.15 (e)</td><td>Frequencies/Impedance: 50 ohms. TETRA 380-400 MHz (VSWR ≤ 1.5). Independent cables with proper terminals (SMA, FME).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+
+        <tr><th colspan="5" class="group-header">2.16 ANALOG TRANSCEIVER</th></tr>
+        <tr><td>2.16</td><td>Adapt location for Motorola PRO5100. Remote mounting kit provided by contractor. Radio freq 42-50 MHz, 60W.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.16</td><td>External VHF antenna: Monopole, min gain 0 dB, impedance 50 Ohms, VSWR max 1.5:1, freq 46-49 MHz. Steel reinforcing plate under roof.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.16</td><td>RG58C/RGC58 coaxial cable. Report required measuring impedance and SWR at 46 and 49 MHz. Signed by installer.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
     <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
@@ -218,58 +328,6 @@ export const defaultHTML = `
   <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
 </div>
 
-<div class="page" id="apc-evidence">
-  <div class="header">
-    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
-  </div>
-  <div class="page-content">
-    <div class="main-heading">Visual References & Equipment Configuration (APC)</div>
-    <p class="para">The following technical diagrams and visual evidence corroborate the specifications detailed in Annex IB.</p>
-
-    <div class="img-grid">
-      <div class="img-box">
-        <div class="img-title">2.9.1 & 2.9.2 — Seating Layout & Access</div>
-        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating 10 seats (1+1+8), 4 side doors, rear outward door, and roof escape hatch.</p>
-        <div class="img-placeholder" onclick="promptImage(this)">
-          <span>Click to insert/replace image<br/>(e.g., General Arrangement drawing)</span>
-          <img src="" alt="" onerror="this.style.display='none'">
-        </div>
-      </div>
-      <div class="img-box">
-        <div class="img-title">2.9.4 — Firing Ports (Loopholes)</div>
-        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating configuration of 11 operational firing ports integrated into the armoring.</p>
-        <div class="img-placeholder" onclick="promptImage(this)">
-          <span>Click to insert/replace image<br/>(e.g., Side armor profile / Ports diagram)</span>
-          <img src="" alt="" onerror="this.style.display='none'">
-        </div>
-      </div>
-    </div>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addImageBox(this)">+ Add Image Box</button></div>
-
-    <div class="img-grid">
-      <div class="img-box">
-        <div class="img-title">2.10 — Ballistic & Blast Protection Base</div>
-        <p class="para" style="font-size:10px; margin-bottom:6px;">Reference for Police protection cell (CEN BR 7) and certified underbody blast integration.</p>
-        <div class="img-placeholder" onclick="promptImage(this)">
-          <span>Click to insert/replace image<br/>(e.g., Ballistic Cell / Chassis reinforcement)</span>
-          <img src="" alt="" onerror="this.style.display='none'">
-        </div>
-      </div>
-      <div class="img-box">
-        <div class="img-title">2.14 — Visual Signaling (Lightbar System)</div>
-        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating LED lightbar, grille modules, and strobe placement per PMES standard.</p>
-        <div class="img-placeholder" onclick="promptImage(this)">
-          <span>Click to insert/replace image<br/>(e.g., Lighting & Siren configuration)</span>
-          <img src="" alt="" onerror="this.style.display='none'">
-        </div>
-      </div>
-    </div>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addImageBox(this)">+ Add Image Box</button></div>
-
-  </div>
-  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
-</div>
-
 <div class="page">
   <div class="header">
     <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
@@ -283,35 +341,38 @@ export const defaultHTML = `
     
     <table>
       <thead>
-        <tr>
-          <th style="width:8%">Ref. No</th>
-          <th style="width:36%">Details</th>
-          <th style="width:8%">Comply</th>
-          <th style="width:24%">MEVA Response</th>
-          <th style="width:24%">Supporting Documents</th>
-        </tr>
+        <tr><th style="width:8%">Ref. No</th><th style="width:36%">Details</th><th style="width:8%">Comply</th><th style="width:24%">MEVA Response</th><th style="width:24%">Supporting Documents</th></tr>
       </thead>
       <tbody>
         <tr><th colspan="5" class="group-header">1. OBJECT</th></tr>
-        <tr><td>1.1.1</td><td>Acquisition of armored tactical SUV for transport of 05 military personnel (1 driver + 1 cmdr + 3).</td><td class="col-exec col-exec-tbd">TBD</td><td>Offer SUV for 5 personnel.</td><td>Tech Offer Cover</td></tr>
-        <tr><td>1.1.2</td><td>Manufactured 2024+; never used; 0 km condition; mfg guarantee.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm 2024+ and 0 km.</td><td>Mfg Declaration</td></tr>
+        <tr><td>1.1.1</td><td>Acquisition of armored tactical SUV for transport of 05 military personnel (1 driver + 1 cmdr + 3).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>1.1.2</td><td>Manufactured in 2024 or later, never used, 0 (zero) kilometer condition, guaranteed by manufacturer.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
-        <tr><th colspan="5" class="group-header">2.1 CHASSIS & 2.2 ENGINE</th></tr>
-        <tr><td>2.1.1</td><td>Chassis: Mounted on a commercial chassis and reinforced to support armored structure.</td><td class="col-exec col-exec-tbd">TBD</td><td>Reinforced commercial SUV chassis.</td><td>OEM Chassis Specs</td></tr>
-        <tr><td>2.2.1-2</td><td>Engine type: Turbo diesel, Euro 4+, Power 300 HP.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm Euro 4+ & 300 HP.</td><td>OEM Engine Specs</td></tr>
-        <tr><td>2.2.3</td><td>Torque: Minimum 700 Nm / 1,500 to 2,700 rpm.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm torque output.</td><td>OEM Torque Curve</td></tr>
-
+        <tr><th colspan="5" class="group-header">2. TECHNICAL SPECIFICATIONS OF THE VEHICLES</th></tr>
+        <tr><td>2.1.1</td><td>Chassis: Mounted on a commercial chassis and reinforced to support armored structure.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.2.1</td><td>Engine type: Internal combustion engine, turbo diesel, Euro 4 or higher.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.2.2</td><td>Power: 300 HP.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.2.3</td><td>Torque: Minimum torque 700 Nm / 1,500 to 2,700 rpm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        
         <tr><th colspan="5" class="group-header">2.3 TRANSMISSION, STEERING, BRAKES & SUSPENSION</th></tr>
-        <tr><td>2.3.1</td><td>Gearbox: Auto transmission, min 6 fwd + 1 rev, torque converter, electronic management.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm gearbox.</td><td>OEM Trans Specs</td></tr>
-        <tr><td>2.3.2</td><td>Wheel drive: Full-time 4WD; 4x4 part-time electronic transfer box; real-time.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm 4WD spec.</td><td>OEM Drivetrain Specs</td></tr>
-        <tr><td>2.3.3</td><td>Brakes: ABS + EBD; Ventilated discs; Service brake holds 60%; ESP active from cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm brake / ESP specs.</td><td>OEM Brake Specs</td></tr>
-        <tr><td>2.3.4</td><td>Direction: Hydr/electric; Original factory LHD.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm LHD steering.</td><td>OEM Specs</td></tr>
-        <tr><td>2.3.5</td><td>Suspension: Axles reinforced to meet military requirements.</td><td class="col-exec col-exec-tbd">TBD</td><td>Heavy duty military axles.</td><td>Suspension Upgrade Doc</td></tr>
+        <tr><td>2.3.1</td><td>Gearbox: Automatic transmission with at least six forward speeds and one reverse speed, torque converter and electronic management.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.2 (a)</td><td>Wheel drive: Full-time 4WD.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.2 (b)</td><td>Wheel drive: 4X4 part-time electronic transfer box; Real-time; automatic/manual freewheel.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.3 (a)</td><td>Brakes: Braking system must have (ABS) on all wheels.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.3 (b)</td><td>Brakes: Electronic brake force distribution (EBD); Ventilated disc brakes on all four wheels.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.3 (c)</td><td>Brakes: Service brake must keep vehicle immobilized up to 60% gradient.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.3 (d)</td><td>Brakes: Electronic stability control (ESP) activatable from inside the cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.4 (a)</td><td>Direction: Hydraulic or electrical.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.4 (b)</td><td>Direction: Original factory steering wheel positioned on the left side of the cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.3.5</td><td>Suspension: The axles must be reinforced to meet military requirements.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
         <tr><th colspan="5" class="group-header">2.4 ELECTRICAL, LIGHTING & AC</th></tr>
-        <tr><td>2.4.1</td><td>Electrical: Compatible capacity, packaged/insulated wiring, 12V, at least two 12V batteries.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm 12V dual battery spec.</td><td>Elec Schematic</td></tr>
-        <tr><td>2.4.2</td><td>Lighting: LED headlights; LED interior/exterior lamps; LED/halogen ceiling light.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm lighting setup.</td><td>Lighting Specs</td></tr>
-        <tr><td>2.4.3</td><td>Air Con: Cooling/ventilation front+rear, cools cabin in >50°C environments, hot & cold air.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm high-cap HVAC.</td><td>HVAC Specs</td></tr>
+        <tr><td>2.4.1 (a)</td><td>Electrical: Compatible capacity to simultaneously power vehicle, adaptations, and comms.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.1 (b-d)</td><td>Electrical: Harnesses and wiring packaged/insulated, protected against water/dirt, coded per ABNT 5410.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.1 (e)</td><td>Electrical: System voltage - 12 volts.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.1 (f)</td><td>Electrical: The vehicle must have at least 02 (two) 12-volt batteries.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.2 (a-c)</td><td>Lighting: LED headlights, LED interior/exterior lamps, LED or halogen ceiling light.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.4.3 (a-c)</td><td>Air Cond: Cooling/ventilation front/rear. Cools in >50°C environments. Hot and cold air.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
     <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
@@ -332,28 +393,79 @@ export const defaultHTML = `
       </thead>
       <tbody>
         <tr><th colspan="5" class="group-header">2.5 PERFORMANCE, 2.6 DIMENSIONS & 2.7 WEIGHT</th></tr>
-        <tr><td>2.5.1-3</td><td>Fuel tank 110L (S10); Min range 700 km fully charged.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm tank & range.</td><td>Spec Sheet</td></tr>
-        <tr><td>2.5.4-5</td><td>Wheels/Tires: 18”+ rim; Run Flat all tires. Perf: Cruise 90 km/h; Max 120 km/h.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm Runflats and speed.</td><td>Runflat Cert / Specs</td></tr>
-        <tr><td>2.6.1-5</td><td>Dim: L ≤5500mm, W ≤2000mm, H ≤2000mm, WB ≤3000mm, Ground Clear ≥220mm.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm dimensions.</td><td>GA Drawing</td></tr>
-        <tr><td>2.7.1-3</td><td>Weight: GVWR ≤6000kg, Curb ≤5000kg, Payload ≥1000kg.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm weights.</td><td>Weight Statement</td></tr>
+        <tr><td>2.5.1</td><td>Fuel tank capacity: 110 liters.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.2</td><td>Fuel: S10 Diesel.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.3</td><td>Minimum range: 700 km fully charged.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.4 (a)</td><td>Wheels and tires: 18” rim and larger.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.4 (b)</td><td>Wheels and tires: System Run Flat on all tires, including the spare tire.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.5 (a)</td><td>Performance: Cruising speed 90 km/h.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.5.5 (b)</td><td>Performance: Maximum speed 120 km/h.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.1</td><td>Maximum length: 5500 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.2</td><td>Maximum width: 2000 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.3</td><td>Maximum height (VCW): 2000 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.4</td><td>Maximum wheelbase: 3000 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.6.5</td><td>Minimum ground clearance: 220 mm.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.7.1</td><td>Gross Vehicle Weight Rating (GVWR): up to 6000 kg.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.7.2</td><td>Curb weight (CW): up to 5000 kg.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.7.3</td><td>Minimum payload: 1000 kg.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
-        <tr><th colspan="5" class="group-header">2.8 DRIVING CHAR. & 2.9 CONFIGURATION</th></tr>
-        <tr><td>2.8.1</td><td>Ascent 50%; tilt 30º; approach 30º; departure 20º.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm angles.</td><td>Mobility Specs</td></tr>
-        <tr><td>2.9.1-2</td><td>Seats for 5 (1+1+3) w/ belts. 4 side doors (forward hinge), 1 rear door for boarding.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm seating & access.</td><td>Layout Drawing</td></tr>
-        <tr><td>2.9.3-4</td><td>7 replaceable windows (1-piece windshield, side doors, rear) + 1 roof hatch. Manual/Alarm locks.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm glass & hatch.</td><td>Armoring Specs</td></tr>
+        <tr><th colspan="5" class="group-header">2.8 DRIVING CHARACTERISTICS</th></tr>
+        <tr><td>2.8.1 (a)</td><td>Vertical obstacle/climbing up to gradual ascent/descent capacity: 50%.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.8.1 (b)</td><td>Minimum static lateral tilt: 30º.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.8.1 (c)</td><td>Minimum approach/entry angle: 30º.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.8.1 (e)</td><td>Minimum start/departure angle: 20º.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
-        <tr><th colspan="5" class="group-header">2.10 BALLISTICS & 2.11 GRAPHICS</th></tr>
-        <tr><td>2.10</td><td>Protection cell VPAM EDITION 3 VR7 (glazed areas, floor, engine/radiator). Front mudguards, critical components protected.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm VPAM VR7 integration.</td><td>VPAM VR7 Certs</td></tr>
-        <tr><td>2.11</td><td>Graphics: CIELAB Standard compliant. Unmarked vehicles must be metallic/solid/pearlescent.</td><td class="col-exec col-exec-tbd">TBD</td><td>Acknowledge paint options.</td><td>Paint Spec</td></tr>
+        <tr><th colspan="5" class="group-header">2.9 CONFIGURATION</th></tr>
+        <tr><td>2.9.1 (a)</td><td>Seats for 5 (five) police officers. Configuration 1+1+3 = 5.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.1 (b-d)</td><td>Driver/passenger seats in cloth. Second row 3 seats facing forward. All have seat belts.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.2 (a-c)</td><td>5-door vehicle: 4 side doors (forward hinge), 1 rear door. Exterior door sills.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.3 (a-d)</td><td>7 replaceable windows: One-piece windshield, single window in side/rear doors. 1 escape hatch.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.9.4 (a-c)</td><td>Locks: Standard manual key; Presence sensor; Door lock/alarm control.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
+        <tr><th colspan="5" class="group-header">2.10 BALLISTIC PROTECTION</th></tr>
+        <tr><td>2.10</td><td>Protective cell (glazed areas, floor, engine): VPAM EDITION 3 VR7 (5.56x45mm NATO & 7.62x51mm NATO). Front radiator guard 7.62x51mm 60°N. Front mudguards, critical engine comps (batteries, ECU, ABS).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+
+        <tr><th colspan="5" class="group-header">2.11 GRAPHIC DESIGN</th></tr>
+        <tr><td>2.11 (I)</td><td>CIELAB Standard Color Space (D65/10º, A/10º, T84/10º).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.11 (II)</td><td>Special paint stickers per PMES. Unmarked: metallic, solid, or pearlescent.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+  </div>
+  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
+</div>
+
+<div class="page">
+  <div class="header">
+    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
+  </div>
+  <div class="page-content">
+    <div class="main-heading" style="font-size: 13px;">3.7 Technical Compliance Report – Annex ID (Cont.)</div>
+
+    <table>
+      <thead>
+        <tr><th style="width:8%">Ref. No</th><th style="width:36%">Details</th><th style="width:8%">Comply</th><th style="width:24%">MEVA Response</th><th style="width:24%">Supporting Documents</th></tr>
+      </thead>
+      <tbody>
         <tr><th colspan="5" class="group-header">2.12 MANUALS, ACC. & 2.13 ACOUSTICS</th></tr>
-        <tr><td>2.12</td><td>Color reverse camera, AM/FM radio, lifting tools, electric mirrors. Manuals in PT.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm accessories.</td><td>Equipment List</td></tr>
-        <tr><td>2.13</td><td>Siren: min 100W, 110 dB @ 1m, 3 tones, hidden installation, sealed driver, no RF interference.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm siren spec.</td><td>Siren Spec / Report</td></tr>
+        <tr><td>2.12.1 (a)</td><td>Color reversing camera and backup monitor with one-way microphone.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.1 (b)</td><td>AM/FM Stereo radio with digital clock and 2 speakers. Prepared for antenna.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.1 (c)</td><td>Sufficient lifting tools for changing the wheel.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.1 (d)</td><td>Exterior rearview mirrors electrically operated.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.12.2</td><td>Operating and preventive maintenance manuals in Portuguese.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (a)</td><td>Electronic siren: amplifier min 100W @ 11 Ohms. Min 110 dB at 1m. 3 tones (Wail, Yelp, Horn).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (b-c)</td><td>Discreet installation (not visible in grille). Lowest possible cabin noise. Low-freq siren permitted if additional.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.13.1 (d-g)</td><td>Sealed driver for police use. Specific body mounting points. No RF interference. ANATEL compliant.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
 
         <tr><th colspan="5" class="group-header">2.14, 2.15 & 2.16 VISUAL, COMMS & LIGHTING ASSY</th></tr>
-        <tr><td>2.14</td><td>Visual Signaling: Weather resistant, PWM load mgmt. Roof Lightbar (>90% width) with animations. Alley lights (min 1500 lumens). Traffic Advisor. 1-DIN Control Panel.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm signaling and panel.</td><td>Lighting Spec</td></tr>
-        <tr><td>2.15</td><td>Comms Prep: TETRA prep (Multifunction roof antenna IP66) + Analog PRO5100 prep (VHF antenna SWR ≤ 1.5:1).</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm antenna prep & SWR.</td><td>Antenna Report</td></tr>
-        <tr><td>2.16</td><td>Unmarked Lighting Assy: Front primary (inside windshield), Rear primary (inside rear window), Secondary grille (smoked lens), Magnetic Emblems.</td><td class="col-exec col-exec-tbd">TBD</td><td>Confirm unmarked light specs.</td><td>Lighting Spec</td></tr>
+        <tr><td>2.14.1</td><td>Visual Signaling: Weather resistant, PWM load mgmt. Roof Lightbar (>90% width) with animations (ROUND, QTI, STOP, EMERGENCY). Alley lights (min 1500 lumens/side).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (X)</td><td>SECONDARY LIGHTING: Front (4x 3W LED modules, 6 alternating Red/Blue). Rear (4x 3W LED modules, 6 alternating Red/Blue).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (XI)</td><td>WHITE LIGHTS WITH STROBE EFFECTS: Inside headlights/taillights, synchronized face-to-face, min 350 ANSI lumens.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (XII)</td><td>TRAFFIC GUIDANCE BAR: Amber, min 5 segments (left->right, right->left, center->edges).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.14.1 (XIII)</td><td>CONTROL PANEL: 1 DIN (179x50mm). Controls visual/acoustic signaling. Specific keys per client model.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.15</td><td>Comms Prep (TETRA): 5A fused cable, Multifunction roof antenna (GPS/GSM/3G/WLAN/TETRA) IP66. Independent cables. 12x12 cm access cover.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.15</td><td>Comms Prep (Analog): PRO5100 prep. VHF Antenna (46-49 MHz), SWR ≤ 1.5:1. Impedance/SWR report required.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        <tr><td>2.16</td><td>Unmarked Lighting Assy: Front primary (inside windshield), Rear primary (inside rear window), Secondary (behind grille, smoked lens). 2 magnetic emblems (40 cm).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
     <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
@@ -383,28 +495,29 @@ export const defaultHTML = `
   <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
 </div>
 
-<div class="page" id="cav-evidence">
+<div class="page" id="apc-evidence">
   <div class="header">
     <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
   </div>
   <div class="page-content">
-    <div class="main-heading">Visual References & Equipment Configuration (CAV)</div>
-    <p class="para">The following technical diagrams and visual evidence corroborate the specifications detailed in Annex ID.</p>
+    <div class="vol-identifier">PART III — VISUAL REFERENCES</div>
+    <div class="main-heading">Equipment Configuration (APC & CAV)</div>
+    <p class="para">The following technical diagrams and visual evidence corroborate the specifications detailed in Annex IB and Annex ID.</p>
 
     <div class="img-grid">
       <div class="img-box">
-        <div class="img-title">2.9.1 & 2.9.2 — Seating Layout & Doors</div>
-        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating 5 seats (1+1+3), 4 forward hinge doors, and rear door access.</p>
+        <div class="img-title">Item 1 (APC): 2.9.1 & 2.9.2 — Seating & Access</div>
+        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating 10 seats (1+1+8), 4 side doors, rear outward door, and roof escape hatch.</p>
         <div class="img-placeholder" onclick="promptImage(this)">
           <span>Click to insert/replace image<br/>(e.g., General Arrangement drawing)</span>
           <img src="" alt="" onerror="this.style.display='none'">
         </div>
       </div>
       <div class="img-box">
-        <div class="img-title">2.10 — Ballistic Protection Cell</div>
-        <p class="para" style="font-size:10px; margin-bottom:6px;">Reference for VPAM Edition 3 VR7 protective cell integration on commercial chassis.</p>
+        <div class="img-title">Item 1 (APC): 2.9.4 — Firing Ports</div>
+        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating configuration of 11 operational firing ports integrated into the armoring.</p>
         <div class="img-placeholder" onclick="promptImage(this)">
-          <span>Click to insert/replace image<br/>(e.g., Armoring Cell layout / Base structural limits)</span>
+          <span>Click to insert/replace image<br/>(e.g., Side armor profile / Ports diagram)</span>
           <img src="" alt="" onerror="this.style.display='none'">
         </div>
       </div>
@@ -413,18 +526,18 @@ export const defaultHTML = `
 
     <div class="img-grid">
       <div class="img-box">
-        <div class="img-title">2.14 — Visual Signaling (Roof Bar)</div>
-        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating LED lightbar (>90% width), Alley Lights, and overall layout.</p>
+        <div class="img-title">Item 2 (CAV): 2.9.1 & 2.9.2 — Seating & Doors</div>
+        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating 5 seats (1+1+3), 4 forward hinge doors, and rear door access.</p>
         <div class="img-placeholder" onclick="promptImage(this)">
-          <span>Click to insert/replace image<br/>(e.g., Roof bar design/spec sheet snippet)</span>
+          <span>Click to insert/replace image<br/>(e.g., General Arrangement drawing)</span>
           <img src="" alt="" onerror="this.style.display='none'">
         </div>
       </div>
       <div class="img-box">
-        <div class="img-title">2.16 — Lighting Assembly (Unmarked)</div>
-        <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating internal red/blue modules and discrete grille module integration.</p>
+        <div class="img-title">Item 2 (CAV): 2.10 — Protection Cell</div>
+        <p class="para" style="font-size:10px; margin-bottom:6px;">Reference for VPAM Edition 3 VR7 protective cell integration on commercial chassis.</p>
         <div class="img-placeholder" onclick="promptImage(this)">
-          <span>Click to insert/replace image<br/>(e.g., Unmarked lighting configuration)</span>
+          <span>Click to insert/replace image<br/>(e.g., Armoring Cell layout / Base structural limits)</span>
           <img src="" alt="" onerror="this.style.display='none'">
         </div>
       </div>
@@ -505,6 +618,7 @@ export const defaultHTML = `
     <table>
       <thead><tr><th style="width: 8%;">Ref. No</th><th style="width: 36%;">Details</th><th style="width: 8%;">Comply</th><th style="width: 24%;">MEVA Response</th><th style="width: 24%;">Supporting Documents</th></tr></thead>
       <tbody>
+        <tr><td>5.11</td><td><strong>Warranty Schedule</strong><br><em style="font-size:9px; color:gray;">Opaque/Transparent Shielding: 60 months. Engine/Gearbox, Comms, Mod Deficiencies, Prev. Maint: Per Table.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>60-month shielding warranty confirmed.</td><td>Annex 7.1</td></tr>
         <tr><td>7.1</td><td><strong>Warranty & After-Sales Plan</strong><br><em style="font-size:9px; color:gray;">60 day repair max, 10-year spares, 1% spare reserve, recall ref.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Warranty plan provided.</td><td>Annex 7.1</td></tr>
         <tr><td>7.2</td><td><strong>Operator Training Plan</strong><br><em style="font-size:9px; color:gray;">20 hours in ES, Portuguese, max 10 per class.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Training syllabus attached.</td><td>Annex 7.2</td></tr>
         <tr><td>7.3</td><td><strong>Subcontracting Declaration</strong><br><em style="font-size:9px; color:gray;">Max 30% (maintenance only). Or declare none.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Declaration provided.</td><td>Annex 7.3</td></tr>
