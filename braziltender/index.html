@@ -423,6 +423,51 @@
     }
   };
 
+  window.addDeepdiveRow = function(btn) {
+    const table = getTargetTable(btn);
+    if (!table) return;
+
+    // Try to find the row the user's cursor is currently inside
+    const selection = window.getSelection();
+    let targetRow = null;
+    if (selection.rangeCount > 0) {
+      let node = selection.anchorNode;
+      while (node && node !== document.body) {
+        if (node.tagName && node.tagName.toLowerCase() === 'tr') {
+          targetRow = node;
+          break;
+        }
+        node = node.parentNode;
+      }
+    }
+
+    // Create the Deep Dive Row
+    const newRow = document.createElement('tr');
+    newRow.className = 'no-break'; // Prevents page breaks in the middle of the image
+    newRow.innerHTML = `
+      <td colspan="5" style="background-color: #f8fafc; border-left: 3px solid var(--brand-color); padding: 15px;">
+        <strong style="color: var(--brand-color); font-size: 11px; text-transform: uppercase;">↳ Technical Deep Dive & Evidence</strong>
+        <div contenteditable="true" style="margin-top: 8px; font-size: 11px; color: var(--text-main); margin-bottom: 12px;">
+           <strong>Brand / OEM:</strong> [Enter details]<br><br>
+           <strong>Technical Justification:</strong> [Enter detailed explanation here...]
+        </div>
+        <div class="img-placeholder" onclick="promptImage(this)" style="max-width: 400px; margin: 0 auto; background: #fff;">
+          <span>Click to insert technical diagram / photo</span>
+          <img src="" alt="" style="display:none; width: 100%; border-radius: 4px;">
+        </div>
+      </td>
+    `;
+
+    // Insert right below the active row, or at the end of the table if no row is selected
+    if (targetRow && targetRow.closest('table') === table) {
+      targetRow.parentNode.insertBefore(newRow, targetRow.nextSibling);
+    } else {
+      table.querySelector('tbody').appendChild(newRow);
+    }
+    
+    window.notifyChange();
+  };
+
   window.addCol = function(btn) {
     const table = getTargetTable(btn);
     if (!table) return;
