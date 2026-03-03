@@ -559,6 +559,7 @@ export const defaultHTML = `
           </tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
+
 <div style="padding: 8px 0px; border-bottom: 4px solid var(--brand-color); margin-top: 25px; margin-bottom: 10px;">
             <div style="font-size: 12px; color: var(--brand-color); text-transform: uppercase; font-weight: 800; margin: 0; padding: 0;">
                 TLC300 BALLISTIC & DYNAMICS CERTIFICATION
@@ -626,99 +627,6 @@ export const defaultHTML = `
                 </table>
             </div>
         </div>
-        
-        <div style="padding: 8px 0px; border-bottom: 4px solid var(--brand-color); margin-top: 25px; margin-bottom: 10px;">
-            <div style="font-size: 12px; color: var(--brand-color); text-transform: uppercase; font-weight: 800; margin: 0; padding: 0;">
-                STANDARD BALLISTIC CHART & ARMOR FEATURES (CEN BR 7)
-            </div>
-        </div>
-
-        <div style="padding:0px; border-radius:6px; margin-bottom:15px; border: 1px solid #e5e7eb; overflow: hidden;">
-            <table style="width:100%; border-collapse:collapse; font-size:8pt; text-align: center;">
-                <thead>
-                    <tr style="background:#f3f4f6; font-weight:800; color: #333;">
-                        <td rowspan="2" style="border:1px solid #e5e7eb; padding:6px;">Class</td>
-                        <td rowspan="2" style="border:1px solid #e5e7eb; padding:6px;">Weapon</td>
-                        <td rowspan="2" style="border:1px solid #e5e7eb; padding:6px;">Caliber</td>
-                        <td rowspan="2" style="border:1px solid #e5e7eb; padding:6px;">Type</td>
-                        <td rowspan="2" style="border:1px solid #e5e7eb; padding:6px;">Mass (g)</td>
-                        <td colspan="4" style="border:1px solid #e5e7eb; padding:6px;">Test Conditions</td>
-                    </tr>
-                    <tr style="background:#f3f4f6; font-weight:800; color: #333;">
-                        <td style="border:1px solid #e5e7eb; padding:6px;">Range (m)</td>
-                        <td style="border:1px solid #e5e7eb; padding:6px;">Velocity</td>
-                        <td style="border:1px solid #e5e7eb; padding:6px;">Strikes</td>
-                        <td style="border:1px solid #e5e7eb; padding:6px;">Distance</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">BR5</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">Rifle</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">5.56×45</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">FJ2/PB/SC</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">4.0 ±0.1</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">10 ±0.05</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">950 ±10</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">3</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">120 ±10</td>
-                    </tr>
-                    <tr>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">BR6</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">Rifle</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">7.62×51</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">FJ2/PB/SC</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">9.5 ±0.1</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">10 ±0.05</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">830 ±10</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">3</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">120 ±10</td>
-                    </tr>
-                    <tr style="background-color: #fff0f1; border: 2px solid var(--brand-color);">
-                        <td style="border:1px solid #e5e7eb; padding:5px; font-weight:800; color:var(--brand-color);">BR7 &#9664;</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">Rifle</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">0.30-06</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">AP</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">10.8 ±0.1</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">10 ±0.05</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">870 ±10</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">3</td>
-                        <td style="border:1px solid #e5e7eb; padding:5px;">120 ±10</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <table style="width:100%; border-collapse:collapse; table-layout:fixed; margin-bottom: 15px;">
-            <tr style="background:#f3f4f6; font-weight:800; font-size:8.5pt; color:#333;">
-                <td style="border:1px solid #e5e7eb; padding:8px;">Opaque Armor</td>
-                <td style="border:1px solid #e5e7eb; padding:8px;">Transparent Armor</td>
-                <td style="border:1px solid #e5e7eb; padding:8px;">Other Features</td>
-            </tr>
-            <tr>
-                <td style="border:1px solid #e5e7eb; padding:8px; vertical-align:top; font-size:8pt; color:#333; line-height: 1.4;">
-                    • Floor: 2×DM51 Grenades<br>
-                    • Roof: CEN BR 7 Ballistic Steel<br>
-                    • Doors: Reinforced, heavy-duty hinges<br>
-                    • Cab: CEN BR 7 Steel<br>
-                    • Frame: Armored & reinforced
-                </td>
-                <td style="border:1px solid #e5e7eb; padding:8px; vertical-align:top; font-size:8pt; color:#333; line-height: 1.4;">
-                    • Armored glass to CEN BR 7 standard<br>
-                    • Glass + Polycarbonate + Mylar<br>
-                    • Anti-spall protection<br>
-                    • 3-shot multi-impact
-                </td>
-                <td style="border:1px solid #e5e7eb; padding:8px; vertical-align:top; font-size:8pt; color:#333; line-height: 1.4;">
-                    • Integrated 11 Firing Ports<br>
-                    • OEM electricals retained<br>
-                    • Suspension upgraded for GVW<br>
-                    • Run-flat inserts fitted
-                </td>
-            </tr>
-        </table>
-        
-
         <div class="sub-heading" style="margin-top: 20px;">Item 2 – Formal Certifications Required (Refer to Vol VIII)</div>
         <table>
           <tbody>
