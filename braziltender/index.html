@@ -585,20 +585,20 @@
         });
         btn.innerText = "✔ Synced";
         btn.style.background = "#1b5e20";
-        btn.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
         showToast("Saved to Cloud!");
       } catch (err) {
         console.error("Save failed:", err);
         btn.innerText = "❌ Error";
-        btn.style.background = "#dc2626";
-        showToast("Permission denied or connection error.");
+        showToast("Connection error.");
       }
 
       setTimeout(() => {
         btn.innerText = "☁️ Sync Content";
         btn.style.background = "var(--brand-color)";
+        // HIDE BUTTON AFTER SYNC
+        btn.classList.remove('visible'); 
         isSaving = false;
-      }, 2000);
+      }, 1500);
     };
 
     // --- The Raw HTML Seed Payload ---
