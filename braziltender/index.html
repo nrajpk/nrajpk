@@ -23,7 +23,7 @@
     /* 2. GLOBAL SETTINGS */
     @page { 
       size: A4; 
-      margin: 15mm 10mm; /* Adjusted to 10mm side margins */
+      margin: 15mm 10mm; /* 10mm Side Margins */
     }
 
     body {
@@ -31,7 +31,7 @@
       margin: 0;
       background: #374151; /* Dark backdrop for web view */
       color: var(--text-main);
-      line-height: 1.5; /* Breathable line height */
+      line-height: 1.5;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -44,20 +44,21 @@
       content: "Page " counter(sheet);
     }
 
-    /* 4. LOGICAL PAGE LAYOUT (WEB VIEW) */
+    /* 4. LOGICAL PAGE LAYOUT (WEB) */
     @media screen {
       .page {
         width: 210mm;
-        height: 297mm; /* Fixed A4 Height to match Blade PDF */
+        height: 297mm; /* Fixed A4 Height to act as visual "sheet" */
         margin: 20px auto;
         background: #FFFFFF;
-        display: flex; /* Stack content vertically */
+        display: flex; /* Force Footer to stay at bottom */
         flex-direction: column;
-        padding: 10mm; /* 10mm margins for web-view */
+        padding: 10mm; 
         box-sizing: border-box;
         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         position: relative;
-        overflow: hidden; /* Prevents text spill-over in web view */
+        overflow: hidden; /* Visual stop when page is full */
+        border-radius: 4px;
       }
     }
 
@@ -81,22 +82,22 @@
       }
 
       thead { display: table-header-group; }
-      tfoot { display: table-footer-group; }
       tr, .no-break { page-break-inside: avoid; break-inside: avoid; }
       h1, h2, h3, .main-heading, .sub-heading { page-break-after: avoid; }
       
       .page-footer { 
         position: absolute; 
         bottom: 10mm; 
-        width: calc(100% - 20mm); /* Width adjusted for 10mm margins */
+        width: calc(100% - 20mm); /* Adjusted for 10mm margins */
       }
     }
 
     /* 6. TYPOGRAPHY & VISUAL HIERARCHY */
     .page-content {
-      flex: 1; /* Pushes footer to bottom */
+      flex: 1; /* Expands to fill the A4 box and push footer down */
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     .vol-identifier {
@@ -202,9 +203,7 @@
       transition: opacity 0.2s ease;
     }
     
-    .doc-controls-wrapper:hover {
-      opacity: 1; 
-    }
+    .doc-controls-wrapper:hover { opacity: 1; }
 
     .doc-control {
       background: #F1F3F4;
@@ -219,7 +218,7 @@
       font-family: 'Georama', sans-serif;
     }
 
-    /* 9. HEADER & FOOTER PINNING */
+    /* 9. HEADER & FOOTER */
     .header {
       flex-shrink: 0;
       display: flex; 
@@ -234,7 +233,7 @@
     
     .page-footer {
       flex-shrink: 0;
-      margin-top: auto; /* Pins to bottom in web view */
+      margin-top: auto; /* Pushes to absolute bottom of flex container */
       display: flex; 
       align-items: center; 
       justify-content: space-between;
@@ -247,6 +246,7 @@
       font-size: 7.5pt; 
       color: var(--text-muted); 
       font-weight: 600; 
+      white-space: nowrap; 
     }
 
     /* 10. UI ELEMENTS */
@@ -261,15 +261,25 @@
     .info-box.critical { border-left-color: var(--brand-color); background: #FFF0F1; }
     .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 8px; }
     .img-box { border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; background: #FFFFFF; text-align: center; }
+    .img-title { font-size: 10px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; margin-bottom: 4px; }
+    .img-placeholder { border: 1px dashed var(--border-color); padding: 30px 10px; border-radius: 4px; font-size: 10px; color: var(--text-muted); cursor: pointer; text-align: center; }
+    .img-placeholder img { width: 100%; max-height: 200px; object-fit: contain; }
+
+    /* WEB UI COMPONENTS */
+    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; font-size: 13px; border-bottom: 1px solid #F59E0B; }
+    .ui-controls { position: fixed; top: 15px; right: 20px; z-index: 1000; display: flex; gap: 10px; }
+    .btn { background: #FFFFFF; border: 1px solid var(--border-color); padding: 8px 16px; font-weight: 800; font-size: 12px; text-transform: uppercase; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .save-btn { position: absolute; left: 50%; transform: translateX(-50%); display: none; z-index: 999; background: var(--brand-color); color: white; border: none; }
+    .save-btn.visible { display: block; }
+    #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; }
   </style>
 </head>
-
 <body>
 
 <div id="remote-banner">
   ⚠️ Someone else saved a newer version while you were editing.
-  <button id="btn-accept-remote" type="button">Load latest</button>
-  <button id="btn-keep-mine" type="button">Keep mine</button>
+  <button id="btn-accept-remote" type="button" class="doc-control">Load latest</button>
+  <button id="btn-keep-mine" type="button" class="doc-control">Keep mine</button>
 </div>
 
 <div id="status-toast"></div>
