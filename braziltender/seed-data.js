@@ -571,6 +571,40 @@ export const defaultHTML = `
           </tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
+        <!-- INSERTED: VPAM VR7 baseline ballistic & blast summary (reference only; does not replace tender certificates) -->
+        <div class="info-box" style="margin-top: 14px;">
+          <div class="sub-heading" style="margin: 0 0 8px 0;">Reference Ballistic & Blast Performance Summary (VPAM VR7 Baseline)</div>
+          <div class="text-muted" style="font-size: 12px; margin-bottom: 10px;">
+            Reference baseline text extracted from MEVA VPAM VR7 TLC300 certification pack for standard alignment and traceability wording.
+            Final offered vehicle certificates and VIN-linked reports shall be provided in VOLUME VIII as per tender requirement.
+          </div>
+
+          <div style="font-weight: 700; margin: 8px 0 6px 0;">Independent Certification</div>
+          <ul style="margin: 0 0 10px 18px;">
+            <li>VPAM VR7 certified</li>
+            <li>Tested and certified by Beschussamt Ulm GmbH (3-Star rating stated in reference pack)</li>
+            <li>VPAM BRV and ERV standards referenced</li>
+          </ul>
+
+          <div style="font-weight: 700; margin: 8px 0 6px 0;">Ballistic Protection</div>
+          <ul style="margin: 0 0 10px 18px;">
+            <li>Ballistic: VR7 (SS109 and DM111) with roof and glazing at 90 degrees</li>
+            <li>PAS 300 blast and ballistic: roof tested at 45 degree angle (reference pack)</li>
+          </ul>
+
+          <div style="font-weight: 700; margin: 8px 0 6px 0;">Blast and Underbody / Roof References</div>
+          <ul style="margin: 0 0 10px 18px;">
+            <li>Side blast: 12.5 kg PETN at 4 m (pressure sensor verified in reference pack)</li>
+            <li>Underbody: DM 31 (x1) and HG 85 (x2) referenced</li>
+            <li>Roof: DM 51 double charge (standard and hatch) referenced</li>
+          </ul>
+
+          <div style="font-weight: 700; margin: 8px 0 6px 0;">Drivability Certification Reference</div>
+          <ul style="margin: 0 0 0 18px;">
+            <li>PAS 301 drivability certified (dynamics and handling: acceleration, slalom, fast-lane change, braking) referenced</li>
+          </ul>
+        </div>
+
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -672,65 +706,64 @@ export const defaultHTML = `
             <tr><td style="font-weight: 700;">5.5</td><td><strong>Incoterm Declaration</strong></td><td>Confirm DDP (preferred) or DPU (if justified).</td></tr>
             <tr><td style="font-weight: 700;">5.6</td><td><strong>Letter of Credit Terms Declaration</strong></td><td>State LC timeframe, acceptance of risk, and confirm inclusion of LC costs.</td></tr>
             <tr><td style="font-weight: 700;">5.7</td><td><strong>Proposal Validity Declaration</strong></td><td>Minimum 180 days.</td></tr>
-          
-            <tr>
-              <td style="font-weight: 700;">5.8</td>
-              <td><strong>Payment Terms</strong></td>
-              <td>
-                <div class="para" style="margin:0;">
-                  <p style="margin:0 0 8px 0;"><strong>Method of Payment:</strong> Payment shall be made by Cheque (UAE only) or Electronic Funds Transfer (EFT). Cash payments shall not be accepted.</p>
-                  <p style="margin:0 0 8px 0;"><strong>Payment Schedule:</strong> 100% of the total contract value payable in advance.</p>
-                  <p style="margin:0 0 8px 0;"><strong>Freight:</strong> Freight quotation, if any, is valid for 14 days from the contract or quotation date and is subject to revision at the time of shipment based on actual rates.</p>
-                  <p style="margin:0 0 8px 0;"><strong>Export Deposit (if applicable):</strong> If the Buyer undertakes export through their own freight forwarder, a refundable export deposit equal to 12% of the total invoice value shall be paid to Mahindra Emirates Vehicle Armouring prior to delivery. The Buyer is responsible for providing export documentation including customs exit confirmation, Bill of Lading copy, and duly stamped Bill of Entry. The deposit shall be returned upon receipt of customs confirmation for the MEVA deposit release.</p>
-                  <p style="margin:0 0 8px 0;"><strong>Taxes and Duties:</strong> For Ex-Factory sales, the Buyer is responsible for all UAE customs and taxes, and all taxes and charges in the country of import.</p>
-                  <p style="margin:0 0 8px 0;"><strong>Delivery Terms:</strong> Seller sells products Ex-Factory only. UAE customs clearance and shipping support may be provided as an additional service upon request, however the Seller is not responsible for export restrictions, shipping limitations, or changes in shipping charges at the time of shipment.</p>
-                  <p style="margin:0 0 8px 0;"><strong>Sanctions Compliance:</strong> All purchases are subject to compliance with applicable international sanctions laws including UN, EU, and USA regulations. If any entity or person involved is subject to sanctions, the contract shall be cancelled and amounts paid shall not be returned.</p>
-                  <p style="margin:0 0 10px 0;"><strong>Termination:</strong> If the Buyer or any involved entity is found to be in violation of international law or listed under any UN, EU, or USA sanctions or embargo, the contract shall terminate immediately and all amounts paid shall stand forfeited.</p>
-
-                  <div style="font-weight:800; margin: 8px 0 6px 0;">Account Information</div>
-                  <table style="width:100%; border-collapse:collapse; font-size:12px;">
-                    <tr>
-                      <td style="border:1px solid var(--border-color); padding:8px; width:32%;"><strong>Account Name</strong></td>
-                      <td style="border:1px solid var(--border-color); padding:8px;" colspan="2">Mahindra Emirates Vehicle Armouring FZ-LLC</td>
-                    </tr>
-                    <tr>
-                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>Bank and Branch</strong></td>
-                      <td style="border:1px solid var(--border-color); padding:8px;" colspan="2">Bank of Baroda - Deira, Dubai, UAE (P.O. Box 5107)</td>
-                    </tr>
-                    <tr>
-                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>SWIFT</strong></td>
-                      <td style="border:1px solid var(--border-color); padding:8px;" colspan="2">BARBAEADDEI</td>
-                    </tr>
-                    <tr>
-                      <td style="border:1px solid var(--border-color); padding:8px;"></td>
-                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>USD</strong></td>
-                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>AED</strong></td>
-                    </tr>
-                    <tr>
-                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>Account Number</strong></td>
-                      <td style="border:1px solid var(--border-color); padding:8px;">90030200022561</td>
-                      <td style="border:1px solid var(--border-color); padding:8px;">90030400000380</td>
-                    </tr>
-                    <tr>
-                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>IBAN</strong></td>
-                      <td style="border:1px solid var(--border-color); padding:8px;">AE35 0110 0900 3020 0022 561</td>
-                      <td style="border:1px solid var(--border-color); padding:8px;">AE35 0110 0900 3040 0000 380</td>
-                    </tr>
-                    <tr>
-                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>Intermediary</strong></td>
-                      <td style="border:1px solid var(--border-color); padding:8px;" colspan="2">Standard Chartered Bank, New York (SWIFT: SCBLUS33). Not applicable for local wire transfers.</td>
-                    </tr>
-                  </table>
-
-                  <p style="margin:10px 0 0 0;"><strong>Remark:</strong> Please mention the Proforma Invoice Number in transfer remarks for prompt allocation.</p>
-                </div>
-              </td>
-            </tr>
-</tbody>
+          </tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
         
-        <div class="info-box note">
+        
+        <!-- INSERTED: Reference commercial & contractual terms (append-only; does not override tender forms) -->
+        <div class="sub-heading" style="margin-top: 22px;">Reference Commercial & Contractual Terms (MEVA Standard)</div>
+        <div class="text-muted" style="font-size: 12px; margin-bottom: 10px;">
+          The following clauses are reference terms extracted from an MEVA proposal pack to help populate the commercial narrative.
+          Where tender forms or public procurement terms differ, the tender requirements shall prevail.
+        </div>
+
+        <div class="main-heading" style="margin-top: 8px;">Proposed Payment Terms (Reference)</div>
+        <ul style="margin: 0 0 12px 18px;">
+          <li>Method of payment: cheque (UAE only) or electronic funds transfer. Cash payments not accepted.</li>
+          <li>Payment schedule: 100% of total contract value in advance (subject to tender acceptance).</li>
+          <li>Freight quotation validity: 14 days from contract/quotation date; subject to revision at time of shipment on actuals.</li>
+          <li>Export deposit (if buyer exports through own forwarder): refundable deposit of 12% of invoice value, returned upon receipt of export documentation evidence.</li>
+          <li>Taxes and duties: for ex-factory sales, client responsible for local customs/taxes and import country taxes/charges (subject to tender incoterm and equalization).</li>
+          <li>Sanctions compliance: purchases subject to UN, EU, and USA sanctions compliance; contract cancellation if sanctioned party involvement is identified.</li>
+        </ul>
+
+        <div class="main-heading" style="margin-top: 8px;">Account Information (Reference)</div>
+        <table>
+          <tbody>
+            <tr><td style="width: 28%; font-weight: 700;">Account Name</td><td>Mahindra Emirates Vehicle Armouring FZ-LLC</td></tr>
+            <tr><td style="font-weight: 700;">Bank and Branch</td><td>Bank of Baroda, Deira-Dubai, UAE (P.O Box 5107)</td></tr>
+            <tr><td style="font-weight: 700;">Swift Code</td><td>BARBAEADDEI</td></tr>
+            <tr><td style="font-weight: 700;">Account Number (USD)</td><td>90030200022561</td></tr>
+            <tr><td style="font-weight: 700;">IBAN (USD)</td><td>AE35 0110 0900 3020 0022 561</td></tr>
+            <tr><td style="font-weight: 700;">Account Number (AED)</td><td>90030400000380</td></tr>
+            <tr><td style="font-weight: 700;">IBAN (AED)</td><td>AE35 0110 0900 3040 0000 380</td></tr>
+            <tr><td style="font-weight: 700;">Intermediary (USD)</td><td>Standard Chartered NY, SWIFT: SCBLUS33 (not applicable for local wire transfers)</td></tr>
+            <tr><td style="font-weight: 700;">Remark</td><td>Please mention the proforma invoice number in transfer remarks for allocation.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="main-heading" style="margin-top: 14px;">Other Terms and Conditions (Reference)</div>
+        <table>
+          <tbody>
+            <tr><td style="width: 28%; font-weight: 700;">Proposal Period</td><td>30 days from proposal issuance date (reference pack)</td></tr>
+            <tr><td style="font-weight: 700;">Pre-Delivery Inspection</td><td>Upon request of client, at client cost</td></tr>
+            <tr><td style="font-weight: 700;">Pre-Fabrication Inspection</td><td>Upon request of client, at client cost</td></tr>
+            <tr><td style="font-weight: 700;">Storage Fees</td><td>From completion notification to shipment date: USD 50 per vehicle per day (reference pack)</td></tr>
+            <tr><td style="font-weight: 700;">Force Majeure</td><td>Delays due to acts beyond seller control (acts of God, strikes, embargoes, epidemics, changes in law, etc.)</td></tr>
+            <tr><td style="font-weight: 700;">Payment Failure</td><td>Failure to pay within 15 days of notification: 2% of outstanding billed monthly until paid (reference pack)</td></tr>
+            <tr><td style="font-weight: 700;">Amendments</td><td>Any amendments to be notified in writing/email</td></tr>
+          </tbody>
+        </table>
+
+        <div class="main-heading" style="margin-top: 14px;">Confidentiality, Dispute, and Termination (Reference)</div>
+        <ul style="margin: 0 0 0 18px;">
+          <li>Confidentiality and non-disclosure: information treated as commercially valuable and used only for contract performance.</li>
+          <li>Dispute and governing law clauses in reference pack cite UAE jurisdiction; for this tender, governing terms shall follow tender and contract conditions.</li>
+          <li>Termination: reference pack includes termination pathways and advance refund conditions; tender contract terms shall prevail.</li>
+        </ul>
+
+<div class="info-box note">
           <strong>Note:</strong> All financial and commercial declarations listed above are attached as formal annexures in VOLUME VIII.
         </div>
       </div>
@@ -768,62 +801,74 @@ export const defaultHTML = `
           </tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
+        
+        
+        <!-- INSERTED: Warranty, support, and documentation requirements (append-only) -->
+        <div class="sub-heading" style="margin-top: 22px;">Proposed Warranty Terms (Reference)</div>
+        <div class="text-muted" style="font-size: 12px; margin-bottom: 10px;">
+          The following clauses are reference warranty terms extracted from an MEVA proposal pack and added for narrative completeness.
+          Final warranty commitments will be aligned to the tender contract requirements.
+        </div>
 
-        <div class="sub-heading" style="margin-top: 18px;">Detailed Warranty Terms & Support Commitment</div>
+        <div style="font-weight: 700; margin: 8px 0 6px 0;">Authorized Warranty Repairs</div>
+        <div style="margin-bottom: 10px;">
+          Warranty work authorized to be covered by Mahindra Emirates Vehicle Armouring FZ-LLC may be performed locally at the nearest authorized facility,
+          with billing routed to MEVA for assessment and approval before payment for repairs deemed reasonable by MEVA Warranty Service and Engineering.
+        </div>
+
+        <div style="font-weight: 700; margin: 8px 0 6px 0;">Use Outside Design Parameters</div>
+        <div style="margin-bottom: 10px;">
+          No liability for damage or failure attributable to operation outside or beyond prescribed design specification parameters. Assessment and warranty decisions
+          are performed by MEVA authorized officers.
+        </div>
+
+        <div style="font-weight: 700; margin: 8px 0 6px 0;">Misuse, Abuse, or Unauthorized Modifications</div>
+        <div style="margin-bottom: 10px;">
+          No liability for damage incurred through misuse, abuse, negligence, accidental damage, or unauthorized modifications after delivery.
+        </div>
+
+        <div style="font-weight: 700; margin: 8px 0 6px 0;">Limitation of Liability</div>
+        <div style="margin-bottom: 10px;">
+          Liability limited to repair or replacement of warranty-related items. Incidental or consequential damages are excluded as per reference pack language.
+        </div>
+
+        <div class="sub-heading" style="margin-top: 18px;">Our Support Commitment (Reference)</div>
+        <div style="margin-bottom: 10px;">
+          MEVA maintains regional service network hubs to provide on-ground technical assistance, periodic maintenance, and genuine spare parts availability across key
+          mission territories, minimizing downtime.
+        </div>
+
+        <div class="sub-heading" style="margin-top: 18px;">Documentation Requirements for Shipment (Reference)</div>
         <table>
-          <thead>
-            <tr>
-              <th style="width: 18%;">Clause</th>
-              <th style="width: 82%;">MEVA Commitment</th>
-            </tr>
-          </thead>
           <tbody>
             <tr>
-              <td><strong>Authorized Warranty Repairs</strong></td>
+              <td style="width: 28%; font-weight: 700;">Vehicles Built in UAE (MEVA)</td>
               <td>
-                Warranty work authorized by Mahindra Emirates Vehicle Armouring FZ-LLC shall be performed locally at the nearest Mahindra authorized facility, with billing forwarded directly to MEVA.
-                After assessment of the invoice, and upon consultation and approval by MEVA Warranty Service and Engineering Departments, MEVA shall pay for repairs deemed reasonable and necessary.
-                <br><br>
-                If no authorized facility exists in the area of operation, work may be performed at a service facility of the client’s choosing once agreed upon in writing with MEVA Warranty Service Department.
+                End User Certificate (EUC) on official letterhead (signed and stamped).<br>
+                No Objection Certificate (NOC) from relevant Embassy or Consulate in UAE.<br>
+                Importing country consulate attested trade license or passport copy of buyer.<br>
+                Any other documents required as per local law.
               </td>
             </tr>
             <tr>
-              <td><strong>Use Outside Design Parameters</strong></td>
+              <td style="font-weight: 700;">Vehicles Built in Jordan (MAVJ)</td>
               <td>
-                MEVA assumes no responsibility for damage or vehicle failure attributable to use of the vehicle outside, or in excess of, the specification parameters prescribed in the vehicle design.
-                Assessment of damage and warranty applicability shall be performed only by authorized MEVA officers at their discretion and judgement.
+                End User Certificate (EUC) on official letterhead (signed and stamped).<br>
+                No Objection Certificate (NOC) from relevant Embassy or Consulate in UAE.<br>
+                Importing country consulate attested trade license or passport copy of buyer.<br>
+                Any other documents required as per local law.
               </td>
             </tr>
             <tr>
-              <td><strong>Misuse, Abuse, or Unauthorized Modifications</strong></td>
+              <td style="font-weight: 700;">Shipment Readiness Condition</td>
               <td>
-                MEVA assumes no responsibility for damage incurred through misuse, abuse, negligence, accidental damage, or any unauthorized modification or alteration made to the vehicle following delivery.
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Limitation of Liability</strong></td>
-              <td>
-                This limited warranty covers repair and or replacement of warranty-related items only. MEVA shall not be liable for incidental or consequential damages arising from loss of use, inconvenience, or any commercial loss resulting from the need for warranty work.
-                Any non-warranty related costs remain the responsibility of the client.
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Authorization Requirement</strong></td>
-              <td>
-                Repairs and or work deemed unnecessary by MEVA management and or Engineering Department, including work performed at the request of the client without prior written consent from MEVA Warranty Service Department, may be refused and shall remain the responsibility of the client.
+                MEVA/MAVJ shipment responsibilities are subject to receipt of all of: EUC, NOC, and official export license issued by MOFA (reference pack wording).
               </td>
             </tr>
           </tbody>
         </table>
 
-        <div class="sub-heading" style="margin-top: 14px;">Our Support Commitment</div>
-        <div class="para">
-          <p style="margin: 0 0 8px 0;"><strong>Regional Service Network Hubs:</strong> To ensure operational readiness of the fleet, Mahindra Emirates Vehicle Armouring engages a network of regional service centers designed to provide on-ground technical assistance, periodic maintenance, and genuine spare parts availability across key mission territories, minimizing downtime.</p>
-          <p style="margin: 0;"><strong>Service Network:</strong> Global hub mapping and available authorized service facility references can be provided during clarification stage and finalized upon contract award.</p>
-        </div>
-
-        
-        <div class="info-box note">
+<div class="info-box note">
           <strong>Note:</strong> All commitment declarations listed above are attached as formal annexures in VOLUME VIII.
         </div>
       </div>
