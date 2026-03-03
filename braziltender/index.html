@@ -463,19 +463,28 @@
       saveBtn.textContent = '☁️ Sync to Cloud';
       saveBtn.disabled = false;
     }
-  };
-// --- WORD-DOC FUNCTIONALITIES ---
+  };// --- BULLETPROOF WORD-DOC FUNCTIONALITIES ---
   
+  // Helper: Search backwards past hidden breaks/divs to find the table
+  function getNearestTable(wrapper) {
+    let el = wrapper.previousElementSibling;
+    while (el && el.tagName !== 'TABLE') {
+      el = el.previousElementSibling;
+    }
+    return el;
+  }
+
   // Table Rows
   window.addRow = function(btn) {
-    const table = btn.parentElement.previousElementSibling;
-    if (!table || table.tagName !== 'TABLE') return;
+    console.log("Add Row triggered");
+    const table = getNearestTable(btn.closest('.doc-controls-wrapper'));
+    if (!table) return;
+    
     const tbody = table.querySelector('tbody');
     if (!tbody || !tbody.lastElementChild) return;
     
     const newRow = tbody.lastElementChild.cloneNode(true);
-    // Clear out the cloned text so it's blank for the user
-    newRow.querySelectorAll('td').forEach(td => td.innerText = '');
+    newRow.querySelectorAll('td').forEach(td => td.innerHTML = ''); // Clear text
     tbody.appendChild(newRow);
     
     setDirty(true);
@@ -483,10 +492,9 @@
   };
 
   window.removeRow = function(btn) {
-    const table = btn.parentElement.previousElementSibling;
-    if (!table || table.tagName !== 'TABLE') return;
+    const table = getNearestTable(btn.closest('.doc-controls-wrapper'));
+    if (!table) return;
     const tbody = table.querySelector('tbody');
-    // Keep at least one row
     if (tbody && tbody.children.length > 1) {
       tbody.removeChild(tbody.lastElementChild);
       setDirty(true);
@@ -496,8 +504,8 @@
 
   // Table Columns
   window.addCol = function(btn) {
-    const table = btn.parentElement.previousElementSibling;
-    if (!table || table.tagName !== 'TABLE') return;
+    const table = getNearestTable(btn.closest('.doc-controls-wrapper'));
+    if (!table) return;
     
     const theadTr = table.querySelector('thead tr');
     if (theadTr) {
@@ -516,8 +524,8 @@
   };
 
   window.removeCol = function(btn) {
-    const table = btn.parentElement.previousElementSibling;
-    if (!table || table.tagName !== 'TABLE') return;
+    const table = getNearestTable(btn.closest('.doc-controls-wrapper'));
+    if (!table) return;
     
     const theadTr = table.querySelector('thead tr');
     if (theadTr && theadTr.children.length > 1) {
@@ -536,34 +544,41 @@
 
   // Image Prompts & Addition
   window.promptImage = function(placeholderElement) {
-    const url = prompt('Enter the secure URL of the image to insert:');
+    const url = prompt('Enter the secure URL of the image to insert (e.g., https://...):');
     if (url) {
       const img = placeholderElement.querySelector('img');
       const span = placeholderElement.querySelector('span');
-      img.src = url;
-      img.style.display = 'block';
+      if(img) { img.src = url; img.style.display = 'block'; }
       if(span) span.style.display = 'none';
       setDirty(true);
     }
   };
 
   window.addImageBox = function(btn) {
-    const grid = btn.parentElement.previousElementSibling;
-    if (grid && grid.classList.contains('img-grid')) {
-      const newBox = grid.firstElementChild.cloneNode(true);
-      
-      // Reset the new box
-      const img = newBox.querySelector('img');
-      if (img) { img.src = ''; img.style.display = 'none'; }
-      const span = newBox.querySelector('span');
-      if (span) span.style.display = 'block';
-      newBox.querySelector('.img-title').innerText = 'New Image Section';
-      newBox.querySelector('p').innerText = 'Description...';
-      
-      grid.appendChild(newBox);
-      setDirty(true);
-      positionSaveNearCaret();
+    let grid = btn.closest('.doc-controls-wrapper').previousElementSibling;
+    // Scan backwards for the image grid
+    while (grid && !grid.classList.contains('img-grid')) {
+      grid = grid.previousElementSibling;
     }
+    if (!grid) return;
+
+    const newBox = grid.firstElementChild.cloneNode(true);
+    
+    const img = newBox.querySelector('img');
+    if (img) { img.src = ''; img.style.display = 'none'; }
+    
+    const span = newBox.querySelector('span');
+    if (span) span.style.display = 'block';
+    
+    const title = newBox.querySelector('.img-title');
+    if(title) title.innerText = 'New Image Section';
+    
+    const desc = newBox.querySelector('p.para');
+    if(desc) desc.innerText = 'Description...';
+    
+    grid.appendChild(newBox);
+    setDirty(true);
+    positionSaveNearCaret();
   };
 
   // Certificate Pagination
@@ -572,13 +587,14 @@
     if (!page) return;
     const newPage = page.cloneNode(true);
     
-    // Reset specific text fields in the cloned certificate
-    newPage.querySelector('.cert-title').innerText = 'Annex: [New Document]';
-    newPage.querySelector('.cert-placeholder h4').innerText = 'Attach Document: [Name]';
+    const title = newPage.querySelector('.cert-title');
+    if(title) title.innerText = 'Annex: [New Document]';
+    
+    const h4 = newPage.querySelector('.cert-placeholder h4');
+    if(h4) h4.innerText = 'Attach Document: [Name]';
     
     page.parentNode.insertBefore(newPage, page.nextSibling);
     
-    // Safely call the update page numbers function
     if (typeof window.updatePageNumbers === 'function') {
       window.updatePageNumbers();
     }
@@ -586,6 +602,7 @@
     setDirty(true);
     positionSaveNearCaret();
   };
+  // ⬆️ END OF PASTED JAVASCRIPT SNIPPET ⬆️
   contentDiv.addEventListener('input', () => {
     if (applyingRemote) return;
     setDirty(true);
