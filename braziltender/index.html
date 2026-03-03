@@ -218,7 +218,28 @@
     }
     .doc-control:last-child { border-right: none; }
     .doc-control:hover { background: #e5e7eb; color: var(--text-main); }
+/* --- IMAGE SIZING CONTROLS --- */
+    /* 1. Auto-constrain any image pasted into a normal table cell */
+    #document-content td img {
+      max-width: 100%;
+      max-height: 140px; /* Default small size so rows don't get huge */
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 4px;
+      margin-top: 6px;
+      cursor: zoom-in; /* Tells the user they can click it */
+      transition: max-height 0.2s ease;
+    }
 
+    /* 2. Allow Deep Dive rows to have larger images by default */
+    #document-content td[colspan="5"] img {
+      max-height: 300px;
+    }
+
+    /* 3. Utility classes for manual click-to-resize */
+    #document-content img.size-md { max-height: 250px !important; cursor: zoom-in; }
+    #document-content img.size-lg { max-height: 450px !important; cursor: zoom-out; }
     /* 10. HEADER & FOOTER */
     .header { flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 0 8px 0; border-bottom: 0.5pt solid var(--border-color); margin-bottom: 20px; }
     .logo-container img { height: 28px; width: auto; object-fit: contain; }
@@ -672,6 +693,25 @@
       setDirty(true);
     }
   }
+  // --- CLICK TO RESIZE IMAGES ---
+  contentDiv.addEventListener('click', (e) => {
+    if (e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
+      const img = e.target;
+      
+      // Cycle through sizes: Default (140px) -> Medium (250px) -> Large (450px) -> back to Default
+      if (!img.classList.contains('size-md') && !img.classList.contains('size-lg')) {
+        img.classList.add('size-md');
+      } else if (img.classList.contains('size-md')) {
+        img.classList.remove('size-md');
+        img.classList.add('size-lg');
+      } else {
+        img.classList.remove('size-lg');
+      }
+      
+      setDirty(true);
+      window.notifyChange();
+    }
+  });
 
   startApp();
 </script>
