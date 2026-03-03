@@ -9,50 +9,51 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    /* Global Variables */
+<style>
+    /* Global Variables - Airbnb Aesthetic */
     :root {
-      --brand-color: #e41837; /* The requested red */
-      --brand-color-light: #fbe8eb; /* Very light red for backgrounds */
-      --text-main: #1f2937; /* Dark gray, softer than pure black */
-      --text-muted: #6b7280;
-      --border-color: #e5e7eb;
-      --bg-gray: #f9fafb;
+      --brand-color: #e41837;
+      --brand-color-light: #fef2f2;
+      --text-main: #222222; /* Airbnb standard dark */
+      --text-muted: #717171; /* Airbnb standard gray */
+      --border-color: #ebebeb;
+      --bg-light: #f7f7f7;
+      --shadow-premium: 0 6px 16px rgba(0,0,0,0.12);
     }
 
-    /* Smooth scrolling for the index links */
     html { scroll-behavior: smooth; }
 
     /* Print setup */
-    @page { size: A4; margin: 16mm; }
-    html, body { height: 100%; }
+    @page { size: A4; margin: 0; }
+    html, body { height: 100%; width: 100%; }
     
     body {
-      font-family: 'Georama', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text-main);
       margin: 0;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
-      line-height: 1.5;
+      line-height: 1.6;
+      background-color: var(--bg-light);
     }
 
-    /* Screen layout (Makes it look like physical A4 pages on a web browser) */
+    /* Screen layout - A4 Virtual Pages */
     @media screen {
-      body { background-color: #e5e7eb; padding: 40px 0; }
+      body { padding: 40px 0; }
       .page {
         width: 210mm;
         min-height: 297mm;
-        margin: 0 auto 30px auto;
+        margin: 0 auto 40px auto;
         background: #fff;
-        padding: 16mm 16mm 25mm 16mm; /* Extra bottom padding for footer */
+        padding: 20mm;
         box-sizing: border-box;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.08); /* Softer shadow */
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.05), var(--shadow-premium);
         position: relative;
-        border-radius: 8px; /* Slight rounding for modern feel */
+        border-radius: 12px;
         display: flex;
         flex-direction: column;
       }
+      .page:first-child { padding: 0; overflow: hidden; } /* Hero Page */
     }
 
     /* Print layout */
@@ -60,10 +61,10 @@
       body { background: #fff; padding: 0; }
       .page { 
         margin: 0; 
-        padding: 0 0 15mm 0; /* Padding for print footer */
+        padding: 15mm;
         box-shadow: none; 
-        width: auto; 
-        min-height: auto; 
+        width: 100%; 
+        height: 297mm; 
         page-break-after: always; 
         border-radius: 0;
         position: relative;
@@ -74,218 +75,265 @@
       .ui-controls, .doc-controls-wrapper { display: none !important; } 
     }
 
-    .page-content { flex-grow: 1; display: flex; flex-direction: column; }
-
-    /* Main Action Buttons */
-    .btn {
-      position: fixed;
-      top: 20px;
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      z-index: 1000;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: all 0.2s ease;
-      font-family: 'Georama', sans-serif;
+    /* Airbnb Style Hero Section */
+    .hero-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: url('mevahero.jpeg') center/cover no-repeat;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
     }
-    .print-btn { right: 20px; background: var(--text-main); }
-    .print-btn:hover { background: #111827; transform: translateY(-1px); }
-    
-    .save-btn { right: 165px; background: var(--brand-color); }
-    .save-btn:hover { background: #c0142e; transform: translateY(-1px); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+    }
+    .hero-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 50px;
+      border-radius: 24px;
+      max-width: 80%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .page-content { flex-grow: 1; display: flex; flex-direction: column; }
+
+    /* Action Buttons */
+    .btn {
+      position: fixed;
+      top: 25px;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: var(--shadow-premium);
+      transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .print-btn { right: 25px; background: var(--text-main); }
+   /* Update the .btn and .save-btn in your <style> block */
+.btn {
+  position: absolute; /* Changed from fixed to absolute */
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px; /* Airbnb rounded style */
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  color: #fff;
+}
+
+.save-btn {
+  background: var(--brand-color);
+  opacity: 0; /* Hidden by default */
+  pointer-events: none;
+  white-space: nowrap;
+  transform: translateY(10px);
+}
+
+.save-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.print-btn {
+  position: fixed; /* Keep print button in a static top-right corner */
+  right: 25px;
+  top: 25px;
+  background: var(--text-main);
+}
 
     /* Universal Header */
     .header {
       border-bottom: 1px solid var(--border-color);
-      padding-bottom: 10px;
-      margin-bottom: 24px;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
-    }
-    .logo-container {
-      width: 140px; 
-      height: 35px; /* 1:4 Ratio */
-      display: flex;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
     }
-    .logo-container img { width: 100%; height: 100%; object-fit: contain; }
+    .logo-container { height: 40px; }
+    .logo-container img { height: 100%; width: auto; object-fit: contain; }
 
-    /* Font Structure Uniformity */
+    /* Typography Hierarchy */
     .vol-identifier {
-      font-size: 18px;
+      font-family: 'Georama', sans-serif;
+      font-size: 24px;
       font-weight: 800;
       color: var(--text-main);
-      text-transform: uppercase;
-      border-bottom: 2px solid var(--text-main);
-      padding-bottom: 8px;
       margin: 0 0 24px 0;
-      letter-spacing: 0.5px;
+      letter-spacing: -0.5px;
     }
     .main-heading {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--brand-color);
-      margin: 0 0 16px 0;
+      margin: 0 0 12px 0;
       text-transform: uppercase;
+      letter-spacing: 1.2px;
     }
     .sub-heading {
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 600;
       color: var(--text-main);
-      margin: 20px 0 10px 0;
-      background: var(--bg-gray);
-      padding: 8px 12px;
-      border-radius: 4px;
-      border-left: 4px solid var(--brand-color);
+      margin: 25px 0 15px 0;
+      padding: 12px 16px;
+      background: var(--bg-light);
+      border-radius: 8px;
     }
-    
-    .para { font-size: 11.5px; margin: 0 0 12px; color: #374151; }
+    .para { font-size: 13px; margin: 0 0 16px; color: #484848; }
 
-    /* Premium Modern Tables */
+    /* Premium Tables */
     table {
       width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      font-size: 11px;
-      margin-bottom: 4px; /* Reduced to accommodate controls */
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid var(--border-color);
-      page-break-inside: auto;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-bottom: 12px;
     }
-    tr { page-break-inside: avoid; page-break-after: auto; }
-    th, td {
-      padding: 8px 10px;
-      vertical-align: top;
-      border-bottom: 1px solid var(--border-color);
-      border-right: 1px solid var(--border-color);
-    }
-    th:last-child, td:last-child { border-right: none; }
-    tr:last-child th, tr:last-child td { border-bottom: none; }
     th {
-      background: var(--bg-gray);
-      font-weight: 700;
-      text-align: left;
-      color: var(--text-main);
+      background: transparent;
+      border-bottom: 2px solid var(--text-main);
+      padding: 12px 8px;
       text-transform: uppercase;
-      font-size: 10px;
-      letter-spacing: 0.5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    td {
+      padding: 14px 8px;
+      border-bottom: 1px solid var(--border-color);
+      color: #484848;
     }
     th.group-header {
       background: var(--brand-color-light);
-      text-align: left;
-      font-size: 11px;
       color: var(--brand-color);
-      border-top: 1px solid var(--border-color);
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--brand-color);
+      padding: 10px 16px;
     }
-    tr:first-child th.group-header { border-top: none; }
 
-    .col-order { width: 6%; text-align: center; }
-    .col-exec  { width: 10%; text-align: center; font-weight: 700; color: #059669; }
-    .col-exec-tbd { color: #d97706; }
-    .col-obs    { width: 30%; }
-    
-    .helper-note { display: block; margin-top: 4px; font-style: italic; color: var(--text-muted); font-size: 10px; }
-
-    ul.check-list { list-style: none; padding: 0; margin: 0 0 16px 0; }
-    ul.check-list li { position: relative; padding-left: 20px; margin-bottom: 6px; font-size: 11.5px; color: #374151; }
-    ul.check-list li::before { content: '✓'; position: absolute; left: 0; color: var(--brand-color); font-weight: bold; }
-
-    /* Info Boxes */
-    .info-box { margin: 12px 0; padding: 10px 14px; border-radius: 6px; font-size: 11px; line-height: 1.4; display: flex; gap: 10px; }
-    .info-box.note { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a8a; }
-    .info-box.critical { background: var(--brand-color-light); border: 1px solid #fecdd3; color: #9f1239; }
-    .info-box strong { font-weight: 700; }
-
-    /* A4 Certificate Placeholders */
-    .cert-placeholder {
-      border: 2px dashed #cbd5e1;
-      border-radius: 8px;
-      background: #f8fafc;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px;
-      margin-top: 10px;
-      flex-grow: 1; 
-      min-height: 180mm; 
+    /* Checklists & Info Boxes */
+    ul.check-list { list-style: none; padding: 0; }
+    ul.check-list li { 
+      position: relative; 
+      padding-left: 24px; 
+      margin-bottom: 8px; 
+      font-size: 13px; 
     }
-    .cert-placeholder svg { width: 48px; height: 48px; color: #94a3b8; margin-bottom: 16px; }
-    .cert-placeholder h4 { font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 8px 0; }
-    .cert-placeholder p { font-size: 12px; color: var(--text-muted); margin: 0; max-width: 80%; }
+    ul.check-list li::before { 
+      content: '●'; 
+      position: absolute; 
+      left: 0; 
+      color: var(--brand-color); 
+      font-size: 10px;
+    }
 
-    /* Image Evidence Grids */
-    .img-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 4px; page-break-inside: avoid; }
-    .img-box { flex: 1 1 calc(50% - 16px); min-width: 200px; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-    .img-title { font-size: 11px; font-weight: 700; color: var(--brand-color); margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; }
-    .img-placeholder { width: 100%; height: 180px; background: var(--bg-gray); border: 2px dashed #d1d5db; border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: pointer; transition: 0.2s; }
-    .img-placeholder:hover { background: #e5e7eb; border-color: var(--brand-color); }
-    .img-placeholder span { position: absolute; font-size: 10px; color: #9ca3af; font-weight: 600; z-index: 1; text-align: center; padding: 10px; pointer-events: none; }
-    .img-placeholder img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 2; }
+    .info-box { 
+      margin: 20px 0; 
+      padding: 16px; 
+      border-radius: 12px; 
+      font-size: 12px; 
+      border: 1px solid var(--border-color);
+    }
+    .info-box.note { background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
-    /* Signature blocks */
-    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; page-break-inside: avoid; }
-    .sig-box { border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; background: var(--bg-gray); }
-    .sig-badge { display: inline-block; font-size: 10px; font-weight: 800; padding: 4px 10px; background: var(--text-main); color: #fff; border-radius: 4px; margin-bottom: 12px; text-transform: uppercase; }
-    .sig-line { border-top: 1px solid #d1d5db; margin-top: 50px; padding-top: 8px; font-size: 11px; color: var(--text-muted); }
-    
+    /* Evidence Cards */
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .img-box { 
+      border: 1px solid var(--border-color); 
+      border-radius: 16px; 
+      padding: 16px; 
+      transition: box-shadow 0.2s;
+    }
+    .img-box:hover { box-shadow: var(--shadow-premium); }
+    .img-placeholder {
+      width: 100%;
+      height: 200px;
+      background: var(--bg-light);
+      border-radius: 12px;
+      border: 2px dashed #ddd;
+    }
+
     /* Footer & Pagination */
-    .page-footer { position: absolute; bottom: 10mm; left: 16mm; right: 16mm; border-top: 1px solid var(--border-color); padding-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 9px; color: var(--text-muted); }
-    .page-footer-text { font-weight: 500; letter-spacing: 0.3px; }
-    .page-footer-text strong { color: var(--text-main); font-weight: 700; }
-    .page-num { font-size: 10px; color: var(--text-main); font-weight: 700; }
-    @media print { .page-footer { bottom: 0; left: 0; right: 0; } }
-
-    /* Index styles */
-    .toc-container { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background: #fff; }
-    .toc-link { display: flex; align-items: center; color: var(--text-main); text-decoration: none; font-size: 13px; font-weight: 700; margin-bottom: 10px; padding: 8px 10px; border-radius: 4px; transition: background 0.2s; }
-    .toc-link:hover { background: var(--bg-gray); color: var(--brand-color); }
-    .toc-sublink { display: block; color: var(--text-muted); text-decoration: none; font-size: 11.5px; margin-left: 28px; margin-bottom: 8px; position: relative; }
-    .toc-sublink::before { content: ''; position: absolute; left: -12px; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: var(--border-color); }
-    .toc-sublink:hover { color: var(--brand-color); }
-    .toc-divider { margin: 16px 0; border-top: 1px dashed var(--border-color); }
-
-    /* Custom In-Document Editing Controls */
-    .doc-controls-wrapper {
-      display: flex; gap: 8px; margin-bottom: 16px;
-      user-select: none;
+    .page-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: 20mm;
+      right: 20mm;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    .doc-control {
-      display: inline-flex; align-items: center; justify-content: center;
-      background: #e5e7eb; border: 1px solid #d1d5db; color: #374151;
-      padding: 4px 10px; border-radius: 4px; font-size: 10px; font-weight: 700;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .doc-control:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
+    .page-num { font-weight: 800; color: var(--text-main); }
 
-    /* Status indicator */
+    /* Index - Card Style */
+    .toc-container { 
+      background: var(--bg-light); 
+      border-radius: 16px; 
+      padding: 30px;
+    }
+    .toc-link {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .toc-link:hover { color: var(--brand-color); }
+
+    /* Toast */
     #status-toast {
       position: fixed;
-      bottom: 20px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      background: #1f2937;
+      background: var(--text-main);
       color: #fff;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 14px;
-      z-index: 9999;
-      display: none;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 500;
+      box-shadow: var(--shadow-premium);
+      z-index: 10000;
     }
+
+    /* Editor Controls */
+    .doc-control {
+      background: white;
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .doc-control:hover { border-color: var(--brand-color); color: var(--brand-color); }
   </style>
 </head>
 
