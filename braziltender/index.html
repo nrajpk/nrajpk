@@ -464,7 +464,128 @@
       saveBtn.disabled = false;
     }
   };
+// --- WORD-DOC FUNCTIONALITIES ---
+  
+  // Table Rows
+  window.addRow = function(btn) {
+    const table = btn.parentElement.previousElementSibling;
+    if (!table || table.tagName !== 'TABLE') return;
+    const tbody = table.querySelector('tbody');
+    if (!tbody || !tbody.lastElementChild) return;
+    
+    const newRow = tbody.lastElementChild.cloneNode(true);
+    // Clear out the cloned text so it's blank for the user
+    newRow.querySelectorAll('td').forEach(td => td.innerText = '');
+    tbody.appendChild(newRow);
+    
+    setDirty(true);
+    positionSaveNearCaret();
+  };
 
+  window.removeRow = function(btn) {
+    const table = btn.parentElement.previousElementSibling;
+    if (!table || table.tagName !== 'TABLE') return;
+    const tbody = table.querySelector('tbody');
+    // Keep at least one row
+    if (tbody && tbody.children.length > 1) {
+      tbody.removeChild(tbody.lastElementChild);
+      setDirty(true);
+      positionSaveNearCaret();
+    }
+  };
+
+  // Table Columns
+  window.addCol = function(btn) {
+    const table = btn.parentElement.previousElementSibling;
+    if (!table || table.tagName !== 'TABLE') return;
+    
+    const theadTr = table.querySelector('thead tr');
+    if (theadTr) {
+      const newTh = document.createElement('th');
+      newTh.innerText = 'New Col';
+      theadTr.appendChild(newTh);
+    }
+    
+    table.querySelectorAll('tbody tr').forEach(tr => {
+      const newTd = document.createElement('td');
+      tr.appendChild(newTd);
+    });
+    
+    setDirty(true);
+    positionSaveNearCaret();
+  };
+
+  window.removeCol = function(btn) {
+    const table = btn.parentElement.previousElementSibling;
+    if (!table || table.tagName !== 'TABLE') return;
+    
+    const theadTr = table.querySelector('thead tr');
+    if (theadTr && theadTr.children.length > 1) {
+      theadTr.removeChild(theadTr.lastElementChild);
+    }
+    
+    table.querySelectorAll('tbody tr').forEach(tr => {
+      if (tr.children.length > 1) {
+        tr.removeChild(tr.lastElementChild);
+      }
+    });
+    
+    setDirty(true);
+    positionSaveNearCaret();
+  };
+
+  // Image Prompts & Addition
+  window.promptImage = function(placeholderElement) {
+    const url = prompt('Enter the secure URL of the image to insert:');
+    if (url) {
+      const img = placeholderElement.querySelector('img');
+      const span = placeholderElement.querySelector('span');
+      img.src = url;
+      img.style.display = 'block';
+      if(span) span.style.display = 'none';
+      setDirty(true);
+    }
+  };
+
+  window.addImageBox = function(btn) {
+    const grid = btn.parentElement.previousElementSibling;
+    if (grid && grid.classList.contains('img-grid')) {
+      const newBox = grid.firstElementChild.cloneNode(true);
+      
+      // Reset the new box
+      const img = newBox.querySelector('img');
+      if (img) { img.src = ''; img.style.display = 'none'; }
+      const span = newBox.querySelector('span');
+      if (span) span.style.display = 'block';
+      newBox.querySelector('.img-title').innerText = 'New Image Section';
+      newBox.querySelector('p').innerText = 'Description...';
+      
+      grid.appendChild(newBox);
+      setDirty(true);
+      positionSaveNearCaret();
+    }
+  };
+
+  // Certificate Pagination
+  window.addCertificate = function(btn) {
+    const page = btn.closest('.page');
+    if (!page) return;
+    const newPage = page.cloneNode(true);
+    
+    // Reset specific text fields in the cloned certificate
+    newPage.querySelector('.cert-title').innerText = 'Annex: [New Document]';
+    newPage.querySelector('.cert-placeholder h4').innerText = 'Attach Document: [Name]';
+    
+    page.parentNode.insertBefore(newPage, page.nextSibling);
+    
+    // Safely call the update page numbers function
+    if (typeof window.updatePageNumbers === 'function') {
+      window.updatePageNumbers();
+    }
+    
+    setDirty(true);
+    positionSaveNearCaret();
+  };
   contentDiv.addEventListener('input', () => {
     if (applyingRemote) return;
     setDirty(true);
