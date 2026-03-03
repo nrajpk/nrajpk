@@ -545,9 +545,27 @@
       triggerSaveCue();
     };
 
-    function triggerSaveCue() {
-       document.getElementById('save-btn').style.boxShadow = "0 0 12px rgba(228, 24, 55, 0.8)";
-    }
+    window.triggerSaveCue = function() {
+      const saveBtn = document.getElementById('save-btn');
+      const selection = window.getSelection();
+      
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+
+        // Calculate vertical position relative to the whole document
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const topPosition = rect.top + scrollTop - 10; // Slightly above the current line
+
+        // Position the button on the right margin
+        saveBtn.style.top = `${topPosition}px`;
+        saveBtn.style.right = "40px"; // Keeps it floating near the right edge
+        
+        // Make it pop and glow
+        saveBtn.classList.add('visible');
+        saveBtn.style.boxShadow = "0 0 20px rgba(228, 24, 55, 0.5)";
+      }
+    };
 
     contentDiv.addEventListener('input', triggerSaveCue);
 
