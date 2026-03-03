@@ -10,109 +10,345 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    /* Consolidated Professional Global Design CSS */
+    /* Global Variables - Airbnb Aesthetic */
     :root {
       --brand-color: #e41837;
-      --meva-red: #e41837; /* Supporting new HTML calls */
-      --text-main: #1a1a1a;
-      --text-muted: #595959;
-      --border-color: #d1d1d1;
-      --bg-light: #f4f4f4;
-      --shadow-premium: 0 4px 12px rgba(0,0,0,0.08);
+      --brand-color-light: #fef2f2;
+      --text-main: #222222; /* Airbnb standard dark */
+      --text-muted: #717171; /* Airbnb standard gray */
+      --border-color: #ebebeb;
+      --bg-light: #f7f7f7;
+      --shadow-premium: 0 6px 16px rgba(0,0,0,0.12);
     }
 
-    /* Print Precision */
+    html { scroll-behavior: smooth; }
+
+    /* Print setup */
     @page { size: A4; margin: 0; }
+    html, body { height: 100%; width: 100%; }
     
     body {
-      font-family: 'Georama', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text-main);
       margin: 0;
-      background-color: #525659; /* Modern Dark UI Background */
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+      line-height: 1.6;
+      background-color: var(--bg-light);
     }
 
+    /* Screen layout - A4 Virtual Pages */
     @media screen {
+      body { padding: 40px 0; }
       .page {
         width: 210mm;
         min-height: 297mm;
-        margin: 40px auto;
+        margin: 0 auto 40px auto;
         background: #fff;
-        padding: 20mm 15mm;
+        padding: 20mm;
         box-sizing: border-box;
-        box-shadow: 0 0 30px rgba(0,0,0,0.3);
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.05), var(--shadow-premium);
+        position: relative;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+      }
+      .page:first-child { padding: 0; overflow: hidden; } /* Hero Page */
+    }
+
+    /* Print layout */
+    @media print { 
+      body { background: #fff; padding: 0; }
+      .page { 
+        margin: 0; 
+        padding: 15mm;
+        box-shadow: none; 
+        width: 100%; 
+        height: 297mm; 
+        page-break-after: always; 
+        border-radius: 0;
         position: relative;
         display: flex;
         flex-direction: column;
       }
-      .page:first-child { padding: 0 !important; overflow: hidden; } 
+      .page:last-child { page-break-after: auto; }
+      .ui-controls, .doc-controls-wrapper { display: none !important; } 
     }
 
-    @media print {
-      body { background: #fff; padding: 0; }
-      .page { 
-        margin: 0; padding: 15mm; box-shadow: none; 
-        width: 210mm; height: 297mm; page-break-after: always; 
-      }
-      .ui-controls, .doc-controls-wrapper { display: none !important; }
+    /* Airbnb Style Hero Section */
+    .hero-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: url('mevahero.jpeg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+    }
+    .hero-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 50px;
+      border-radius: 24px;
+      max-width: 80%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
-    /* Professional Google-Grade Header */
+    .page-content { flex-grow: 1; display: flex; flex-direction: column; }
+
+    /* Action Buttons */
+    .btn {
+      position: fixed;
+      top: 25px;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: var(--shadow-premium);
+      transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  /* --- Action Buttons (Refined UI) --- */
+
+.btn {
+  /* Default button properties */
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 24px; /* Airbnb-style pill shape */
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  color: #fff;
+}
+
+/* 1. Static Print Button (Top-Right) */
+.print-btn {
+  position: fixed; 
+  right: 25px;
+  top: 25px;
+  background: var(--text-main);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.print-btn:hover {
+  background: #000;
+  transform: translateY(-1px);
+}
+
+/* 2. Floating Dynamic Sync Button (Near Cursor) */
+.save-btn {
+  position: absolute; /* Allows JS to position it near the change */
+  background: var(--brand-color);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transform: translateY(10px) scale(0.95);
+  box-shadow: 0 10px 20px rgba(228, 24, 55, 0.3);
+}
+
+.save-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.save-btn:hover {
+  background: #c0142e;
+  box-shadow: 0 12px 24px rgba(228, 24, 55, 0.4);
+}
+
+    /* Universal Header */
     .header {
-      border-bottom: 2px solid var(--brand-color);
-      padding-bottom: 8px;
-      margin-bottom: 25px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 15px;
+      margin-bottom: 30px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
     }
+    .logo-container { height: 40px; }
+    .logo-container img { height: 100%; width: auto; object-fit: contain; }
 
-    /* Audit-Ready Technical Tables */
+    /* Typography Hierarchy */
+    .vol-identifier {
+      font-family: 'Georama', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0 0 24px 0;
+      letter-spacing: -0.5px;
+    }
+    .main-heading {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--brand-color);
+      margin: 0 0 12px 0;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+    .sub-heading {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin: 25px 0 15px 0;
+      padding: 12px 16px;
+      background: var(--bg-light);
+      border-radius: 8px;
+    }
+    .para { font-size: 13px; margin: 0 0 16px; color: #484848; }
+
+    /* Premium Tables */
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 9pt;
-      margin-bottom: 15px;
+      font-size: 12px;
+      margin-bottom: 12px;
     }
     th {
-      background: #f8f9fa;
-      border: 1px solid var(--border-color);
+      background: transparent;
       border-bottom: 2px solid var(--text-main);
-      padding: 10px;
+      padding: 12px 8px;
       text-transform: uppercase;
-      font-size: 8pt;
-      font-weight: 800;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-main);
     }
     td {
-      padding: 8px 10px;
-      border: 1px solid var(--border-color);
-      vertical-align: top;
+      padding: 14px 8px;
+      border-bottom: 1px solid var(--border-color);
+      color: #484848;
     }
     th.group-header {
-      background: #fdf2f2;
+      background: var(--brand-color-light);
       color: var(--brand-color);
-      text-align: left;
-      border-left: 4px solid var(--brand-color);
+      border-bottom: 1px solid var(--brand-color);
+      padding: 10px 16px;
     }
 
-    /* Google-Grade Page Footer */
+    /* Checklists & Info Boxes */
+    ul.check-list { list-style: none; padding: 0; }
+    ul.check-list li { 
+      position: relative; 
+      padding-left: 24px; 
+      margin-bottom: 8px; 
+      font-size: 13px; 
+    }
+    ul.check-list li::before { 
+      content: '●'; 
+      position: absolute; 
+      left: 0; 
+      color: var(--brand-color); 
+      font-size: 10px;
+    }
+
+    .info-box { 
+      margin: 20px 0; 
+      padding: 16px; 
+      border-radius: 12px; 
+      font-size: 12px; 
+      border: 1px solid var(--border-color);
+    }
+    .info-box.note { background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+    /* Evidence Cards */
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .img-box { 
+      border: 1px solid var(--border-color); 
+      border-radius: 16px; 
+      padding: 16px; 
+      transition: box-shadow 0.2s;
+    }
+    .img-box:hover { box-shadow: var(--shadow-premium); }
+    .img-placeholder {
+      width: 100%;
+      height: 200px;
+      background: var(--bg-light);
+      border-radius: 12px;
+      border: 2px dashed #ddd;
+    }
+
+    /* Footer & Pagination */
     .page-footer {
       position: absolute;
       bottom: 10mm;
-      left: 15mm;
-      right: 15mm;
-      padding-top: 8px;
+      left: 20mm;
+      right: 20mm;
+      padding-top: 15px;
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-between;
-      font-family: 'Inter', sans-serif;
-      font-size: 7.5pt;
+      font-size: 10px;
       color: var(--text-muted);
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    .page-num { font-weight: 800; color: var(--brand-color); }
-</style>
+    .page-num { font-weight: 800; color: var(--text-main); }
+
+    /* Index - Card Style */
+    .toc-container { 
+      background: var(--bg-light); 
+      border-radius: 16px; 
+      padding: 30px;
+    }
+    .toc-link {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .toc-link:hover { color: var(--brand-color); }
+
+    /* Toast */
+    #status-toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text-main);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 500;
+      box-shadow: var(--shadow-premium);
+      z-index: 10000;
+    }
+
+    /* Editor Controls */
+    .doc-control {
+      background: white;
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .doc-control:hover { border-color: var(--brand-color); color: var(--brand-color); }
+  </style>
 </head>
 
 <body>
@@ -388,26 +624,13 @@
     async function seedDatabase() {
       const defaultHTML = `
     <!-- COVER PAGE WITH HERO IMAGE 1:4 RATIO -->
-   <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 0; border: none; background: #fff;">
-  
-  <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">
-    <img src="meva.png" alt="MEVA Logo" style="height: 25px; filter: grayscale(1);" onerror="this.style.display='none';">
-    <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #666; text-transform: uppercase; letter-spacing: 1px;">
-      Document Ref: BR-PMES-2026-002 <br> 
-      Classification: Commercial-in-Confidence
-    </div>
-  </div>
-
-  <div style="width: 100%; height: 350px; position: relative; background-color: #1a1a1a;">
-    <img src="mevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.9;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    
-    <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#444; background:#f0f0f0; position:absolute; top:0; left:0;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-      <span style="font-size: 10px; margin-top: 10px; font-family: 'JetBrains Mono'; letter-spacing: 2px;">ASSET_MISSING // COVER_IMAGE</span>
-    </div>
-
-    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 12px; background: linear-gradient(90deg, #e41837 0%, #b0122a 100%);"></div>
-  </div>
+    <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
+      <div style="width: 100%; aspect-ratio: 4 / 1; position: relative; background-color: var(--bg-gray);">
+        <img src="mevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#9ca3af; font-size:14px; font-weight:bold; background:#e5e7eb; position:absolute; top:0; left:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
+          [ HERO IMAGE PLACEHOLDER (1:4 RATIO) ]
+        </div>
         <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background-color: var(--brand-color);"></div>
       </div>
       <div style="padding: 60px 50px; background-color: #fff; flex-grow: 1; box-sizing: border-box;">
