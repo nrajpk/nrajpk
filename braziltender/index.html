@@ -705,6 +705,175 @@
     });
   };
 </script>
+<script>
+  // Utility function to manually trigger the input event
+  // This ensures the auto-save logic in your main script catches button clicks
+  function notifyChange() {
+    const contentDiv = document.getElementById('document-content');
+    if (contentDiv) {
+      contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  }
 
+  // Helper to find the table immediately preceding the clicked control button
+  function getTargetTable(btn) {
+    let el = btn.closest('.doc-controls-wrapper');
+    while (el && el.previousElementSibling) {
+      el = el.previousElementSibling;
+      if (el.tagName.toLowerCase() === 'table') return el;
+    }
+    return null;
+  }
+
+  // --- TABLE CONTROLS ---
+
+  window.addRow = function(btn) {
+    const table = getTargetTable(btn);
+    if (!table) return;
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    const rows = tbody.querySelectorAll('tr');
+    if (rows.length === 0) return;
+    
+    // Clone the last row
+    const newRow = rows[rows.length - 1].cloneNode(true);
+    
+    // Optional: Clear out the text of the cloned row so it's fresh for input
+    const cells = newRow.querySelectorAll('td');
+    cells.forEach(cell => {
+      // Keep internal HTML if it has checklists, otherwise clear text
+      if (!cell.querySelector('.check-list')) {
+        cell.innerHTML = ''; 
+      }
+    });
+
+    tbody.appendChild(newRow);
+    notifyChange();
+  };
+
+  window.removeRow = function(btn) {
+    const table = getTargetTable(btn);
+    if (!table) return;
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    const rows = tbody.querySelectorAll('tr');
+    
+    // Keep at least one row to prevent breaking the table structure
+    if (rows.length > 1) { 
+      tbody.removeChild(rows[rows.length - 1]);
+      notifyChange();
+    }
+  };
+
+  window.addCol = function(btn) {
+    const table = getTargetTable(btn);
+    if (!table) return;
+    
+    const theadTr = table.querySelector('thead tr');
+    if (theadTr) {
+      const newTh = document.createElement('th');
+      newTh.innerText = "New Header";
+      theadTr.appendChild(newTh);
+    }
+    
+    const tbodyRows = table.querySelectorAll('tbody tr');
+    tbodyRows.forEach(row => {
+      const newTd = document.createElement('td');
+      newTd.innerText = "...";
+      row.appendChild(newTd);
+    });
+    
+    notifyChange();
+  };
+
+  window.removeCol = function(btn) {
+    const table = getTargetTable(btn);
+    if (!table) return;
+    
+    const theadTr = table.querySelector('thead tr');
+    if (theadTr && theadTr.children.length > 1) {
+      theadTr.removeChild(theadTr.lastElementChild);
+    }
+    
+    const tbodyRows = table.querySelectorAll('tbody tr');
+    tbodyRows.forEach(row => {
+      if (row.children.length > 1) {
+        row.removeChild(row.lastElementChild);
+      }
+    });
+    
+    notifyChange();
+  };
+
+  // --- IMAGE & MEDIA CONTROLS ---
+
+  window.promptImage = function(el) {
+    // In a production environment, you might replace this with a Firebase Storage upload trigger.
+    // For the prototype, prompting for a URL works perfectly.
+    const url = prompt("Enter the direct URL for the vehicle diagram or image:", "https://via.placeholder.com/600x400");
+    if (url) {
+      const img = el.querySelector('img');
+      const span = el.querySelector('span');
+      if (img) {
+        img.src = url;
+        img.style.display = 'block';
+      }
+      if (span) {
+        span.style.display = 'none'; // Hide the "Click to insert" text
+      }
+      notifyChange();
+    }
+  };
+
+  window.addImageBox = function(btn) {
+    const grid = btn.closest('.doc-controls-wrapper').previousElementSibling;
+    if (grid && grid.classList.contains('img-grid')) {
+      const boxes = grid.querySelectorAll('.img-box');
+      if (boxes.length > 0) {
+        const newBox = boxes[boxes.length - 1].cloneNode(true);
+        
+        // Reset the state of the cloned image box
+        const img = newBox.querySelector('img');
+        if(img) { 
+          img.src = ''; 
+          img.style.display = 'none'; 
+        }
+        const span = newBox.querySelector('span');
+        if(span) { 
+          span.style.display = 'block'; 
+        }
+        
+        // Update the title placeholder
+        const title = newBox.querySelector('.img-title');
+        if(title) title.innerText = "New Visual Reference";
+
+        grid.appendChild(newBox);
+        notifyChange();
+      }
+    }
+  };
+
+  // --- DOCUMENT STRUCTURE CONTROLS ---
+
+  window.addCertificate = function(btn) {
+    const page = btn.closest('.page');
+    if (!page) return;
+    
+    const newPage = page.cloneNode(true);
+    
+    // Clear out any user-entered text in the new certificate's title to avoid confusion
+    const certTitle = newPage.querySelector('.cert-title');
+    if (certTitle) certTitle.innerText = "Annex: [Document Name]";
+    
+    // Insert the new page immediately after the current one
+    page.parentNode.insertBefore(newPage, page.nextSibling);
+    
+    // Trigger the existing function to update the footer page numbers
+    if (typeof window.updatePageNumbers === 'function') {
+      window.updatePageNumbers();
+    }
+    notifyChange();
+  };
+</script>
 </body>
 </html>
