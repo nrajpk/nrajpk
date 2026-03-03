@@ -89,7 +89,11 @@ export const defaultHTML = `
         <tr><td>5.4</td><td>Foreign companies that are unable to submit the documentation required... due to lack of equivalent instrument... must submit a declaration, as per Annex I-H.</td><td class="col-exec col-exec-tbd">TBD</td><td>Notarized Declaration (Annex I-H) attached.</td><td>Annex 5.4 (I-H)</td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
 
     <div class="main-heading" style="margin-top: 20px;">A2. Tax, Social & Labor Qualification</div>
     <p class="para">Matrix corresponding to the tax and labor qualification requirements.</p>
@@ -102,7 +106,11 @@ export const defaultHTML = `
         <tr><td>2.8</td><td>Proof of good standing with the Labor Courts.</td><td class="col-exec col-exec-tbd">TBD</td><td>MOHRE good standing certificate.</td><td>Annex 2.8</td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
   </div>
   <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
 </div>
@@ -122,7 +130,11 @@ export const defaultHTML = `
         <tr><td>3.1.2 (b)</td><td>Proof of project maturity: History of use Military and Law Enforcement (MLE), national or foreign, for at least 02 (two) years.</td><td class="col-exec col-exec-tbd">TBD</td><td>Historical MLE supply proven.</td><td>Annex 3.1.2 (b)</td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
 
     <div id="part-b2" class="main-heading" style="margin-top: 20px;">B2. Technical Specifications – Item 1 (APC)</div>
     <p class="para">Matrix corresponding to Annex I-B of the source document.</p>
@@ -153,13 +165,32 @@ export const defaultHTML = `
         <tr><td>2.3.1</td><td>Gearbox: Automatic transmission with at least six forward speeds and one reverse speed, torque converter and electronic management.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
         <tr><td>2.3.2</td><td>Wheel drive: 4X4 part-time; real-time electronic transfer case; automatic/manual freewheel.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
         <tr><td>2.3.3 (a-b)</td><td>Brakes: The braking system must have (ABS) on all wheels; Electronic brake force distribution (EBD); Ventilated disc brakes.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
+        
+        <tr class="no-break">
+          <td colspan="5" style="background-color: #f8fafc; border-left: 3px solid var(--brand-color); padding: 15px;">
+            <strong style="color: var(--brand-color); font-size: 11px; text-transform: uppercase;">↳ Technical Deep Dive & Evidence: Braking System</strong>
+            <div contenteditable="true" style="margin-top: 8px; font-size: 11px; color: var(--text-main); margin-bottom: 12px;">
+               <strong>Brand / OEM:</strong> Brembo / DBA (Example)<br><br>
+               <strong>Technical Justification:</strong> The upgraded heavy-duty braking kit features slotted ventilated rotors and 6-piston calipers designed specifically to handle the increased GVWR of the armored platform without brake fade during pursuit or evasive maneuvers.
+            </div>
+            <div class="img-placeholder" onclick="promptImage(this)" style="max-width: 400px; margin: 0 auto; background: #fff;">
+              <span>Click to insert technical diagram / photo of brake kit</span>
+              <img src="" alt="" style="display:none; width: 100%; border-radius: 4px;">
+            </div>
+          </td>
+        </tr>
+
         <tr><td>2.3.3 (c)</td><td>Brakes: The service brake system must keep the vehicle immobilized, even at its total weight, when parked on the asphalt surface up to 60%.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
         <tr><td>2.3.3 (d)</td><td>Brakes: Electronic stability control (ESP - Electronic Stability Program) that can be activated or deactivated inside the cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
         <tr><td>2.3.4 (a-b)</td><td>Direction: Hydraulic or electrical; Original factory steering wheel positioned on the left side of the cabin.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
         <tr><td>2.3.5</td><td>Suspension: The axles must be reinforced to meet military requirements.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
   </div>
   <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
 </div>
@@ -205,7 +236,11 @@ export const defaultHTML = `
         <tr><td>2.10 (a-e)</td><td>Police protection cell: CEN BR 7 (glazed areas/opaque/loopholes). Floor: Protection against simultaneous explosions (DM51x2, HG85, DM31). Engine/mudguards: Critical components protected. Radiator guard 7.62x51mm NATO 60°N.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
   </div>
   <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
 </div>
@@ -241,7 +276,11 @@ export const defaultHTML = `
         <tr><td>2.16 (i-iii)</td><td>Analog Prep: Motorola PRO5100 adaptation with remote kit. External VHF antenna (46-49 MHz, 50 Ohms, VSWR max 1.5:1). RG58C cable. Impedance/SWR report required.</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
 
     <div class="sub-heading" style="margin-top: 20px;">Item 1 – Formal Certifications Required (Refer to Annexures)</div>
     <table>
@@ -251,7 +290,11 @@ export const defaultHTML = `
         <tr><td>3.6</td><td><strong>Underbody Protection Certification – APC</strong><br><em style="font-size:9px; color:gray;">Blast test compliance certification.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Blast Certs attached.</td><td>Annex 3.6</td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
   </div>
   <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
 </div>
@@ -340,7 +383,11 @@ export const defaultHTML = `
         <tr><td>2.10</td><td>Protective cell (glazed areas, floor, engine): VPAM EDITION 3 VR7 (5.56x45mm NATO & 7.62x51mm NATO). Front radiator guard 7.62x51mm 60°N. Front mudguards, critical engine comps (batteries, ECU, ABS).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
   </div>
   <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
 </div>
@@ -377,7 +424,11 @@ export const defaultHTML = `
         <tr><td>2.16 (a-e)</td><td>Unmarked Lighting Assy: Front primary (inside windshield), Rear primary (inside rear window), Secondary (behind grille, smoked lens). 2 magnetic emblems (40 cm).</td><td class="col-exec col-exec-tbd">TBD</td><td></td><td></td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
 
     <div class="sub-heading" style="margin-top: 20px;">Item 2 – Formal Certifications Required (Refer to Annexures)</div>
     <table>
@@ -386,7 +437,11 @@ export const defaultHTML = `
         <tr><td>3.8</td><td><strong>Ballistic Certification – CAV</strong><br><em style="font-size:9px; color:gray;">Independent lab. Opaque + transparent shielding per VPAM VR7.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Independent VPAM VR7 Cert.</td><td>Annex 3.8</td></tr>
       </tbody>
     </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
+    <div class="doc-controls-wrapper" contenteditable="false">
+      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
+    </div>
   </div>
   <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
 </div>
@@ -484,225 +539,4 @@ export const defaultHTML = `
     <div class="vol-identifier">PART C - ECONOMIC & FINANCIAL COMPLIANCE</div>
     <div class="main-heading">Part Summary Checklist</div>
     <table>
-      <thead><tr><th style="width: 8%;">Ref. No</th><th style="width: 36%;">Details (Per Source Document)</th><th style="width: 8%;">Comply</th><th style="width: 24%;">MEVA Response</th><th style="width: 24%;">Supporting Documents</th></tr></thead>
-      <tbody>
-        <tr><td>4.4.1</td><td><strong>Audited Financial Statements (Last 2 Years)</strong><br><em style="font-size:9px; color:gray;">Balance Sheet, Income Statement, Auditor Report. Apostilled.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Audited financials attached.</td><td>Annex 4.4.1</td></tr>
-        <tr><td>4.4.1</td><td><strong>Accountant Declaration of Ratios</strong><br><em style="font-size:9px; color:gray;">Must show: LG > 1, LC > 1, SG > 1. If not → Net Worth ≥ 10%.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Accountant declaration attached.</td><td>Annex 4.4.1 (Ratios)</td></tr>
-      </tbody>
-    </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
-
-    <div id="part-d" class="vol-identifier" style="margin-top: 30px;">PART D - COMMERCIAL PROPOSAL</div>
-    <div class="main-heading">Commercial Terms & Pricing Logic</div>
-    <table>
-      <thead><tr><th style="width: 8%;">Ref. No</th><th style="width: 36%;">Details (Per Source Document)</th><th style="width: 8%;">Comply</th><th style="width: 24%;">MEVA Response</th><th style="width: 24%;">Supporting Documents</th></tr></thead>
-      <tbody>
-        <tr><td>6.1.1</td><td><strong>Annex I-G – Commercial Proposal (Imported)</strong><br><em style="font-size:9px; color:gray;">Separate forms for Item 1 and Item 2 using equalized K value.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Forms populated and attached.</td><td>Annex I-G</td></tr>
-        <tr>
-          <td style="color:var(--brand-color); font-weight:700;">9.5</td>
-          <td><strong>Commercial Pricing Schedule & Equalization</strong><br><em style="font-size:9px; color:gray;">Unit Price, Total Batch Price, Customs & Duties equalization (ICMS, PIS, COFINS).</em></td>
-          <td class="col-exec col-exec-tbd">TBD</td><td>Detailed schedule provided.</td><td>Pricing Annex</td>
-        </tr>
-        <tr><td>9.4</td><td><strong>PTAX Exchange Rate Declaration</strong><br><em style="font-size:9px; color:gray;">Using rate 3 business days before March 11, 2026.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Calculated and declared.</td><td>Annex 9.4</td></tr>
-        <tr><td>9.11</td><td><strong>Incoterm Declaration</strong><br><em style="font-size:9px; color:gray;">Confirm DDP (preferred) or DPU (if justified).</em></td><td class="col-exec col-exec-tbd">TBD</td><td>DDP / DPU declared.</td><td>Annex 9.11</td></tr>
-        <tr><td>7.24</td><td><strong>Letter of Credit Terms Declaration</strong><br><em style="font-size:9px; color:gray;">State LC timeframe, acceptance of risk, and costs.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>LC terms accepted.</td><td>Annex 7.24</td></tr>
-        <tr><td>6.16</td><td><strong>Proposal Validity Declaration</strong><br><em style="font-size:9px; color:gray;">Minimum 180 days.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Valid for 180 days.</td><td>Annex 6.16</td></tr>
-      </tbody>
-    </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
-    
-    <div class="sub-heading" style="margin-top: 22px;">Reference Commercial & Contractual Terms (MEVA Standard)</div>
-    <div class="text-muted" style="font-size: 12px; margin-bottom: 10px;">The following clauses are reference terms extracted from an MEVA proposal pack to help populate the commercial narrative. Where tender forms or public procurement terms differ, the tender requirements shall prevail.</div>
-    <ul style="margin: 0 0 12px 18px; font-size:11px;">
-      <li><strong>Payment:</strong> 100% advance (subject to tender acceptance) or LC per tender.</li>
-      <li><strong>Account:</strong> Mahindra Emirates Vehicle Armouring FZ-LLC, Bank of Baroda Dubai (Swift: BARBAEADDEI).</li>
-      <li><strong>Force Majeure:</strong> Delays due to acts beyond seller control.</li>
-    </ul>
-  </div>
-  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
-</div>
-
-<div class="page" id="part-e">
-  <div class="header">
-    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
-  </div>
-  <div class="page-content">
-    <div class="vol-identifier">PART E - TRAINING, WARRANTY & MAINTENANCE</div>
-    <div class="main-heading">Post-Contract Commitments</div>
-    <table>
-      <thead><tr><th style="width: 8%;">Ref. No</th><th style="width: 36%;">Details (Per Source Document)</th><th style="width: 8%;">Comply</th><th style="width: 24%;">MEVA Response</th><th style="width: 24%;">Supporting Documents</th></tr></thead>
-      <tbody>
-        <tr><td>5.11</td><td><strong>Warranty Schedule</strong><br><em style="font-size:9px; color:gray;">Opaque/Transparent Shielding: 60 months. Engine/Gearbox, Comms, Mod Deficiencies, Prev. Maint: Per Table.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>60-month shielding warranty confirmed.</td><td>Annex 5.11</td></tr>
-        <tr><td>5.13</td><td><strong>Warranty & After-Sales Plan</strong><br><em style="font-size:9px; color:gray;">60 day repair max, 10-year spares, 1% spare reserve, recall ref.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Warranty plan provided.</td><td>Annex 5.13</td></tr>
-        <tr><td>4.4</td><td><strong>Operator Training Plan</strong><br><em style="font-size:9px; color:gray;">20 hours in ES, Portuguese, max 10 per class.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Training syllabus attached.</td><td>Annex 4.4</td></tr>
-        <tr><td>4.5</td><td><strong>Subcontracting Declaration</strong><br><em style="font-size:9px; color:gray;">Max 30% (maintenance only). Or declare none.</em></td><td class="col-exec col-exec-tbd">TBD</td><td>Declaration provided.</td><td>Annex 4.5</td></tr>
-      </tbody>
-    </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
-    
-    <div class="sub-heading" style="margin-top: 22px;">Proposed Warranty & Support Terms (Reference)</div>
-    <div class="text-muted" style="font-size: 12px; margin-bottom: 10px;">Reference warranty terms extracted from an MEVA proposal pack. Final warranty commitments will be aligned to the tender contract requirements.</div>
-    <ul style="margin: 0 0 10px 18px; font-size:11px;">
-      <li><strong>Authorized Repairs:</strong> May be performed locally with MEVA approval.</li>
-      <li><strong>Limitations:</strong> No liability for use outside parameters, misuse, abuse, or unauthorized mods.</li>
-      <li><strong>Shipment Docs:</strong> Subject to EUC, NOC, and export license (MOFA).</li>
-      <li>All commitment declarations are attached as formal annexures.</li>
-    </ul>
-
-    <div class="main-heading" style="margin-top: 30px;">Acceptance Test Plan (Annex I-K) - Traceability Checklist</div>
-    <table>
-      <thead>
-        <tr><th style="width:60%;">Traceability Element</th><th style="width:10%;">Provided</th><th style="width:30%;">Reference / Location</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>VIN/Chassis (or equivalent identifier)</td><td class="col-exec">YES</td><td>Traceability Header</td></tr>
-        <tr><td>Engine number (when applicable)</td><td class="col-exec">YES</td><td>Delivery dossier</td></tr>
-        <tr><td>Serial numbers of relevant components (armor, glass, systems)</td><td class="col-exec">YES</td><td>Annex certificates</td></tr>
-        <tr><td>Linking to required tax documentation and reports/certificates</td><td class="col-exec">YES</td><td>Invoice / Annex ref</td></tr>
-      </tbody>
-    </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
-  </div>
-  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
-</div>
-
-<div class="page" id="final-declarations">
-  <div class="header">
-    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
-  </div>
-  <div class="page-content">
-    <div class="vol-identifier">FINAL DECLARATIONS & SIGNATURES</div>
-    
-    <div class="trace" style="background:#f1f5f9; padding: 10px; border: 1px solid var(--border-color); font-size: 11px; margin-bottom: 20px;">
-      <strong>Traceability Header:</strong> &nbsp;
-      <span>Item: ☐ Item 1 (APC) ☐ Item 2 (CAV) &nbsp; | &nbsp; VIN/Chassis: __________________________</span>
-    </div>
-
-    <div class="main-heading">Compliance with Annex I-I & I-J – Responsibilities of Committees</div>
-    <p class="para">Mahindra Emirates Vehicle Armouring FZ-LLC acknowledges and accepts the provisions of Annex I-I (Testing Committee) and Annex I-J (Provisional Acceptance Committee) regarding:</p>
-    <ul class="check-list" style="column-count: 2; column-gap: 20px;">
-      <li>Purpose and exclusive technical competence</li>
-      <li>Nature and scope of activity</li>
-      <li>Prohibition of commercial negotiation</li>
-      <li>Composition of the Commission</li>
-      <li>Technical planning authority</li>
-      <li>Audit and data recording authority</li>
-      <li>Incident recording and documentation</li>
-      <li>Issuance of Conclusive Technical Opinion</li>
-      <li>Quorum requirements</li>
-      <li>Security and public session rules</li>
-      <li>Evidence recording and traceability</li>
-      <li>Interface limitations</li>
-    </ul>
-    
-    <div class="info-box note">
-      <strong>Contractor confirms:</strong> Full cooperation with strictly technical role. No commercial negotiations during testing. All facilities/equipment will be available. Operational assistance will not interfere with fairness. Traceability guaranteed.
-    </div>
-
-    <div class="main-heading" style="margin-top: 24px;">Commitment Declaration & Signatures</div>
-    <p class="para" style="font-size: 11px;">
-      Mahindra Emirates Vehicle Armouring FZ-LLC hereby formally declares full acceptance of the Acceptance Testing Procedure (ATP) for both Item 1 and Item 2. The bidder commits to present sample vehicles, provide qualified technical personnel, allow dynamic road testing up to 50 km, provide complete documentation, cooperate with the Testing Committee in the issuance of the Conclusive Technical Opinion, and comply fully with Annex I-I, Annex I-J, and Annex I-K regarding the authority and procedures of the Committees. This declaration remains binding upon contract award.
-    </p>
-    
-    <div class="sig-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      <div class="sig-box" style="border:1px solid var(--border-color); padding:15px; border-radius:4px;">
-        <div class="sig-badge" style="font-size:10px; font-weight:800; color:var(--brand-color); margin-bottom:10px;">BIDDER</div>
-        <div class="small" style="font-size:11px; margin-bottom:15px;">
-          <strong>Company:</strong> Mahindra Emirates Vehicle Armouring FZ-LLC<br/>
-          <strong>Document:</strong> Technical Proposal & Acceptance Tests Undertaking<br/>
-          <strong>Applicability:</strong> Common + Item 1 (APC) + Item 2 (CAV)
-        </div>
-        <div class="sig-line" style="font-size:12px;">
-          Authorized Signatory: __________________________<br/><br/>
-          Name: __________________________<br/><br/>
-          Title: __________________________<br/><br/>
-          Date: ____ / ____ / ______<br/><br/>
-          Company Stamp:
-        </div>
-      </div>
-
-      <div class="sig-box" style="border:1px dashed var(--border-color); padding:15px; border-radius:4px;">
-        <div class="sig-badge" style="font-size:10px; font-weight:800; color:var(--text-muted); margin-bottom:10px;">WITNESS / INTERNAL CONTROL</div>
-        <div class="small" style="color:var(--text-muted); font-size:11px; margin-bottom:15px;">
-          Optional internal witness for submission pack control (recommended for traceability assurance).<br/>
-          This does not replace PMES Testing Committee records.
-        </div>
-        <div class="sig-line" style="font-size:12px;">
-          Reviewer: __________________________<br/><br/>
-          Name: __________________________<br/><br/>
-          Title/Dept: __________________________<br/><br/>
-          Date: ____ / ____ / ______<br/><br/>
-          Signature:
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
-</div>
-
-<div class="page" id="vol8">
-  <div class="header">
-    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
-  </div>
-  <div class="page-content">
-    <div class="vol-identifier">APPENDED ANNEXURES & CERTIFICATES</div>
-    <div class="main-heading">Annexure Index</div>
-    <p class="para">The following pages contain the formal certificates and documentation referenced throughout the proposal.</p>
-    
-    <table>
-      <thead>
-        <tr><th style="width: 15%;">Ref</th><th style="width: 85%;">Certificate / Document Name</th></tr>
-      </thead>
-      <tbody>
-        <tr><th colspan="2" class="group-header">Part A: Administrative, Legal, Tax & Labor</th></tr>
-        <tr><td>Annex 1.1</td><td>Bid Cover Letter</td></tr>
-        <tr><td>Annex 1.2</td><td>Corporate Legal Existence Documents (Trade License, MoA, Apostille)</td></tr>
-        <tr><td>Annex 1.3</td><td>Power of Attorney – Brazilian Legal Representative</td></tr>
-        <tr><td>Annex 1.4</td><td>Declarations Required by Law 14.133/2021</td></tr>
-        <tr><td>Annex 1.5</td><td>Declaration of Non-Existence of Equivalent Document</td></tr>
-        <tr><td>Annex 2.1</td><td>UAE Tax Registration Certificate (FTA – TRN)</td></tr>
-        <tr><td>Annex 2.5</td><td>UAE Tax Compliance Certificate (RFB Equivalent)</td></tr>
-        <tr><td>Annex 2.8</td><td>Labor Compliance Certificate (MOHRE)</td></tr>
-
-        <tr><th colspan="2" class="group-header">Part B: Technical Qualification</th></tr>
-        <tr><td>Annex 3.1.2</td><td>Technical-Operational Capacity Certificate(s) & Proof of Maturity</td></tr>
-        <tr><td>Annex 3.5</td><td>Ballistic Certification & Blast Certificates – APC</td></tr>
-        <tr><td>Annex 3.8</td><td>Ballistic Certification & Blast Certificates – CAV (VPAM VR7)</td></tr>
-        <tr><td>Annex 6.4</td><td>Testing & Antenna Commitments</td></tr>
-
-        <tr><th colspan="2" class="group-header">Part C: Economic & Financial</th></tr>
-        <tr><td>Annex 4.4.1</td><td>Audited Financial Statements (Last 2 Years) & Ratios</td></tr>
-        <tr><td>Annex 4.2</td><td>Bankruptcy / Insolvency Certificate</td></tr>
-
-        <tr><th colspan="2" class="group-header">Part D: Commercial Proposal</th></tr>
-        <tr><td>Annex 6.1.1</td><td>Annex I-G – Commercial Proposal</td></tr>
-        <tr><td>Annex 9.4</td><td>Commercial Declarations (PTAX, NCM, Incoterm, LC, Validity)</td></tr>
-
-        <tr><th colspan="2" class="group-header">Part E: Training, Warranty & Maintenance</th></tr>
-        <tr><td>Annex 5.11</td><td>Warranty Schedule and Coverage</td></tr>
-        <tr><td>Annex 4.4</td><td>Operator Training Plan</td></tr>
-      </tbody>
-    </table>
-    <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button></div>
-  </div>
-  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
-</div>
-
-<div class="page cert-page">
-  <div class="header">
-    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
-  </div>
-  <div class="page-content">
-    <div class="main-heading cert-title">Annex: [Document Name]</div>
-    <div class="cert-placeholder" contenteditable="false" style="text-align:center; padding: 40px; border: 2px dashed var(--border-color); border-radius: 8px; margin-top: 20px;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="var(--text-muted)" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-      <h4 style="margin: 10px 0; color: var(--text-main);">Attach Document: [Name]</h4>
-      <p style="color: var(--text-muted); font-size: 12px; margin: 0;">Please append the relevant physical document here before final submission.</p>
-    </div>
-    <div class="doc-controls-wrapper" style="justify-content:center; margin-top:16px; width: 100%; display: flex;" contenteditable="false">
-      <button class="doc-control" onclick="addCertificate(this)" style="border: none;">+ Duplicate Certificate Page</button>
-    </div>
-  </div>
-  <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
-</div>
-`;
+      <thead><tr><th style="width: 8%;">Ref. No</th><th style="width: 36%;">Details (
