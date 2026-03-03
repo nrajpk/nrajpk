@@ -189,7 +189,26 @@
       border-bottom: 1.5pt solid var(--brand-color) !important; /* Keeps your nice thick red line for sub-sections */
     }
     tbody tr:last-child td { border-bottom: none; }
-
+/* --- TABLE RESIZING (EXCEL STYLE) --- */
+    th {
+      position: relative; /* Required for the drag handle */
+    }
+    .resizer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5px;
+      cursor: col-resize;
+      user-select: none;
+      height: 100%;
+      z-index: 1;
+    }
+    .resizer:hover, .resizing {
+      border-right: 2px solid var(--brand-color);
+    }
+    @media print {
+      .resizer { display: none !important; }
+    }
     /* 9. INLINE EDITOR UI CONTROLS */
     .doc-controls-wrapper {
       display: inline-flex;
@@ -712,7 +731,64 @@
       window.notifyChange();
     }
   });
+// --- COLUMN RESIZING LOGIC ---
+  function initTableResizers() {
+    const tables = document.querySelectorAll('#document-content table');
+    tables.forEach(table => {
+      const headers = table.querySelectorAll('th');
+      headers.forEach(th => {
+        // Skip group headers (the ones spanning multiple columns)
+        if (th.classList.contains('group-header') || th.colSpan > 1) return;
+        
+        // Only add if it doesn't already have a resizer
+        if (!th.querySelector('.resizer')) {
+          const resizer = document.createElement('div');
+          resizer.classList.add('resizer');
+          resizer.contentEditable = "false"; // Prevent typing in the handle
+          th.appendChild(resizer);
+          createResizableColumn(th, resizer);
+        }
+      });
+    });
+  }
 
+  function createResizableColumn(col, resizer) {
+    let x = 0;
+    let w = 0;
+
+    const mouseDownHandler = function(e) {
+      x = e.clientX;
+      const styles = window.getComputedStyle(col);
+      w = parseInt(styles.width, 10);
+
+      document.addEventListener('mousemove', mouseMoveHandler);
+      document.addEventListener('mouseup', mouseUpHandler);
+      resizer.classList.add('resizing');
+    };
+
+    const mouseMoveHandler = function(e) {
+      const dx = e.clientX - x;
+      col.style.width = `${w + dx}px`;
+    };
+
+    const mouseUpHandler = function() {
+      resizer.classList.remove('resizing');
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
+      
+      // Tell Firebase a change was made so it syncs the new widths
+      setDirty(true);
+      window.notifyChange();
+    };
+
+    resizer.addEventListener('mousedown', mouseDownHandler);
+  }
+
+  // Automatically attach resizers when the document content changes (e.g., loading from Cloud)
+  const observer = new MutationObserver(() => {
+    initTableResizers();
+  });
+  observer.observe(document.getElementById('document-content'), { childList: true, subtree: true });
   startApp();
 </script>
 </body>
