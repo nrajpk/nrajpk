@@ -275,7 +275,49 @@
     Download PDF
   </button>
   <button id="save-btn" class="btn save-btn" onclick="saveDocument()" contenteditable="false">💾 Save HTML</button>
+<!-- COVER PAGE WITH HERO IMAGE & DETAILS -->
+  <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden;">
+    
+    <!-- Top Hero Image Section -->
+    <div style="flex-grow: 1; position: relative; background-color: var(--bg-gray);">
+      <!-- REPLACE 'cover-image.jpg' WITH YOUR ACTUAL HERO IMAGE PATH/URL -->
+      <img src="mevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      
+      <!-- Brand color accent line bridging the image and the text -->
+      <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background-color: var(--brand-color);"></div>
+    </div>
 
+    <!-- Bottom Details Section -->
+    <div style="padding: 60px 50px; background-color: #fff; height: 35%; box-sizing: border-box;">
+      <div style="font-size: 14px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;">
+        Technical & Commercial Proposal
+      </div>
+      <h1 style="font-size: 38px; font-weight: 800; color: var(--text-main); margin: 0 0 24px 0; line-height: 1.1; letter-spacing: -0.5px;">
+        Armored Vehicles for Police Use
+      </h1>
+      
+      <!-- Short divider -->
+      <div style="width: 60px; height: 4px; background-color: var(--brand-color); margin-bottom: 35px; border-radius: 2px;"></div>
+      
+      <!-- Structured Details Table (No borders for a clean look) -->
+      <table style="width: 100%; border: none; font-size: 14px; margin-bottom: 0;">
+        <tr>
+          <td style="padding: 5px 0; font-weight: 700; color: var(--text-muted); width: 140px; border: none; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Auction No:</td>
+          <td style="padding: 5px 0; font-weight: 700; color: var(--text-main); border: none; font-size: 15px;">002/2026 – PMES</td>
+        </tr>
+        <tr>
+          <td style="padding: 5px 0; font-weight: 700; color: var(--text-muted); border: none; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Destination:</td>
+          <td style="padding: 5px 0; font-weight: 600; color: var(--text-main); border: none; font-size: 15px;">State of Espírito Santo, Brazil</td>
+        </tr>
+        <tr>
+          <td style="padding: 5px 0; font-weight: 700; color: var(--text-muted); border: none; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Bidder:</td>
+          <td style="padding: 5px 0; font-weight: 800; color: var(--brand-color); border: none; font-size: 16px;">Mahindra Emirates Vehicle Armouring FZ-LLC</td>
+        </tr>
+      </table>
+    </div>
+    
+  </div>
+  <!-- END COVER PAGE -->
   <!-- PAGE 1: INDEX / TABLE OF CONTENTS -->
   <div class="page" id="index-page">
     <div class="header">
