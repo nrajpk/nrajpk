@@ -168,7 +168,7 @@ export const defaultHTML = `
     <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
   </div>
   <div class="page-content">
-    <div class="main-heading" style="font-size: 13px;">B2. Technical Specifications – Item 1 (Cont.)</div>
+    
 
     <table>
       <thead>
