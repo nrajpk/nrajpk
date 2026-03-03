@@ -291,7 +291,7 @@
 
 <body>
   <div id="loading-overlay" style="position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--brand-color); font-family: 'Georama', sans-serif; font-size: 18px;">
-    Fetching Proposal from Cloud...
+    Loading Proposal...
   </div>
 
   <!-- UI Controls (Excluded from printing) -->
@@ -311,23 +311,23 @@
   <div id="document-content" contenteditable="true" style="outline: none;"></div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-      apiKey: "",
+    // Standalone Firebase Config (Replace with your actual config for persistence)
+    // For now, it initializes safely but falls back to local seeding if it fails to connect.
+    const firebaseConfig = {
+      apiKey: "AIzaSyCKKlwTf9Jgh94j2tRZyP-qPNuArdyT1bc",
       authDomain: "brazil-tender.firebaseapp.com",
       projectId: "brazil-tender",
+      storageBucket: "brazil-tender.firebasestorage.app",
+      messagingSenderId: "844067669814",
+      appId: "1:844067669814:web:8c1b4f84ce7b5c62cbd597",
+      measurementId: "G-2XP78ZRN5K"
     };
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'meva-tender-full';
     
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    
-    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'meva_content', 'main_html');
-
+    let app, auth, db, docRef;
     let user = null;
     let isSaving = false;
     const contentDiv = document.getElementById('document-content');
@@ -340,22 +340,30 @@
     }
 
     async function init() {
-      const initAuth = async () => {
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
-      };
-
       try {
-        await initAuth();
+        if (!getApps().length) {
+          app = initializeApp(firebaseConfig);
+        } else {
+          app = getApp();
+        }
+        auth = getAuth(app);
+        db = getFirestore(app);
+        
+        // Simpler path for generic hosting
+        docRef = doc(db, 'tender_documents', 'meva_main_html');
+
+        await signInAnonymously(auth);
+        
         onAuthStateChanged(auth, (u) => {
           user = u;
           if (u) setupListeners();
         });
       } catch (err) {
-        console.error("Auth failed:", err);
+        console.error("Firebase init failed, falling back to local view.", err);
+        // If Firebase fails entirely (e.g., bad config), still render the document
+        seedDatabase();
+        document.getElementById('loading-overlay').style.display = 'none';
+        showToast("Running in local mode. Changes won't be saved to cloud.");
       }
     }
 
@@ -373,6 +381,11 @@
         document.getElementById('loading-overlay').style.display = 'none';
       }, (err) => {
         console.error("Snapshot error:", err);
+        // Fallback to local
+        if (!contentDiv.innerHTML.trim()) {
+           seedDatabase();
+           document.getElementById('loading-overlay').style.display = 'none';
+        }
       });
     }
 
@@ -491,7 +504,10 @@
     contentDiv.addEventListener('input', triggerSaveCue);
 
     window.saveData = async () => {
-      if (!user) return;
+      if (!user || !docRef) {
+         showToast("Cannot save: Not connected to Cloud.");
+         return;
+      }
       isSaving = true;
       const btn = document.getElementById('save-btn');
       btn.innerText = "⏳ Syncing...";
@@ -509,6 +525,7 @@
         console.error("Save failed:", err);
         btn.innerText = "❌ Error";
         btn.style.background = "#dc2626";
+        showToast("Permission denied or connection error.");
       }
 
       setTimeout(() => {
@@ -524,7 +541,7 @@
     <!-- COVER PAGE WITH HERO IMAGE 1:4 RATIO -->
     <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
       <div style="width: 100%; aspect-ratio: 4 / 1; position: relative; background-color: var(--bg-gray);">
-        <img src="cmevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="cover-image.jpg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#9ca3af; font-size:14px; font-weight:bold; background:#e5e7eb; position:absolute; top:0; left:0;">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
           [ HERO IMAGE PLACEHOLDER (1:4 RATIO) ]
@@ -1362,13 +1379,29 @@
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
       `;
+      
+      // If we are in the standalone/GitHub Pages context, we don't try to save to Firebase during seed.
       contentDiv.innerHTML = defaultHTML;
       updatePageNumbers();
-      if (user) {
-        await setDoc(docRef, { htmlContent: defaultHTML, updatedAt: new Date().toISOString() });
+      
+      // Only attempt to save if user is logged in
+      if (user && docRef) {
+          try {
+             await setDoc(docRef, { htmlContent: defaultHTML, updatedAt: new Date().toISOString() });
+          } catch(e) {
+              console.log("Could not push seed data to Firebase (this is normal for unauthorized viewers)");
+          }
       }
     }
 
+    // Since we want this to work without Firebase strictly required, 
+    // we'll run the seed right away, then attempt Firebase sync.
+    seedDatabase();
+    
+    // Hide overlay immediately since we seeded locally
+    document.getElementById('loading-overlay').style.display = 'none';
+
+    // Now try to connect to Firebase in the background
     init();
   </script>
 </body>
