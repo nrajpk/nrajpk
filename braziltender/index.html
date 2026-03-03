@@ -603,10 +603,36 @@
     positionSaveNearCaret();
   };
   // ⬆️ END OF PASTED JAVASCRIPT SNIPPET ⬆️
-  contentDiv.addEventListener('input', () => {
+  contentDiv.addEventListener('input', (e) => {
     if (applyingRemote) return;
     setDirty(true);
     positionSaveNearCaret();
+
+    // --- AUTO-FORMATTING LOGIC ---
+    // Safely find if the user is typing inside a table cell
+    let cell = null;
+    if (e.target && e.target.nodeType === 3) {
+      cell = e.target.parentElement.closest('td');
+    } else if (e.target && e.target.closest) {
+      cell = e.target.closest('td');
+    }
+
+    if (cell) {
+      const text = cell.innerText.trim().toUpperCase();
+      if (text === 'COMPLY' || text === 'YES') {
+        cell.style.color = '#16a34a'; // High-contrast military green
+        cell.style.fontWeight = '900';
+        cell.style.fontStyle = 'normal';
+      } else if (text === 'TBD') {
+        cell.style.color = '#9ca3af'; // Muted gray
+        cell.style.fontWeight = 'normal';
+        cell.style.fontStyle = 'italic';
+      } else {
+        cell.style.color = 'var(--text-main)'; // Reset to standard text
+        cell.style.fontWeight = 'normal';
+        cell.style.fontStyle = 'normal';
+      }
+    }
   });
 
   contentDiv.addEventListener('keyup', positionSaveNearCaret);
