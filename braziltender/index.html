@@ -9,17 +9,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
- <style>
+  <style>
     :root {
       --brand-color: #e41837;
-      --brand-color-light: #fbe8eb;
       --text-main: #1f2937;
       --text-muted: #6b7280;
       --border-color: #e5e7eb;
       --bg-gray: #f9fafb;
     }
 
-    /* Print & Layout */
     @page { size: A4; margin: 16mm; }
 
     body {
@@ -42,310 +40,66 @@
         box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         position: relative;
         border-radius: 8px;
-        overflow: hidden;
       }
     }
 
     @media print {
-      .ui-controls, #remote-banner, #status-toast { display: none !important; }
+      .ui-controls, .doc-controls-wrapper, #remote-banner, #status-toast { display: none !important; }
       body { background: #fff; }
-      .page {
-        margin: 0;
-        box-shadow: none;
-        page-break-after: always;
-        width: 100%;
-        border-radius: 0;
-      }
+      .page { margin: 0; box-shadow: none; page-break-after: always; width: 100%; border-radius: 0; }
     }
 
-    /* =========================================================
-       Document Header (logo + titles)
-       ========================================================= */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
+    th, td { border: 1px solid var(--border-color); padding: 10px; text-align: left; }
+    th { background: var(--bg-gray); font-weight: 800; color: var(--text-muted); font-size: 11px; }
+
+    /* Common header/footer sizing safeguards (works only if seed uses these classes) */
     .header {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--border-color);
-    }
-
-    .brand-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      padding: 0 0 10px 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 12px;
     }
-
-    .brand-left {
+    .logo-container {
       display: flex;
       align-items: center;
-      gap: 12px;
-      min-width: 0;
+      gap: 10px;
+      max-width: 60%;
     }
-
-    .brand-logo {
-      width: 54px;
-      height: 54px;
-      border-radius: 10px;
-      background: #fff;
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      flex: 0 0 auto;
-    }
-
-    .brand-logo img {
-      width: 100%;
-      height: 100%;
+    .logo-container img {
+      height: 26px;
+      width: auto;
+      max-width: 180px;
       object-fit: contain;
       display: block;
     }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      min-width: 0;
-    }
-
-    .brand-name {
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      color: var(--text-main);
-      line-height: 1.15;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .brand-sub {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .brand-badge {
-      flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border: 1px solid var(--border-color);
-      border-radius: 999px;
-      background: var(--bg-gray);
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--text-main);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    .doc-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--brand-color);
-      margin: 0;
-      line-height: 1.2;
-    }
-
-    .doc-meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .meta-box {
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 10px 12px;
-      background: #fff;
-    }
-
-    .meta-k {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 4px;
-    }
-
-    .meta-v {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.3;
-      word-break: break-word;
-    }
-
-    /* =========================================================
-       Core typography
-       ========================================================= */
-    h2 {
-      margin: 14px 0 8px 0;
-      font-size: 14px;
-      font-weight: 900;
-      color: var(--text-main);
-      letter-spacing: 0.2px;
-    }
-
-    h3 {
-      margin: 12px 0 6px 0;
-      font-size: 12.5px;
-      font-weight: 900;
-      color: var(--brand-color);
-      letter-spacing: 0.2px;
-    }
-
-    p {
-      margin: 0 0 10px 0;
-      font-size: 12px;
-      line-height: 1.5;
-      color: #374151;
-    }
-
-    /* Tables */
-    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
-    th, td { border: 1px solid var(--border-color); padding: 10px; text-align: left; vertical-align: top; }
-    th { background: var(--bg-gray); font-weight: 900; color: var(--text-muted); font-size: 10.5px; letter-spacing: 0.3px; text-transform: uppercase; }
-    .helper-note { display: block; margin-top: 4px; font-style: italic; color: var(--text-muted); font-size: 10px; }
-
-    /* Lists */
-    ul.check-list { list-style: none; padding: 0; margin: 0 0 16px 0; }
-    ul.check-list li {
+    .page {
       position: relative;
-      padding-left: 20px;
-      margin-bottom: 6px;
-      font-size: 11.5px;
-      color: #374151;
+      padding-bottom: 22mm; /* reserve footer space */
     }
-    ul.check-list li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--brand-color);
-      font-weight: 900;
-    }
-
-    /* Info boxes */
-    .info-box {
-      margin: 12px 0;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 11px;
-      line-height: 1.4;
-      display: flex;
-      gap: 10px;
-      border: 1px solid var(--border-color);
-      background: #fff;
-    }
-    .info-box.note { background: #eff6ff; border-color: #bfdbfe; color: #1e3a8a; }
-    .info-box.critical { background: var(--brand-color-light); border-color: #fecdd3; color: #9f1239; }
-    .info-box strong { font-weight: 900; }
-
-    /* Certificates placeholders */
-    .cert-placeholder {
-      border: 2px dashed #cbd5e1;
-      border-radius: 10px;
-      background: #f8fafc;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 34px;
-      margin-top: 10px;
-      min-height: 180mm;
-    }
-    .cert-placeholder svg { width: 44px; height: 44px; color: #94a3b8; margin-bottom: 14px; }
-    .cert-placeholder h4 { font-size: 14px; font-weight: 900; color: var(--text-main); margin: 0 0 8px 0; }
-    .cert-placeholder p { font-size: 12px; color: var(--text-muted); margin: 0; max-width: 80%; }
-
-    /* Signatures */
-    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; page-break-inside: avoid; }
-    .sig-box { border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; background: var(--bg-gray); }
-    .sig-badge {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 900;
-      padding: 4px 10px;
-      background: var(--text-main);
-      color: #fff;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-    .sig-line { border-top: 1px solid #d1d5db; margin-top: 46px; padding-top: 8px; font-size: 11px; color: var(--text-muted); }
-
-    /* Footer + Page numbering */
     .page-footer {
       position: absolute;
-      bottom: 10mm;
       left: 16mm;
       right: 16mm;
-      border-top: 1px solid var(--border-color);
-      padding-top: 8px;
+      bottom: 12mm;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      font-size: 9px;
+      gap: 10px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 6px;
+    }
+    .page-footer-text,
+    .page-num {
+      font-size: 9.5px;
       color: var(--text-muted);
+      font-weight: 800;
+      white-space: nowrap;
     }
-    .page-footer-text { font-weight: 600; letter-spacing: 0.3px; }
-    .page-footer-text strong { color: var(--text-main); font-weight: 900; }
-    .page-num { font-size: 10px; color: var(--text-main); font-weight: 900; }
-    @media print { .page-footer { bottom: 0; left: 0; right: 0; } }
 
-    /* TOC */
-    .toc-container { border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; background: #fff; }
-    .toc-link {
-      display: flex;
-      align-items: center;
-      color: var(--text-main);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 900;
-      margin-bottom: 10px;
-      padding: 8px 10px;
-      border-radius: 8px;
-      transition: background 0.2s;
-    }
-    .toc-link:hover { background: var(--bg-gray); color: var(--brand-color); }
-    .toc-sublink {
-      display: block;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 11.5px;
-      margin-left: 28px;
-      margin-bottom: 8px;
-      position: relative;
-    }
-    .toc-sublink::before {
-      content: '';
-      position: absolute;
-      left: -12px;
-      top: 6px;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--border-color);
-    }
-    .toc-sublink:hover { color: var(--brand-color); }
-    .toc-divider { margin: 14px 0; border-top: 1px dashed var(--border-color); }
-
-    /* UI Controls */
     .ui-controls {
       position: fixed;
       top: 20px;
@@ -357,22 +111,18 @@
     }
 
     .btn {
-      padding: 12px 18px;
-      border-radius: 999px;
+      padding: 12px 24px;
+      border-radius: 50px;
       cursor: pointer;
-      font-weight: 900;
+      font-weight: 800;
       border: none;
       font-family: 'Georama', sans-serif;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
     }
 
-    .print-btn { background: #fff; color: var(--text-main); }
+    .print-btn { background: white; color: var(--text-main); }
 
-    /* Save button */
     .save-btn {
       background: var(--brand-color);
       color: #fff;
@@ -382,9 +132,8 @@
       top: 72px;
       z-index: 10000;
     }
-    .save-btn.visible { display: inline-flex; }
+    .save-btn.visible { display: inline-flex; align-items: center; gap: 8px; }
 
-    /* Remote conflict banner */
     #remote-banner {
       position: fixed;
       top: 0;
@@ -394,7 +143,7 @@
       color: #78350f;
       padding: 10px;
       text-align: center;
-      font-weight: 900;
+      font-weight: 800;
       display: none;
       z-index: 10001;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -404,12 +153,11 @@
       margin-left: 12px;
       padding: 6px 10px;
       cursor: pointer;
-      font-weight: 900;
+      font-weight: 800;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
     }
 
-    /* Toast */
     #status-toast {
       position: fixed;
       bottom: 18px;
@@ -424,272 +172,304 @@
       display: none;
       box-shadow: 0 4px 15px rgba(0,0,0,0.25);
     }
-
-    /* Editor */
-    #document-content { outline: none; }
   </style>
 </head>
 
 <body>
 
-  <div id="remote-banner">
-    ⚠️ Someone else saved a newer version while you were editing.
-    <button id="btn-accept-remote" type="button">Load latest</button>
-    <button id="btn-keep-mine" type="button">Keep mine</button>
-  </div>
+<div id="remote-banner">
+  ⚠️ Someone else saved a newer version while you were editing.
+  <button id="btn-accept-remote" type="button">Load latest</button>
+  <button id="btn-keep-mine" type="button">Keep mine</button>
+</div>
 
-  <div id="status-toast"></div>
+<div id="status-toast"></div>
 
-  <div class="ui-controls">
-    <button class="btn print-btn" onclick="window.print()">🖨️ Print PDF</button>
-  </div>
+<div class="ui-controls">
+  <button class="btn print-btn" onclick="window.print()">🖨️ Print PDF</button>
+</div>
 
-  <button class="btn save-btn" id="save-btn" type="button" onclick="saveData()">☁️ Sync to Cloud</button>
+<button class="btn save-btn" id="save-btn" type="button" onclick="saveData()">☁️ Sync to Cloud</button>
 
-  <div id="document-content" contenteditable="true" spellcheck="false"></div>
+<div id="document-content" contenteditable="true" spellcheck="false"></div>
 
-  <!-- IMPORTANT: define updatePageNumbers BEFORE the module calls it -->
-  <script>
-    window.updatePageNumbers = () => {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach((p, i) => {
-        const numEl = p.querySelector('.page-num');
-        if (numEl) numEl.innerText = `Page ${i + 1} of ${pages.length}`;
+<script type="module">
+  import { defaultHTML } from './seed-data.js';
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    onSnapshot,
+    runTransaction,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCKKlwTf9Jgh94j2tRZyP-qPNuArdyT1bc",
+    authDomain: "brazil-tender.firebaseapp.com",
+    projectId: "brazil-tender",
+    storageBucket: "brazil-tender.firebasestorage.app",
+    messagingSenderId: "844067669814",
+    appId: "1:844067669814:web:8c1b4f84ce7b5c62cbd597"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const docRef = doc(db, 'tender_documents', 'meva_main_html');
+
+  const contentDiv = document.getElementById('document-content');
+  const saveBtn = document.getElementById('save-btn');
+  const remoteBanner = document.getElementById('remote-banner');
+  const btnAcceptRemote = document.getElementById('btn-accept-remote');
+  const btnKeepMine = document.getElementById('btn-keep-mine');
+  const toast = document.getElementById('status-toast');
+
+  let currentRev = 0;         // last applied cloud revision
+  let remotePending = null;   // { html, rev }
+  let dirty = false;          // local edits not yet synced
+  let applyingRemote = false; // guard for snapshot apply
+  let seededOnce = false;     // avoid repeated seed attempts
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 2200);
+  }
+
+  function setDirty(isDirty) {
+    dirty = isDirty;
+    if (dirty) saveBtn.classList.add('visible');
+    else saveBtn.classList.remove('visible');
+  }
+
+  function positionSaveNearCaret() {
+    if (!dirty) return;
+
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) {
+      saveBtn.style.top = '72px';
+      return;
+    }
+
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+
+    // Fallback for tables and ambiguous selections
+    if (!rect || (rect.top === 0 && rect.left === 0 && rect.width === 0 && rect.height === 0)) {
+      saveBtn.style.top = '72px';
+      return;
+    }
+
+    const top = Math.max(80, rect.top + window.scrollY - 10);
+    saveBtn.style.top = `${top}px`;
+  }
+
+  async function seedCloudIfMissing() {
+    await runTransaction(db, async (tx) => {
+      const snap = await tx.get(docRef);
+      if (snap.exists()) return;
+      tx.set(docRef, {
+        htmlContent: defaultHTML,
+        rev: 1,
+        updatedAt: serverTimestamp()
       });
-    };
-  </script>
-
-  <script type="module">
-    import { defaultHTML } from './seed-data.js';
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      onSnapshot,
-      runTransaction,
-      serverTimestamp,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCKKlwTf9Jgh94j2tRZyP-qPNuArdyT1bc",
-      authDomain: "brazil-tender.firebaseapp.com",
-      projectId: "brazil-tender",
-      storageBucket: "brazil-tender.firebasestorage.app",
-      messagingSenderId: "844067669814",
-      appId: "1:844067669814:web:8c1b4f84ce7b5c62cbd597"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    // One shared document
-    const docRef = doc(db, 'tender_documents', 'meva_main_html');
-
-    const contentDiv = document.getElementById('document-content');
-    const saveBtn = document.getElementById('save-btn');
-    const remoteBanner = document.getElementById('remote-banner');
-    const btnAcceptRemote = document.getElementById('btn-accept-remote');
-    const btnKeepMine = document.getElementById('btn-keep-mine');
-    const toast = document.getElementById('status-toast');
-
-    let currentRev = 0;               // last applied cloud revision
-    let remotePending = null;         // { html, rev }
-    let dirty = false;                // user has local edits not yet synced
-    let applyingRemote = false;       // guard to avoid marking dirty while applying snapshot
-
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2200);
-    }
-
-    function setDirty(isDirty) {
-      dirty = isDirty;
-      if (dirty) saveBtn.classList.add('visible');
-      else saveBtn.classList.remove('visible');
-    }
-
-    function positionSaveNearCaret() {
-      if (!dirty) return;
-
-      const sel = window.getSelection();
-      if (!sel || sel.rangeCount === 0) return;
-
-      const range = sel.getRangeAt(0);
-      const rect = range.getBoundingClientRect();
-      if (!rect || (rect.top === 0 && rect.left === 0 && rect.width === 0 && rect.height === 0)) return;
-
-      const top = Math.max(80, rect.top + window.scrollY - 10);
-      saveBtn.style.top = `${top}px`;
-    }
-
-    async function seedCloudIfMissing() {
-      await runTransaction(db, async (tx) => {
-        const snap = await tx.get(docRef);
-        if (snap.exists()) return;
-        tx.set(docRef, { htmlContent: defaultHTML, rev: 1, updatedAt: serverTimestamp() });
-      });
-    }
-
-    // REQUIRED for your rule: request.auth != null
-    await signInAnonymously(auth).catch((e) => {
-      console.error('Anonymous auth failed:', e);
-      showToast('Auth failed. Enable Anonymous Auth in Firebase.');
     });
+  }
 
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) return;
+  function startRealtimeListener() {
+    onSnapshot(docRef, { includeMetadataChanges: true }, async (snap) => {
+      // Ignore our own local pending writes
+      if (snap.metadata.hasPendingWrites) return;
 
-      // Ensure doc exists
-      try {
-        const first = await getDoc(docRef);
-        if (!first.exists()) await seedCloudIfMissing();
-      } catch (e) {
-        console.error('Initial read/seed failed:', e);
-        showToast('Cannot read from cloud. Check Firestore rules.');
-        applyingRemote = true;
-        contentDiv.innerHTML = defaultHTML;
-        applyingRemote = false;
-        setDirty(true);
+      // If doc missing, seed from here (single source of truth)
+      if (!snap.exists()) {
+        if (!seededOnce) {
+          seededOnce = true;
+
+          // Show something immediately so team is not staring at blank
+          applyingRemote = true;
+          contentDiv.innerHTML = defaultHTML;
+          applyingRemote = false;
+          currentRev = 0;
+          setDirty(true);
+          window.updatePageNumbers();
+          showToast('Seeding cloud...');
+
+          try {
+            await seedCloudIfMissing();
+          } catch (e) {
+            console.error('Seed failed:', e);
+            showToast('Seed failed. Check Firestore rules.');
+          }
+        }
         return;
       }
 
-      // Realtime listener
-      onSnapshot(docRef, { includeMetadataChanges: true }, (snap) => {
-        if (!snap.exists()) return;
+      const data = snap.data() || {};
+      const nextRev = Number(data.rev || 0);
+      const nextHTML = String(data.htmlContent || '');
 
-        // Ignore our own pending local writes
-        if (snap.metadata.hasPendingWrites) return;
+      // First load
+      if (currentRev === 0) {
+        applyingRemote = true;
+        contentDiv.innerHTML = nextHTML;
+        applyingRemote = false;
 
-        const data = snap.data();
-        const nextRev = Number(data.rev || 0);
-        const nextHTML = data.htmlContent || '';
-
-        // First load
-        if (currentRev === 0) {
-          applyingRemote = true;
-          contentDiv.innerHTML = nextHTML;
-          applyingRemote = false;
-          currentRev = nextRev;
-          setDirty(false);
-          window.updatePageNumbers();
-          return;
-        }
-
-        // If remote is newer
-        if (nextRev > currentRev) {
-          if (dirty) {
-            remotePending = { html: nextHTML, rev: nextRev };
-            remoteBanner.style.display = 'block';
-            return;
-          }
-
-          applyingRemote = true;
-          contentDiv.innerHTML = nextHTML;
-          applyingRemote = false;
-          currentRev = nextRev;
-          window.updatePageNumbers();
-          showToast('Updated from cloud');
-        }
-      }, (err) => {
-        console.error('Snapshot error:', err);
-        showToast('Live sync error. Check rules or network.');
-      });
-    });
-
-    // Save Function with optimistic concurrency
-    window.saveData = async () => {
-      if (!dirty) return;
-
-      saveBtn.textContent = '⏳ Syncing...';
-      saveBtn.disabled = true;
-
-      try {
-        await runTransaction(db, async (tx) => {
-          const snap = await tx.get(docRef);
-
-          if (!snap.exists()) {
-            tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: 1, updatedAt: serverTimestamp() });
-            currentRev = 1;
-            return;
-          }
-
-          const serverRev = Number(snap.data().rev || 0);
-
-          // If someone else saved after our last applied rev, fail cleanly
-          if (serverRev !== currentRev) {
-            throw new Error('REV_CONFLICT');
-          }
-
-          const newRev = serverRev + 1;
-          tx.update(docRef, {
-            htmlContent: contentDiv.innerHTML,
-            rev: newRev,
-            updatedAt: serverTimestamp()
-          });
-
-          currentRev = newRev;
-        });
-
+        currentRev = nextRev;
         setDirty(false);
         remoteBanner.style.display = 'none';
         remotePending = null;
-        showToast('Synced');
-
-      } catch (e) {
-        console.error('Sync failed:', e);
-
-        if (String(e.message || '').includes('REV_CONFLICT')) {
-          showToast('Conflict. Load latest or keep yours.');
-          remoteBanner.style.display = 'block';
-        } else {
-          showToast('Sync failed. Check permissions.');
-        }
-
-      } finally {
-        saveBtn.textContent = '☁️ Sync to Cloud';
-        saveBtn.disabled = false;
-      }
-    };
-
-    // Local edits
-    contentDiv.addEventListener('input', () => {
-      if (applyingRemote) return;
-      setDirty(true);
-      positionSaveNearCaret();
-    });
-
-    contentDiv.addEventListener('keyup', () => positionSaveNearCaret());
-    contentDiv.addEventListener('mouseup', () => positionSaveNearCaret());
-
-    // Conflict actions
-    btnAcceptRemote.addEventListener('click', () => {
-      if (!remotePending) {
-        remoteBanner.style.display = 'none';
+        window.updatePageNumbers();
         return;
       }
 
+      // Remote is newer
+      if (nextRev > currentRev) {
+        if (dirty) {
+          remotePending = { html: nextHTML, rev: nextRev };
+          remoteBanner.style.display = 'block';
+          return;
+        }
+
+        applyingRemote = true;
+        contentDiv.innerHTML = nextHTML;
+        applyingRemote = false;
+
+        currentRev = nextRev;
+        window.updatePageNumbers();
+        showToast('Updated from cloud');
+      }
+    }, (err) => {
+      console.error('Snapshot error:', err);
+      showToast('Live sync error. Check rules or network.');
+    });
+  }
+
+  window.saveData = async () => {
+    if (!dirty) return;
+
+    saveBtn.textContent = '⏳ Syncing...';
+    saveBtn.disabled = true;
+
+    try {
+      await runTransaction(db, async (tx) => {
+        const snap = await tx.get(docRef);
+
+        if (!snap.exists()) {
+          tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: 1, updatedAt: serverTimestamp() });
+          currentRev = 1;
+          return;
+        }
+
+        const serverRev = Number(snap.data().rev || 0);
+
+        if (serverRev !== currentRev) {
+          throw new Error('REV_CONFLICT');
+        }
+
+        const newRev = serverRev + 1;
+        tx.update(docRef, {
+          htmlContent: contentDiv.innerHTML,
+          rev: newRev,
+          updatedAt: serverTimestamp()
+        });
+
+        currentRev = newRev;
+      });
+
+      setDirty(false);
+      remoteBanner.style.display = 'none';
+      remotePending = null;
+      showToast('Synced');
+
+    } catch (e) {
+      console.error('Sync failed:', e);
+
+      if (String(e.message || '').includes('REV_CONFLICT')) {
+        showToast('Conflict. Load latest or keep yours.');
+        remoteBanner.style.display = 'block';
+      } else {
+        showToast('Sync failed. Check permissions.');
+      }
+
+    } finally {
+      saveBtn.textContent = '☁️ Sync to Cloud';
+      saveBtn.disabled = false;
+    }
+  };
+
+  contentDiv.addEventListener('input', () => {
+    if (applyingRemote) return;
+    setDirty(true);
+    positionSaveNearCaret();
+  });
+
+  contentDiv.addEventListener('keyup', positionSaveNearCaret);
+  contentDiv.addEventListener('mouseup', positionSaveNearCaret);
+
+  btnAcceptRemote.addEventListener('click', () => {
+    if (!remotePending) {
+      remoteBanner.style.display = 'none';
+      return;
+    }
+
+    applyingRemote = true;
+    contentDiv.innerHTML = remotePending.html;
+    applyingRemote = false;
+
+    currentRev = remotePending.rev;
+    remotePending = null;
+    remoteBanner.style.display = 'none';
+    setDirty(false);
+    window.updatePageNumbers();
+    showToast('Loaded latest');
+  });
+
+  btnKeepMine.addEventListener('click', () => {
+    remoteBanner.style.display = 'none';
+    showToast('Keeping local edits');
+  });
+
+  async function startApp() {
+    // No top-level await. Fail gracefully.
+    try {
+      await signInAnonymously(auth);
+    } catch (e) {
+      console.error('Anonymous auth failed:', e);
+
+      // Still show local seed so team can work visually
       applyingRemote = true;
-      contentDiv.innerHTML = remotePending.html;
+      contentDiv.innerHTML = defaultHTML;
       applyingRemote = false;
 
-      currentRev = remotePending.rev;
-      remotePending = null;
-      remoteBanner.style.display = 'none';
-      setDirty(false);
+      setDirty(true);
       window.updatePageNumbers();
-      showToast('Loaded latest');
-    });
+      showToast('Auth failed. Check Firebase Auth and Firestore rules.');
+      return;
+    }
 
-    btnKeepMine.addEventListener('click', () => {
-      remoteBanner.style.display = 'none';
-      showToast('Keeping local edits');
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return;
+      startRealtimeListener();
     });
-  </script>
+  }
+
+  startApp();
+</script>
+
+<script>
+  window.updatePageNumbers = () => {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach((p, i) => {
+      const numEl = p.querySelector('.page-num');
+      if (numEl) numEl.innerText = `Page ${i + 1} of ${pages.length}`;
+    });
+  };
+</script>
 
 </body>
 </html>
