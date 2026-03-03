@@ -603,38 +603,46 @@
     positionSaveNearCaret();
   };
   // ⬆️ END OF PASTED JAVASCRIPT SNIPPET ⬆️
-  contentDiv.addEventListener('input', (e) => {
-    if (applyingRemote) return;
-    setDirty(true);
-    positionSaveNearCaret();
+  // --- BULLETPROOF AUTO-FORMATTING ---
+  const applyAutoFormatting = () => {
+    // Scan all table cells directly
+    document.querySelectorAll('#document-content td').forEach(cell => {
+      // Skip locked structural columns to keep it fast
+      if (cell.getAttribute('contenteditable') === 'false') return;
 
-    // --- AUTO-FORMATTING LOGIC ---
-    // Safely find if the user is typing inside a table cell
-    let cell = null;
-    if (e.target && e.target.nodeType === 3) {
-      cell = e.target.parentElement.closest('td');
-    } else if (e.target && e.target.closest) {
-      cell = e.target.closest('td');
-    }
-
-    if (cell) {
       const text = cell.innerText.trim().toUpperCase();
+      
       if (text === 'COMPLY' || text === 'YES') {
-        cell.style.color = '#16a34a'; // High-contrast military green
+        cell.style.color = '#16a34a'; // Military green
         cell.style.fontWeight = '900';
         cell.style.fontStyle = 'normal';
       } else if (text === 'TBD') {
         cell.style.color = '#9ca3af'; // Muted gray
         cell.style.fontWeight = 'normal';
         cell.style.fontStyle = 'italic';
-      } else {
-        cell.style.color = 'var(--text-main)'; // Reset to standard text
-        cell.style.fontWeight = 'normal';
+      } else if (text === 'NO' || text === 'FAIL') {
+        cell.style.color = '#e41837'; // MEVA Red for non-compliance
+        cell.style.fontWeight = '900';
         cell.style.fontStyle = 'normal';
+      } else if (cell.style.color) {
+        // Reset text back to standard if they backspace or type something else
+        cell.style.color = '';
+        cell.style.fontWeight = '';
+        cell.style.fontStyle = '';
       }
-    }
+    });
+  };
+
+  // Trigger on typing
+  contentDiv.addEventListener('input', () => {
+    if (applyingRemote) return;
+    setDirty(true);
+    positionSaveNearCaret();
+    applyAutoFormatting();
   });
 
+  // Trigger once when the page loads so existing "TBD"s format correctly
+  setTimeout(applyAutoFormatting, 500);
   contentDiv.addEventListener('keyup', positionSaveNearCaret);
   contentDiv.addEventListener('mouseup', positionSaveNearCaret);
 
