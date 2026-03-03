@@ -10,60 +10,63 @@
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
  <style>
+  /* 1. BRAND TOKENS (Absorbed from pdf.blade.php) */
   :root {
-    --brand-color: #e41837;
-    --text-main: #1f2937;
-    --text-muted: #6b7280;
-    --border-color: #e5e7eb;
-    --bg-gray: #f9fafb;
+    --brand-color: #E41837;
+    --text-main: #1A1A1B;
+    --text-muted: #5F6368;
+    --border-color: #DADCE0;
+    --bg-gray: #F8F9FA;
+    --black: #000000;
   }
 
-  /* 1. Global Print Settings */
+  /* 2. GLOBAL PRINT SETTINGS */
   @page { 
     size: A4; 
-    margin: 15mm; /* Standardized margins for print */
+    margin: 15mm; 
   }
 
   body {
     font-family: 'Georama', sans-serif;
     margin: 0;
-    background: #374151;
+    background: #374151; /* Dark backdrop for web view */
     color: var(--text-main);
+    line-height: 1.4;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  /* 2. Dynamic Page Numbering Fix */
-  /* This creates a real counter that tracks physical sheets, not just <div> count */
+  /* 3. DYNAMIC PAGE NUMBERING FIX */
   body { counter-reset: sheet; }
   
   .page-num::after {
     counter-increment: sheet;
-    content: "Page " counter(sheet); /* Removes the hardcoded "of 16" error */
+    content: "Page " counter(sheet);
   }
 
-  /* 3. Logical Page Layout */
+  /* 4. LOGICAL PAGE LAYOUT (WEB) */
   @media screen {
     .page {
       width: 210mm;
       min-height: 297mm;
       margin: 20px auto;
-      background: #fff;
+      background: #FFFFFF;
       padding: 16mm;
       box-sizing: border-box;
       box-shadow: 0 20px 50px rgba(0,0,0,0.3);
       position: relative;
-      border-radius: 8px;
+      border-radius: 4px;
     }
   }
 
+  /* 5. LOGICAL PAGE LAYOUT (PRINT) */
   @media print {
     /* Hide all web UI elements */
     .ui-controls, .doc-controls-wrapper, #remote-banner, #status-toast { 
       display: none !important; 
     }
     
-    body { background: #fff; }
+    body { background: #FFFFFF; }
     
     .page { 
       margin: 0; 
@@ -71,20 +74,16 @@
       display: block;
       width: 100%;
       border-radius: 0;
-      /* Ensure each volume/section starts on a fresh sheet */
-      page-break-after: always; 
+      page-break-after: always; /* Force new sheet per section */
     }
 
-    /* 4. Table Header Repetition Fix */
-    /* This ensures "Ref / Requirement / Comp" stays at the top of the sheet */
+    /* Table & Break Logic */
     thead { display: table-header-group; }
     tfoot { display: table-footer-group; }
-
-    /* Prevent text being cut in half across pages */
-    tr { page-break-inside: avoid; }
+    tr, .no-break { page-break-inside: avoid; break-inside: avoid; }
     h1, h2, h3, .main-heading, .sub-heading { page-break-after: avoid; }
     
-    /* Ensure footers stay at the very bottom of the sheet */
+    /* Lock footer to bottom of sheet */
     .page-footer { 
       position: absolute; 
       bottom: 0; 
@@ -92,51 +91,135 @@
     }
   }
 
-  /* 5. Typography & Branding */
+  /* 6. TYPOGRAPHY & VISUAL HIERARCHY */
   .vol-identifier {
-    background: var(--brand-color);
-    color: white;
-    padding: 4px 12px;
-    font-weight: 800;
     font-size: 12px;
-    display: inline-block;
-    margin-bottom: 10px;
+    font-weight: 800;
+    color: var(--brand-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 0;
+    border-bottom: 3px solid var(--brand-color);
+    margin-bottom: 12px;
+    display: block;
   }
-  .main-heading { font-size: 24px; font-weight: 800; margin-bottom: 15px; color: var(--text-main); }
+  
+  .main-heading { 
+    font-size: 16px; 
+    font-weight: 800; 
+    color: var(--text-main); 
+    margin-bottom: 12px; 
+    text-transform: uppercase; 
+  }
+  
   .sub-heading {
-    font-size: 18px; font-weight: 700; color: var(--brand-color);
-    border-bottom: 2px solid var(--brand-color);
-    padding-bottom: 5px; margin: 20px 0 10px 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--brand-color);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 4px;
+    margin: 16px 0 8px 0;
   }
-  .group-header { background: #f3f4f6 !important; text-align: center; font-weight: 800; text-transform: uppercase; font-size: 11px; }
 
-  /* 6. Tables */
-  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12.5px; }
-  th, td { border: 1px solid var(--border-color); padding: 8px 10px; text-align: left; }
-  th { background: var(--bg-gray); font-weight: 800; color: var(--text-muted); font-size: 11px; }
+  .group-header { 
+    background: #FBFBFC !important; 
+    text-align: center; 
+    font-weight: 800; 
+    color: var(--text-main); 
+    text-transform: uppercase; 
+    font-size: 10px; 
+    letter-spacing: 0.5px; 
+  }
 
-  /* 7. Header & Footer Sizing */
+  /* 7. TABLES (Datasheet Style) */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-bottom: 16px; 
+    font-size: 11.5px; /* Matches blade ~8.5pt */
+  }
+  
+  th, td { 
+    border: 0.5pt solid var(--border-color); 
+    padding: 8px 10px; 
+    text-align: left; 
+    vertical-align: top; 
+  }
+  
+  th { 
+    background: var(--bg-gray); 
+    font-weight: 700; 
+    color: var(--text-muted); 
+    font-size: 10px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
+  }
+
+  /* 8. HEADER & FOOTER */
   .header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 0 10px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 12px;
+    display: flex; 
+    align-items: flex-end; 
+    justify-content: space-between;
+    padding: 0 0 8px 0; 
+    border-bottom: 0.5pt solid var(--border-color); 
+    margin-bottom: 16px;
   }
-  .logo-container img { height: 26px; width: auto; object-fit: contain; display: block; }
+  
+  .logo-container img { 
+    height: 28px; 
+    width: auto; 
+    object-fit: contain; 
+    display: block; 
+  }
+  
   .page-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 10px; border-top: 1px solid var(--border-color); padding-top: 6px;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    gap: 10px; 
+    border-top: 0.5pt solid var(--border-color); 
+    padding-top: 6px;
   }
-  .page-footer-text, .page-num { font-size: 9px; color: var(--text-muted); font-weight: 800; white-space: nowrap; }
+  
+  .page-footer-text, .page-num { 
+    font-size: 7.5pt; /* Exact blade footer size */
+    color: var(--text-muted); 
+    font-weight: 600; 
+    white-space: nowrap; 
+  }
 
-  /* 8. Extra UI Elements (ToC, Info Boxes, etc.) */
-  .toc-container { background: #f3f4f6; padding: 20px; border-radius: 6px; border: 1px solid var(--border-color); }
-  .toc-link { font-weight: 800; color: var(--text-main); text-decoration: none; font-size: 14px; }
-  .toc-sublink { font-weight: 600; color: var(--brand-color); text-decoration: none; font-size: 13px; margin-left: 15px; }
-  .info-box { padding: 12px 15px; border-left: 4px solid; border-radius: 4px; background: #f9fafb; font-size: 13px; margin: 15px 0; }
-  .info-box.critical { border-left-color: var(--brand-color); background: #fef2f2; }
-  .info-box.note { border-left-color: #3b82f6; background: #eff6ff; }
-  .check-list { margin: 0; padding-left: 20px; font-size: 13px; }
+  /* 9. UI ELEMENTS (Info Boxes, ToC, Grids) */
+  .toc-container { 
+    background: var(--bg-gray); 
+    padding: 20px; 
+    border-radius: 4px; 
+    border: 1px solid var(--border-color); 
+  }
+  
+  .toc-link { font-weight: 800; color: var(--text-main); text-decoration: none; font-size: 13px; text-transform: uppercase; }
+  .toc-sublink { font-weight: 600; color: var(--text-muted); text-decoration: none; font-size: 12px; margin-left: 15px; }
+  .toc-divider { border-bottom: 1px solid var(--border-color); margin: 10px 0; }
+  
+  .info-box { 
+    padding: 12px 14px; 
+    border-left: 4px solid var(--brand-color); 
+    background: var(--bg-gray); 
+    border-radius: 4px; 
+    font-size: 11.5px; 
+    margin: 12px 0; 
+  }
+  
+  /* Critical matches the "Active Ballistic Level" row color from the blade */
+  .info-box.critical { border-left-color: var(--brand-color); background: #FFF0F1; }
+  .info-box.note { border-left-color: var(--text-muted); background: #F1F3F4; }
+  
+  .check-list { margin: 0; padding-left: 16px; font-size: 11.5px; line-height: 1.5; }
+  
   .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-  .img-box { border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; text-align: center; }
+  .img-box { border: 1px solid var(--border-color); padding: 5px; border-radius: 4px; background: #FFFFFF; text-align: center; }
+  .img-title { font-size: 10px; font-weight: 700; color: var(--brand-color); text-transform: uppercase; margin-bottom: 4px; }
 </style>
 </head>
 
