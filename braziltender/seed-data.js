@@ -559,74 +559,86 @@ export const defaultHTML = `
           </tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
-
-<div style="padding: 8px 0px; border-bottom: 4px solid var(--brand-color); margin-top: 25px; margin-bottom: 10px;">
-            <div style="font-size: 12px; color: var(--brand-color); text-transform: uppercase; font-weight: 800; margin: 0; padding: 0;">
+<div class="page">
+      <div class="header">
+        <div class="logo-container">
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="vol-identifier">VOLUME III — TECHNICAL QUALIFICATION</div>
+        
+        <div style="padding: 8px 0px; border-bottom: 4px solid var(--brand-color); margin-top: 0px; margin-bottom: 15px;">
+            <div style="font-size: 14px; color: var(--brand-color); text-transform: uppercase; font-weight: 800; margin: 0; padding: 0;">
                 TLC300 BALLISTIC & DYNAMICS CERTIFICATION
             </div>
         </div>
 
-        <div style="overflow: hidden; margin-bottom: 15px; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;">
-            <div style="padding: 15px;">
-                 <div style="color: #333; font-weight: 800; font-size: 11pt; text-transform: uppercase; text-align: center;">VPAM VR7 CERTIFIED</div>
-                 <div style="color: #777; font-size: 9pt; font-weight: 600; text-align: center; margin-bottom: 10px;">Tested & Certified by Beschussamt Ulm GmbH with 3-Star Ratings</div>
+        <div style="overflow: hidden; margin-bottom: 25px; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;">
+            <div style="padding: 20px;">
+                 <div style="color: #333; font-weight: 800; font-size: 13pt; text-transform: uppercase; text-align: center;">VPAM VR7 CERTIFIED</div>
+                 <div style="color: #777; font-size: 10pt; font-weight: 600; text-align: center; margin-bottom: 15px;">Tested & Certified by Beschussamt Ulm GmbH with 3-Star Ratings</div>
                  
                  <table style="width:100%; border-collapse:collapse; table-layout: fixed; margin-bottom: 10px;">
                     <tr>
-                        <td colspan="3" style="padding: 6px 0; font-size: 8.5pt; font-weight: 800; color: #333; text-transform: uppercase;">VPAM BRV & ERV Standards</td>
+                        <td colspan="3" style="padding: 8px 0; font-size: 9.5pt; font-weight: 800; color: #333; text-transform: uppercase;">VPAM BRV & ERV Standards</td>
                     </tr>
                     <tr>
-                        <td style="width: 21%; padding: 4px 0; font-size: 8pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Ballistic</td>
-                        <td style="width: 2%; padding: 4px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 77%; padding: 4px 6px; font-size: 8.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">VR7 (SS109 & DM111) | Roof & Glazing at 90°</td>
+                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Ballistic</td>
+                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
+                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">VR7 (SS109 & DM111) | Roof & Glazing at 90°</td>
                     </tr>
                     <tr>
-                        <td style="width: 21%; padding: 4px 0; font-size: 8pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Side Blast</td>
-                        <td style="width: 2%; padding: 4px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 77%; padding: 4px 6px; border-bottom: 1px solid #f5f5f5;">
-                            <div style="font-size: 8.5pt; font-weight: 700; color: #333; text-transform: uppercase;">12.5kg PETN @ 4m with Biofidelic Dummy</div>
-                            <div style="font-size: 7.5pt; font-weight: 700; color: #777; text-transform: uppercase;">Human bone fracture characteristic testing</div>
+                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Side Blast</td>
+                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
+                        <td style="width: 73%; padding: 6px; border-bottom: 1px solid #f5f5f5;">
+                            <div style="font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase;">12.5kg PETN @ 4m with Biofidelic Dummy</div>
+                            <div style="font-size: 8.5pt; font-weight: 700; color: #777; text-transform: uppercase; margin-top:2px;">Human bone fracture characteristic testing</div>
                         </td>
                     </tr>
                    <tr>
-                        <td style="width: 21%; padding: 4px 0; font-size: 8pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Underbody</td>
-                        <td style="width: 2%; padding: 4px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 77%; padding: 4px 6px; font-size: 8.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">DM 31 (x1) and HG 85 (x2)</td>
+                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Underbody</td>
+                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
+                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">DM 31 (x1) and HG 85 (x2)</td>
                     </tr>    
                      <tr>
-                        <td style="width: 21%; padding: 4px 0; font-size: 8pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Roof</td>
-                        <td style="width: 2%; padding: 4px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 77%; padding: 4px 6px; font-size: 8.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">DM 51 Double Charge (Standard & Hatch)</td>
+                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Roof</td>
+                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
+                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">DM 51 Double Charge (Standard & Hatch)</td>
                     </tr>  
                     <tr>
-                        <td colspan="3" style="padding: 10px 0 6px 0; font-size: 8.5pt; font-weight: 800; color: #333; text-transform: uppercase;">PAS 300 Blast & Ballistic</td>
+                        <td colspan="3" style="padding: 15px 0 8px 0; font-size: 9.5pt; font-weight: 800; color: #333; text-transform: uppercase;">PAS 300 Blast & Ballistic</td>
                     </tr>
                     <tr>
-                        <td style="width: 21%; padding: 4px 0; font-size: 8pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Ballistic</td>
-                        <td style="width: 2%; padding: 4px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 77%; padding: 4px 6px; font-size: 8.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">Roof tested at 45° angle</td>
+                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Ballistic</td>
+                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
+                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">Roof tested at 45° angle</td>
                     </tr>
                     <tr>
-                        <td style="width: 21%; padding: 4px 0; font-size: 8pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Side Blast</td>
-                        <td style="width: 2%; padding: 4px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 77%; padding: 4px 6px; font-size: 8.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">12.5kg PETN (Pressure sensor verified)</td>
+                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Side Blast</td>
+                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
+                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">12.5kg PETN (Pressure sensor verified)</td>
                     </tr>
                  </table>    
             </div>
             
-            <div style="background: #fafafa; border-top: 1px solid #e5e7eb; padding: 15px;">
-                <div style="color: #333; font-weight: 800; font-size: 10pt; text-transform: uppercase; text-align: center;">PAS 301 Drivability Certified</div>
-                <div style="color: #777; font-size: 9pt; font-weight: 600; text-align: center; margin-bottom: 10px;">Dynamics & Handling Tested for VPAM VR7 LC 300</div>
+            <div style="background: #fafafa; border-top: 1px solid #e5e7eb; padding: 20px;">
+                <div style="color: #333; font-weight: 800; font-size: 11pt; text-transform: uppercase; text-align: center;">PAS 301 Drivability Certified</div>
+                <div style="color: #777; font-size: 10pt; font-weight: 600; text-align: center; margin-bottom: 15px;">Dynamics & Handling Tested for VPAM VR7 LC 300</div>
                 <table style="width: 100%; border-collapse: collapse; text-align: center;">
                     <tr>
-                        <td style="width: 25%; padding: 5px; font-size: 8pt; font-weight: 800; color: #333; text-transform: uppercase;">Acceleration</td>
-                        <td style="width: 25%; padding: 5px; font-size: 8pt; font-weight: 800; color: #333; text-transform: uppercase;">Slalom Test</td>
-                        <td style="width: 25%; padding: 5px; font-size: 8pt; font-weight: 800; color: #333; text-transform: uppercase;">Fast-Lane Change</td>
-                        <td style="width: 25%; padding: 5px; font-size: 8pt; font-weight: 800; color: #333; text-transform: uppercase;">Braking</td>
+                        <td style="width: 25%; padding: 8px; font-size: 9pt; font-weight: 800; color: #333; text-transform: uppercase;">Acceleration</td>
+                        <td style="width: 25%; padding: 8px; font-size: 9pt; font-weight: 800; color: #333; text-transform: uppercase;">Slalom Test</td>
+                        <td style="width: 25%; padding: 8px; font-size: 9pt; font-weight: 800; color: #333; text-transform: uppercase;">Fast-Lane Change</td>
+                        <td style="width: 25%; padding: 8px; font-size: 9pt; font-weight: 800; color: #333; text-transform: uppercase;">Braking</td>
                     </tr>
                 </table>
             </div>
         </div>
+        </div>
+      <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
+    </div>
         <div class="sub-heading" style="margin-top: 20px;">Item 2 – Formal Certifications Required (Refer to Vol VIII)</div>
         <table>
           <tbody>
