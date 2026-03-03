@@ -275,13 +275,19 @@
     Download PDF
   </button>
   <button id="save-btn" class="btn save-btn" onclick="saveDocument()" contenteditable="false">💾 Save HTML</button>
-<!-- COVER PAGE WITH HERO IMAGE & DETAILS -->
-  <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden;">
-    
+
+  <!-- COVER PAGE WITH HERO IMAGE & DETAILS -->
+  <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
     <!-- Top Hero Image Section -->
     <div style="flex-grow: 1; position: relative; background-color: var(--bg-gray);">
       <!-- REPLACE 'cover-image.jpg' WITH YOUR ACTUAL HERO IMAGE PATH/URL -->
-      <img src="mevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      <img src="mevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      
+      <!-- Fallback placeholder if image is missing -->
+      <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#9ca3af; font-size:14px; font-weight:bold; background:#e5e7eb; position:absolute; top:0; left:0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
+        [ HERO IMAGE PLACEHOLDER (cover-image.jpg) ]
+      </div>
       
       <!-- Brand color accent line bridging the image and the text -->
       <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background-color: var(--brand-color);"></div>
@@ -299,8 +305,8 @@
       <!-- Short divider -->
       <div style="width: 60px; height: 4px; background-color: var(--brand-color); margin-bottom: 35px; border-radius: 2px;"></div>
       
-      <!-- Structured Details Table (No borders for a clean look) -->
-      <table style="width: 100%; border: none; font-size: 14px; margin-bottom: 0;">
+      <!-- Structured Details Table -->
+      <table style="width: 100%; border: none; font-size: 14px; margin-bottom: 0; box-shadow: none; border-radius: 0;">
         <tr>
           <td style="padding: 5px 0; font-weight: 700; color: var(--text-muted); width: 140px; border: none; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Auction No:</td>
           <td style="padding: 5px 0; font-weight: 700; color: var(--text-main); border: none; font-size: 15px;">002/2026 – PMES</td>
@@ -315,9 +321,9 @@
         </tr>
       </table>
     </div>
-    
   </div>
   <!-- END COVER PAGE -->
+
   <!-- PAGE 1: INDEX / TABLE OF CONTENTS -->
   <div class="page" id="index-page">
     <div class="header">
