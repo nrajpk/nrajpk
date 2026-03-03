@@ -98,7 +98,10 @@
     .print-btn { right: 20px; background: var(--text-main); }
     .print-btn:hover { background: #111827; transform: translateY(-1px); }
     
-    .save-btn { right: 165px; background: var(--brand-color); display: none; }
+    .download-btn { right: 165px; background: #2563eb; }
+    .download-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+    .save-btn { right: 330px; background: var(--brand-color); display: none; }
     .save-btn:hover { background: #c0142e; transform: translateY(-1px); }
 
     /* Universal Header */
@@ -275,7 +278,12 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
       Download PDF
     </button>
-    <button id="save-btn" class="btn save-btn">💾 Save to Cloud</button>
+    <button class="btn download-btn" onclick="downloadHTML()">
+      📥 Download HTML
+    </button>
+    <button id="save-btn" class="btn save-btn" onclick="saveDocumentToCloud()">
+      ☁️ Sync to Cloud
+    </button>
   </div>
 
   <!-- Editable Document Content (Synced via Firebase) -->
@@ -1217,6 +1225,19 @@
       saveBtn.style.display = 'flex';
     });
 
+    window.downloadHTML = function() {
+      const htmlContent = '<!doctype html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+
     // Initialize Authentication and Real-time Sync
     async function initCollaboration() {
       try {
@@ -1262,7 +1283,7 @@
           }
 
           setTimeout(() => {
-            saveBtn.innerHTML = '💾 Save to Cloud';
+            saveBtn.innerHTML = '☁️ Sync to Cloud';
             saveBtn.style.background = 'var(--brand-color)';
             isSaving = false;
           }, 2500);
