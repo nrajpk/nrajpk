@@ -1,8 +1,6 @@
 // seed-data.js
 export const defaultHTML = `
-  
     <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
-  <!-- HERO BAND (WIDE, PRINT-STABLE) -->
   <div style="width: 100%; height: 55mm; position: relative; background-color: var(--bg-gray); overflow: hidden;">
     <img
       src="mevahero.jpeg"
@@ -10,29 +8,22 @@ export const defaultHTML = `
       style="width: 100%; height: 100%; object-fit: cover; display: block;"
       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
     >
-
-    <!-- Fallback placeholder (shows only if image fails) -->
     <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#9ca3af; font-size:14px; font-weight:bold; background:#e5e7eb; position:absolute; top:0; left:0;">
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px;">
         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
       </svg>
       [ HERO IMAGE PLACEHOLDER (WIDE) ]
     </div>
-
-    <!-- Brand strip -->
     <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background-color: var(--brand-color);"></div>
   </div>
 
-  <!-- COVER CONTENT -->
   <div style="padding: 60px 50px; background-color: #fff; flex-grow: 1; box-sizing: border-box;">
     <div style="font-size: 14px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;">
       Technical & Commercial Proposal
     </div>
-
     <h1 style="font-size: 38px; font-weight: 800; color: var(--text-main); margin: 0 0 24px 0; line-height: 1.1; letter-spacing: -0.5px;">
       Polícia Militar do Estado do Espírito Santo
     </h1>
-
     <div style="width: 60px; height: 4px; background-color: var(--brand-color); margin-bottom: 35px; border-radius: 2px;"></div>
 
     <table style="width: 100%; border: none; font-size: 14px; margin-bottom: 0; box-shadow: none; border-radius: 0;">
@@ -63,7 +54,7 @@ export const defaultHTML = `
     </table>
   </div>
 </div>
-    <!-- PAGE 1: INDEX -->
+
     <div class="page" id="index-page">
       <div class="header">
         <div class="logo-container">
@@ -76,32 +67,47 @@ export const defaultHTML = `
         <p class="para" style="margin-bottom: 20px;">Click any section below to jump directly to the relevant page.</p>
         <div class="toc-container" contenteditable="false">
           <a href="#vol1" class="toc-link">VOLUME I — ADMINISTRATIVE & LEGAL DOCUMENTS</a>
+          <br>
           <a href="#vol2" class="toc-link">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION</a>
+          <br>
           <a href="#vol3" class="toc-link">VOLUME III — TECHNICAL QUALIFICATION</a>
+          <br>
           <a href="#item3-4" class="toc-sublink">3.4 ITEM 1 – APC: Technical Compliance Matrix</a>
+          <br>
           <a href="#apc-evidence" class="toc-sublink">↳ ITEM 1 – APC: Supporting Evidence & Images</a>
+          <br>
           <a href="#item3-7" class="toc-sublink">3.7 ITEM 2 – CAV: Technical Compliance Matrix</a>
+          <br>
           <a href="#cav-evidence" class="toc-sublink">↳ ITEM 2 – CAV: Supporting Evidence & Images</a>
+          <br>
           <a href="#vol4" class="toc-link">VOLUME IV — ECONOMIC & FINANCIAL QUALIFICATION</a>
+          <br>
           <a href="#vol5" class="toc-link">VOLUME V — COMMERCIAL PROPOSAL</a>
+          <br>
           <a href="#item5-2" class="toc-sublink">5.2 Commercial Pricing Schedule</a>
+          <br>
           <a href="#vol6" class="toc-link">VOLUME VI — SAMPLE & TESTING COMMITMENT</a>
+          <br>
           <a href="#item6-5" class="toc-sublink">6.5 Acceptance Test Compliance Statement & Tables (APC)</a>
+          <br>
           <a href="#item6-6" class="toc-sublink">6.6 Acceptance Test Compliance Statement & Tables (CAV)</a>
+          <br>
           <a href="#vol7" class="toc-link">VOLUME VII — POST-CONTRACT COMMITMENTS</a>
+          <br>
           <div class="toc-divider"></div>
           <a href="#final-declarations" class="toc-link">FINAL DECLARATIONS & SIGNATURES</a>
+          <br>
           <a href="#annex2" class="toc-sublink">Compliance with Annex II (Testing Committee)</a>
+          <br>
           <a href="#signatures" class="toc-sublink">Binding Undertaking, Traceability Checklist & Signatures</a>
+          <br>
           <div class="toc-divider"></div>
           <a href="#vol8" class="toc-link">VOLUME VIII — ANNEXURES & CERTIFICATES</a>
-          <a href="#vol8" class="toc-sublink">Appended Certificate Placeholders</a>
         </div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 2: VOL I & II CHECKLIST -->
     <div class="page" id="vol1">
       <div class="header">
         <div class="logo-container">
@@ -142,7 +148,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 3: VOL III -->
     <div class="page" id="vol3">
       <div class="header">
         <div class="logo-container">
@@ -214,7 +219,6 @@ export const defaultHTML = `
   <button class="doc-control" onclick="removeCol(this)">- Remove Col</button>
 </div>
 
-<!-- PAGE 4: VOL III (Item 1 Part 2) -->
 <div class="page">
   <div class="header">
     <div class="logo-container">
@@ -372,7 +376,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 5: APC IMAGES & EVIDENCE -->
     <div class="page" id="apc-evidence">
       <div class="header">
         <div class="logo-container">
@@ -429,7 +432,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 6: VOL III (Item 2 Part 1) -->
     <div class="page">
       <div class="header">
         <div class="logo-container">
@@ -484,7 +486,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 7: ITEM 2 CAV MATRIX P2 -->
     <div class="page">
       <div class="header">
         <div class="logo-container">
@@ -590,7 +591,6 @@ export const defaultHTML = `
           </tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
-        <!-- INSERTED: VPAM VR7 baseline ballistic & blast summary (reference only; does not replace tender certificates) -->
         <div class="info-box" style="margin-top: 14px;">
           <div class="sub-heading" style="margin: 0 0 8px 0;">Reference Ballistic & Blast Performance Summary (VPAM VR7 Baseline)</div>
           <div class="text-muted" style="font-size: 12px; margin-bottom: 10px;">
@@ -628,7 +628,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 8: CAV IMAGES & EVIDENCE -->
     <div class="page" id="cav-evidence">
       <div class="header">
         <div class="logo-container">
@@ -684,7 +683,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 9: VOL IV & V CHECKLIST & PRICING-->
     <div class="page" id="vol4">
       <div class="header">
         <div class="logo-container">
@@ -730,7 +728,6 @@ export const defaultHTML = `
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
         
         
-        <!-- INSERTED: Reference commercial & contractual terms (append-only; does not override tender forms) -->
         <div class="sub-heading" style="margin-top: 22px;">Reference Commercial & Contractual Terms (MEVA Standard)</div>
         <div class="text-muted" style="font-size: 12px; margin-bottom: 10px;">
           The following clauses are reference terms extracted from an MEVA proposal pack to help populate the commercial narrative.
@@ -789,7 +786,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 10: VOL VI & VII CHECKLIST -->
     <div class="page" id="vol6">
       <div class="header">
         <div class="logo-container">
@@ -822,7 +818,6 @@ export const defaultHTML = `
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
         
         
-        <!-- INSERTED: Warranty, support, and documentation requirements (append-only) -->
         <div class="sub-heading" style="margin-top: 22px;">Proposed Warranty Terms (Reference)</div>
         <div class="text-muted" style="font-size: 12px; margin-bottom: 10px;">
           The following clauses are reference warranty terms extracted from an MEVA proposal pack and added for narrative completeness.
@@ -894,7 +889,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 11: ITEM 1 ATP (Part 1) -->
     <div class="page" id="item6-5">
       <div class="header">
         <div class="logo-container">
@@ -951,7 +945,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 12: ITEM 2 ATP (Part 1) -->
     <div class="page" id="item6-6">
       <div class="header">
         <div class="logo-container">
@@ -1008,7 +1001,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 13: ANNEX II COMPLIANCE & SIGNATURES -->
     <div class="page" id="final-declarations">
       <div class="header">
         <div class="logo-container">
@@ -1064,15 +1056,15 @@ export const defaultHTML = `
           Mahindra Emirates Vehicle Armouring FZ-LLC hereby formally declares full acceptance of the Acceptance Testing Procedure (ATP) for both Item 1 and Item 2. The bidder commits to present sample vehicles, provide qualified technical personnel, allow dynamic road testing up to 50 km, provide complete documentation, cooperate with the Testing Committee in the issuance of the Conclusive Technical Opinion, and comply fully with Annex II regarding the authority and procedures of the Testing Committee. This declaration remains binding upon contract award.
         </p>
         
-        <div class="sig-grid">
-          <div class="sig-box">
-            <div class="sig-badge">BIDDER</div>
-            <div class="small">
+        <div class="sig-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="sig-box" style="border:1px solid var(--border-color); padding:15px; border-radius:4px;">
+            <div class="sig-badge" style="font-size:10px; font-weight:800; color:var(--brand-color); margin-bottom:10px;">BIDDER</div>
+            <div class="small" style="font-size:11px; margin-bottom:15px;">
               <strong>Company:</strong> Mahindra Emirates Vehicle Armouring FZ-LLC<br/>
               <strong>Document:</strong> Part VI Acceptance Tests Undertaking<br/>
               <strong>Applicability:</strong> Common + Item 1 (APC) + Item 2 (CAV)
             </div>
-            <div class="sig-line">
+            <div class="sig-line" style="font-size:12px;">
               Authorized Signatory: __________________________<br/><br/>
               Name: __________________________<br/><br/>
               Title: __________________________<br/><br/>
@@ -1081,13 +1073,13 @@ export const defaultHTML = `
             </div>
           </div>
 
-          <div class="sig-box">
-            <div class="sig-badge" style="background:var(--text-muted);">WITNESS / INTERNAL CONTROL</div>
-            <div class="small" style="color:var(--text-muted);">
+          <div class="sig-box" style="border:1px dashed var(--border-color); padding:15px; border-radius:4px;">
+            <div class="sig-badge" style="font-size:10px; font-weight:800; color:var(--text-muted); margin-bottom:10px;">WITNESS / INTERNAL CONTROL</div>
+            <div class="small" style="color:var(--text-muted); font-size:11px; margin-bottom:15px;">
               Optional internal witness for submission pack control (recommended for traceability assurance).<br/>
               This does not replace PMES Testing Committee records.
             </div>
-            <div class="sig-line">
+            <div class="sig-line" style="font-size:12px;">
               Reviewer: __________________________<br/><br/>
               Name: __________________________<br/><br/>
               Title/Dept: __________________________<br/><br/>
@@ -1100,7 +1092,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- VOLUME VIII: ANNEXURE INDEX -->
     <div class="page" id="vol8">
       <div class="header">
         <div class="logo-container">
@@ -1155,7 +1146,6 @@ export const defaultHTML = `
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- CERTIFICATE PLACEHOLDER -->
     <div class="page cert-page">
       <div class="header">
         <div class="logo-container">
@@ -1165,16 +1155,15 @@ export const defaultHTML = `
       </div>
       <div class="page-content">
         <div class="main-heading cert-title">Annex: [Document Name]</div>
-        <div class="cert-placeholder" contenteditable="false">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-          <h4>Attach Document: [Name]</h4>
-          <p>Please append the relevant physical document here before final submission.</p>
+        <div class="cert-placeholder" contenteditable="false" style="text-align:center; padding: 40px; border: 2px dashed var(--border-color); border-radius: 8px; margin-top: 20px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="var(--text-muted)" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+          <h4 style="margin: 10px 0; color: var(--text-main);">Attach Document: [Name]</h4>
+          <p style="color: var(--text-muted); font-size: 12px; margin: 0;">Please append the relevant physical document here before final submission.</p>
         </div>
-        <div class="doc-controls-wrapper" style="justify-content:center; margin-top:16px;" contenteditable="false">
-          <button class="doc-control" onclick="addCertificate(this)">+ Duplicate Certificate Page</button>
+        <div class="doc-controls-wrapper" style="justify-content:center; margin-top:16px; width: 100%; display: flex;" contenteditable="false">
+          <button class="doc-control" onclick="addCertificate(this)" style="border: none;">+ Duplicate Certificate Page</button>
         </div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
-     
 `;
