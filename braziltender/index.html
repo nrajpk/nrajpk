@@ -33,6 +33,8 @@
     color: var(--text-main);
     line-height: 1.4;
     -webkit-print-color-adjust: exact;
+    line-height: 1.5;
+
     print-color-adjust: exact;
   }
 
@@ -105,11 +107,12 @@
   }
   
   .main-heading { 
-    font-size: 16px; 
+    font-size: 14px; /* Slightly smaller to match Blade elegance */
     font-weight: 800; 
     color: var(--text-main); 
     margin-bottom: 12px; 
     text-transform: uppercase; 
+    letter-spacing: 0.5px;
   }
   
   .sub-heading {
@@ -117,10 +120,10 @@
     font-weight: 700;
     color: var(--brand-color);
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 4px;
-    margin: 16px 0 8px 0;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--brand-color); /* Thicker bottom border */
+    padding-bottom: 6px;
+    margin: 20px 0 10px 0;
   }
 
   .group-header { 
@@ -137,24 +140,47 @@
   table { 
     width: 100%; 
     border-collapse: collapse; 
-    margin-bottom: 16px; 
-    font-size: 11.5px; /* Matches blade ~8.5pt */
+    margin-bottom: 20px; 
+    font-size: 11px; /* Matches blade exact sizing */
   }
   
   th, td { 
-    border: 0.5pt solid var(--border-color); 
-    padding: 8px 10px; 
+    border-bottom: 1px solid var(--border-color); 
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    padding: 10px 8px; /* Increased padding for vertical breathing room */
     text-align: left; 
     vertical-align: top; 
   }
   
   th { 
-    background: var(--bg-gray); 
-    font-weight: 700; 
-    color: var(--text-muted); 
-    font-size: 10px; 
+    background: #FFFFFF; /* Dropped the gray background for a cleaner look */
+    font-weight: 800; 
+    color: var(--text-main); 
     text-transform: uppercase; 
     letter-spacing: 0.5px; 
+    border-bottom: 2px solid var(--text-muted); /* Strong anchor line for headers */
+  }
+   tbody tr:nth-child(even):not(.group-header-row) {
+    background-color: #FBFBFC;
+  }
+   .group-header { 
+    background: #FFFFFF !important; 
+    text-align: left; 
+    font-weight: 800; 
+    color: var(--brand-color); 
+    text-transform: uppercase; 
+    font-size: 10px; 
+    letter-spacing: 1px; 
+    padding-top: 18px; /* Push it down from the previous section */
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--brand-color);
+  }
+
+  /* Remove borders from the last row to keep it clean */
+  tbody tr:last-child td {
+    border-bottom: none;
   }
 
   /* 8. HEADER & FOOTER */
