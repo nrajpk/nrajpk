@@ -179,158 +179,177 @@ export const defaultHTML = `
         
         <div id="item3-4" class="main-heading" style="margin-top: 10px; font-size: 13px;">3.4 Technical Compliance Report – Annex IB</div>
         <p class="para">Must confirm compliance with ALL specifications listed below. <br/><em><strong>Note:</strong> Formal certificates are attached in Volume VIII. Visual evidence is attached on the following pages.</em></p>
+<table>
+  <thead>
+    <tr>
+      <th style="width:7%">Ref</th>
+      <th style="width:33%">Annex IB Requirement</th>
+      <th style="width:25%">MEVA Response</th>
+      <th style="width:28%">Evidence File / Note</th>
+      <th style="width:7%">Comp.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th colspan="5" class="group-header">1.1 OVERVIEW</th></tr>
+    <tr><td>1.I</td><td>Light armored vehicle for transport of 10 personnel (driver; cmdr + 8)</td><td>Offered vehicle will transport 10 (1+1+8)</td><td>Tech Offer Cover / Image Sec.</td><td class="col-exec col-exec-tbd">TBD</td></tr>
+    <tr><td>1.II</td><td>Manufactured in 2024+; never used; 0 km condition; mfg guarantee</td><td>Confirm production year and 0 km</td><td>Manufacturer Declaration</td><td class="col-exec col-exec-tbd">TBD</td></tr>
+    <tr><td>1.III</td><td>Signaling/communication may be installed in Brazil</td><td>Confirm allowance for install in BR</td><td>Installation Statement</td><td class="col-exec col-exec-tbd">TBD</td></tr>
 
-        <table>
-          <thead>
-            <tr>
-              <th style="width:7%">Ref</th>
-              <th style="width:33%">Annex IB Requirement</th>
-              <th style="width:25%">MEVA Response</th>
-              <th style="width:7%">Comp.</th>
-              <th style="width:28%">Evidence File / Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><th colspan="5" class="group-header">1.1 OVERVIEW</th></tr>
-            <tr><td>1.I</td><td>Light armored vehicle for transport of 10 personnel (driver; cmdr + 8)</td><td>Offered vehicle will transport 10 (1+1+8)</td><td class="col-exec col-exec-tbd">TBD</td><td>Tech Offer Cover / Image Sec.</td></tr>
-            <tr><td>1.II</td><td>Manufactured in 2024+; never used; 0 km condition; mfg guarantee</td><td>Confirm production year and 0 km</td><td class="col-exec col-exec-tbd">TBD</td><td>Manufacturer Declaration</td></tr>
-            <tr><td>1.III</td><td>Signaling/communication may be installed in Brazil</td><td>Confirm allowance for install in BR</td><td class="col-exec col-exec-tbd">TBD</td><td>Installation Statement</td></tr>
-            
-            <tr><th colspan="5" class="group-header">1.2.1 Chassis & 1.2.2 Engine</th></tr>
-            <tr><td>1.2.1.I</td><td>Mounted on commercial chassis, reinforced for armoring</td><td>Offered on reinforced commercial chassis</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM Chassis Datasheet</td></tr>
-            <tr><td>1.2.2.I</td><td>Internal combustion, turbo diesel, Euro 4 or higher</td><td>Confirm turbo diesel Euro 4+</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM Engine Datasheet</td></tr>
-            <tr><td>1.2.2.II</td><td>Power: 300 HP</td><td>Confirm 300 HP</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM Engine Datasheet</td></tr>
-            <tr><td>1.2.2.III</td><td>Torque min 1,000 Nm at 1,200–2,200 rpm</td><td>Confirm torque curve meets requirement</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM Torque Curve</td></tr>
+    <tr><th colspan="5" class="group-header">1.2.1 Chassis &amp; 1.2.2 Engine</th></tr>
+    <tr><td>1.2.1.I</td><td>Mounted on commercial chassis, reinforced for armoring</td><td>Offered on reinforced commercial chassis</td><td>OEM Chassis Datasheet</td><td class="col-exec col-exec-tbd">TBD</td></tr>
+    <tr><td>1.2.2.I</td><td>Internal combustion, turbo diesel, Euro 4 or higher</td><td>Confirm turbo diesel Euro 4+</td><td>OEM Engine Datasheet</td><td class="col-exec col-exec-tbd">TBD</td></tr>
+    <tr><td>1.2.2.II</td><td>Power: 300 HP</td><td>Confirm 300 HP</td><td>OEM Engine Datasheet</td><td class="col-exec col-exec-tbd">TBD</td></tr>
+    <tr><td>1.2.2.III</td><td>Torque min 1,000 Nm at 1,200–2,200 rpm</td><td>Confirm torque curve meets requirement</td><td>OEM Torque Curve</td><td class="col-exec col-exec-tbd">TBD</td></tr>
 
-            <tr><th colspan="5" class="group-header">1.2.3 Transmission, Steering, Brakes, Suspension</th></tr>
-            <tr><td>1.2.3.I</td><td>Automatic, ≥6 fwd + 1 rev, torque converter</td><td>Confirm gearbox spec</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM Transmission Datasheet</td></tr>
-            <tr><td>1.2.3.II</td><td>4x4 part-time; electronic transfer case</td><td>Confirm drivetrain spec</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM 4x4 Spec Sheet</td></tr>
-          </tbody>
-        </table>
-        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
-      </div>
-      <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
+    <tr><th colspan="5" class="group-header">1.2.3 Transmission, Steering, Brakes, Suspension</th></tr>
+    <tr><td>1.2.3.I</td><td>Automatic, ≥6 fwd + 1 rev, torque converter</td><td>Confirm gearbox spec</td><td>OEM Transmission Datasheet</td><td class="col-exec col-exec-tbd">TBD</td></tr>
+    <tr><td>1.2.3.II</td><td>4x4 part-time; electronic transfer case</td><td>Confirm drivetrain spec</td><td>OEM 4x4 Spec Sheet</td><td class="col-exec col-exec-tbd">TBD</td></tr>
+  </tbody>
+</table>
+
+<div class="doc-controls-wrapper" contenteditable="false">
+  <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
+  <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
+  <button class="doc-control" onclick="addCol(this)">+ Add Col</button>
+  <button class="doc-control" onclick="removeCol(this)">- Remove Col</button>
+</div>
+
+<!-- PAGE 4: VOL III (Item 1 Part 2) -->
+<div class="page">
+  <div class="header">
+    <div class="logo-container">
+      <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
     </div>
+  </div>
 
-    <!-- PAGE 4: VOL III (Item 1 Part 2) -->
-    <div class="page">
-      <div class="header">
-        <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
-        </div>
-      </div>
-      <div class="page-content">
-        <div class="main-heading" style="font-size: 13px;">3.4 Technical Compliance Report – Annex IB (Cont.)</div>
-        
-        <table>
-          <thead>
-            <tr>
-              <th style="width:7%">Ref</th>
-              <th style="width:33%">Annex IB Requirement</th>
-              <th style="width:25%">MEVA Response</th>
-              <th style="width:7%">Comp.</th>
-              <th style="width:28%">Evidence File / Note</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1.2.3.3</td><td>ABS on all wheels and EBD; ventilated disc brakes; service brake holds 60% of vehicle weight</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.3.4</td><td>ESP must be activatable and deactivatable from inside the cabin</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.3.5</td><td>Hydraulic or electric steering; factory left-hand drive; reinforced axles</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.4 ELECTRICAL SYSTEMS, LIGHTING, AIR CONDITIONING</th></tr>
-            <tr><td>1.2.4.1</td><td>Electrical capacity for adaptations; insulated harness; compliance with ABNT NBR 5410</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.4.2</td><td>Electrical system voltage 12V; at least two 12V batteries</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.4.3</td><td>LED headlights and LED interior/exterior lighting; air-conditioning for front and rear compartments</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.5 PERFORMANCE</th></tr>
-            <tr><td>1.2.5.1</td><td>Vehicle fuel must be S10</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.5.2</td><td>Fuel tank capacity: minimum 200 liters</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.5.3</td><td>Minimum mixed-route range: 500 km</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.5.4</td><td>Rim size 18 inches or more</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.5.5</td><td>Run-flat system on all tires</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.5.6</td><td>Cruise speed 90 km/h; maximum speed 100 km/h</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.6 DIMENSIONS</th></tr>
-            <tr><td>1.2.6</td><td>Length ≤ 7000 mm; Width ≤ 3000 mm; Height ≤ 3000 mm; Wheelbase ≤ 3600 mm; Ground clearance ≥ 250 mm</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.7 WEIGHT</th></tr>
-            <tr><td>1.2.7.1</td><td>GVWR ≤ 12,000 kg</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.7.2</td><td>Curb weight ≤ 10,000 kg</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.7.3</td><td>Payload ≥ 1,500 kg including occupants, equipment, and accessories</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.7.4</td><td>Tolerances: 2% tolerance allowed only on payload requirement</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.8 CHARACTERISTICS</th></tr>
-            <tr><td>1.2.8</td><td>Gradeability 50%; lateral tilt 30 degrees; approach and departure angles 30 degrees</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.9 CONFIGURATION</th></tr>
-            <tr><td>1.2.9.1</td><td>Seating for 10 (1+1+8); 2nd row seats facing opposite direction; all seats with seat belts</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.9.2</td><td>Four side doors hinged forward</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.9.3</td><td>Rear door must open outward</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.9.4</td><td>Door sills around all doors</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.9.5</td><td>11 loopholes (firing ports)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.9.6</td><td>Split windshield (two-piece), no tinting</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.9.7</td><td>Blinds for all windows</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.10 BALLISTICS</th></tr>
-            <tr><td>1.2.10.1</td><td>Police protection cell compliant with CEN BR 7, including opaque and transparent armor</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.10.2</td><td>Underbody blast protection certification required where specified (include certified underbody protection)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.11 GRAPHICS AND PAINT</th></tr>
-            <tr><td>1.2.11.1</td><td>Paint must comply with CIELAB values under D65 illuminant and 10 degree observer (per specified color sets)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.11.2</td><td>Vehicle identification stickers must comply with PMES standard</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.11.3</td><td>Unmarked vehicle option: metallic, solid, or pearlescent color per requesting agency; must maintain CIELAB compliance</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.12 MANUALS AND ACCESSORIES</th></tr>
-            <tr><td>1.2.12.1</td><td>At least 4 cameras integrated with monitor and one-way audio pickup (microphone)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.2</td><td>AM/FM radio with clock and two speakers; pre-installed for connection of external antenna</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.3</td><td>Lifting tools for wheel replacement</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.4</td><td>Electric external rearview mirrors</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.5</td><td>Electric winch with minimum pulling capacity 4,000 kg, integrated with front armoring</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.6</td><td>Spare wheel equipped with run-flat system</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.7</td><td>Portuguese manuals: vehicle operation manual and preventive maintenance manual</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.8</td><td>Training: minimum 20 hours for 10 operators (8 operators and 2 mechanics)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.8.a</td><td>Training topic: vehicle overview and operator familiarization</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.8.b</td><td>Training topic: safety procedures and emergency response</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.8.c</td><td>Training topic: pre-use checks, maintenance basics, and troubleshooting</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.8.d</td><td>Training topic: driving techniques and limitations of armored vehicle</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.8.e</td><td>Training topic: communications and signaling equipment overview (if installed)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.12.8.f</td><td>Training topic: environmental and HSE considerations (temperature, terrain, load)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.13 ACOUSTIC SIGNALING SYSTEM (SIREN)</th></tr>
-            <tr><td>1.2.13.1</td><td>Amplifier output at least 100W at 11 ohms; one acoustic emitter; at least 3 distinct sounds</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.13.2</td><td>Minimum sound pressure level 110 dB at 1 meter from emitter (measured per defined method)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.13.3</td><td>Siren must be discreet and not visibly mounted in the vehicle grille</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.13.4</td><td>Additional low-frequency (sub) siren permitted, provided it does not replace the primary siren</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.13.5</td><td>Emitter must have sealed driver; must not be musical</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.13.6</td><td>Mounting and attachment points per specified engineering design</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.13.7</td><td>No electromagnetic interference in radio or other installed systems when siren operates</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.14 VISUAL SIGNALING SYSTEM</th></tr>
-            <tr><td>1.2.14.1</td><td>System must withstand Brazilian weather conditions: temperature, humidity, rain, dust, vibration</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.2</td><td>Anti-corrosion and abrasion resistance for all external lighting components</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.3</td><td>Automatic load management: allow hazard lights with engine off; manage loads across lighting and aux systems</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.4</td><td>Automatic shutdown before battery voltage becomes too low to restart engine</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.5</td><td>Pulse-width modulation (PWM) current management for lighting modules</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.6.a</td><td>LED color performance: Red (623–633 nm), intensity ≥ 470 cd (SAE J595 Class 1)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.6.b</td><td>LED color performance: Blue (464–474 nm), intensity ≥ 310 cd (SAE J595 Class 1)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.6.c</td><td>LED color performance: Amber (586–596 nm), intensity ≥ 165 cd (SAE J595 Class 1)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.6.d</td><td>LED color performance: White (400–700 nm), intensity ≥ 120 cd (SAE J595 Class 1)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.7</td><td>Main lightbar: low profile, length > 90% of vehicle width, mounted above B-pillar on roof rails or equivalent</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.7.a</td><td>Lightbar must be tested by accredited lab: optical performance, electrical, mechanical, and environmental tests</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.7.b</td><td>Lightbar modules: red/blue modules at ends and center, with required flash patterns and day/night modes</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.7.c</td><td>LED lifetime minimum 30,000 hours; power 3W or higher per LED (as specified)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.7.d</td><td>Flash patterns required: ROUND, QTI, STOP, EMERGENCY (as defined)</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.8</td><td>Alley lights: minimum 1,500 lumens each side, integrated into lightbar or as separate units</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.9</td><td>Secondary front lighting: 4x 3W modules, each with 6 LEDs alternating red/blue; 12V; anti-corrosion; 30,000h lifetime</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.10</td><td>Secondary rear lighting: 4x 3W modules, each with 6 LEDs alternating red/blue; 12V; anti-corrosion; 30,000h lifetime</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.11</td><td>Traffic advisor amber bar: 5 segments (left and right), must not be installed on B-pillar; optical performance report required</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.14.12</td><td>Control panel: 1-DIN rack unit, with on-off buttons for each device and programmed lighting modes</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.15 COMMUNICATION EQUIPMENT PREPARATION (TETRA)</th></tr>
-            <tr><td>1.2.15.1</td><td>5A fused power cable from main battery to dashboard and trunk; sufficient length; connectors provided; ignition-controlled</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.15.2</td><td>Multi-function roof antenna for GPS, GSM, UMTS, WLAN, and TETRA; omnidirectional; IP66; specified frequency ranges and gains</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.15.3</td><td>Antenna cables: 3m length, specified connectors (SMA/FME or as required), VSWR ≤ 1.5 at specified frequencies</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.15.4</td><td>Antenna mounting: plastic cover 12x12 cm on roof, with mechanical protection and sealing</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><th colspan="5" class="group-header">1.2.16 COMMUNICATION EQUIPMENT PREPARATION (ANALOG TRANSCEIVER)</th></tr>
-            <tr><td>1.2.16.1</td><td>Provide mounting location for Motorola PRO5100 (or equivalent) with remote head; fixed in front only</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.16.2</td><td>VHF radio spec: 42–50 MHz (primary 46–49 MHz), 60W at 13.6V, 12.5/25 kHz channels, ≥250 channels, scanning, emergency and encryption options</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.16.3</td><td>Provide pre-installation with cables accessible from driver cabin and trunk; allow fast installation without dismantling</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.16.4</td><td>External VHF antenna: omnidirectional, vertical polarization, 0 dB gain, spring base, stainless steel whip, IP56 or better, specified dimensions</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.16.5</td><td>Coax cable RG-58C (or better), 50 ohm, specified connectors, mounted through roof with sealing and reinforcement</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.16.6</td><td>Provide SWR and impedance report per vehicle at 46 MHz, with tolerance limits and measurement method</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.16.7</td><td>All signaling equipment must not interfere with communication system operation</td><td></td><td class="col-exec"></td><td></td></tr>
-            <tr><td>1.2.16.8</td><td>Bidder responsible for antenna installation preparation, drilling and reinforcement, and all measurement/compliance actions</td><td></td><td class="col-exec"></td><td></td></tr>
-          </tbody>
-        </table>
+  <div class="page-content">
+    <div class="main-heading" style="font-size: 13px;">3.4 Technical Compliance Report – Annex IB (Cont.)</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:7%">Ref</th>
+          <th style="width:33%">Annex IB Requirement</th>
+          <th style="width:25%">MEVA Response</th>
+          <th style="width:28%">Evidence File / Note</th>
+          <th style="width:7%">Comp.</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr><td>1.2.3.3</td><td>ABS on all wheels and EBD; ventilated disc brakes; service brake holds 60% of vehicle weight</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.3.4</td><td>ESP must be activatable and deactivatable from inside the cabin</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.3.5</td><td>Hydraulic or electric steering; factory left-hand drive; reinforced axles</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.4 ELECTRICAL SYSTEMS, LIGHTING, AIR CONDITIONING</th></tr>
+        <tr><td>1.2.4.1</td><td>Electrical capacity for adaptations; insulated harness; compliance with ABNT NBR 5410</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.4.2</td><td>Electrical system voltage 12V; at least two 12V batteries</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.4.3</td><td>LED headlights and LED interior/exterior lighting; air-conditioning for front and rear compartments</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.5 PERFORMANCE</th></tr>
+        <tr><td>1.2.5.1</td><td>Vehicle fuel must be S10</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.5.2</td><td>Fuel tank capacity: minimum 200 liters</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.5.3</td><td>Minimum mixed-route range: 500 km</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.5.4</td><td>Rim size 18 inches or more</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.5.5</td><td>Run-flat system on all tires</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.5.6</td><td>Cruise speed 90 km/h; maximum speed 100 km/h</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.6 DIMENSIONS</th></tr>
+        <tr><td>1.2.6</td><td>Length ≤ 7000 mm; Width ≤ 3000 mm; Height ≤ 3000 mm; Wheelbase ≤ 3600 mm; Ground clearance ≥ 250 mm</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.7 WEIGHT</th></tr>
+        <tr><td>1.2.7.1</td><td>GVWR ≤ 12,000 kg</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.7.2</td><td>Curb weight ≤ 10,000 kg</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.7.3</td><td>Payload ≥ 1,500 kg including occupants, equipment, and accessories</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.7.4</td><td>Tolerances: 2% tolerance allowed only on payload requirement</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.8 CHARACTERISTICS</th></tr>
+        <tr><td>1.2.8</td><td>Gradeability 50%; lateral tilt 30 degrees; approach and departure angles 30 degrees</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.9 CONFIGURATION</th></tr>
+        <tr><td>1.2.9.1</td><td>Seating for 10 (1+1+8); 2nd row seats facing opposite direction; all seats with seat belts</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.9.2</td><td>Four side doors hinged forward</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.9.3</td><td>Rear door must open outward</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.9.4</td><td>Door sills around all doors</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.9.5</td><td>11 loopholes (firing ports)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.9.6</td><td>Split windshield (two-piece), no tinting</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.9.7</td><td>Blinds for all windows</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.10 BALLISTICS</th></tr>
+        <tr><td>1.2.10.1</td><td>Police protection cell compliant with CEN BR 7, including opaque and transparent armor</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.10.2</td><td>Underbody blast protection certification required where specified (include certified underbody protection)</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.11 GRAPHICS AND PAINT</th></tr>
+        <tr><td>1.2.11.1</td><td>Paint must comply with CIELAB values under D65 illuminant and 10 degree observer (per specified color sets)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.11.2</td><td>Vehicle identification stickers must comply with PMES standard</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.11.3</td><td>Unmarked vehicle option: metallic, solid, or pearlescent color per requesting agency; must maintain CIELAB compliance</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.12 MANUALS AND ACCESSORIES</th></tr>
+        <tr><td>1.2.12.1</td><td>At least 4 cameras integrated with monitor and one-way audio pickup (microphone)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.2</td><td>AM/FM radio with clock and two speakers; pre-installed for connection of external antenna</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.3</td><td>Lifting tools for wheel replacement</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.4</td><td>Electric external rearview mirrors</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.5</td><td>Electric winch with minimum pulling capacity 4,000 kg, integrated with front armoring</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.6</td><td>Spare wheel equipped with run-flat system</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.7</td><td>Portuguese manuals: vehicle operation manual and preventive maintenance manual</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.8</td><td>Training: minimum 20 hours for 10 operators (8 operators and 2 mechanics)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.8.a</td><td>Training topic: vehicle overview and operator familiarization</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.8.b</td><td>Training topic: safety procedures and emergency response</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.8.c</td><td>Training topic: pre-use checks, maintenance basics, and troubleshooting</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.8.d</td><td>Training topic: driving techniques and limitations of armored vehicle</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.8.e</td><td>Training topic: communications and signaling equipment overview (if installed)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.12.8.f</td><td>Training topic: environmental and HSE considerations (temperature, terrain, load)</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.13 ACOUSTIC SIGNALING SYSTEM (SIREN)</th></tr>
+        <tr><td>1.2.13.1</td><td>Amplifier output at least 100W at 11 ohms; one acoustic emitter; at least 3 distinct sounds</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.13.2</td><td>Minimum sound pressure level 110 dB at 1 meter from emitter (measured per defined method)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.13.3</td><td>Siren must be discreet and not visibly mounted in the vehicle grille</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.13.4</td><td>Additional low-frequency (sub) siren permitted, provided it does not replace the primary siren</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.13.5</td><td>Emitter must have sealed driver; must not be musical</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.13.6</td><td>Mounting and attachment points per specified engineering design</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.13.7</td><td>No electromagnetic interference in radio or other installed systems when siren operates</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.14 VISUAL SIGNALING SYSTEM</th></tr>
+        <tr><td>1.2.14.1</td><td>System must withstand Brazilian weather conditions: temperature, humidity, rain, dust, vibration</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.2</td><td>Anti-corrosion and abrasion resistance for all external lighting components</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.3</td><td>Automatic load management: allow hazard lights with engine off; manage loads across lighting and aux systems</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.4</td><td>Automatic shutdown before battery voltage becomes too low to restart engine</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.5</td><td>Pulse-width modulation (PWM) current management for lighting modules</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.6.a</td><td>LED color performance: Red (623–633 nm), intensity ≥ 470 cd (SAE J595 Class 1)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.6.b</td><td>LED color performance: Blue (464–474 nm), intensity ≥ 310 cd (SAE J595 Class 1)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.6.c</td><td>LED color performance: Amber (586–596 nm), intensity ≥ 165 cd (SAE J595 Class 1)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.6.d</td><td>LED color performance: White (400–700 nm), intensity ≥ 120 cd (SAE J595 Class 1)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.7</td><td>Main lightbar: low profile, length &gt; 90% of vehicle width, mounted above B-pillar on roof rails or equivalent</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.7.a</td><td>Lightbar must be tested by accredited lab: optical performance, electrical, mechanical, and environmental tests</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.7.b</td><td>Lightbar modules: red/blue modules at ends and center, with required flash patterns and day/night modes</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.7.c</td><td>LED lifetime minimum 30,000 hours; power 3W or higher per LED (as specified)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.7.d</td><td>Flash patterns required: ROUND, QTI, STOP, EMERGENCY (as defined)</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.8</td><td>Alley lights: minimum 1,500 lumens each side, integrated into lightbar or as separate units</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.9</td><td>Secondary front lighting: 4x 3W modules, each with 6 LEDs alternating red/blue; 12V; anti-corrosion; 30,000h lifetime</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.10</td><td>Secondary rear lighting: 4x 3W modules, each with 6 LEDs alternating red/blue; 12V; anti-corrosion; 30,000h lifetime</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.11</td><td>Traffic advisor amber bar: 5 segments (left and right), must not be installed on B-pillar; optical performance report required</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.14.12</td><td>Control panel: 1-DIN rack unit, with on-off buttons for each device and programmed lighting modes</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.15 COMMUNICATION EQUIPMENT PREPARATION (TETRA)</th></tr>
+        <tr><td>1.2.15.1</td><td>5A fused power cable from main battery to dashboard and trunk; sufficient length; connectors provided; ignition-controlled</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.15.2</td><td>Multi-function roof antenna for GPS, GSM, UMTS, WLAN, and TETRA; omnidirectional; IP66; specified frequency ranges and gains</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.15.3</td><td>Antenna cables: 3m length, specified connectors (SMA/FME or as required), VSWR ≤ 1.5 at specified frequencies</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.15.4</td><td>Antenna mounting: plastic cover 12x12 cm on roof, with mechanical protection and sealing</td><td></td><td></td><td class="col-exec"></td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.16 COMMUNICATION EQUIPMENT PREPARATION (ANALOG TRANSCEIVER)</th></tr>
+        <tr><td>1.2.16.1</td><td>Provide mounting location for Motorola PRO5100 (or equivalent) with remote head; fixed in front only</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.16.2</td><td>VHF radio spec: 42–50 MHz (primary 46–49 MHz), 60W at 13.6V, 12.5/25 kHz channels, ≥250 channels, scanning, emergency and encryption options</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.16.3</td><td>Provide pre-installation with cables accessible from driver cabin and trunk; allow fast installation without dismantling</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.16.4</td><td>External VHF antenna: omnidirectional, vertical polarization, 0 dB gain, spring base, stainless steel whip, IP56 or better, specified dimensions</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.16.5</td><td>Coax cable RG-58C (or better), 50 ohm, specified connectors, mounted through roof with sealing and reinforcement</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.16.6</td><td>Provide SWR and impedance report per vehicle at 46 MHz, with tolerance limits and measurement method</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.16.7</td><td>All signaling equipment must not interfere with communication system operation</td><td></td><td></td><td class="col-exec"></td></tr>
+        <tr><td>1.2.16.8</td><td>Bidder responsible for antenna installation preparation, drilling and reinforcement, and all measurement/compliance actions</td><td></td><td></td><td class="col-exec"></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="sub-heading" style="margin-top: 20px;">Item 1 – Formal Certifications Required (Refer to Vol VIII)</div>
