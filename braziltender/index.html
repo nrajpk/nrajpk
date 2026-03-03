@@ -122,45 +122,59 @@
       align-items: center;
       gap: 8px;
     }
-    .print-btn { right: 25px; background: var(--text-main); }
-   /* Update the .btn and .save-btn in your <style> block */
+  /* --- Action Buttons (Refined UI) --- */
+
 .btn {
-  position: absolute; /* Changed from fixed to absolute */
-  padding: 8px 14px;
-  font-size: 12px;
+  /* Default button properties */
+  padding: 10px 18px;
+  font-size: 13px;
   font-weight: 600;
-  border-radius: 20px; /* Airbnb rounded style */
+  border-radius: 24px; /* Airbnb-style pill shape */
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: opacity 0.3s ease, transform 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', sans-serif;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border: none;
   color: #fff;
 }
 
+/* 1. Static Print Button (Top-Right) */
+.print-btn {
+  position: fixed; 
+  right: 25px;
+  top: 25px;
+  background: var(--text-main);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.print-btn:hover {
+  background: #000;
+  transform: translateY(-1px);
+}
+
+/* 2. Floating Dynamic Sync Button (Near Cursor) */
 .save-btn {
+  position: absolute; /* Allows JS to position it near the change */
   background: var(--brand-color);
-  opacity: 0; /* Hidden by default */
+  opacity: 0;
   pointer-events: none;
   white-space: nowrap;
-  transform: translateY(10px);
+  transform: translateY(10px) scale(0.95);
+  box-shadow: 0 10px 20px rgba(228, 24, 55, 0.3);
 }
 
 .save-btn.visible {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
-.print-btn {
-  position: fixed; /* Keep print button in a static top-right corner */
-  right: 25px;
-  top: 25px;
-  background: var(--text-main);
+.save-btn:hover {
+  background: #c0142e;
+  box-shadow: 0 12px 24px rgba(228, 24, 55, 0.4);
 }
 
     /* Universal Header */
@@ -344,14 +358,19 @@
 
   <!-- UI Controls (Excluded from printing) -->
   <div class="ui-controls" contenteditable="false">
-    <button class="btn print-btn" onclick="window.print()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-      Print PDF
-    </button>
-    <button class="btn save-btn" id="save-btn" onclick="saveData()">
-      ☁️ Sync Content
-    </button>
-  </div>
+  <button class="btn print-btn" onclick="window.print()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="7 10 12 15 17 10"></polyline>
+      <line x1="12" y1="15" x2="12" y2="3"></line>
+    </svg>
+    Print PDF
+  </button>
+
+  <button class="btn save-btn" id="save-btn" onclick="saveData()">
+    ☁️ Sync Content
+  </button>
+</div>
 
   <div id="status-toast"></div>
 
