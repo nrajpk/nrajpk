@@ -34,7 +34,30 @@
       z-index: 1000;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
-    @media print { .print-btn { display: none; } }
+    
+    /* Floating Save Button */
+    .save-btn {
+      position: fixed;
+      top: 20px;
+      right: 140px; /* Positioned to the left of the print button */
+      background: #2e7d32; /* Green color for save */
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      display: none; /* Hidden by default, shown via JS on edit */
+      transition: background 0.3s ease;
+    }
+    .save-btn:hover { background: #1b5e20; }
+
+    @media print { 
+      .print-btn, .save-btn { display: none !important; } 
+    }
 
     /* Page container */
     .page {
@@ -230,8 +253,9 @@
   </style>
 </head>
 
-<body>
-  <button class="print-btn" onclick="window.print()">Print to PDF</button>
+<body contenteditable="true">
+  <button class="print-btn" onclick="window.print()" contenteditable="false">Print to PDF</button>
+  <button id="save-btn" class="save-btn" onclick="saveDocument()" contenteditable="false">💾 Save Changes</button>
 
   <!-- PAGE 1: VOL I, II, & III Summaries -->
   <div class="page">
@@ -903,5 +927,41 @@
     <div class="page-num">Page 10</div>
   </div>
 
+  <script>
+    const saveBtn = document.getElementById('save-btn');
+    
+    // Show save button when the user edits content
+    document.body.addEventListener('input', function() {
+      saveBtn.style.display = 'inline-block';
+    });
+
+    function saveDocument() {
+      // Temporarily hide the save button so it isn't visible by default in the saved document
+      saveBtn.style.display = 'none';
+      
+      const htmlContent = '<!doctype html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'MEVA_Tender_Documentation_Edited.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      // Provide visual feedback for saving
+      const originalText = saveBtn.innerHTML;
+      saveBtn.innerHTML = '✔ Saved!';
+      saveBtn.style.background = '#1b5e20';
+      saveBtn.style.display = 'inline-block';
+      
+      setTimeout(() => {
+        saveBtn.style.display = 'none';
+        saveBtn.innerHTML = originalText;
+        saveBtn.style.background = '#2e7d32';
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
