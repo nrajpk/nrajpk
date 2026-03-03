@@ -559,86 +559,7 @@ export const defaultHTML = `
           </tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
-<div class="page">
-      <div class="header">
-        <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
-        </div>
-      </div>
-      <div class="page-content">
-        <div class="vol-identifier">VOLUME III — TECHNICAL QUALIFICATION</div>
-        
-        <div style="padding: 8px 0px; border-bottom: 4px solid var(--brand-color); margin-top: 0px; margin-bottom: 15px;">
-            <div style="font-size: 14px; color: var(--brand-color); text-transform: uppercase; font-weight: 800; margin: 0; padding: 0;">
-                TLC300 BALLISTIC & DYNAMICS CERTIFICATION
-            </div>
-        </div>
 
-        <div style="overflow: hidden; margin-bottom: 25px; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px;">
-            <div style="padding: 20px;">
-                 <div style="color: #333; font-weight: 800; font-size: 13pt; text-transform: uppercase; text-align: center;">VPAM VR7 CERTIFIED</div>
-                 <div style="color: #777; font-size: 10pt; font-weight: 600; text-align: center; margin-bottom: 15px;">Tested & Certified by Beschussamt Ulm GmbH with 3-Star Ratings</div>
-                 
-                 <table style="width:100%; border-collapse:collapse; table-layout: fixed; margin-bottom: 10px;">
-                    <tr>
-                        <td colspan="3" style="padding: 8px 0; font-size: 9.5pt; font-weight: 800; color: #333; text-transform: uppercase;">VPAM BRV & ERV Standards</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Ballistic</td>
-                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">VR7 (SS109 & DM111) | Roof & Glazing at 90°</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Side Blast</td>
-                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 73%; padding: 6px; border-bottom: 1px solid #f5f5f5;">
-                            <div style="font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase;">12.5kg PETN @ 4m with Biofidelic Dummy</div>
-                            <div style="font-size: 8.5pt; font-weight: 700; color: #777; text-transform: uppercase; margin-top:2px;">Human bone fracture characteristic testing</div>
-                        </td>
-                    </tr>
-                   <tr>
-                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Underbody</td>
-                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">DM 31 (x1) and HG 85 (x2)</td>
-                    </tr>    
-                     <tr>
-                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Roof</td>
-                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">DM 51 Double Charge (Standard & Hatch)</td>
-                    </tr>  
-                    <tr>
-                        <td colspan="3" style="padding: 15px 0 8px 0; font-size: 9.5pt; font-weight: 800; color: #333; text-transform: uppercase;">PAS 300 Blast & Ballistic</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Ballistic</td>
-                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">Roof tested at 45° angle</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 25%; padding: 6px 0; font-size: 9pt; color: #999; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #f5f5f5;">Side Blast</td>
-                        <td style="width: 2%; padding: 6px 0; font-weight: 300; border-bottom: 1px solid #f5f5f5;">:</td>
-                        <td style="width: 73%; padding: 6px; font-size: 9.5pt; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 1px solid #f5f5f5;">12.5kg PETN (Pressure sensor verified)</td>
-                    </tr>
-                 </table>    
-            </div>
-            
-            <div style="background: #fafafa; border-top: 1px solid #e5e7eb; padding: 20px;">
-                <div style="color: #333; font-weight: 800; font-size: 11pt; text-transform: uppercase; text-align: center;">PAS 301 Drivability Certified</div>
-                <div style="color: #777; font-size: 10pt; font-weight: 600; text-align: center; margin-bottom: 15px;">Dynamics & Handling Tested for VPAM VR7 LC 300</div>
-                <table style="width: 100%; border-collapse: collapse; text-align: center;">
-                    <tr>
-                        <td style="width: 25%; padding: 8px; font-size: 9pt; font-weight: 800; color: #333; text-transform: uppercase;">Acceleration</td>
-                        <td style="width: 25%; padding: 8px; font-size: 9pt; font-weight: 800; color: #333; text-transform: uppercase;">Slalom Test</td>
-                        <td style="width: 25%; padding: 8px; font-size: 9pt; font-weight: 800; color: #333; text-transform: uppercase;">Fast-Lane Change</td>
-                        <td style="width: 25%; padding: 8px; font-size: 9pt; font-weight: 800; color: #333; text-transform: uppercase;">Braking</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        </div>
-      <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
-    </div>
         <div class="sub-heading" style="margin-top: 20px;">Item 2 – Formal Certifications Required (Refer to Vol VIII)</div>
         <table>
           <tbody>
@@ -751,7 +672,61 @@ export const defaultHTML = `
             <tr><td style="font-weight: 700;">5.5</td><td><strong>Incoterm Declaration</strong></td><td>Confirm DDP (preferred) or DPU (if justified).</td></tr>
             <tr><td style="font-weight: 700;">5.6</td><td><strong>Letter of Credit Terms Declaration</strong></td><td>State LC timeframe, acceptance of risk, and confirm inclusion of LC costs.</td></tr>
             <tr><td style="font-weight: 700;">5.7</td><td><strong>Proposal Validity Declaration</strong></td><td>Minimum 180 days.</td></tr>
-          </tbody>
+          
+            <tr>
+              <td style="font-weight: 700;">5.8</td>
+              <td><strong>Payment Terms</strong></td>
+              <td>
+                <div class="para" style="margin:0;">
+                  <p style="margin:0 0 8px 0;"><strong>Method of Payment:</strong> Payment shall be made by Cheque (UAE only) or Electronic Funds Transfer (EFT). Cash payments shall not be accepted.</p>
+                  <p style="margin:0 0 8px 0;"><strong>Payment Schedule:</strong> 100% of the total contract value payable in advance.</p>
+                  <p style="margin:0 0 8px 0;"><strong>Freight:</strong> Freight quotation, if any, is valid for 14 days from the contract or quotation date and is subject to revision at the time of shipment based on actual rates.</p>
+                  <p style="margin:0 0 8px 0;"><strong>Export Deposit (if applicable):</strong> If the Buyer undertakes export through their own freight forwarder, a refundable export deposit equal to 12% of the total invoice value shall be paid to Mahindra Emirates Vehicle Armouring prior to delivery. The Buyer is responsible for providing export documentation including customs exit confirmation, Bill of Lading copy, and duly stamped Bill of Entry. The deposit shall be returned upon receipt of customs confirmation for the MEVA deposit release.</p>
+                  <p style="margin:0 0 8px 0;"><strong>Taxes and Duties:</strong> For Ex-Factory sales, the Buyer is responsible for all UAE customs and taxes, and all taxes and charges in the country of import.</p>
+                  <p style="margin:0 0 8px 0;"><strong>Delivery Terms:</strong> Seller sells products Ex-Factory only. UAE customs clearance and shipping support may be provided as an additional service upon request, however the Seller is not responsible for export restrictions, shipping limitations, or changes in shipping charges at the time of shipment.</p>
+                  <p style="margin:0 0 8px 0;"><strong>Sanctions Compliance:</strong> All purchases are subject to compliance with applicable international sanctions laws including UN, EU, and USA regulations. If any entity or person involved is subject to sanctions, the contract shall be cancelled and amounts paid shall not be returned.</p>
+                  <p style="margin:0 0 10px 0;"><strong>Termination:</strong> If the Buyer or any involved entity is found to be in violation of international law or listed under any UN, EU, or USA sanctions or embargo, the contract shall terminate immediately and all amounts paid shall stand forfeited.</p>
+
+                  <div style="font-weight:800; margin: 8px 0 6px 0;">Account Information</div>
+                  <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                    <tr>
+                      <td style="border:1px solid var(--border-color); padding:8px; width:32%;"><strong>Account Name</strong></td>
+                      <td style="border:1px solid var(--border-color); padding:8px;" colspan="2">Mahindra Emirates Vehicle Armouring FZ-LLC</td>
+                    </tr>
+                    <tr>
+                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>Bank and Branch</strong></td>
+                      <td style="border:1px solid var(--border-color); padding:8px;" colspan="2">Bank of Baroda - Deira, Dubai, UAE (P.O. Box 5107)</td>
+                    </tr>
+                    <tr>
+                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>SWIFT</strong></td>
+                      <td style="border:1px solid var(--border-color); padding:8px;" colspan="2">BARBAEADDEI</td>
+                    </tr>
+                    <tr>
+                      <td style="border:1px solid var(--border-color); padding:8px;"></td>
+                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>USD</strong></td>
+                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>AED</strong></td>
+                    </tr>
+                    <tr>
+                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>Account Number</strong></td>
+                      <td style="border:1px solid var(--border-color); padding:8px;">90030200022561</td>
+                      <td style="border:1px solid var(--border-color); padding:8px;">90030400000380</td>
+                    </tr>
+                    <tr>
+                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>IBAN</strong></td>
+                      <td style="border:1px solid var(--border-color); padding:8px;">AE35 0110 0900 3020 0022 561</td>
+                      <td style="border:1px solid var(--border-color); padding:8px;">AE35 0110 0900 3040 0000 380</td>
+                    </tr>
+                    <tr>
+                      <td style="border:1px solid var(--border-color); padding:8px;"><strong>Intermediary</strong></td>
+                      <td style="border:1px solid var(--border-color); padding:8px;" colspan="2">Standard Chartered Bank, New York (SWIFT: SCBLUS33). Not applicable for local wire transfers.</td>
+                    </tr>
+                  </table>
+
+                  <p style="margin:10px 0 0 0;"><strong>Remark:</strong> Please mention the Proforma Invoice Number in transfer remarks for prompt allocation.</p>
+                </div>
+              </td>
+            </tr>
+</tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
         
@@ -793,6 +768,60 @@ export const defaultHTML = `
           </tbody>
         </table>
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
+
+        <div class="sub-heading" style="margin-top: 18px;">Detailed Warranty Terms & Support Commitment</div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 18%;">Clause</th>
+              <th style="width: 82%;">MEVA Commitment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Authorized Warranty Repairs</strong></td>
+              <td>
+                Warranty work authorized by Mahindra Emirates Vehicle Armouring FZ-LLC shall be performed locally at the nearest Mahindra authorized facility, with billing forwarded directly to MEVA.
+                After assessment of the invoice, and upon consultation and approval by MEVA Warranty Service and Engineering Departments, MEVA shall pay for repairs deemed reasonable and necessary.
+                <br><br>
+                If no authorized facility exists in the area of operation, work may be performed at a service facility of the client’s choosing once agreed upon in writing with MEVA Warranty Service Department.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Use Outside Design Parameters</strong></td>
+              <td>
+                MEVA assumes no responsibility for damage or vehicle failure attributable to use of the vehicle outside, or in excess of, the specification parameters prescribed in the vehicle design.
+                Assessment of damage and warranty applicability shall be performed only by authorized MEVA officers at their discretion and judgement.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Misuse, Abuse, or Unauthorized Modifications</strong></td>
+              <td>
+                MEVA assumes no responsibility for damage incurred through misuse, abuse, negligence, accidental damage, or any unauthorized modification or alteration made to the vehicle following delivery.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Limitation of Liability</strong></td>
+              <td>
+                This limited warranty covers repair and or replacement of warranty-related items only. MEVA shall not be liable for incidental or consequential damages arising from loss of use, inconvenience, or any commercial loss resulting from the need for warranty work.
+                Any non-warranty related costs remain the responsibility of the client.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Authorization Requirement</strong></td>
+              <td>
+                Repairs and or work deemed unnecessary by MEVA management and or Engineering Department, including work performed at the request of the client without prior written consent from MEVA Warranty Service Department, may be refused and shall remain the responsibility of the client.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="sub-heading" style="margin-top: 14px;">Our Support Commitment</div>
+        <div class="para">
+          <p style="margin: 0 0 8px 0;"><strong>Regional Service Network Hubs:</strong> To ensure operational readiness of the fleet, Mahindra Emirates Vehicle Armouring engages a network of regional service centers designed to provide on-ground technical assistance, periodic maintenance, and genuine spare parts availability across key mission territories, minimizing downtime.</p>
+          <p style="margin: 0;"><strong>Service Network:</strong> Global hub mapping and available authorized service facility references can be provided during clarification stage and finalized upon contract award.</p>
+        </div>
+
         
         <div class="info-box note">
           <strong>Note:</strong> All commitment declarations listed above are attached as formal annexures in VOLUME VIII.
