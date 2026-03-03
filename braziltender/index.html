@@ -1,1 +1,907 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MEVA - Finalizing Tender Documentation</title>
 
+  <style>
+    /* Print setup */
+    @page { size: A4; margin: 16mm; }
+    html, body { height: 100%; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+      margin: 0;
+      background: #fff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Floating Print Button */
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #111;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    @media print { .print-btn { display: none; } }
+
+    /* Page container */
+    .page {
+      page-break-after: always;
+      padding: 0;
+      position: relative;
+    }
+    .page:last-child { page-break-after: auto; }
+
+    /* Header and footer */
+    .header {
+      border-bottom: 1px solid #222;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .header .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+    }
+    .doc-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .meta {
+      font-size: 11px;
+      color: #333;
+      text-align: right;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    .trace {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #111;
+      padding: 8px 10px;
+      border: 1px solid #444;
+      border-radius: 6px;
+    }
+    .trace strong { font-weight: 700; }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin: 14px 0 6px;
+      padding: 8px 10px;
+      border-left: 4px solid #111;
+      background: #f3f3f3;
+    }
+
+    .subhead {
+      font-size: 12px;
+      font-weight: 700;
+      margin: 10px 0 6px;
+    }
+    
+    .matrix-title {
+      font-size: 12px;
+      font-weight: 700;
+      background: #333;
+      color: #fff;
+      padding: 4px 8px;
+      margin-top: 10px;
+    }
+
+    .para {
+      font-size: 11.5px;
+      line-height: 1.45;
+      margin: 0 0 8px;
+    }
+
+    /* Lists */
+    ul {
+      margin: 4px 0 10px 0;
+      padding-left: 24px;
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+    li { margin-bottom: 3px; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5px;
+      margin-bottom: 10px;
+      page-break-inside: auto;
+    }
+    tr { page-break-inside: avoid; page-break-after: auto; }
+    th, td {
+      border: 1px solid #333;
+      padding: 4px 6px;
+      vertical-align: top;
+    }
+    th {
+      background: #efefef;
+      font-weight: 700;
+      text-align: left;
+    }
+    th.group-header {
+      background: #e2e2e2;
+      text-align: center;
+      font-size: 11px;
+    }
+    .col-order { width: 7%; text-align: center; }
+    .col-exec  { width: 10%; text-align: center; font-weight: bold; }
+    .col-obs   { width: 30%; }
+    
+    .helper-note {
+      display: block;
+      margin-top: 4px;
+      font-style: italic;
+      color: #555;
+      font-size: 9px;
+    }
+
+    .phase {
+      margin-top: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 8px;
+      background: #111;
+      color: #fff;
+      border-radius: 5px;
+      margin-bottom: 8px;
+    }
+
+    /* Signature blocks */
+    .sig-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+      page-break-inside: avoid;
+    }
+    .sig-box {
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 10px;
+      min-height: 145px;
+    }
+    .sig-line {
+      border-top: 1px solid #333;
+      margin-top: 46px;
+      padding-top: 6px;
+      font-size: 11px;
+    }
+    .small {
+      font-size: 10.8px;
+      color: #222;
+      line-height: 1.4;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border: 1px solid #111;
+      border-radius: 999px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* Helper blocks */
+    .note {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border: 1px dashed #666;
+      border-radius: 6px;
+      background: #fafafa;
+      font-size: 10.8px;
+      line-height: 1.35;
+      color: #222;
+      margin-bottom: 12px;
+    }
+    .note strong { font-weight: 700; }
+    .critical {
+      border: 1px solid #d32f2f;
+      background: #ffebee;
+      color: #c62828;
+    }
+    
+    .page-num {
+      position: absolute;
+      bottom: -15px;
+      right: 0;
+      font-size: 10px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="print-btn" onclick="window.print()">Print to PDF</button>
+
+  <!-- PAGE 1: VOL I, II, & III Summaries -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">TENDER DOCUMENTATION - SUMMARY & LEGAL</div>
+        <div class="meta">
+          Auction No. 002/2026 – PMES<br/>
+          Bidder: Mahindra Emirates Vehicle Armouring FZ-LLC
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">VOLUME I — ADMINISTRATIVE & LEGAL DOCUMENTS (Common)</div>
+
+    <div class="subhead">1. Bid Cover Letter</div>
+    <ul>
+      <li>Identifies bidder & Brazilian legal representative</li>
+      <li>States participation in both Item 1 (APC) and Item 2 (CAV)</li>
+      <li>Signed by authorized signatory</li>
+    </ul>
+    <div class="note"><strong>Note:</strong> Mandatory opening document. Keep simple and formal.</div>
+
+    <div class="subhead">2. Corporate Legal Existence Documents</div>
+    <ul>
+      <li>UAE Trade License (valid) & Certificate of Incorporation</li>
+      <li>Memorandum & Articles of Association</li>
+      <li>Commercial Registration (MoE or Free Zone Authority)</li>
+      <li>Apostille (UAE Hague compliant)</li>
+      <li>Sworn Portuguese translation (for contract stage)</li>
+    </ul>
+    <div class="note"><strong>Note:</strong> During proposal stage → free translation accepted. Apostille required at contract signing.</div>
+
+    <div class="subhead">3. Power of Attorney – Brazilian Legal Representative</div>
+    <ul>
+      <li>Grants authority to receive summons, respond administratively & judicially, sign ARP & Contract.</li>
+      <li>Apostilled & Sworn Portuguese translation (for contract stage)</li>
+    </ul>
+    <div class="note critical"><strong>Critical:</strong> This is mandatory for foreign company participation.</div>
+
+    <div class="subhead">4. Declarations Required by Law 14.133/2021</div>
+    <p class="para">All signed on company letterhead:</p>
+    <ul>
+      <li>Acceptance of Tender Conditions & Covers all labor rights costs</li>
+      <li>No employment of minors, No forced/degrading labor, Compliance with disability quota</li>
+      <li>No conviction in last 5 years, No conflict of interest, No sanctions preventing participation</li>
+    </ul>
+    <div class="note"><strong>Note:</strong> These are explicitly required in Notice Section “Submission of Proposal”.</div>
+
+    <div class="subhead">5. Declaration of Non-Existence of Equivalent Document (Annex I-H)</div>
+    <p class="para">Only for Brazilian documents that have no UAE equivalent. (Use carefully. Do not overuse.)</p>
+
+    <div class="section-title">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION (Common)</div>
+    <div class="subhead">6. UAE Tax Registration Certificate (FTA – TRN)</div><p class="para">Equivalent to CNPJ.</p>
+    <div class="subhead">7. UAE Tax Compliance Certificate</div><p class="para">FTA clearance confirming no outstanding liabilities.</p>
+    <div class="subhead">8. Labor Compliance Certificate</div><p class="para">MOHRE good standing certificate.</p>
+    <div class="subhead">9. Bankruptcy / Insolvency Certificate</div><p class="para">Issued by UAE court. Apostilled. Sworn PT translation. <strong style="color:red">Mandatory disqualification risk if missing.</strong></p>
+
+    <div class="section-title">VOLUME III — TECHNICAL QUALIFICATION (General Overviews)</div>
+    <div class="subhead" style="margin-top: 8px;">A. COMMON TECHNICAL QUALIFICATION</div>
+    <div class="subhead">10. Technical-Operational Capacity Certificate(s)</div>
+    <ul>
+      <li>For APC (Item 1): supply of at least 2 units</li>
+      <li>For CAV (Item 2): supply of at least 10 units</li>
+      <li>Issued by police/military authority. Must contain contact details.</li>
+    </ul>
+    <div class="note critical"><strong>Critical:</strong> This is the biggest elimination risk.</div>
+    
+    <div class="subhead">11. Proof of Project Maturity (Minimum 2 Years MLE Use)</div>
+    <p class="para">Accepted docs: End-user certificate, Invoice + delivery confirmation, Police authority letter.</p>
+    <div class="subhead">12. Manufacturer Letter of Solidarity</div><p class="para">(Only if bidder ≠ manufacturer)</p>
+
+    <div class="subhead" style="margin-top: 10px;">B. ITEM 1 – APC & C. ITEM 2 – CAV (Summaries)</div>
+    <ul style="column-count: 2; column-gap: 20px;">
+      <li><strong>13/17. Tech Compliance Reports:</strong> Must follow Annex IB & ID line-by-line (See detailed matrix in pages below).</li>
+      <li><strong>14/18. Ballistic Certification:</strong> Independent lab. Opaque + transparent protection. Must show test methodology & VIN.</li>
+      <li><strong>15. Underbody Protection:</strong> Required for APC blast section.</li>
+      <li><strong>16/19. Acceptance Test Compliance:</strong> Confirms vehicles will undergo IC & IE tests.</li>
+    </ul>
+
+    <div class="page-num">Page 1</div>
+  </div>
+
+  <!-- PAGE 2: VOL IV, V, VI, VII -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">TENDER DOCUMENTATION - FINANCIAL & COMMERCIAL</div>
+        <div class="meta">
+          Auction No. 002/2026 – PMES<br/>
+          Bidder: Mahindra Emirates Vehicle Armouring FZ-LLC
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">VOLUME IV — ECONOMIC & FINANCIAL QUALIFICATION (Common)</div>
+    <div class="subhead">20. Audited Financial Statements (Last 2 Years)</div>
+    <p class="para">Balance Sheet, Income Statement, Auditor Report. Apostilled.</p>
+    
+    <div class="subhead">21. Accountant Declaration of Ratios</div>
+    <p class="para">Must show: LG &gt; 1, LC &gt; 1, SG &gt; 1.<br/>If not → Net Worth ≥ 10% of estimated contract value.</p>
+    <div class="note"><strong>Note:</strong> Estimated value is confidential. Use conservative estimate.</div>
+
+    <div class="section-title">VOLUME V — COMMERCIAL PROPOSAL (Common + Item Specific)</div>
+    <div class="subhead">22. Annex IG – Commercial Proposal (Imported Equipment)</div>
+    <p class="para">Separate form for: Item 1 (APC) and Item 2 (CAV). Must use equalized “K” value.</p>
+    
+    <div class="subhead">23. PTAX Exchange Rate Declaration</div>
+    <p class="para">Using rate from 3 business days before March 11, 2026.</p>
+
+    <div class="subhead">24. NCM Classification Declaration</div>
+    <p class="para">Confirm NCM 8710.00.00. Highlight ICMS, PIS, COFINS equalization.</p>
+
+    <div class="subhead">25. Incoterm Declaration</div>
+    <p class="para">Confirm DDP (preferred) Or DPU (if justified)</p>
+
+    <div class="subhead">26. Letter of Credit Terms Declaration</div>
+    <p class="para">State LC timeframe. State acceptance of risk. Confirm inclusion of LC costs.</p>
+
+    <div class="subhead">27. Proposal Validity Declaration</div>
+    <p class="para">Minimum 180 days.</p>
+
+    <div class="section-title">VOLUME VI — SAMPLE & TESTING COMMITMENT (Common + Item Specific)</div>
+    <div class="subhead">28 & 29. Testing Schedule Commitment – APC & CAV</div>
+    <p class="para">Submit within 5 days if ranked first. Minimum 15-day notice.</p>
+
+    <div class="subhead">30. Testing Logistics Cost Undertaking</div>
+    <p class="para">Confirm covering travel for 4 PMES officers to UAE. Flights, hotel, meals, internal transport.</p>
+
+    <div class="subhead">31. Antenna Measurement Reports (Per Vehicle)</div>
+    <p class="para">Required for both APC & CAV. Must show SWR at 46 MHz & 49 MHz. Signed by technician.</p>
+
+    <div class="section-title">VOLUME VII — POST-CONTRACT COMMITMENTS</div>
+    <div class="subhead">32. Warranty & After-Sales Plan</div>
+    <p class="para">Must confirm: Warranty as per table, 60 working day repair max, 10-year spare parts availability, 1% spare parts reserve, Recall commitment.</p>
+
+    <div class="subhead">33. Operator Training Plan</div>
+    <p class="para">20 hours, Portuguese, Espírito Santo, Max 10 per class, Certificate issued.</p>
+
+    <div class="subhead">34. Subcontracting Declaration</div>
+    <p class="para">If applicable: max 30%, maintenance only. If none → declare no subcontracting.</p>
+
+    <div class="page-num">Page 2</div>
+  </div>
+
+  <!-- PAGE 3: ITEM 1 MATRIX (Part 1) -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">VOLUME III — DETAILED TECHNICAL COMPLIANCE MATRICES</div>
+        <div class="meta">ITEM 1 – APC (MEDIUM ARMOURED VEHICLE)</div>
+      </div>
+    </div>
+    
+    <div class="matrix-title">ITEM 1 – APC OVERVIEW & SPECIFICATIONS (1.1 to 1.2.7)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:7%">Ref</th>
+          <th style="width:33%">Annex IB Requirement</th>
+          <th style="width:25%">MEVA Response</th>
+          <th style="width:7%">Comp.</th>
+          <th style="width:28%">Evidence File / Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th colspan="5" class="group-header">1.1 OVERVIEW</th></tr>
+        <tr><td>1.I</td><td>Acquisition of light armored operational vehicle for transport of 10 personnel (driver; commander + 8)</td><td>Offered vehicle will transport 10 (1+1+8)</td><td class="col-exec">TBD</td><td>Technical Offer Cover Sheet + Seating drawing<span class="helper-note">Note: "Capacity: 10 personnel..."</span></td></tr>
+        <tr><td>1.II</td><td>Manufactured in 2024 or later; never used; 0 km condition; manufacturer guarantee</td><td>Confirm production year and 0 km condition</td><td class="col-exec">TBD</td><td>Manufacturer Declaration (Model 2024+ & 0 km)</td></tr>
+        <tr><td>1.III</td><td>Signaling/communication/transceivers may be installed in Brazil at contract location</td><td>Confirm allowance for installation in Brazil</td><td class="col-exec">TBD</td><td>Statement: Adaptations may be installed in Brazil</td></tr>
+        
+        <tr><th colspan="5" class="group-header">1.2.1 Chassis & 1.2.2 Engine</th></tr>
+        <tr><td>1.2.1.I</td><td>Mounted on commercial chassis and reinforced to support armored structure</td><td>Offered on commercial chassis with reinforcement for armoring</td><td class="col-exec">TBD</td><td>OEM Chassis Datasheet + MEVA Armoring Concept</td></tr>
+        <tr><td>1.2.2.I</td><td>Internal combustion, turbo diesel, Euro 4 or higher</td><td>Confirm turbo diesel Euro 4+</td><td class="col-exec">TBD</td><td>OEM Engine Datasheet</td></tr>
+        <tr><td>1.2.2.II</td><td>Power: 300 HP</td><td>Confirm 300 HP</td><td class="col-exec">TBD</td><td>OEM Engine Datasheet</td></tr>
+        <tr><td>1.2.2.III</td><td>Torque min 1,000 Nm at 1,200–2,200 rpm</td><td>Confirm torque curve meets requirement</td><td class="col-exec">TBD</td><td>OEM Engine Datasheet (torque curve)</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.3 Transmission, Steering, Brakes, Suspension</th></tr>
+        <tr><td>1.2.3.I</td><td>Automatic, at least 6 forward + 1 reverse, torque converter, electronic management</td><td>Confirm gearbox spec</td><td class="col-exec">TBD</td><td>OEM Transmission Datasheet</td></tr>
+        <tr><td>1.2.3.II</td><td>4x4 part-time; real-time electronic transfer case; auto/manual freewheel</td><td>Confirm drivetrain spec</td><td class="col-exec">TBD</td><td>OEM 4x4/Transfer case spec sheet</td></tr>
+        <tr><td>1.2.3.III.a</td><td>ABS all wheels + EBD</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM brake spec</td></tr>
+        <tr><td>1.2.3.III.b</td><td>Ventilated disc brakes on all 4 wheels, ABS</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM brake spec</td></tr>
+        <tr><td>1.2.3.III.c</td><td>Service brake holds vehicle at total weight on asphalt up to 60%</td><td>Confirm / provide test basis</td><td class="col-exec">TBD</td><td>Manufacturer Compliance Statement + test report</td></tr>
+        <tr><td>1.2.3.III.d</td><td>ESP activatable/deactivatable inside cabin</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM ESP spec + cabin control photo</td></tr>
+        <tr><td>1.2.3.IV.a</td><td>Steering hydraulic or electric</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM steering spec</td></tr>
+        <tr><td>1.2.3.IV.b</td><td>Steering wheel factory-original on left side</td><td>Confirm LHD</td><td class="col-exec">TBD</td><td>Photos + OEM spec</td></tr>
+        <tr><td>1.2.3.V</td><td>Reinforced axles to meet military requirements</td><td>Confirm</td><td class="col-exec">TBD</td><td>MEVA Armoring/Chassis Reinforcement Statement</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.4 Electrical Systems, Lighting, Air Conditioning</th></tr>
+        <tr><td>1.2.4.I.a</td><td>Electrical capacity for OEM + adaptations + transceiver</td><td>Confirm electrical capacity</td><td class="col-exec">TBD</td><td>Electrical System Description + load calc</td></tr>
+        <tr><td>1.2.4.I.b</td><td>Harness packaged/insulated to prevent rust/friction</td><td>Confirm</td><td class="col-exec">TBD</td><td>Wiring workmanship standard + photos</td></tr>
+        <tr><td>1.2.4.I.c</td><td>Wiring protection via conduit/shield</td><td>Confirm</td><td class="col-exec">TBD</td><td>Wiring routing photos + statement</td></tr>
+        <tr><td>1.2.4.I.d</td><td>Wire coding per ABNT 5410 or similar; avoid cut zones</td><td>Confirm</td><td class="col-exec">TBD</td><td>Wiring standard compliance statement</td></tr>
+        <tr><td>1.2.4.I.e-f</td><td>System voltage 12V; At least 2 batteries of 12V</td><td>Confirm 12V & dual battery</td><td class="col-exec">TBD</td><td>OEM electrical spec + photos</td></tr>
+        <tr><td>1.2.4.II.a-b</td><td>LED headlights + LED interior/exterior lighting</td><td>Confirm</td><td class="col-exec">TBD</td><td>Lighting spec + photos</td></tr>
+        <tr><td>1.2.4.III</td><td>AC outlets front/rear; Cools cabin >50°C outside; Hot & cold</td><td>Confirm</td><td class="col-exec">TBD</td><td>HVAC description & manufacturer spec</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.5 Performance, 1.2.6 Dimensions & 1.2.7 Weight</th></tr>
+        <tr><td>1.2.5.I-II</td><td>Fuel tank min 200 L; Fuel: S10 diesel</td><td>Confirm specs & compatibility</td><td class="col-exec">TBD</td><td>OEM fuel system spec & Engine spec</td></tr>
+        <tr><td>1.2.5.III</td><td>Range min 500 km mixed terrain</td><td>Confirm with calc</td><td class="col-exec">TBD</td><td>Range calculation sheet</td></tr>
+        <tr><td>1.2.5.IV</td><td>Rim 18” or larger; Run Flat on all tires incl spare</td><td>Confirm</td><td class="col-exec">TBD</td><td>Wheel/tire spec + Runflat certificate</td></tr>
+        <tr><td>1.2.5.V</td><td>Cruise speed 90 km/h; Max speed 100 km/h</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM spec</td></tr>
+        <tr><td>1.2.6.I-V</td><td>Length ≤7000mm, Width ≤3000mm, Height ≤3000mm, WB ≤3600mm, Clearance ≥250mm</td><td>Confirm dimensions</td><td class="col-exec">TBD</td><td>GA drawing & OEM spec</td></tr>
+        <tr><td>1.2.7.I-III</td><td>GVWR ≤12,000kg; Curb ≤10,000kg; Payload ≥1,500kg</td><td>Confirm</td><td class="col-exec">TBD</td><td>Weight statement + payload/axle load calc</td></tr>
+      </tbody>
+    </table>
+    <div class="page-num">Page 3</div>
+  </div>
+
+  <!-- PAGE 4: ITEM 1 MATRIX (Part 2) -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">VOLUME III — DETAILED TECHNICAL COMPLIANCE MATRICES</div>
+        <div class="meta">ITEM 1 – APC (MEDIUM ARMOURED VEHICLE)</div>
+      </div>
+    </div>
+    
+    <div class="matrix-title">ITEM 1 – APC SPECIFICATIONS CONTINUED (1.2.8 to 1.2.16)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:7%">Ref</th>
+          <th style="width:33%">Annex IB Requirement</th>
+          <th style="width:25%">MEVA Response</th>
+          <th style="width:7%">Comp.</th>
+          <th style="width:28%">Evidence File / Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th colspan="5" class="group-header">1.2.8 Minimum Driving Characteristics & 1.2.9 Configuration</th></tr>
+        <tr><td>1.2.8.I</td><td>Gradeability 50%, Lateral tilt 30°, Approach/Depart 30°</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM spec / test basis</td></tr>
+        <tr><td>1.2.9.I</td><td>10 seats (1+1+8); Cloth manual front seats; All seat belts</td><td>Confirm 1+1+8</td><td class="col-exec">TBD</td><td>Seating layout drawing & photos</td></tr>
+        <tr><td>1.2.9.II</td><td>4 side doors, rear door outward, roof escape hatch, side steps</td><td>Confirm</td><td class="col-exec">TBD</td><td>GA drawing & photos</td></tr>
+        <tr><td>1.2.9.III</td><td>Split windshield, 1 window/door + rear door, all with blinds</td><td>Confirm</td><td class="col-exec">TBD</td><td>Photos + statement</td></tr>
+        <tr><td>1.2.9.IV-V</td><td>11 firing ports; Standard manual key</td><td>Confirm</td><td class="col-exec">TBD</td><td>Diagram marking ports & OEM spec</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.10 Ballistic Protection & 1.2.11 Graphic Design</th></tr>
+        <tr><td>1.2.10 (1)</td><td>Police protection cell & Loopholes: CEN BR 7</td><td>Confirm CEN BR 7</td><td class="col-exec">TBD</td><td>Ballistic Lab Report – Opaque/Transparent</td></tr>
+        <tr><td>1.2.10 (2)</td><td>Floor protects vs 2x DM51 + 1x HG85 + 1x DM31, lab certified</td><td>Confirm</td><td class="col-exec">TBD</td><td>Underbody/Blast Lab Report</td></tr>
+        <tr><td>1.2.10 (3)</td><td>Engine/mudguards/components + radiator vs 7.62x51 NATO 60°N</td><td>Confirm</td><td class="col-exec">TBD</td><td>Armoring design description + test basis</td></tr>
+        <tr><td>1.2.11</td><td>CIELAB Paint Specs; Stickers per PMES standard after award</td><td>Confirm / Accept</td><td class="col-exec">YES</td><td>Paint compliance & Acceptance statement</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.12 Manuals & Accessories & 1.2.13 Acoustic Signaling</th></tr>
+        <tr><td>1.2.12.I</td><td>≥4 external cameras, AM/FM radio, Lift tools, Electric mirrors, Winch 4,000kg</td><td>Confirm</td><td class="col-exec">TBD</td><td>Spec sheets, tools list, camera/winch photos</td></tr>
+        <tr><td>1.2.12.II-III</td><td>Driver/Maint. manuals (PT); 20hr Training in Espírito Santo</td><td>Provide</td><td class="col-exec">TBD</td><td>Manuals (PT) or letter & Training outline</td></tr>
+        <tr><td>1.2.13.I-II</td><td>Siren amp ≥100W (Wail/Yelp/Horn); SPL ≥110 dB; Discreet; Sealed</td><td>Confirm</td><td class="col-exec">TBD</td><td>Siren datasheet & Install plan</td></tr>
+        <tr><td>1.2.13.III</td><td>No EM interference; ANATEL regulations</td><td>Confirm</td><td class="col-exec">TBD</td><td>EMC compliance statement</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.14 Visual Signaling, 1.2.15 TETRA & 1.2.16 Analog Radio</th></tr>
+        <tr><td>1.2.14.I-V</td><td>Weather designed (-10°C to 45°C), Auto load mgmt, PWM control</td><td>Confirm</td><td class="col-exec">TBD</td><td>Lightbar/System datasheets & specs</td></tr>
+        <tr><td>1.2.14.VI-VIII</td><td>LED wavelengths/lumens; Grille/Rear modules (4x3W, red/blue); Strobes</td><td>Confirm</td><td class="col-exec">TBD</td><td>LED module datasheets & install drawings</td></tr>
+        <tr><td>1.2.15</td><td>TETRA Prep: 5A fused cable; Multifunction roof antenna (GPS/GSM/TETRA); ANATEL</td><td>Confirm / Commit</td><td class="col-exec">TBD</td><td>Prep drawing + Antenna datasheet + Plan</td></tr>
+        <tr><td>1.2.16.I-IV</td><td>Motorola PRO5100 prep, remote mount kit, slack requirements</td><td>Confirm</td><td class="col-exec">TBD</td><td>Radio prep design & bracket drawings</td></tr>
+        <tr><td>1.2.16.V</td><td>VHF roof antenna (46–49 MHz, 50Ω, VSWR ≤1.5:1, steel plate)</td><td>Confirm</td><td class="col-exec">TBD</td><td>Antenna datasheet + roof plate drawing</td></tr>
+        <tr><td>1.2.16.VI-X</td><td>Per-vehicle SWR reports (10% tol.), no EM interference</td><td>Provide / Confirm</td><td class="col-exec">TBD</td><td>Antenna Report Template + EMC statement</td></tr>
+      </tbody>
+    </table>
+    <div class="page-num">Page 4</div>
+  </div>
+
+  <!-- PAGE 5: ITEM 2 MATRIX (Part 1) -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">VOLUME III — DETAILED TECHNICAL COMPLIANCE MATRICES</div>
+        <div class="meta">ITEM 2 – CAV (ARMOURED SUV)</div>
+      </div>
+    </div>
+    
+    <div class="matrix-title">ITEM 2 – CAV OVERVIEW & SPECIFICATIONS (1.1 to 1.2.9)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:7%">Ref</th>
+          <th style="width:33%">Annex ID Requirement</th>
+          <th style="width:25%">MEVA Response</th>
+          <th style="width:7%">Comp.</th>
+          <th style="width:28%">Evidence File / Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th colspan="5" class="group-header">1.1 OBJECT & 1.2.1 Chassis</th></tr>
+        <tr><td>1.1.1</td><td>Armored tactical SUV for 05 personnel (driver; commander + 03)</td><td>Provide armored tactical SUV 1+1+3</td><td class="col-exec">TBD</td><td>Seating layout drawing + cabin plan</td></tr>
+        <tr><td>1.1.2</td><td>Manufactured 2024+; never used; 0 km; manufacturer guarantee</td><td>Confirm 2024+ and 0 km condition</td><td class="col-exec">TBD</td><td>Manufacturer Declaration + VIN list</td></tr>
+        <tr><td>1.2.1.I</td><td>Mounted on commercial chassis, reinforced to support armored structure</td><td>Provide commercial chassis w/ reinforcement</td><td class="col-exec">TBD</td><td>OEM chassis datasheet + armoring note</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.2 Engine & 1.2.3 Transmission, Steering, Brakes, Suspension</th></tr>
+        <tr><td>1.2.2.I-II</td><td>Turbo diesel, Euro 4+, Power 300 HP</td><td>Confirm Euro 4+ & 300 HP</td><td class="col-exec">TBD</td><td>OEM engine datasheet</td></tr>
+        <tr><td>1.2.2.III</td><td>Torque min 700 Nm at 1,500–2,700 rpm</td><td>Confirm torque curve</td><td class="col-exec">TBD</td><td>OEM torque curve / datasheet</td></tr>
+        <tr><td>1.2.3.I-II</td><td>Automatic ≥6 speed; Full-time 4WD / part-time electronic transfer box</td><td>Confirm gearbox & drivetrain</td><td class="col-exec">TBD</td><td>OEM transmission & 4WD spec</td></tr>
+        <tr><td>1.2.3.III.a-b</td><td>ABS all wheels + EBD; Ventilated disc brakes</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM brake spec</td></tr>
+        <tr><td>1.2.3.III.c-d</td><td>Parking brake holds at full weight up to 60%; ESP activatable in cabin</td><td>Confirm</td><td class="col-exec">TBD</td><td>Compliance stmt & OEM ESP spec/photo</td></tr>
+        <tr><td>1.2.3.IV-V</td><td>Steering hydr/electric (LHD); Reinforced axles for military reqs</td><td>Confirm LHD & reinforced</td><td class="col-exec">TBD</td><td>OEM steering spec & MEVA statement</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.4 Electrical, Lighting, Air Conditioning</th></tr>
+        <tr><td>1.2.4.I.a-d</td><td>Elec capacity for adaptations; Harness insulated/conduit protected; ABNT 5410</td><td>Confirm</td><td class="col-exec">TBD</td><td>Load calc + wiring plan/photos</td></tr>
+        <tr><td>1.2.4.I.e-f</td><td>System voltage 12V; ≥2 batteries 12V</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM spec + photos</td></tr>
+        <tr><td>1.2.4.II</td><td>LED headlights; LED interior/exterior lamps; Ceiling lighting LED/halogen</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM & Interior lighting specs + photos</td></tr>
+        <tr><td>1.2.4.III</td><td>AC outlets front/rear; Cools cabin >50°C; Hot and cold</td><td>Confirm</td><td class="col-exec">TBD</td><td>HVAC description & spec</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.5 Performance, 1.2.6 Dimensions & 1.2.7 Weight</th></tr>
+        <tr><td>1.2.5.I-III</td><td>Fuel tank 110 L (S10 diesel); Min range 700 km fully charged</td><td>Confirm specs & range</td><td class="col-exec">TBD</td><td>OEM fuel spec + Range calculation sheet</td></tr>
+        <tr><td>1.2.5.IV</td><td>Rim 18”+; Run Flat all tires incl spare</td><td>Confirm</td><td class="col-exec">TBD</td><td>Wheel/tire spec + Runflat spec/certificate</td></tr>
+        <tr><td>1.2.5.V</td><td>Cruise speed 90 km/h; Max speed 120 km/h</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM performance spec</td></tr>
+        <tr><td>1.2.6.I-V</td><td>Length ≤5500, Width ≤2000, Height ≤2000, WB ≤3000, Clear ≥220mm</td><td>Confirm dimensions</td><td class="col-exec">TBD</td><td>GA drawing & OEM spec</td></tr>
+        <tr><td>1.2.7.I-III</td><td>GVWR ≤6000kg; Curb weight ≤5000kg; Payload ≥1000kg</td><td>Confirm</td><td class="col-exec">TBD</td><td>Weight statement + payload calculation</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.8 Driving Characteristics & 1.2.9 Configuration</th></tr>
+        <tr><td>1.2.8.I</td><td>Ascent 50%, Lat tilt 30°, App angle 30°, Dep angle 20°</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM spec / test basis</td></tr>
+        <tr><td>1.2.9.I-V</td><td>Seats for 5 (1+1+3); Cloth front; Row 2 facing fwd; All seat belts</td><td>Provide 1+1+3</td><td class="col-exec">TBD</td><td>Seating layout drawing + photos</td></tr>
+        <tr><td>1.2.9.VI</td><td>4 side doors fwd hinge; Rear door; Exterior door sills</td><td>Confirm</td><td class="col-exec">TBD</td><td>Photos + GA drawing</td></tr>
+        <tr><td>1.2.9.VII</td><td>1-pc windshield; 1 window/door + rear; Escape hatch in roof</td><td>Confirm</td><td class="col-exec">TBD</td><td>Photos + hatch spec</td></tr>
+        <tr><td>1.2.9.VIII</td><td>Manual key locks; Presence sensor; Door lock/alarm control</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM spec</td></tr>
+      </tbody>
+    </table>
+    <div class="page-num">Page 5</div>
+  </div>
+
+  <!-- PAGE 6: ITEM 2 MATRIX (Part 2) -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">VOLUME III — DETAILED TECHNICAL COMPLIANCE MATRICES</div>
+        <div class="meta">ITEM 2 – CAV (ARMOURED SUV)</div>
+      </div>
+    </div>
+    
+    <div class="matrix-title">ITEM 2 – CAV SPECIFICATIONS CONTINUED (1.2.10 to 1.2.16)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:7%">Ref</th>
+          <th style="width:33%">Annex ID Requirement</th>
+          <th style="width:25%">MEVA Response</th>
+          <th style="width:7%">Comp.</th>
+          <th style="width:28%">Evidence File / Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th colspan="5" class="group-header">1.2.10 Ballistic Protection & 1.2.11 Graphic Design</th></tr>
+        <tr><td>1.2.10 (1)</td><td>VPAM Edition 3 VR7 protective cell, glazed areas, floor, engine</td><td>Confirm VPAM VR7</td><td class="col-exec">TBD</td><td>Ballistic Test Report (Opaque + Transp.)</td></tr>
+        <tr><td>1.2.10 (2)</td><td>Threats: 5.56x45 4g @ 950m/s; 7.62x51 9.55g @ 830m/s</td><td>Confirm in report</td><td class="col-exec">TBD</td><td>Ballistic report pages showing threats</td></tr>
+        <tr><td>1.2.10 (3)</td><td>Mudguards, critical components, radiator vs 7.62x51 60°N</td><td>Confirm</td><td class="col-exec">TBD</td><td>Armoring design statement + photos</td></tr>
+        <tr><td>1.2.11.I-II</td><td>CIELAB values (D65/A/T84); Stickers per PMES after award</td><td>Confirm / Accept</td><td class="col-exec">YES</td><td>Paint/color statement & Acceptance stmt</td></tr>
+        <tr><td>1.2.11.III</td><td>Unmarked vehicles metallic/solid/pearl; select 1.2.14 or 1.2.16 lighting</td><td>Confirm selection</td><td class="col-exec">TBD</td><td>Statement: chosen configuration option</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.12 Manuals & Accessories & 1.2.13 Acoustic Signaling</th></tr>
+        <tr><td>1.2.12.I</td><td>Reverse cam+mic; AM/FM radio; Lifting tools; Electric mirrors</td><td>Confirm</td><td class="col-exec">TBD</td><td>Specs & Tools list</td></tr>
+        <tr><td>1.2.12.II</td><td>Manuals in Portuguese: driver + preventive maintenance</td><td>Provide</td><td class="col-exec">TBD</td><td>Manuals (PT) or commitment letter</td></tr>
+        <tr><td>1.2.13.I</td><td>Siren amp ≥100W (3 tones); SPL ≥110 dB; Discreet install</td><td>Confirm</td><td class="col-exec">TBD</td><td>Siren datasheet + Install plan</td></tr>
+        <tr><td>1.2.13.II-III</td><td>Sealed driver for police use; No EM interference (ANATEL)</td><td>Confirm</td><td class="col-exec">TBD</td><td>Datasheet + EMC statement</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.14 Visual Signaling (Roof bar system)</th></tr>
+        <tr><td>1.2.14.I-V</td><td>Weather resists (-10 to 45°C), Batt. mgmt, PWM, metal case cooling</td><td>Confirm</td><td class="col-exec">TBD</td><td>Lightbar datasheet & Control spec</td></tr>
+        <tr><td>1.2.14.VI-VIII</td><td>LED wavelengths; Roof bar >90% width (SAE J595/J845); Animations</td><td>Confirm</td><td class="col-exec">TBD</td><td>Specs + SAE test report + Mfg declaration</td></tr>
+        <tr><td>1.2.14.IX</td><td>Alley lighting: ≥1500 ANSI lumens and 20,000 cd each side</td><td>Confirm</td><td class="col-exec">TBD</td><td>Alley light spec + aiming statement</td></tr>
+        <tr><td>1.2.14.X-XIII</td><td>Secondary grille/rear+strobe; Traffic bar; DIN Control panel logic</td><td>Confirm</td><td class="col-exec">TBD</td><td>Module/Traffic bar specs + Layout table</td></tr>
+
+        <tr><th colspan="5" class="group-header">1.2.15 Communication Equipment & 1.2.16 Lighting Assembly (Unmarked)</th></tr>
+        <tr><td>1.2.15.I</td><td>TETRA prep: 5A fused cable; Multifunction roof antenna (ANATEL)</td><td>Confirm</td><td class="col-exec">TBD</td><td>Wiring drawing + Antenna spec + Commit</td></tr>
+        <tr><td>1.2.15.II</td><td>Analog radio (PRO5100) prep + VHF antenna spec + SWR report</td><td>Confirm</td><td class="col-exec">TBD</td><td>Datasheet + report template + EMC stmt</td></tr>
+        <tr><td>1.2.16.I-III</td><td>Unmarked: Front/Rear internal red/blue dev (≤60mm); Grille modules</td><td>Confirm</td><td class="col-exec">TBD</td><td>Product specs + install drawings</td></tr>
+        <tr><td>1.2.16.IV</td><td>2 magnetic emblems, 40 cm high, must attach at 120 km/h</td><td>Confirm</td><td class="col-exec">TBD</td><td>Emblem spec + retention test statement</td></tr>
+      </tbody>
+    </table>
+    <div class="page-num">Page 6</div>
+  </div>
+
+  <!-- PAGE 7: ATP QUICK INDEX & ITEM 1 ATP (Part 1) -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">VOLUME VI – SAMPLE & TESTING COMMITMENT (ACCEPTANCE TESTS)</div>
+        <div class="meta">Compliance with “Acceptance Tests: Item 1 & 2”</div>
+      </div>
+      <div class="trace">
+        <strong>Traceability Header (to be completed for sample units)</strong><br/>
+        Item: ☒ Item 1 (APC) ☐ Item 2 (CAV) &nbsp; | &nbsp; VIN/Chassis: __________________________ <br/>
+      </div>
+    </div>
+
+    <div class="section-title">Purpose of this Volume</div>
+    <p class="para">
+      This Volume provides the bidder’s binding commitments and structured compliance statements for the Sample Tests and Acceptance Testing Procedure (ATP)
+      required for Items 1 and 2, including cooperation with the Testing Committee and full traceability of evidence.
+    </p>
+
+    <div class="section-title">Quick Index (Acceptance Tests)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%;">Ref</th>
+          <th>Document</th>
+          <th style="width:18%;">Applicability</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>VI-AT-01</td><td>Acceptance Test Compliance Statement – Item 1 (APC)</td><td>APC</td></tr>
+        <tr><td>VI-AT-02</td><td>Acceptance Test Compliance Statement – Item 2 (CAV)</td><td>CAV</td></tr>
+        <tr><td>VI-AT-03</td><td>Compliance with Annex II – Responsibilities of the Testing Committee</td><td>Common</td></tr>
+        <tr><td>VI-AT-04</td><td>Signature and Binding Undertaking (Authorized Signatory + Company Stamp)</td><td>Common</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">VI-AT-01 – Acceptance Test Compliance Statement (ITEM 1 – APC)</div>
+    <div class="subhead">1. Introduction</div>
+    <p class="para">
+      Mahindra Emirates Vehicle Armouring FZ-LLC confirms full acceptance of the Acceptance Testing Procedure (ATP) for Item 1 exactly as defined, including: Documentation verification, Dynamic road test up to 50 km (70% paved, 30% off-road), Post-drive static inspection, and Final consolidation reporting. The contractor commits to present sample vehicles and designate specialized personnel during the entire ATP process.
+    </p>
+
+    <div class="section-title">2. Acceptance Testing Procedure (ATP)</div>
+    
+    <div class="phase">PHASE 1 – BEFORE DRIVING</div>
+    <p class="para">The contractor confirms compliance with the following activities:</p>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-order">Order</th>
+          <th>Activity Description (as per Tender)</th>
+          <th class="col-exec">Executed</th>
+          <th class="col-obs">Method of Fulfillment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-order">1</td><td>Presentation of vehicles (samples) and designation of specialized employees for monitoring by the technical committee</td><td class="col-exec">YES</td><td>Sample vehicle(s) and designated MEVA technical staff will be present</td></tr>
+        <tr><td class="col-order">2</td><td>Identification of vehicles to be inspected as samples</td><td class="col-exec">YES</td><td>VIN/chassis identification provided at inspection</td></tr>
+        <tr><td class="col-order">3</td><td>Familiarization with vehicle documentation, operating manual, technical maintenance manual, and other necessary documents</td><td class="col-exec">YES</td><td>Full documentation package will be provided</td></tr>
+        <tr><td class="col-order">4</td><td>Visual inspection of body, interior and exterior for structural presentation and functioning</td><td class="col-exec">YES</td><td>Vehicle delivered fully assembled and operational</td></tr>
+        <tr><td class="col-order">5</td><td>Verification of technical specification data required in the tender prior to departure</td><td class="col-exec">YES</td><td>Compliance matrix cross-reference available</td></tr>
+        <tr><td class="col-order">6</td><td>Pre-departure maintenance and vehicle operating instructions</td><td class="col-exec">YES</td><td>Technical briefing provided by MEVA staff</td></tr>
+      </tbody>
+    </table>
+
+    <p class="para" style="margin-top: 10px;">The following documentation will be presented during Phase 1:</p>
+    <ul>
+      <li>Owner’s manual of the base vehicle & Armoring/adaptation manual (MEVA)</li>
+      <li>Preventive maintenance manual</li>
+      <li>Electrical, signaling & communication system preparation documentation</li>
+    </ul>
+
+    <div class="page-num">Page 7</div>
+  </div>
+
+  <!-- PAGE 8: ITEM 1 ATP (Part 2) & ITEM 2 ATP (Part 1) -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">ACCEPTANCE TESTS (Continuation)</div>
+        <div class="meta">Compliance with “Acceptance Tests: Item 1 & 2”</div>
+      </div>
+      <div class="trace">
+        <strong>Traceability Header</strong><br/>
+        Item: ☒ Item 1 (APC) ☒ Item 2 (CAV) &nbsp; | &nbsp; VIN/Chassis: __________________________ <br/>
+      </div>
+    </div>
+
+    <div class="phase">PHASE 2 – DURING DRIVING (ROAD TEST) - ITEM 1</div>
+    <p class="para">The contractor accepts the dynamic verification activities up to 50 km (70% paved road, 30% off-road/proving ground):</p>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-order">Order</th>
+          <th>Activity Description</th>
+          <th class="col-exec">Executed</th>
+          <th class="col-obs">Method of Fulfillment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-order">7</td><td>Safety briefing prior to road test</td><td class="col-exec">YES</td><td>Conducted by MEVA engineer</td></tr>
+        <tr><td class="col-order">8</td><td>Driving on paved roads/highways up to 50 km</td><td class="col-exec">YES</td><td>Vehicle designed for compliant road operation</td></tr>
+        <tr><td class="col-order">9</td><td>Observation of performance in accordance with technical specifications</td><td class="col-exec">YES</td><td>Engine, transmission, brakes, suspension verified</td></tr>
+        <tr><td class="col-order">10</td><td>Driving on off-road test track/proving ground</td><td class="col-exec">YES</td><td>4x4 drivetrain and reinforced suspension</td></tr>
+        <tr><td class="col-order">11</td><td>Testing of all vehicle systems during operation</td><td class="col-exec">YES</td><td>Functional verification of all systems</td></tr>
+        <tr><td class="col-order">12</td><td>Evaluation of drivability, ergonomics and operational aspects</td><td class="col-exec">YES</td><td>Vehicle configured per operational requirements</td></tr>
+      </tbody>
+    </table>
+
+    <div class="phase">PHASE 3 – AFTER DRIVING (STATIC INSPECTION) - ITEM 1</div>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-order">Order</th>
+          <th>Activity Description</th>
+          <th class="col-exec">Executed</th>
+          <th class="col-obs">Method of Fulfillment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-order">13</td><td>Inspection for leaks, play, damage or issues after road testing</td><td class="col-exec">YES</td><td>Final inspection protocol executed</td></tr>
+        <tr><td class="col-order">14</td><td>Final technical meeting with the client for evaluation/improvements</td><td class="col-exec">YES</td><td>Contractor participation confirmed</td></tr>
+        <tr><td class="col-order">15</td><td>Consolidation of final report, listing demands and contractor positioning</td><td class="col-exec">YES</td><td>Formal response commitment provided</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title" style="margin-top: 24px;">VI-AT-02 – Acceptance Test Compliance Statement (ITEM 2 – CAV)</div>
+    <p class="para">
+      Mahindra Emirates Vehicle Armouring FZ-LLC confirms that the armored tactical SUV (Item 2) complies with Appendix ID. The contractor formally accepts execution of the ATP (Verification, 50km Road Test, Static Inspection, Final Consolidation).
+    </p>
+
+    <div class="phase">PHASE 1 – BEFORE DRIVING - ITEM 2</div>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-order">Order</th>
+          <th>Activity Description</th>
+          <th class="col-exec">Executed</th>
+          <th class="col-obs">Method of Fulfillment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-order">1</td><td>Presentation of vehicles and designation of specialized employees</td><td class="col-exec">YES</td><td>Sample vehicle(s) and qualified MEVA personnel present</td></tr>
+        <tr><td class="col-order">2</td><td>Identification of vehicles to be inspected as samples</td><td class="col-exec">YES</td><td>VIN/chassis identification provided</td></tr>
+        <tr><td class="col-order">3</td><td>Familiarization with documentation (operating, maintenance, etc.)</td><td class="col-exec">YES</td><td>Complete documentation package provided</td></tr>
+        <tr><td class="col-order">4</td><td>Visual inspection of body, interior/exterior for structural integrity</td><td class="col-exec">YES</td><td>Vehicle delivered fully assembled and operational</td></tr>
+        <tr><td class="col-order">5</td><td>Verification of technical specification data prior to departure</td><td class="col-exec">YES</td><td>Compliance matrix cross-referenced</td></tr>
+        <tr><td class="col-order">6</td><td>Pre-departure maintenance and vehicle operating instructions</td><td class="col-exec">YES</td><td>Technical briefing provided</td></tr>
+      </tbody>
+    </table>
+    
+    <div class="page-num">Page 8</div>
+  </div>
+
+  <!-- PAGE 9: ITEM 2 ATP (Part 2) & ANNEX II -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">ACCEPTANCE TESTS (Continuation)</div>
+        <div class="meta">Compliance with “Acceptance Tests: Item 2” and Annex II</div>
+      </div>
+      <div class="trace">
+        <strong>Traceability Header</strong><br/>
+        Item: ☐ Item 1 (APC) ☒ Item 2 (CAV) &nbsp; | &nbsp; VIN/Chassis: __________________________ <br/>
+      </div>
+    </div>
+
+    <div class="phase">PHASE 2 – DURING DRIVING (ROAD TEST) - ITEM 2</div>
+    <p class="para">The contractor accepts dynamic verification up to 50 km (approx. 70% paved road, 30% off-road/proving ground):</p>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-order">Order</th>
+          <th>Activity Description</th>
+          <th class="col-exec">Executed</th>
+          <th class="col-obs">Method of Fulfillment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-order">7</td><td>Safety briefing prior to road test</td><td class="col-exec">YES</td><td>Conducted by MEVA engineer</td></tr>
+        <tr><td class="col-order">8</td><td>Driving on paved roads/highways up to 50 km</td><td class="col-exec">YES</td><td>Vehicle designed for compliant highway operation</td></tr>
+        <tr><td class="col-order">9</td><td>Observation of performance according to technical specifications</td><td class="col-exec">YES</td><td>Engine, transmission, braking, suspension verified</td></tr>
+        <tr><td class="col-order">10</td><td>Driving on off-road track to verify remaining technical data</td><td class="col-exec">YES</td><td>4WD system and reinforced suspension validated</td></tr>
+        <tr><td class="col-order">11</td><td>Testing of all vehicle systems on both paved and off-road terrain</td><td class="col-exec">YES</td><td>Functional verification of all systems</td></tr>
+        <tr><td class="col-order">12</td><td>Evaluation of drivability, ergonomics and operational aspects</td><td class="col-exec">YES</td><td>Vehicle configured per operational requirements</td></tr>
+      </tbody>
+    </table>
+
+    <div class="phase">PHASE 3 – AFTER DRIVING (STATIC INSPECTION) - ITEM 2</div>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-order">Order</th>
+          <th>Activity Description</th>
+          <th class="col-exec">Executed</th>
+          <th class="col-obs">Method of Fulfillment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-order">13</td><td>Inspection for leaks, play, damage or operational issues</td><td class="col-exec">YES</td><td>Final inspection protocol executed</td></tr>
+        <tr><td class="col-order">14</td><td>Final meeting with client to analyze post-test findings</td><td class="col-exec">YES</td><td>Contractor participation confirmed</td></tr>
+        <tr><td class="col-order">15</td><td>Consolidation of final report and contractor positioning</td><td class="col-exec">YES</td><td>Formal cooperation commitment provided</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title" style="margin-top: 24px;">VI-AT-03 – Compliance with Annex II – Responsibilities of the Testing Committee</div>
+    <p class="para">Mahindra Emirates Vehicle Armouring FZ-LLC acknowledges and accepts the provisions of Annex II regarding:</p>
+    <ul style="column-count: 2; column-gap: 20px;">
+      <li>Purpose and exclusive technical competence of the Testing Committee</li>
+      <li>Nature and scope of activity & Prohibition of commercial negotiation during testing</li>
+      <li>Composition of the Commission & Technical planning authority</li>
+      <li>Audit and data recording authority & Incident recording and documentation procedures</li>
+      <li>Issuance of Conclusive Technical Opinion & Quorum requirements</li>
+      <li>Security and public session rules</li>
+      <li>Evidence recording and traceability requirements</li>
+      <li>Interface limitations between bidder and Commission</li>
+    </ul>
+    <p class="para">The contractor confirms:</p>
+    <ul>
+      <li>Full cooperation with the Commission in its strictly technical role.</li>
+      <li>No attempt will be made to negotiate commercial terms during testing.</li>
+      <li>All required facilities, equipment, structure and human support resources will be made available as stipulated.</li>
+      <li>Operational assistance, when requested, will not interfere with independence or fairness.</li>
+      <li>All documentation and test conditions will allow full traceability of sample identification, conditions and measurements.</li>
+    </ul>
+
+    <div class="page-num">Page 9</div>
+  </div>
+
+  <!-- PAGE 10: TRACEABILITY & SIGNATURES -->
+  <div class="page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">VI-AT-04 – Binding Undertaking, Signatures, and Traceability Checklist</div>
+        <div class="meta">Common + Item 1 (APC) + Item 2 (CAV)</div>
+      </div>
+      <div class="trace">
+        <strong>Traceability Header</strong><br/>
+        Item: ☐ Item 1 (APC) ☐ Item 2 (CAV) &nbsp; | &nbsp; VIN/Chassis: __________________________ <br/>
+      </div>
+    </div>
+
+    <div class="section-title">Traceability Checklist (Common)</div>
+    <p class="small">
+      The bidder confirms that verification evidence will maintain traceability through identifiers and linking to documentation and certificates, including:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:56%;">Traceability element</th>
+          <th style="width:14%;">Provided</th>
+          <th>Reference / Location in submission</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>VIN/Chassis (or equivalent identifier)</td><td class="col-exec">YES</td><td>Traceability Header + sample identification records</td></tr>
+        <tr><td>Engine number (when applicable)</td><td class="col-exec">YES</td><td>Traceability Header + delivery dossier</td></tr>
+        <tr><td>Serial numbers of relevant components (armor, glass, systems and installed equipment)</td><td class="col-exec">YES</td><td>Annex certificates and installation records</td></tr>
+        <tr><td>Linking to required tax documentation and reports/certificates</td><td class="col-exec">YES</td><td>Invoice/equivalent instrument + certificate annex references</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">Commitment Declaration & Signatures (Common)</div>
+    <p class="small">
+      Mahindra Emirates Vehicle Armouring FZ-LLC hereby formally declares full acceptance of the Acceptance Testing Procedure (ATP) for both Item 1 and Item 2. The bidder commits to present sample vehicles, provide qualified technical personnel, allow dynamic road testing up to 50 km, provide complete documentation, cooperate with the Testing Committee in the issuance of the Conclusive Technical Opinion, and comply fully with Annex II regarding the authority and procedures of the Testing Committee. This declaration remains binding upon contract award.
+    </p>
+    <div class="sig-grid">
+      <div class="sig-box">
+        <div class="badge">BIDDER</div>
+        <div class="small">
+          Company: Mahindra Emirates Vehicle Armouring FZ-LLC (UAE)<br/>
+          Document: Volume VI Acceptance Tests and Testing Committee Undertaking<br/>
+          Applicability: Common + Item 1 (APC) + Item 2 (CAV)
+        </div>
+        <div class="sig-line">
+          Authorized Signatory: __________________________<br/>
+          Name: __________________________<br/>
+          Title: __________________________<br/>
+          Date: ____ / ____ / ______<br/>
+          Company Stamp: __________________________
+        </div>
+      </div>
+
+      <div class="sig-box">
+        <div class="badge">WITNESS / INTERNAL CONTROL</div>
+        <div class="small">
+          Optional internal witness for submission pack control (recommended for traceability assurance).<br/>
+          This does not replace PMES Testing Committee records.
+        </div>
+        <div class="sig-line">
+          Reviewer: __________________________<br/>
+          Name: __________________________<br/>
+          Title/Dept: __________________________<br/>
+          Date: ____ / ____ / ______<br/>
+          Signature: __________________________
+        </div>
+      </div>
+    </div>
+    
+    <div class="page-num">Page 10</div>
+  </div>
+
+</body>
+</html>
