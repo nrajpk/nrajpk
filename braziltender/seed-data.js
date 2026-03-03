@@ -111,7 +111,7 @@ export const defaultHTML = `
       </div>
       <div class="page-content">
         <div class="vol-identifier">VOLUME I — ADMINISTRATIVE & LEGAL DOCUMENTS</div>
-        <div class="main-heading">Volume Summary Checklist (Common)</div>
+        <div class="main-heading">Part Summary Checklist (Common)</div>
         <table>
           <thead><tr><th style="width: 8%;">#</th><th style="width: 32%;">Document Name</th><th style="width: 60%;">Components & Verification Details</th></tr></thead>
           <tbody>
@@ -125,7 +125,7 @@ export const defaultHTML = `
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div id="vol2" class="vol-identifier" style="margin-top: 20px;">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION</div>
-        <div class="main-heading">Volume Summary Checklist (Common)</div>
+        <div class="main-heading">Part Summary Checklist (Common)</div>
         <table>
           <thead><tr><th style="width: 8%;">#</th><th style="width: 40%;">Certificate Name</th><th style="width: 52%;">Equivalency / Condition</th></tr></thead>
           <tbody>
@@ -178,7 +178,7 @@ export const defaultHTML = `
         <div class="sub-heading" style="margin-top: 14px;">B. ITEM 1 – APC (MEDIUM ARMOURED VEHICLE)</div>
         
         <div id="item3-4" class="main-heading" style="margin-top: 10px; font-size: 13px;">3.4 Technical Compliance Report – Annex IB</div>
-        <p class="para">Must confirm compliance with ALL specifications listed below. <br/><em><strong>Note:</strong> Formal certificates are attached in Volume VIII. Visual evidence is attached on the following pages.</em></p>
+        <p class="para">Must confirm compliance with ALL specifications listed below. <br/><em><strong>Note:</strong> Formal certificates are attached in Part VIII. Visual evidence is attached on the following pages.</em></p>
 <table>
   <thead>
     <tr>
@@ -443,7 +443,7 @@ export const defaultHTML = `
         <div class="sub-heading" style="margin-top: 0;">C. ITEM 2 – CAV (ARMOURED SUV)</div>
 
         <div id="item3-7" class="main-heading" style="margin-top: 10px; font-size: 13px;">3.7 Technical Compliance Report – Annex ID</div>
-        <p class="para">Must confirm compliance with ALL specifications listed below. <br/><em><strong>Note:</strong> Formal certificates are attached in Volume VIII. Visual evidence is attached on the following pages.</em></p>
+        <p class="para">Must confirm compliance with ALL specifications listed below. <br/><em><strong>Note:</strong> Formal certificates are attached in Part VIII. Visual evidence is attached on the following pages.</em></p>
         
         <table>
           <thead>
@@ -694,7 +694,7 @@ export const defaultHTML = `
       </div>
       <div class="page-content">
         <div class="vol-identifier">VOLUME IV — ECONOMIC & FINANCIAL QUALIFICATION</div>
-        <div class="main-heading">Volume Summary Checklist</div>
+        <div class="main-heading">Part Summary Checklist</div>
         <table>
           <tbody>
             <tr><td style="width: 8%; font-weight: 700;">4.1</td><td style="width: 40%;"><strong>Audited Financial Statements (Last 2 Years)</strong></td><td style="width: 52%;">Balance Sheet, Income Statement, Auditor Report. Apostilled.</td></tr>
@@ -799,7 +799,7 @@ export const defaultHTML = `
       </div>
       <div class="page-content">
         <div class="vol-identifier">VOLUME VI — SAMPLE & TESTING COMMITMENT</div>
-        <div class="main-heading">Volume Summary Checklist</div>
+        <div class="main-heading">Part Summary Checklist</div>
         <table>
           <tbody>
             <tr><td style="width: 8%; font-weight: 700;">6.1</td><td style="width: 40%;"><strong>Testing Schedule Commitment – APC</strong></td><td style="width: 52%;">Submit within 5 days if ranked first. Minimum 15-day notice.</td></tr>
@@ -811,7 +811,7 @@ export const defaultHTML = `
         <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div id="vol7" class="vol-identifier" style="margin-top: 30px;">VOLUME VII — POST-CONTRACT COMMITMENTS</div>
-        <div class="main-heading">Volume Summary Checklist</div>
+        <div class="main-heading">Part Summary Checklist</div>
         <table>
           <tbody>
             <tr><td style="width: 8%; font-weight: 700;">7.1</td><td style="width: 40%;"><strong>Warranty & After-Sales Plan</strong></td><td><ul class="check-list" style="margin-bottom:0;"><li>Warranty per table</li><li>60 working day repair max</li><li>10-year spare parts</li><li>1% spare parts reserve</li><li>Recall commitment</li></ul></td></tr>
@@ -1069,7 +1069,7 @@ export const defaultHTML = `
             <div class="sig-badge">BIDDER</div>
             <div class="small">
               <strong>Company:</strong> Mahindra Emirates Vehicle Armouring FZ-LLC<br/>
-              <strong>Document:</strong> Volume VI Acceptance Tests Undertaking<br/>
+              <strong>Document:</strong> Part VI Acceptance Tests Undertaking<br/>
               <strong>Applicability:</strong> Common + Item 1 (APC) + Item 2 (CAV)
             </div>
             <div class="sig-line">
@@ -1111,7 +1111,7 @@ export const defaultHTML = `
       <div class="page-content">
         <div class="vol-identifier">VOLUME VIII — ANNEXURES & CERTIFICATES</div>
         <div class="main-heading">Annexure Index</div>
-        <p class="para">The following pages contain the formal certificates and documentation referenced throughout Volumes I - VII.</p>
+        <p class="para">The following pages contain the formal certificates and documentation referenced throughout Parts I - VII.</p>
         
         <table>
           <thead>
