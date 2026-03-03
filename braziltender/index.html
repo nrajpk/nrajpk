@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MEVA - Finalizing Tender Documentation</title>
+  <title>MEVA - Dynamic Tender Documentation</title>
   
   <!-- Using Georama font for the brand identity -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,12 +71,12 @@
         flex-direction: column;
       }
       .page:last-child { page-break-after: auto; }
-      .ui-controls { display: none !important; } 
+      .ui-controls, .doc-controls-wrapper { display: none !important; } 
     }
 
     .page-content { flex-grow: 1; display: flex; flex-direction: column; }
 
-    /* Buttons */
+    /* Main Action Buttons */
     .btn {
       position: fixed;
       top: 20px;
@@ -98,10 +98,7 @@
     .print-btn { right: 20px; background: var(--text-main); }
     .print-btn:hover { background: #111827; transform: translateY(-1px); }
     
-    .download-btn { right: 165px; background: #2563eb; }
-    .download-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
-
-    .save-btn { right: 330px; background: var(--brand-color); display: none; }
+    .save-btn { right: 165px; background: var(--brand-color); }
     .save-btn:hover { background: #c0142e; transform: translateY(-1px); }
 
     /* Universal Header */
@@ -122,15 +119,6 @@
       overflow: hidden;
     }
     .logo-container img { width: 100%; height: 100%; object-fit: contain; }
-    .header-text { text-align: right; }
-    .doc-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text-main);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .meta { font-size: 10px; color: var(--text-muted); }
 
     /* Font Structure Uniformity */
     .vol-identifier {
@@ -169,7 +157,7 @@
       border-collapse: separate;
       border-spacing: 0;
       font-size: 11px;
-      margin-bottom: 16px;
+      margin-bottom: 4px; /* Reduced to accommodate controls */
       border-radius: 6px;
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -206,7 +194,7 @@
     .col-order { width: 6%; text-align: center; }
     .col-exec  { width: 10%; text-align: center; font-weight: 700; color: #059669; }
     .col-exec-tbd { color: #d97706; }
-    .col-obs   { width: 30%; }
+    .col-obs    { width: 30%; }
     
     .helper-note { display: block; margin-top: 4px; font-style: italic; color: var(--text-muted); font-size: 10px; }
 
@@ -240,11 +228,12 @@
     .cert-placeholder p { font-size: 12px; color: var(--text-muted); margin: 0; max-width: 80%; }
 
     /* Image Evidence Grids */
-    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; page-break-inside: avoid; }
-    .img-box { border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .img-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 4px; page-break-inside: avoid; }
+    .img-box { flex: 1 1 calc(50% - 16px); min-width: 200px; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     .img-title { font-size: 11px; font-weight: 700; color: var(--brand-color); margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; }
-    .img-placeholder { width: 100%; height: 180px; background: var(--bg-gray); border: 2px dashed #d1d5db; border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-    .img-placeholder span { position: absolute; font-size: 10px; color: #9ca3af; font-weight: 600; z-index: 1; text-align: center; padding: 10px; }
+    .img-placeholder { width: 100%; height: 180px; background: var(--bg-gray); border: 2px dashed #d1d5db; border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: pointer; transition: 0.2s; }
+    .img-placeholder:hover { background: #e5e7eb; border-color: var(--brand-color); }
+    .img-placeholder span { position: absolute; font-size: 10px; color: #9ca3af; font-weight: 600; z-index: 1; text-align: center; padding: 10px; pointer-events: none; }
     .img-placeholder img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 2; }
 
     /* Signature blocks */
@@ -268,57 +257,284 @@
     .toc-sublink::before { content: ''; position: absolute; left: -12px; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: var(--border-color); }
     .toc-sublink:hover { color: var(--brand-color); }
     .toc-divider { margin: 16px 0; border-top: 1px dashed var(--border-color); }
+
+    /* Custom In-Document Editing Controls */
+    .doc-controls-wrapper {
+      display: flex; gap: 8px; margin-bottom: 16px;
+      user-select: none;
+    }
+    .doc-control {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #e5e7eb; border: 1px solid #d1d5db; color: #374151;
+      padding: 4px 10px; border-radius: 4px; font-size: 10px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .doc-control:hover { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
+
+    /* Status indicator */
+    #status-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2937;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 14px;
+      z-index: 9999;
+      display: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
   </style>
 </head>
 
 <body>
-  <!-- UI Controls (Excluded from printing and Firebase Sync) -->
+  <div id="loading-overlay" style="position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--brand-color); font-family: 'Georama', sans-serif; font-size: 18px;">
+    Fetching Proposal from Cloud...
+  </div>
+
+  <!-- UI Controls (Excluded from printing) -->
   <div class="ui-controls" contenteditable="false">
     <button class="btn print-btn" onclick="window.print()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-      Download PDF
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Print PDF
     </button>
-    <button class="btn download-btn" onclick="downloadHTML()">
-      📥 Download HTML
-    </button>
-    <button id="save-btn" class="btn save-btn" onclick="saveDocumentToCloud()">
-      ☁️ Sync to Cloud
+    <button class="btn save-btn" id="save-btn" onclick="saveData()">
+      ☁️ Sync Content
     </button>
   </div>
 
-  <!-- Editable Document Content (Synced via Firebase) -->
-  <div id="document-content" contenteditable="true">
+  <div id="status-toast"></div>
 
-    <!-- COVER PAGE WITH HERO IMAGE & DETAILS -->
+  <!-- The dynamic content container (Visual Editor) -->
+  <div id="document-content" contenteditable="true" style="outline: none;"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+      apiKey: "",
+      authDomain: "brazil-tender.firebaseapp.com",
+      projectId: "brazil-tender",
+    };
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'meva-tender-full';
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    
+    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'meva_content', 'main_html');
+
+    let user = null;
+    let isSaving = false;
+    const contentDiv = document.getElementById('document-content');
+    const toast = document.getElementById('status-toast');
+
+    function showToast(msg) {
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    async function init() {
+      const initAuth = async () => {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+      };
+
+      try {
+        await initAuth();
+        onAuthStateChanged(auth, (u) => {
+          user = u;
+          if (u) setupListeners();
+        });
+      } catch (err) {
+        console.error("Auth failed:", err);
+      }
+    }
+
+    function setupListeners() {
+      onSnapshot(docRef, (snap) => {
+        if (snap.exists() && !isSaving) {
+          const remoteHTML = snap.data().htmlContent;
+          if (remoteHTML && remoteHTML !== contentDiv.innerHTML && !contentDiv.contains(document.activeElement)) {
+            contentDiv.innerHTML = remoteHTML;
+            updatePageNumbers();
+          }
+        } else if (!snap.exists()) {
+          seedDatabase();
+        }
+        document.getElementById('loading-overlay').style.display = 'none';
+      }, (err) => {
+        console.error("Snapshot error:", err);
+      });
+    }
+
+    // --- DOM Manipulation Utilities (Attached to window so inline handlers work) ---
+    
+    window.updatePageNumbers = function() {
+      const pages = contentDiv.querySelectorAll('.page');
+      contentDiv.querySelectorAll('.page-num').forEach((el, index) => {
+        el.innerText = `Page ${index + 1} of ${pages.length}`;
+      });
+    };
+
+    window.addRow = function(btn) {
+      const table = btn.parentElement.previousElementSibling;
+      if (table && table.tagName === 'TABLE') {
+        const tbody = table.querySelector('tbody') || table;
+        const lastRow = tbody.rows[tbody.rows.length - 1];
+        if (!lastRow) return;
+        const newRow = lastRow.cloneNode(true);
+        Array.from(newRow.cells).forEach(cell => {
+          if (!cell.hasAttribute('colspan')) cell.innerHTML = '...';
+        });
+        tbody.appendChild(newRow);
+        triggerSaveCue();
+      }
+    };
+
+    window.removeRow = function(btn) {
+      const table = btn.parentElement.previousElementSibling;
+      if (table && table.tagName === 'TABLE') {
+        const tbody = table.querySelector('tbody') || table;
+        if (tbody.rows.length > 1) tbody.deleteRow(-1);
+        triggerSaveCue();
+      }
+    };
+
+    window.addCol = function(btn) {
+      const table = btn.parentElement.previousElementSibling;
+      if (table && table.tagName === 'TABLE') {
+        Array.from(table.rows).forEach(row => {
+          // Adjust colspans dynamically if it's a group header
+          if (row.cells.length === 1 && row.cells[0].hasAttribute('colspan')) {
+             row.cells[0].colSpan = parseInt(row.cells[0].colSpan) + 1;
+          } else {
+            const isTh = row.cells[0] && row.cells[0].tagName === 'TH';
+            const newCell = document.createElement(isTh ? 'th' : 'td');
+            newCell.innerHTML = isTh ? 'NEW COL' : '...';
+            row.appendChild(newCell);
+          }
+        });
+        triggerSaveCue();
+      }
+    };
+
+    window.removeCol = function(btn) {
+      const table = btn.parentElement.previousElementSibling;
+      if (table && table.tagName === 'TABLE') {
+        if (table.rows[0].cells.length > 1) {
+          Array.from(table.rows).forEach(row => {
+            if (row.cells.length === 1 && row.cells[0].hasAttribute('colspan')) {
+               row.cells[0].colSpan = Math.max(1, parseInt(row.cells[0].colSpan) - 1);
+            } else {
+               row.deleteCell(-1);
+            }
+          });
+          triggerSaveCue();
+        }
+      }
+    };
+
+    window.addImageBox = function(btn) {
+      const grid = btn.parentElement.previousElementSibling;
+      if (grid && grid.classList.contains('img-grid')) {
+        const box = document.createElement('div');
+        box.className = 'img-box';
+        box.innerHTML = `
+          <div class="img-title">New Image Section</div>
+          <p class="para" style="font-size:10px; margin-bottom:6px;">Description here.</p>
+          <div class="img-placeholder" onclick="promptImage(this)">
+            <span>Click to insert/replace image</span>
+            <img src="" alt="" onerror="this.style.display='none'">
+          </div>`;
+        grid.appendChild(box);
+        triggerSaveCue();
+      }
+    };
+
+    window.promptImage = function(el) {
+      const url = prompt("Enter Direct Image URL (e.g., https://example.com/image.jpg):");
+      if (url) {
+        const img = el.querySelector('img');
+        img.src = url;
+        img.style.display = 'block';
+        triggerSaveCue();
+      }
+    };
+
+    window.addCertificate = function(btn) {
+      const page = btn.closest('.page');
+      const newPage = page.cloneNode(true);
+      // Reset the cloned specific details
+      const titleEl = newPage.querySelector('.cert-title');
+      if (titleEl) titleEl.innerText = "Annex: [Document Name]";
+      const placeholderTitle = newPage.querySelector('.cert-placeholder h4');
+      if (placeholderTitle) placeholderTitle.innerText = "Attach Document: [Name]";
+      
+      page.parentNode.insertBefore(newPage, page.nextSibling);
+      updatePageNumbers();
+      triggerSaveCue();
+    };
+
+    function triggerSaveCue() {
+       document.getElementById('save-btn').style.boxShadow = "0 0 12px rgba(228, 24, 55, 0.8)";
+    }
+
+    contentDiv.addEventListener('input', triggerSaveCue);
+
+    window.saveData = async () => {
+      if (!user) return;
+      isSaving = true;
+      const btn = document.getElementById('save-btn');
+      btn.innerText = "⏳ Syncing...";
+      
+      try {
+        await setDoc(docRef, { 
+          htmlContent: contentDiv.innerHTML, 
+          updatedAt: new Date().toISOString() 
+        });
+        btn.innerText = "✔ Synced";
+        btn.style.background = "#1b5e20";
+        btn.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+        showToast("Saved to Cloud!");
+      } catch (err) {
+        console.error("Save failed:", err);
+        btn.innerText = "❌ Error";
+        btn.style.background = "#dc2626";
+      }
+
+      setTimeout(() => {
+        btn.innerText = "☁️ Sync Content";
+        btn.style.background = "var(--brand-color)";
+        isSaving = false;
+      }, 2000);
+    };
+
+    // --- The Raw HTML Seed Payload ---
+    async function seedDatabase() {
+      const defaultHTML = `
+    <!-- COVER PAGE WITH HERO IMAGE 1:4 RATIO -->
     <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
-      <!-- Top Hero Image Section -->
-      <div style="flex-grow: 1; position: relative; background-color: var(--bg-gray);">
-        <!-- REPLACE 'cover-image.jpg' WITH YOUR ACTUAL HERO IMAGE PATH/URL -->
+      <div style="width: 100%; aspect-ratio: 4 / 1; position: relative; background-color: var(--bg-gray);">
         <img src="cover-image.jpg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        
-        <!-- Fallback placeholder if image is missing -->
         <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#9ca3af; font-size:14px; font-weight:bold; background:#e5e7eb; position:absolute; top:0; left:0;">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
-          [ HERO IMAGE PLACEHOLDER (cover-image.jpg) ]
+          [ HERO IMAGE PLACEHOLDER (1:4 RATIO) ]
         </div>
-        
-        <!-- Brand color accent line bridging the image and the text -->
         <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background-color: var(--brand-color);"></div>
       </div>
-
-      <!-- Bottom Details Section -->
-      <div style="padding: 60px 50px; background-color: #fff; height: 35%; box-sizing: border-box;">
-        <div style="font-size: 14px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;">
-          Technical & Commercial Proposal
-        </div>
-        <h1 style="font-size: 38px; font-weight: 800; color: var(--text-main); margin: 0 0 24px 0; line-height: 1.1; letter-spacing: -0.5px;">
-          Armored Vehicles for Police Use
-        </h1>
-        
-        <!-- Short divider -->
+      <div style="padding: 60px 50px; background-color: #fff; flex-grow: 1; box-sizing: border-box;">
+        <div style="font-size: 14px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;">Technical & Commercial Proposal</div>
+        <h1 style="font-size: 38px; font-weight: 800; color: var(--text-main); margin: 0 0 24px 0; line-height: 1.1; letter-spacing: -0.5px;">Armored Vehicles for Police Use</h1>
         <div style="width: 60px; height: 4px; background-color: var(--brand-color); margin-bottom: 35px; border-radius: 2px;"></div>
-        
-        <!-- Structured Details Table -->
         <table style="width: 100%; border: none; font-size: 14px; margin-bottom: 0; box-shadow: none; border-radius: 0;">
           <tr>
             <td style="padding: 5px 0; font-weight: 700; color: var(--text-muted); width: 140px; border: none; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Auction No:</td>
@@ -335,18 +551,13 @@
         </table>
       </div>
     </div>
-    <!-- END COVER PAGE -->
 
-    <!-- PAGE 1: INDEX / TABLE OF CONTENTS -->
+    <!-- PAGE 1: INDEX -->
     <div class="page" id="index-page">
       <div class="header">
         <div class="logo-container">
           <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">TENDER DOCUMENTATION</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -355,29 +566,22 @@
         <div class="toc-container" contenteditable="false">
           <a href="#vol1" class="toc-link">VOLUME I — ADMINISTRATIVE & LEGAL DOCUMENTS</a>
           <a href="#vol2" class="toc-link">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION</a>
-          
           <a href="#vol3" class="toc-link">VOLUME III — TECHNICAL QUALIFICATION</a>
           <a href="#item3-4" class="toc-sublink">3.4 ITEM 1 – APC: Technical Compliance Matrix</a>
           <a href="#apc-evidence" class="toc-sublink">↳ ITEM 1 – APC: Supporting Evidence & Images</a>
           <a href="#item3-7" class="toc-sublink">3.7 ITEM 2 – CAV: Technical Compliance Matrix</a>
           <a href="#cav-evidence" class="toc-sublink">↳ ITEM 2 – CAV: Supporting Evidence & Images</a>
-
           <a href="#vol4" class="toc-link">VOLUME IV — ECONOMIC & FINANCIAL QUALIFICATION</a>
           <a href="#vol5" class="toc-link">VOLUME V — COMMERCIAL PROPOSAL</a>
           <a href="#item5-2" class="toc-sublink">5.2 Commercial Pricing Schedule</a>
-          
           <a href="#vol6" class="toc-link">VOLUME VI — SAMPLE & TESTING COMMITMENT</a>
           <a href="#item6-5" class="toc-sublink">6.5 Acceptance Test Compliance Statement & Tables (APC)</a>
           <a href="#item6-6" class="toc-sublink">6.6 Acceptance Test Compliance Statement & Tables (CAV)</a>
-
           <a href="#vol7" class="toc-link">VOLUME VII — POST-CONTRACT COMMITMENTS</a>
-          
           <div class="toc-divider"></div>
-
           <a href="#final-declarations" class="toc-link">FINAL DECLARATIONS & SIGNATURES</a>
           <a href="#annex2" class="toc-sublink">Compliance with Annex II (Testing Committee)</a>
           <a href="#signatures" class="toc-sublink">Binding Undertaking, Traceability Checklist & Signatures</a>
-
           <div class="toc-divider"></div>
           <a href="#vol8" class="toc-link">VOLUME VIII — ANNEXURES & CERTIFICATES</a>
           <a href="#vol8" class="toc-sublink">Appended Certificate Placeholders</a>
@@ -391,11 +595,7 @@
       <div class="header">
         <div class="logo-container">
           <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">TENDER DOCUMENTATION</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -411,8 +611,9 @@
             <tr><td>1.5</td><td><strong>Declaration of Non-Existence</strong></td><td>Only for Brazilian documents that have no UAE equivalent.</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
-        <div id="vol2" class="vol-identifier" style="margin-top: 30px;">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION</div>
+        <div id="vol2" class="vol-identifier" style="margin-top: 20px;">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION</div>
         <div class="main-heading">Volume Summary Checklist (Common)</div>
         <table>
           <thead><tr><th style="width: 8%;">#</th><th style="width: 40%;">Certificate Name</th><th style="width: 52%;">Equivalency / Condition</th></tr></thead>
@@ -423,23 +624,19 @@
             <tr><td>2.4</td><td><strong>Bankruptcy / Insolvency Certificate</strong></td><td>Issued by competent UAE court. Apostilled.<div class="info-box critical" style="margin-top: 6px;"><strong>Note:</strong> Mandatory disqualification risk if missing.</div></td></tr>
           </tbody>
         </table>
-        <div class="info-box note">
-          <strong>Note:</strong> All documents listed above are attached as formal annexures in VOLUME VIII.
-        </div>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
+        
+        <div class="info-box note"><strong>Note:</strong> All documents listed above are attached as formal annexures in VOLUME VIII.</div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- PAGE 3: VOL III (Common + Item 1 Part 1) -->
+    <!-- PAGE 3: VOL III -->
     <div class="page" id="vol3">
       <div class="header">
         <div class="logo-container">
           <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">TENDER DOCUMENTATION</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -451,11 +648,7 @@
             <tr>
               <td style="width: 8%; font-weight: 700;">3.1</td>
               <td style="width: 40%;"><strong>Technical-Operational Capacity Certificate(s)</strong></td>
-              <td style="width: 52%;">
-                Must prove supply of at least <strong>2 units (APC)</strong> and <strong>10 units (CAV)</strong>.<br/>
-                Issued by police/military authority. Must contain contact details.
-                <div class="info-box critical" style="margin-top: 6px;"><strong>Critical:</strong> PRIMARY ELIMINATOR.</div>
-              </td>
+              <td style="width: 52%;">Must prove supply of at least <strong>2 units (APC)</strong> and <strong>10 units (CAV)</strong>. Issued by police/military authority. Must contain contact details. <div class="info-box critical" style="margin-top: 6px;"><strong>Critical:</strong> PRIMARY ELIMINATOR.</div></td>
             </tr>
             <tr>
               <td style="font-weight: 700;">3.2</td>
@@ -469,6 +662,7 @@
             </tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="sub-heading" style="margin-top: 14px;">B. ITEM 1 – APC (MEDIUM ARMOURED VEHICLE)</div>
         
@@ -502,6 +696,7 @@
             <tr><td>1.2.3.II</td><td>4x4 part-time; electronic transfer case</td><td>Confirm drivetrain spec</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM 4x4 Spec Sheet</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -510,11 +705,8 @@
     <div class="page">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">VOLUME III — ITEM 1 APC MATRICES</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -522,7 +714,7 @@
         
         <table>
           <tbody>
-            <tr><td style="width:7%">1.2.3.III.a-c</td><td style="width:33%">ABS all wheels + EBD; Ventilated disc brakes; Service brake holds 60%</td><td style="width:25%">Confirm / provide test basis</td><td style="width:7%" class="col-exec col-exec-tbd">TBD</td><td style="width:28%">OEM Brake Spec / Compliance Stmt</td></tr>
+            <tr><td style="width:7%">1.2.3.III</td><td style="width:33%">ABS all wheels + EBD; Ventilated disc brakes; Service brake holds 60%</td><td style="width:25%">Confirm / provide test basis</td><td style="width:7%" class="col-exec col-exec-tbd">TBD</td><td style="width:28%">OEM Brake Spec / Compliance Stmt</td></tr>
             <tr><td>1.2.3.III.d</td><td>ESP activatable/deactivatable inside cabin</td><td>Confirm</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM ESP Spec</td></tr>
             <tr><td>1.2.3.IV</td><td>Steering hyd/elec; factory LHD; Reinforced axles</td><td>Confirm LHD & reinforced axles</td><td class="col-exec col-exec-tbd">TBD</td><td>OEM Steering & Axle Spec</td></tr>
 
@@ -552,6 +744,7 @@
             <tr><td>1.2.16</td><td>PRO5100 prep, VHF antenna (46–49 MHz), SWR reports</td><td>Provide / Confirm</td><td class="col-exec col-exec-tbd">TBD</td><td>Radio Prep Design + SWR Report</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="sub-heading" style="margin-top: 20px;">Item 1 – Formal Certifications Required (Refer to Vol VIII)</div>
         <table>
@@ -568,6 +761,7 @@
             </tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -576,11 +770,8 @@
     <div class="page" id="apc-evidence">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">ITEM 1 – APC: EVIDENCE & IMAGES</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -592,7 +783,7 @@
           <div class="img-box">
             <div class="img-title">1.2.9.I & 1.2.9.II — Seating Layout & Access</div>
             <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating 10 seats (1+1+8), 4 side doors, rear outward door, and roof escape hatch.</p>
-            <div class="img-placeholder">
+            <div class="img-placeholder" onclick="promptImage(this)">
               <span>Click to insert/replace image<br/>(e.g., General Arrangement drawing)</span>
               <img src="" alt="" onerror="this.style.display='none'">
             </div>
@@ -600,18 +791,19 @@
           <div class="img-box">
             <div class="img-title">1.2.9.IV — Firing Ports (Loopholes)</div>
             <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating configuration of 11 operational firing ports integrated into the armoring.</p>
-            <div class="img-placeholder">
+            <div class="img-placeholder" onclick="promptImage(this)">
               <span>Click to insert/replace image<br/>(e.g., Side armor profile / Ports diagram)</span>
               <img src="" alt="" onerror="this.style.display='none'">
             </div>
           </div>
         </div>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addImageBox(this)">+ Add Image Box</button></div>
 
         <div class="img-grid">
           <div class="img-box">
             <div class="img-title">1.2.10 — Ballistic & Blast Protection Base</div>
             <p class="para" style="font-size:10px; margin-bottom:6px;">Reference for Police protection cell (CEN BR 7) and certified underbody blast integration.</p>
-            <div class="img-placeholder">
+            <div class="img-placeholder" onclick="promptImage(this)">
               <span>Click to insert/replace image<br/>(e.g., Ballistic Cell / Chassis reinforcement)</span>
               <img src="" alt="" onerror="this.style.display='none'">
             </div>
@@ -619,12 +811,14 @@
           <div class="img-box">
             <div class="img-title">1.2.14 — Visual Signaling (Lightbar System)</div>
             <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating LED lightbar, grille modules, and strobe placement per PMES standard.</p>
-            <div class="img-placeholder">
+            <div class="img-placeholder" onclick="promptImage(this)">
               <span>Click to insert/replace image<br/>(e.g., Lighting & Siren configuration)</span>
               <img src="" alt="" onerror="this.style.display='none'">
             </div>
           </div>
         </div>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addImageBox(this)">+ Add Image Box</button></div>
+
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -633,11 +827,8 @@
     <div class="page">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">TENDER DOCUMENTATION</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -646,9 +837,7 @@
         <div class="sub-heading" style="margin-top: 0;">C. ITEM 2 – CAV (ARMOURED SUV)</div>
 
         <div id="item3-7" class="main-heading" style="margin-top: 10px; font-size: 13px;">3.7 Technical Compliance Report – Annex ID</div>
-        <p class="para">
-          Must confirm compliance with ALL specifications listed below. <br/><em><strong>Note:</strong> Formal certificates are attached in Volume VIII. Visual evidence is attached on the following pages.</em>
-        </p>
+        <p class="para">Must confirm compliance with ALL specifications listed below. <br/><em><strong>Note:</strong> Formal certificates are attached in Volume VIII. Visual evidence is attached on the following pages.</em></p>
         
         <table>
           <thead>
@@ -684,6 +873,7 @@
             <tr><td>1.2.7</td><td>GVWR ≤6000kg; Curb ≤5000kg; Payload ≥1000kg</td><td>Confirm</td><td class="col-exec col-exec-tbd">TBD</td><td>Weight Statement</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -692,11 +882,8 @@
     <div class="page">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">VOLUME III — ITEM 2 CAV MATRICES</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -728,6 +915,7 @@
             <tr><td>1.2.15</td><td>TETRA prep (5A fused); PRO5100 prep; VHF antenna</td><td>Confirm</td><td class="col-exec col-exec-tbd">TBD</td><td>Antenna Spec + SWR Report</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="sub-heading" style="margin-top: 20px;">Item 2 – Formal Certifications Required (Refer to Vol VIII)</div>
         <table>
@@ -739,6 +927,7 @@
             </tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -747,11 +936,8 @@
     <div class="page" id="cav-evidence">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">ITEM 2 – CAV: EVIDENCE & IMAGES</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -763,7 +949,7 @@
           <div class="img-box">
             <div class="img-title">1.2.9.I & 1.2.9.VI — Seating Layout & Doors</div>
             <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating 5 seats (1+1+3), 4 forward hinge doors, and rear door access.</p>
-            <div class="img-placeholder">
+            <div class="img-placeholder" onclick="promptImage(this)">
               <span>Click to insert/replace image<br/>(e.g., General Arrangement drawing)</span>
               <img src="" alt="" onerror="this.style.display='none'">
             </div>
@@ -771,18 +957,19 @@
           <div class="img-box">
             <div class="img-title">1.2.10 — Ballistic Protection Cell</div>
             <p class="para" style="font-size:10px; margin-bottom:6px;">Reference for VPAM Edition 3 VR7 protective cell integration on commercial chassis.</p>
-            <div class="img-placeholder">
+            <div class="img-placeholder" onclick="promptImage(this)">
               <span>Click to insert/replace image<br/>(e.g., Armoring Cell layout / Base structural limits)</span>
               <img src="" alt="" onerror="this.style.display='none'">
             </div>
           </div>
         </div>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addImageBox(this)">+ Add Image Box</button></div>
 
         <div class="img-grid">
           <div class="img-box">
             <div class="img-title">1.2.14 — Visual Signaling (Roof Bar)</div>
             <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating LED lightbar (>90% width), Alley Lights, and overall layout.</p>
-            <div class="img-placeholder">
+            <div class="img-placeholder" onclick="promptImage(this)">
               <span>Click to insert/replace image<br/>(e.g., Roof bar design/spec sheet snippet)</span>
               <img src="" alt="" onerror="this.style.display='none'">
             </div>
@@ -790,12 +977,13 @@
           <div class="img-box">
             <div class="img-title">1.2.16 — Lighting Assembly (Unmarked)</div>
             <p class="para" style="font-size:10px; margin-bottom:6px;">Demonstrating internal red/blue modules and discrete grille module integration.</p>
-            <div class="img-placeholder">
+            <div class="img-placeholder" onclick="promptImage(this)">
               <span>Click to insert/replace image<br/>(e.g., Unmarked lighting configuration)</span>
               <img src="" alt="" onerror="this.style.display='none'">
             </div>
           </div>
         </div>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addImageBox(this)">+ Add Image Box</button></div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -804,11 +992,8 @@
     <div class="page" id="vol4">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">TENDER DOCUMENTATION</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -820,14 +1005,13 @@
             <tr><td style="font-weight: 700;">4.2</td><td><strong>Accountant Declaration of Ratios</strong></td><td>Must show: LG &gt; 1, LC &gt; 1, SG &gt; 1. If not → Net Worth ≥ 10% of estimated contract value.<div class="info-box note" style="margin-top: 6px;"><strong>Note:</strong> Estimated value is confidential. Use conservative estimate.</div></td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div id="vol5" class="vol-identifier" style="margin-top: 30px;">VOLUME V — COMMERCIAL PROPOSAL</div>
         <div class="main-heading">Commercial Terms & Pricing Logic</div>
         <table>
           <tbody>
             <tr><td style="width: 8%; font-weight: 700;">5.1</td><td style="width: 40%;"><strong>Annex IG – Commercial Proposal (Imported)</strong></td><td style="width: 52%;">Separate forms for Item 1 (APC) and Item 2 (CAV). Must use equalized “K” value.</td></tr>
-            
-            <!-- NEW PRICING SECTION -->
             <tr>
               <td style="font-weight: 700; color:var(--brand-color);" id="item5-2">5.2</td>
               <td style="color:var(--brand-color);"><strong>Commercial Pricing Schedule</strong></td>
@@ -840,8 +1024,6 @@
                 </ul>
               </td>
             </tr>
-            <!-- END NEW PRICING SECTION -->
-
             <tr><td style="font-weight: 700;">5.3</td><td><strong>PTAX Exchange Rate Declaration</strong></td><td>Using rate from 3 business days before March 11, 2026.</td></tr>
             <tr><td style="font-weight: 700;">5.4</td><td><strong>NCM Classification Declaration</strong></td><td>Confirm NCM 8710.00.00. Highlight ICMS, PIS, COFINS equalization.</td></tr>
             <tr><td style="font-weight: 700;">5.5</td><td><strong>Incoterm Declaration</strong></td><td>Confirm DDP (preferred) or DPU (if justified).</td></tr>
@@ -849,6 +1031,8 @@
             <tr><td style="font-weight: 700;">5.7</td><td><strong>Proposal Validity Declaration</strong></td><td>Minimum 180 days.</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
+        
         <div class="info-box note">
           <strong>Note:</strong> All financial and commercial declarations listed above are attached as formal annexures in VOLUME VIII.
         </div>
@@ -860,11 +1044,8 @@
     <div class="page" id="vol6">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">TENDER DOCUMENTATION</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -878,6 +1059,7 @@
             <tr><td style="font-weight: 700;">6.4</td><td><strong>Antenna Measurement Reports</strong></td><td>Required for both APC & CAV. Must show SWR at 46 MHz & 49 MHz. Signed by technician.</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div id="vol7" class="vol-identifier" style="margin-top: 30px;">VOLUME VII — POST-CONTRACT COMMITMENTS</div>
         <div class="main-heading">Volume Summary Checklist</div>
@@ -888,6 +1070,8 @@
             <tr><td style="font-weight: 700;">7.3</td><td><strong>Subcontracting Declaration</strong></td><td>If applicable: max 30%, maintenance only. If none → declare no subcontracting.</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
+        
         <div class="info-box note">
           <strong>Note:</strong> All commitment declarations listed above are attached as formal annexures in VOLUME VIII.
         </div>
@@ -899,11 +1083,8 @@
     <div class="page" id="item6-5">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">VOLUME VI — ITEM 1 ACCEPTANCE TESTS</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -925,6 +1106,7 @@
             <tr><td class="col-order">6</td><td>Pre-departure maintenance and operating instructions</td><td class="col-exec">YES</td><td>Technical briefing provided</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="sub-heading">PHASE 2 – DURING DRIVING (ROAD TEST)</div>
         <table>
@@ -938,6 +1120,7 @@
             <tr><td class="col-order">12</td><td>Evaluation of drivability and ergonomics</td><td class="col-exec">YES</td><td>Configured per requirements</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="sub-heading">PHASE 3 – AFTER DRIVING (STATIC INSPECTION)</div>
         <table>
@@ -948,6 +1131,7 @@
             <tr><td class="col-order">15</td><td>Consolidation of final report</td><td class="col-exec">YES</td><td>Formal response commitment</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -956,11 +1140,8 @@
     <div class="page" id="item6-6">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">VOLUME VI — ITEM 2 ACCEPTANCE TESTS</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -982,6 +1163,7 @@
             <tr><td class="col-order">6</td><td>Pre-departure maintenance and vehicle operating instructions</td><td class="col-exec">YES</td><td>Technical briefing provided</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="sub-heading">PHASE 2 – DURING DRIVING (ROAD TEST)</div>
         <table>
@@ -995,6 +1177,7 @@
             <tr><td class="col-order">12</td><td>Evaluation of drivability, ergonomics and operational aspects</td><td class="col-exec">YES</td><td>Configured per requirements</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="sub-heading">PHASE 3 – AFTER DRIVING (STATIC INSPECTION)</div>
         <table>
@@ -1005,6 +1188,7 @@
             <tr><td class="col-order">15</td><td>Consolidation of final report and contractor positioning</td><td class="col-exec">YES</td><td>Formal cooperation commitment</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
@@ -1013,11 +1197,8 @@
     <div class="page" id="final-declarations">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">FINAL DECLARATIONS & SIGNATURES</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -1061,6 +1242,7 @@
             <tr><td>Linking to required tax documentation and reports/certificates</td><td class="col-exec">YES</td><td>Invoice / Annex ref</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
 
         <div class="main-heading" style="margin-top: 24px;">Commitment Declaration & Signatures</div>
         <p class="para" style="font-size: 11px;">
@@ -1107,11 +1289,8 @@
     <div class="page" id="vol8">
       <div class="header">
         <div class="logo-container">
-          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span>
-        </div>
-        <div class="header-text">
-          <div class="doc-title">TENDER DOCUMENTATION</div>
-          <div class="meta"><strong>Auction No. 002/2026 – PMES</strong><br/>Bidder: Mahindra Emirates Vehicle Armouring</div>
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
         </div>
       </div>
       <div class="page-content">
@@ -1156,145 +1335,41 @@
             <tr><td>Annex 7.1-7.3</td><td>Warranty, Training, and Subcontracting Plans</td></tr>
           </tbody>
         </table>
+        <div class="doc-controls-wrapper" contenteditable="false"><button class="doc-control" onclick="addRow(this)">+ Add Row</button><button class="doc-control" onclick="removeRow(this)">- Remove Row</button><button class="doc-control" onclick="addCol(this)">+ Add Col</button><button class="doc-control" onclick="removeCol(this)">- Remove Col</button></div>
       </div>
       <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
     </div>
 
-    <!-- VOLUME VIII PLACEHOLDERS -->
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 1.1: Bid Cover Letter</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Bid Cover Letter</h4><p>Must identify bidder, Brazilian legal representative, state participation in Item 1 and/or 2, and be signed.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 1.2: Corporate Legal Existence Documents</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Corporate Legal Existence Documents</h4><p>UAE Trade License, Certificate of Incorporation, Memorandum & Articles of Association, Commercial Registration, Apostille.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 1.3: Power of Attorney – Brazilian Legal Representative</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Power of Attorney</h4><p>Grants authority to receive summons, respond administratively/judicially, sign ARP/Contract. Must be apostilled.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 1.4: Declarations Required by Law 14.133/2021</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Legal Declarations</h4><p>Acceptance of conditions, labor rights, no minors, no forced labor, disability quota, no conviction, no conflict, no sanctions.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 1.5: Declaration of Non-Existence of Equivalent Document</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Non-Existence Declaration</h4><p>Only for Brazilian documents that have no UAE equivalent.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 2.1: UAE Tax Registration Certificate (FTA – TRN)</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Tax Registration Certificate</h4><p>FTA – TRN. Equivalent to CNPJ.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 2.2: UAE Tax Compliance Certificate</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Tax Compliance Certificate</h4><p>FTA clearance confirming no outstanding liabilities.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 2.3: Labor Compliance Certificate</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Labor Compliance Certificate</h4><p>MOHRE good standing certificate.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 2.4: Bankruptcy / Insolvency Certificate</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Bankruptcy Certificate</h4><p>Issued by competent UAE court. Apostilled.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 3.1: Technical-Operational Capacity Certificate(s)</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Technical-Operational Capacity</h4><p>Must prove supply of at least 2 units (APC) and 10 units (CAV). Issued by police/military authority.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 3.2: Proof of Project Maturity</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Proof of Project Maturity</h4><p>Minimum 2 Years MLE Use. End-user certificate, Invoice + delivery confirmation, or Police authority letter.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 3.3: Manufacturer Letter of Solidarity</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Manufacturer Letter of Solidarity</h4><p>Only required if bidder is not the manufacturer.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 3.5: Ballistic Certification – APC</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Ballistic Certification (APC)</h4><p>Independent accredited lab. Opaque + transparent protection level as per Annex IB.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 3.6: Underbody Protection Certification – APC</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Underbody Protection Certification (APC)</h4><p>Required as specified in Annex IB blast section.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 3.8: Ballistic Certification – CAV</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Ballistic Certification (CAV)</h4><p>Independent lab. Opaque + transparent shielding per Annex ID.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 4.1: Audited Financial Statements</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Audited Financial Statements</h4><p>Last 2 Years Balance Sheet, Income Statement, Auditor Report. Must be Apostilled.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 4.2: Accountant Declaration of Ratios</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Accountant Declaration</h4><p>Must show LG &gt; 1, LC &gt; 1, SG &gt; 1. If not → Net Worth ≥ 10% of estimated contract value.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 5.1: Commercial Proposal (Imported)</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Commercial Proposal (Imported)</h4><p>Separate forms for Item 1 and Item 2. Must use equalized “K” value.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 5.3-5.7: Commercial Declarations</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Commercial Declarations</h4><p>PTAX, NCM Classification, Incoterm, Letter of Credit terms, and Proposal Validity.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 6.1-6.4: Testing & Antenna Commitments</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Testing Commitments</h4><p>Testing schedules, logistics cost undertaking, and antenna measurement reports.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-    <div class="page"><div class="header"><div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:10px; color:#9ca3af; font-weight:700;">LOGO (meva.png)</span></div><div class="header-text"><div class="doc-title">VOLUME VIII — ANNEXURES</div><div class="meta"><strong>Auction No. 002/2026 – PMES</strong></div></div></div><div class="page-content"><div class="main-heading">Annex 7.1-7.3: Post-Contract Plans</div><div class="cert-placeholder" contenteditable="false"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><h4>Attach Document: Post-Contract Plans</h4><p>Warranty & after-sales plan, Operator training plan, and Subcontracting declarations.</p></div></div><div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div></div>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCKKlwTf9Jgh94j2tRZyP-qPNuArdyT1bc",
-      authDomain: "brazil-tender.firebaseapp.com",
-      projectId: "brazil-tender",
-      storageBucket: "brazil-tender.firebasestorage.app",
-      messagingSenderId: "844067669814",
-      appId: "1:844067669814:web:8c1b4f84ce7b5c62cbd597",
-      measurementId: "G-2XP78ZRN5K"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const contentDiv = document.getElementById('document-content');
-    const saveBtn = document.getElementById('save-btn');
-    let isSaving = false;
-
-    // Automatically inject exact page numbers
-    window.updatePageNumbers = function() {
-      const pages = contentDiv.querySelectorAll('.page');
-      contentDiv.querySelectorAll('.page-num').forEach((el, index) => {
-        el.innerText = `Page ${index + 1} of ${pages.length}`;
-      });
-    };
-
-    // Run pagination on load
-    updatePageNumbers();
-
-    // Show save button when the user edits content
-    contentDiv.addEventListener('input', function() {
-      saveBtn.style.display = 'flex';
-    });
-
-    window.downloadHTML = function() {
-      const htmlContent = '<!doctype html>\n' + document.documentElement.outerHTML;
-      const blob = new Blob([htmlContent], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'index.html';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    };
-
-    // Initialize Authentication and Real-time Sync
-    async function initCollaboration() {
-      try {
-        await signInAnonymously(auth);
-        const docRef = doc(db, "tender_documents", "meva_main_proposal");
-
-        // Listen for real-time updates from Firebase
-        onSnapshot(docRef, (snapshot) => {
-          if (snapshot.exists() && !isSaving) {
-            const remoteContent = snapshot.data().htmlContent;
-            if (remoteContent && remoteContent !== contentDiv.innerHTML) {
-              // Update if the user isn't actively focused inside the editor to prevent cursor jumping
-              if (!contentDiv.contains(document.activeElement)) {
-                contentDiv.innerHTML = remoteContent;
-                updatePageNumbers();
-              } else {
-                // Show a notification that a remote change happened
-                saveBtn.style.display = 'flex';
-                saveBtn.innerHTML = '🔄 Sync Available (Click away to update)';
-                saveBtn.style.background = '#d97706';
-              }
-            }
-          }
-        });
-
-        // Cloud Save function
-        window.saveDocumentToCloud = async () => {
-          isSaving = true;
-          saveBtn.innerHTML = '⏳ Syncing...';
-          
-          try {
-            await setDoc(docRef, {
-              htmlContent: contentDiv.innerHTML,
-              lastUpdated: new Date()
-            });
-            
-            saveBtn.innerHTML = '✔ Saved to Cloud!';
-            saveBtn.style.background = '#1b5e20';
-          } catch (err) {
-            console.error("Save failed:", err);
-            saveBtn.innerHTML = '❌ Save Error';
-            saveBtn.style.background = '#dc2626';
-          }
-
-          setTimeout(() => {
-            saveBtn.innerHTML = '☁️ Sync to Cloud';
-            saveBtn.style.background = 'var(--brand-color)';
-            isSaving = false;
-          }, 2500);
-        };
-
-      } catch (error) {
-        console.error("Firebase Initialization Error:", error);
+    <!-- CERTIFICATE PLACEHOLDER -->
+    <div class="page cert-page">
+      <div class="header">
+        <div class="logo-container">
+          <img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span>
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="main-heading cert-title">Annex: [Document Name]</div>
+        <div class="cert-placeholder" contenteditable="false">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+          <h4>Attach Document: [Name]</h4>
+          <p>Please append the relevant physical document here before final submission.</p>
+        </div>
+        <div class="doc-controls-wrapper" style="justify-content:center; margin-top:16px;" contenteditable="false">
+          <button class="doc-control" onclick="addCertificate(this)">+ Duplicate Certificate Page</button>
+        </div>
+      </div>
+      <div class="page-footer" contenteditable="false"><div class="page-footer-text"><strong>MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC</strong> | PROPRIETARY & CONFIDENTIAL | TENDER NO. 002/2026 – PMES</div><div class="page-num"></div></div>
+    </div>
+      `;
+      contentDiv.innerHTML = defaultHTML;
+      updatePageNumbers();
+      if (user) {
+        await setDoc(docRef, { htmlContent: defaultHTML, updatedAt: new Date().toISOString() });
       }
     }
 
-    initCollaboration();
+    init();
   </script>
 </body>
 </html>
