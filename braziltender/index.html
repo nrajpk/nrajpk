@@ -6,16 +6,54 @@
   <title>MEVA - Finalizing Tender Documentation</title>
 
   <style>
+    /* Smooth scrolling for the index links */
+    html {
+      scroll-behavior: smooth;
+    }
+
     /* Print setup */
     @page { size: A4; margin: 16mm; }
     html, body { height: 100%; }
+    
     body {
       font-family: Arial, Helvetica, sans-serif;
       color: #111;
       margin: 0;
-      background: #fff;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+    }
+
+    /* Screen layout (Makes it look like physical A4 pages on a web browser) */
+    @media screen {
+      body {
+        background-color: #e5e7eb; /* Gray background for web view */
+        padding: 40px 0;
+      }
+      .page {
+        width: 210mm; /* Exact A4 width */
+        min-height: 297mm; /* Exact A4 height */
+        margin: 0 auto 30px auto;
+        background: #fff;
+        padding: 16mm; /* Matches print margins */
+        box-sizing: border-box;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15); /* Paper shadow */
+        position: relative;
+      }
+    }
+
+    /* Print layout (Removes web styling for clean printing) */
+    @media print { 
+      body { background: #fff; padding: 0; }
+      .page { 
+        margin: 0; 
+        padding: 0; 
+        box-shadow: none; 
+        width: auto; 
+        min-height: auto; 
+        page-break-after: always; 
+      }
+      .page:last-child { page-break-after: auto; }
+      .print-btn, .save-btn { display: none !important; } 
     }
 
     /* Floating Print Button */
@@ -39,8 +77,8 @@
     .save-btn {
       position: fixed;
       top: 20px;
-      right: 140px; /* Positioned to the left of the print button */
-      background: #2e7d32; /* Green color for save */
+      right: 140px;
+      background: #2e7d32;
       color: #fff;
       border: none;
       padding: 10px 16px;
@@ -50,22 +88,10 @@
       cursor: pointer;
       z-index: 1000;
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      display: none; /* Hidden by default, shown via JS on edit */
+      display: none;
       transition: background 0.3s ease;
     }
     .save-btn:hover { background: #1b5e20; }
-
-    @media print { 
-      .print-btn, .save-btn { display: none !important; } 
-    }
-
-    /* Page container */
-    .page {
-      page-break-after: always;
-      padding: 0;
-      position: relative;
-    }
-    .page:last-child { page-break-after: auto; }
 
     /* Header and footer */
     .header {
@@ -245,11 +271,39 @@
     
     .page-num {
       position: absolute;
-      bottom: -15px;
-      right: 0;
+      bottom: 15px; /* Adjusted for screen view padding */
+      right: 16mm;
       font-size: 10px;
       color: #666;
     }
+    @media print {
+      .page-num { bottom: -15px; right: 0; }
+    }
+
+    /* Index styles */
+    .toc-link {
+      display: block;
+      color: #0056b3;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      padding: 4px 0;
+      border-bottom: 1px dotted #ccc;
+    }
+    .toc-link:hover {
+      color: #000;
+      background-color: #f8f9fa;
+    }
+    .toc-sublink {
+      display: block;
+      color: #444;
+      text-decoration: none;
+      font-size: 11px;
+      margin-left: 20px;
+      margin-bottom: 6px;
+    }
+    .toc-sublink:hover { color: #000; text-decoration: underline; }
   </style>
 </head>
 
@@ -257,7 +311,49 @@
   <button class="print-btn" onclick="window.print()" contenteditable="false">Print to PDF</button>
   <button id="save-btn" class="save-btn" onclick="saveDocument()" contenteditable="false">💾 Save Changes</button>
 
-  <!-- PAGE 1: VOL I, II, & III Summaries -->
+  <!-- PAGE 1: INDEX / TABLE OF CONTENTS -->
+  <div class="page" id="index-page">
+    <div class="header">
+      <div class="topline">
+        <div class="doc-title">TENDER DOCUMENTATION - TABLE OF CONTENTS</div>
+        <div class="meta">
+          Auction No. 002/2026 – PMES<br/>
+          Bidder: Mahindra Emirates Vehicle Armouring FZ-LLC
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top: 20px;">Master Document Index</div>
+    <p class="para">Click any section below to jump directly to the relevant page.</p>
+
+    <div style="margin-top: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 4px; background: #fafafa;">
+      <a href="#vol1" class="toc-link" contenteditable="false">VOLUME I — ADMINISTRATIVE & LEGAL DOCUMENTS</a>
+      <a href="#vol2" class="toc-link" contenteditable="false">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION</a>
+      <a href="#vol3-summary" class="toc-link" contenteditable="false">VOLUME III — TECHNICAL QUALIFICATION (General Summary)</a>
+      <a href="#vol4" class="toc-link" contenteditable="false">VOLUME IV — ECONOMIC & FINANCIAL QUALIFICATION</a>
+      <a href="#vol5" class="toc-link" contenteditable="false">VOLUME V — COMMERCIAL PROPOSAL</a>
+      <a href="#vol6-summary" class="toc-link" contenteditable="false">VOLUME VI — SAMPLE & TESTING COMMITMENT (Summary)</a>
+      <a href="#vol7" class="toc-link" contenteditable="false">VOLUME VII — POST-CONTRACT COMMITMENTS</a>
+      
+      <div style="margin-top: 15px; border-top: 2px solid #ddd; padding-top: 15px;"></div>
+      
+      <a href="#matrix-item1" class="toc-link" contenteditable="false">VOLUME III — DETAILED TECHNICAL COMPLIANCE MATRICES</a>
+      <a href="#matrix-item1" class="toc-sublink" contenteditable="false">↳ ITEM 1 – APC (Medium Armoured Vehicle) Specifications</a>
+      <a href="#matrix-item2" class="toc-sublink" contenteditable="false">↳ ITEM 2 – CAV (Armoured SUV) Specifications</a>
+
+      <div style="margin-top: 15px; border-top: 2px solid #ddd; padding-top: 15px;"></div>
+
+      <a href="#atp-procedures" class="toc-link" contenteditable="false">VOLUME VI — ACCEPTANCE TESTING PROCEDURES (ATP)</a>
+      <a href="#atp-item1" class="toc-sublink" contenteditable="false">↳ VI-AT-01: Acceptance Test Compliance Statement – ITEM 1 (APC)</a>
+      <a href="#atp-item2" class="toc-sublink" contenteditable="false">↳ VI-AT-02: Acceptance Test Compliance Statement – ITEM 2 (CAV)</a>
+      <a href="#atp-annex2" class="toc-sublink" contenteditable="false">↳ VI-AT-03: Compliance with Annex II (Testing Committee)</a>
+      <a href="#atp-signatures" class="toc-sublink" contenteditable="false">↳ VI-AT-04: Binding Undertaking, Traceability & Signatures</a>
+    </div>
+
+    <div class="page-num">Page 1</div>
+  </div>
+
+  <!-- PAGE 2: VOL I, II, & III Summaries -->
   <div class="page">
     <div class="header">
       <div class="topline">
@@ -269,7 +365,7 @@
       </div>
     </div>
 
-    <div class="section-title">VOLUME I — ADMINISTRATIVE & LEGAL DOCUMENTS (Common)</div>
+    <div id="vol1" class="section-title">VOLUME I — ADMINISTRATIVE & LEGAL DOCUMENTS (Common)</div>
 
     <div class="subhead">1. Bid Cover Letter</div>
     <ul>
@@ -308,13 +404,13 @@
     <div class="subhead">5. Declaration of Non-Existence of Equivalent Document (Annex I-H)</div>
     <p class="para">Only for Brazilian documents that have no UAE equivalent. (Use carefully. Do not overuse.)</p>
 
-    <div class="section-title">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION (Common)</div>
+    <div id="vol2" class="section-title">VOLUME II — TAX, SOCIAL & LABOR QUALIFICATION (Common)</div>
     <div class="subhead">6. UAE Tax Registration Certificate (FTA – TRN)</div><p class="para">Equivalent to CNPJ.</p>
     <div class="subhead">7. UAE Tax Compliance Certificate</div><p class="para">FTA clearance confirming no outstanding liabilities.</p>
     <div class="subhead">8. Labor Compliance Certificate</div><p class="para">MOHRE good standing certificate.</p>
     <div class="subhead">9. Bankruptcy / Insolvency Certificate</div><p class="para">Issued by UAE court. Apostilled. Sworn PT translation. <strong style="color:red">Mandatory disqualification risk if missing.</strong></p>
 
-    <div class="section-title">VOLUME III — TECHNICAL QUALIFICATION (General Overviews)</div>
+    <div id="vol3-summary" class="section-title">VOLUME III — TECHNICAL QUALIFICATION (General Overviews)</div>
     <div class="subhead" style="margin-top: 8px;">A. COMMON TECHNICAL QUALIFICATION</div>
     <div class="subhead">10. Technical-Operational Capacity Certificate(s)</div>
     <ul>
@@ -336,10 +432,10 @@
       <li><strong>16/19. Acceptance Test Compliance:</strong> Confirms vehicles will undergo IC & IE tests.</li>
     </ul>
 
-    <div class="page-num">Page 1</div>
+    <div class="page-num">Page 2</div>
   </div>
 
-  <!-- PAGE 2: VOL IV, V, VI, VII -->
+  <!-- PAGE 3: VOL IV, V, VI, VII -->
   <div class="page">
     <div class="header">
       <div class="topline">
@@ -351,7 +447,7 @@
       </div>
     </div>
 
-    <div class="section-title">VOLUME IV — ECONOMIC & FINANCIAL QUALIFICATION (Common)</div>
+    <div id="vol4" class="section-title">VOLUME IV — ECONOMIC & FINANCIAL QUALIFICATION (Common)</div>
     <div class="subhead">20. Audited Financial Statements (Last 2 Years)</div>
     <p class="para">Balance Sheet, Income Statement, Auditor Report. Apostilled.</p>
     
@@ -359,7 +455,7 @@
     <p class="para">Must show: LG &gt; 1, LC &gt; 1, SG &gt; 1.<br/>If not → Net Worth ≥ 10% of estimated contract value.</p>
     <div class="note"><strong>Note:</strong> Estimated value is confidential. Use conservative estimate.</div>
 
-    <div class="section-title">VOLUME V — COMMERCIAL PROPOSAL (Common + Item Specific)</div>
+    <div id="vol5" class="section-title">VOLUME V — COMMERCIAL PROPOSAL (Common + Item Specific)</div>
     <div class="subhead">22. Annex IG – Commercial Proposal (Imported Equipment)</div>
     <p class="para">Separate form for: Item 1 (APC) and Item 2 (CAV). Must use equalized “K” value.</p>
     
@@ -378,7 +474,7 @@
     <div class="subhead">27. Proposal Validity Declaration</div>
     <p class="para">Minimum 180 days.</p>
 
-    <div class="section-title">VOLUME VI — SAMPLE & TESTING COMMITMENT (Common + Item Specific)</div>
+    <div id="vol6-summary" class="section-title">VOLUME VI — SAMPLE & TESTING COMMITMENT (Common + Item Specific)</div>
     <div class="subhead">28 & 29. Testing Schedule Commitment – APC & CAV</div>
     <p class="para">Submit within 5 days if ranked first. Minimum 15-day notice.</p>
 
@@ -388,7 +484,7 @@
     <div class="subhead">31. Antenna Measurement Reports (Per Vehicle)</div>
     <p class="para">Required for both APC & CAV. Must show SWR at 46 MHz & 49 MHz. Signed by technician.</p>
 
-    <div class="section-title">VOLUME VII — POST-CONTRACT COMMITMENTS</div>
+    <div id="vol7" class="section-title">VOLUME VII — POST-CONTRACT COMMITMENTS</div>
     <div class="subhead">32. Warranty & After-Sales Plan</div>
     <p class="para">Must confirm: Warranty as per table, 60 working day repair max, 10-year spare parts availability, 1% spare parts reserve, Recall commitment.</p>
 
@@ -398,11 +494,11 @@
     <div class="subhead">34. Subcontracting Declaration</div>
     <p class="para">If applicable: max 30%, maintenance only. If none → declare no subcontracting.</p>
 
-    <div class="page-num">Page 2</div>
+    <div class="page-num">Page 3</div>
   </div>
 
-  <!-- PAGE 3: ITEM 1 MATRIX (Part 1) -->
-  <div class="page">
+  <!-- PAGE 4: ITEM 1 MATRIX (Part 1) -->
+  <div class="page" id="matrix-item1">
     <div class="header">
       <div class="topline">
         <div class="doc-title">VOLUME III — DETAILED TECHNICAL COMPLIANCE MATRICES</div>
@@ -462,10 +558,10 @@
         <tr><td>1.2.7.I-III</td><td>GVWR ≤12,000kg; Curb ≤10,000kg; Payload ≥1,500kg</td><td>Confirm</td><td class="col-exec">TBD</td><td>Weight statement + payload/axle load calc</td></tr>
       </tbody>
     </table>
-    <div class="page-num">Page 3</div>
+    <div class="page-num">Page 4</div>
   </div>
 
-  <!-- PAGE 4: ITEM 1 MATRIX (Part 2) -->
+  <!-- PAGE 5: ITEM 1 MATRIX (Part 2) -->
   <div class="page">
     <div class="header">
       <div class="topline">
@@ -514,11 +610,11 @@
         <tr><td>1.2.16.VI-X</td><td>Per-vehicle SWR reports (10% tol.), no EM interference</td><td>Provide / Confirm</td><td class="col-exec">TBD</td><td>Antenna Report Template + EMC statement</td></tr>
       </tbody>
     </table>
-    <div class="page-num">Page 4</div>
+    <div class="page-num">Page 5</div>
   </div>
 
-  <!-- PAGE 5: ITEM 2 MATRIX (Part 1) -->
-  <div class="page">
+  <!-- PAGE 6: ITEM 2 MATRIX (Part 1) -->
+  <div class="page" id="matrix-item2">
     <div class="header">
       <div class="topline">
         <div class="doc-title">VOLUME III — DETAILED TECHNICAL COMPLIANCE MATRICES</div>
@@ -572,10 +668,10 @@
         <tr><td>1.2.9.VIII</td><td>Manual key locks; Presence sensor; Door lock/alarm control</td><td>Confirm</td><td class="col-exec">TBD</td><td>OEM spec</td></tr>
       </tbody>
     </table>
-    <div class="page-num">Page 5</div>
+    <div class="page-num">Page 6</div>
   </div>
 
-  <!-- PAGE 6: ITEM 2 MATRIX (Part 2) -->
+  <!-- PAGE 7: ITEM 2 MATRIX (Part 2) -->
   <div class="page">
     <div class="header">
       <div class="topline">
@@ -622,11 +718,11 @@
         <tr><td>1.2.16.IV</td><td>2 magnetic emblems, 40 cm high, must attach at 120 km/h</td><td>Confirm</td><td class="col-exec">TBD</td><td>Emblem spec + retention test statement</td></tr>
       </tbody>
     </table>
-    <div class="page-num">Page 6</div>
+    <div class="page-num">Page 7</div>
   </div>
 
-  <!-- PAGE 7: ATP QUICK INDEX & ITEM 1 ATP (Part 1) -->
-  <div class="page">
+  <!-- PAGE 8: ATP QUICK INDEX & ITEM 1 ATP (Part 1) -->
+  <div class="page" id="atp-procedures">
     <div class="header">
       <div class="topline">
         <div class="doc-title">VOLUME VI – SAMPLE & TESTING COMMITMENT (ACCEPTANCE TESTS)</div>
@@ -661,7 +757,7 @@
       </tbody>
     </table>
 
-    <div class="section-title">VI-AT-01 – Acceptance Test Compliance Statement (ITEM 1 – APC)</div>
+    <div id="atp-item1" class="section-title">VI-AT-01 – Acceptance Test Compliance Statement (ITEM 1 – APC)</div>
     <div class="subhead">1. Introduction</div>
     <p class="para">
       Mahindra Emirates Vehicle Armouring FZ-LLC confirms full acceptance of the Acceptance Testing Procedure (ATP) for Item 1 exactly as defined, including: Documentation verification, Dynamic road test up to 50 km (70% paved, 30% off-road), Post-drive static inspection, and Final consolidation reporting. The contractor commits to present sample vehicles and designate specialized personnel during the entire ATP process.
@@ -697,10 +793,10 @@
       <li>Electrical, signaling & communication system preparation documentation</li>
     </ul>
 
-    <div class="page-num">Page 7</div>
+    <div class="page-num">Page 8</div>
   </div>
 
-  <!-- PAGE 8: ITEM 1 ATP (Part 2) & ITEM 2 ATP (Part 1) -->
+  <!-- PAGE 9: ITEM 1 ATP (Part 2) & ITEM 2 ATP (Part 1) -->
   <div class="page">
     <div class="header">
       <div class="topline">
@@ -751,7 +847,7 @@
       </tbody>
     </table>
 
-    <div class="section-title" style="margin-top: 24px;">VI-AT-02 – Acceptance Test Compliance Statement (ITEM 2 – CAV)</div>
+    <div id="atp-item2" class="section-title" style="margin-top: 24px;">VI-AT-02 – Acceptance Test Compliance Statement (ITEM 2 – CAV)</div>
     <p class="para">
       Mahindra Emirates Vehicle Armouring FZ-LLC confirms that the armored tactical SUV (Item 2) complies with Appendix ID. The contractor formally accepts execution of the ATP (Verification, 50km Road Test, Static Inspection, Final Consolidation).
     </p>
@@ -776,10 +872,10 @@
       </tbody>
     </table>
     
-    <div class="page-num">Page 8</div>
+    <div class="page-num">Page 9</div>
   </div>
 
-  <!-- PAGE 9: ITEM 2 ATP (Part 2) & ANNEX II -->
+  <!-- PAGE 10: ITEM 2 ATP (Part 2) & ANNEX II -->
   <div class="page">
     <div class="header">
       <div class="topline">
@@ -830,7 +926,7 @@
       </tbody>
     </table>
 
-    <div class="section-title" style="margin-top: 24px;">VI-AT-03 – Compliance with Annex II – Responsibilities of the Testing Committee</div>
+    <div id="atp-annex2" class="section-title" style="margin-top: 24px;">VI-AT-03 – Compliance with Annex II – Responsibilities of the Testing Committee</div>
     <p class="para">Mahindra Emirates Vehicle Armouring FZ-LLC acknowledges and accepts the provisions of Annex II regarding:</p>
     <ul style="column-count: 2; column-gap: 20px;">
       <li>Purpose and exclusive technical competence of the Testing Committee</li>
@@ -851,11 +947,11 @@
       <li>All documentation and test conditions will allow full traceability of sample identification, conditions and measurements.</li>
     </ul>
 
-    <div class="page-num">Page 9</div>
+    <div class="page-num">Page 10</div>
   </div>
 
-  <!-- PAGE 10: TRACEABILITY & SIGNATURES -->
-  <div class="page">
+  <!-- PAGE 11: TRACEABILITY & SIGNATURES -->
+  <div class="page" id="atp-signatures">
     <div class="header">
       <div class="topline">
         <div class="doc-title">VI-AT-04 – Binding Undertaking, Signatures, and Traceability Checklist</div>
@@ -924,7 +1020,7 @@
       </div>
     </div>
     
-    <div class="page-num">Page 10</div>
+    <div class="page-num">Page 11</div>
   </div>
 
   <script>
