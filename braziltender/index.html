@@ -18,19 +18,20 @@
       --text-muted: #5F6368;
       --border-color: #DADCE0;
       --bg-gray: #F8F9FA;
-      --app-bg: #1f2937; /* Dark backdrop for web view */
+      --app-bg: #1f2937;
     }
 
     /* 2. GLOBAL SETTINGS */
     body {
       font-family: 'Georama', sans-serif;
       margin: 0;
-      padding-top: 60px; /* Space for fixed toolbar */
+      padding-top: 60px;
       background: var(--app-bg);
       color: var(--text-main);
       line-height: 1.5;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+      counter-reset: sheet;
     }
 
     /* 3. APP TOOLBAR (WEB UI) */
@@ -59,14 +60,14 @@
     }
     .app-brand span { color: var(--brand-color); }
     .toolbar-actions { display: flex; align-items: center; gap: 16px; }
-    
+
     .sync-status {
       font-size: 13px;
       font-weight: 600;
       color: var(--text-muted);
       transition: color 0.2s;
     }
-    .sync-status.dirty { color: #d97706; } /* Warning Orange */
+    .sync-status.dirty { color: #d97706; }
 
     .btn {
       background: #FFFFFF;
@@ -87,19 +88,18 @@
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* 4. DYNAMIC PAGE NUMBERING */
-    body { counter-reset: sheet; }
     .page-num::after { counter-increment: sheet; content: "Page " counter(sheet); }
 
     /* 5. LOGICAL PAGE LAYOUT (WEB) */
     @media screen {
       .page {
         width: 210mm;
-        min-height: 297mm; 
+        min-height: 297mm;
         margin: 30px auto;
         background: #FFFFFF;
         display: flex;
         flex-direction: column;
-        padding: 15mm 10mm; 
+        padding: 15mm 10mm;
         box-sizing: border-box;
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         position: relative;
@@ -112,9 +112,16 @@
     @media print {
       .app-toolbar, .ui-controls, .doc-controls-wrapper, #remote-banner, #status-toast { display: none !important; }
       body { background: #FFFFFF; padding-top: 0; }
-      .page { 
-        margin: 0; box-shadow: none; display: flex; flex-direction: column; 
-        width: 100%; height: 297mm; border-radius: 0; page-break-after: always; padding: 0;
+      .page {
+        margin: 0;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 297mm;
+        border-radius: 0;
+        page-break-after: always;
+        padding: 0;
       }
       thead { display: table-header-group; }
       tr, .no-break { page-break-inside: avoid; break-inside: avoid; }
@@ -124,18 +131,52 @@
 
     /* 7. TYPOGRAPHY & HIERARCHY */
     .page-content { flex: 1; display: flex; flex-direction: column; }
-    .vol-identifier { font-size: 11.5px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; letter-spacing: 1px; padding: 0 0 6px 0; border-bottom: 3px solid var(--brand-color); margin-bottom: 16px; display: block; }
-    .main-heading { font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .sub-heading { font-size: 11px; font-weight: 700; color: var(--brand-color); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin: 24px 0 12px 0; }
-    p.para { font-size: 12px; color: var(--text-main); line-height: 1.45; margin: 0 0 14px 0; text-align: justify; }
+    .vol-identifier {
+      font-size: 11.5px; font-weight: 800; color: var(--brand-color);
+      text-transform: uppercase; letter-spacing: 1px; padding: 0 0 6px 0;
+      border-bottom: 3px solid var(--brand-color); margin-bottom: 16px; display: block;
+    }
+    .main-heading {
+      font-size: 14px; font-weight: 800; color: var(--text-main);
+      margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .sub-heading {
+      font-size: 11px; font-weight: 700; color: var(--brand-color);
+      text-transform: uppercase; letter-spacing: 1px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px; margin: 24px 0 12px 0;
+    }
+    p.para {
+      font-size: 12px; color: var(--text-main);
+      line-height: 1.45; margin: 0 0 14px 0; text-align: justify;
+    }
     p.para em { font-style: italic; color: var(--text-muted); font-size: 11px; display: inline-block; margin-top: 4px; }
     p.para strong { font-weight: 800; color: var(--brand-color); }
 
     /* 8. TABLES */
     table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; }
     th, td { border-bottom: 0.5pt solid var(--border-color); padding: 10px 8px; text-align: left; vertical-align: top; }
-    th { background: var(--bg-gray); font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; border-bottom: 1pt solid var(--border-color); }
-    .group-header { background: #FFFFFF !important; text-align: left; font-weight: 800; color: var(--brand-color); text-transform: uppercase; font-size: 10px; letter-spacing: 1px; padding-top: 24px !important; padding-bottom: 6px !important; border-bottom: 1.5pt solid var(--brand-color) !important; }
+    th {
+      background: var(--bg-gray);
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 10px;
+      border-bottom: 1pt solid var(--border-color);
+    }
+    .group-header {
+      background: #FFFFFF !important;
+      text-align: left;
+      font-weight: 800;
+      color: var(--brand-color);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding-top: 24px !important;
+      padding-bottom: 6px !important;
+      border-bottom: 1.5pt solid var(--brand-color) !important;
+    }
     tbody tr:last-child td { border-bottom: none; }
 
     /* 9. INLINE EDITOR UI CONTROLS */
@@ -148,12 +189,21 @@
       opacity: 0.2;
       transition: all 0.3s ease;
       margin-bottom: 16px;
+      user-select: none;
     }
     .doc-controls-wrapper:hover, .doc-controls-wrapper:focus-within { opacity: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .doc-control {
-      background: transparent; border: none; border-right: 1px solid var(--border-color);
-      color: var(--text-muted); padding: 6px 12px; font-size: 10px; font-weight: 700;
-      text-transform: uppercase; cursor: pointer; font-family: 'Georama', sans-serif; transition: background 0.2s;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Georama', sans-serif;
+      transition: background 0.2s;
     }
     .doc-control:last-child { border-right: none; }
     .doc-control:hover { background: #e5e7eb; color: var(--text-main); }
@@ -174,9 +224,51 @@
     .img-placeholder:hover { background: var(--bg-gray); border-color: var(--text-muted); }
     .img-placeholder img { width: 100%; max-height: 200px; object-fit: contain; }
 
+    /* TOC SUPPORT */
+    .toc-container { line-height: 1.9; }
+    .toc-link, .toc-sublink { color: var(--text-main); text-decoration: none; font-weight: 800; }
+    .toc-sublink { font-weight: 700; color: var(--text-muted); margin-left: 12px; display: inline-block; }
+    .toc-link:hover, .toc-sublink:hover { color: var(--brand-color); }
+    .toc-divider { height: 1px; background: var(--border-color); margin: 12px 0; }
+
+    /* LISTS */
+    ul.check-list { margin: 0 0 12px 18px; padding: 0; font-size: 11px; }
+    ul.check-list li { margin: 0 0 6px 0; }
+
     /* TOASTS & BANNERS */
-    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; font-size: 13px; border-bottom: 1px solid #F59E0B; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; }
-    #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    #remote-banner {
+      display: none;
+      background: #FEF3C7;
+      color: #92400E;
+      padding: 12px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 13px;
+      border-bottom: 1px solid #F59E0B;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+    }
+    #status-toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1A1A1B;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      z-index: 2000;
+      display: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    /* EDITABLE ROOT */
+    #document-content { outline: none; }
   </style>
 </head>
 <body>
@@ -204,7 +296,6 @@
 <div id="document-content" contenteditable="true" spellcheck="false"></div>
 
 <script type="module">
-  // FIREBASE CONFIG & SEED DATA 
   import { defaultHTML } from './seed-data.js';
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
   import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -223,14 +314,21 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
   const docRef = doc(db, 'tender_documents', 'meva_main_html');
+
   const contentDiv = document.getElementById('document-content');
   const saveBtn = document.getElementById('save-btn');
   const syncStatus = document.getElementById('sync-status');
   const toast = document.getElementById('status-toast');
 
+  const remoteBanner = document.getElementById('remote-banner');
+  const btnAcceptRemote = document.getElementById('btn-accept-remote');
+  const btnKeepMine = document.getElementById('btn-keep-mine');
+
   let currentRev = 0;
   let dirty = false;
   let applyingRemote = false;
+
+  let pendingRemote = null; // { htmlContent, rev }
 
   function showToast(msg) {
     toast.textContent = msg;
@@ -251,25 +349,28 @@
     }
   }
 
+  function applyAutoFormatting() {
+    document.querySelectorAll('#document-content td').forEach(cell => {
+      if (cell.getAttribute('contenteditable') === 'false') return;
+      const text = (cell.innerText || '').trim().toUpperCase();
+      if (text === 'COMPLY' || text === 'YES') {
+        cell.style.color = '#16a34a';
+        cell.style.fontWeight = '900';
+      } else if (text === 'TBD') {
+        cell.style.color = '#9ca3af';
+        cell.style.fontWeight = 'normal';
+      } else if (text === 'NO' || text === 'FAIL') {
+        cell.style.color = 'var(--brand-color)';
+        cell.style.fontWeight = '900';
+      }
+    });
+  }
+
   contentDiv.addEventListener('input', () => {
     if (applyingRemote) return;
     setDirty(true);
     applyAutoFormatting();
   });
-
-  const applyAutoFormatting = () => {
-    document.querySelectorAll('#document-content td').forEach(cell => {
-      if (cell.getAttribute('contenteditable') === 'false') return;
-      const text = cell.innerText.trim().toUpperCase();
-      if (text === 'COMPLY' || text === 'YES') {
-        cell.style.color = '#16a34a'; cell.style.fontWeight = '900';
-      } else if (text === 'TBD') {
-        cell.style.color = '#9ca3af'; cell.style.fontWeight = 'normal';
-      } else if (text === 'NO' || text === 'FAIL') {
-        cell.style.color = 'var(--brand-color)'; cell.style.fontWeight = '900';
-      }
-    });
-  };
 
   window.notifyChange = () => {
     contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
@@ -277,61 +378,166 @@
 
   window.saveData = async () => {
     if (!dirty) return;
+
     saveBtn.textContent = '⏳ Syncing...';
+
     try {
       await runTransaction(db, async (tx) => {
         const snap = await tx.get(docRef);
         const serverRev = snap.exists() ? Number(snap.data().rev || 0) : 0;
-        if (serverRev !== currentRev) throw new Error('REV_CONFLICT');
+
+        if (serverRev !== currentRev) {
+          throw new Error('REV_CONFLICT');
+        }
+
         const newRev = serverRev + 1;
-        tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: newRev, updatedAt: serverTimestamp() });
+        tx.set(docRef, {
+          htmlContent: contentDiv.innerHTML,
+          rev: newRev,
+          updatedAt: serverTimestamp()
+        });
+
         currentRev = newRev;
       });
+
       setDirty(false);
       showToast('Synced');
+
     } catch (e) {
       console.error(e);
       showToast('Sync failed');
+
+      if (String(e.message || '').includes('REV_CONFLICT')) {
+        showToast('Conflict: load latest or keep yours');
+        remoteBanner.style.display = 'block';
+      }
+
     } finally {
       saveBtn.textContent = '☁️ Sync to Cloud';
     }
   };
 
+  function renderFromRemote(html, rev) {
+    applyingRemote = true;
+    contentDiv.innerHTML = html;
+    applyingRemote = false;
+    currentRev = Number(rev || 0);
+    setDirty(false);
+    applyAutoFormatting();
+  }
+
+  async function seedCloudIfMissing() {
+    await runTransaction(db, async (tx) => {
+      const snap = await tx.get(docRef);
+      if (snap.exists()) return;
+      tx.set(docRef, {
+        htmlContent: defaultHTML,
+        rev: 1,
+        updatedAt: serverTimestamp()
+      });
+    });
+  }
+
   function startRealtimeListener() {
-    onSnapshot(docRef, (snap) => {
-      if (snap.metadata.hasPendingWrites || !snap.exists()) return;
-      const data = snap.data();
+    onSnapshot(docRef, async (snap) => {
+      // If doc missing, create once and exit. Snapshot will re-fire after seed.
+      if (!snap.exists()) {
+        try { await seedCloudIfMissing(); } catch (e) { console.error(e); }
+        return;
+      }
+
+      // Ignore local pending writes
+      if (snap.metadata.hasPendingWrites) return;
+
+      const data = snap.data() || {};
       const nextRev = Number(data.rev || 0);
+      const nextHtml = String(data.htmlContent || '');
+
+      // First load
+      if (currentRev === 0) {
+        renderFromRemote(nextHtml, nextRev);
+        return;
+      }
+
+      // Newer remote version
       if (nextRev > currentRev) {
         if (!dirty) {
-          applyingRemote = true;
-          contentDiv.innerHTML = data.htmlContent;
-          applyingRemote = false;
-          currentRev = nextRev;
-          applyAutoFormatting();
+          renderFromRemote(nextHtml, nextRev);
         } else {
-          document.getElementById('remote-banner').style.display = 'block';
+          pendingRemote = { htmlContent: nextHtml, rev: nextRev };
+          remoteBanner.style.display = 'block';
         }
       }
     });
   }
+
+  // Remote banner actions
+  btnAcceptRemote.addEventListener('click', () => {
+    if (!pendingRemote) return;
+    remoteBanner.style.display = 'none';
+    renderFromRemote(pendingRemote.htmlContent, pendingRemote.rev);
+    pendingRemote = null;
+    showToast('Loaded latest');
+  });
+
+  btnKeepMine.addEventListener('click', () => {
+    remoteBanner.style.display = 'none';
+    pendingRemote = null;
+    showToast('Keeping your version');
+  });
 
   // --- UI CONTROLS ---
   function getTargetTable(btn) {
     let el = btn.closest('.doc-controls-wrapper');
     while (el && el.previousElementSibling) {
       el = el.previousElementSibling;
-      if (el.tagName.toLowerCase() === 'table') return el;
+      if (el.tagName && el.tagName.toLowerCase() === 'table') return el;
     }
     return null;
+  }
+
+  function getTableColumnCount(table) {
+    const headerRow = table.querySelector('thead tr');
+    if (!headerRow) {
+      const firstBodyRow = table.querySelector('tbody tr');
+      if (!firstBodyRow) return 1;
+      return Array.from(firstBodyRow.children).reduce((sum, cell) => sum + (cell.colSpan || 1), 0);
+    }
+    return Array.from(headerRow.children).reduce((sum, cell) => sum + (cell.colSpan || 1), 0);
+  }
+
+  function findLastDataRow(tbody) {
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    for (let i = rows.length - 1; i >= 0; i--) {
+      const r = rows[i];
+      if (r.querySelector('th.group-header')) continue;
+      if ((r.className || '').includes('no-break') && r.querySelector('td[colspan]')) continue;
+      // must have at least one TD with colspan=1 or normal structure
+      if (r.querySelector('td')) return r;
+    }
+    return rows.find(r => r.querySelector('td')) || null;
   }
 
   window.addRow = function(btn) {
     const table = getTargetTable(btn);
     if (!table) return;
+
     const tbody = table.querySelector('tbody');
-    const newRow = tbody.lastElementChild.cloneNode(true);
-    newRow.querySelectorAll('td').forEach(td => { if(td.colSpan === 1) td.innerHTML = ''; });
+    if (!tbody) return;
+
+    const baseRow = findLastDataRow(tbody);
+    if (!baseRow) return;
+
+    const newRow = baseRow.cloneNode(true);
+
+    // Clear only standard cells, keep structure
+    newRow.querySelectorAll('td').forEach(td => {
+      // If a deepdive row slipped in, skip (but we already filtered)
+      if (td.colSpan && td.colSpan > 1) return;
+      td.innerHTML = '';
+      td.removeAttribute('style'); // remove any YES/NO coloring carried over
+    });
+
     tbody.appendChild(newRow);
     window.notifyChange();
   };
@@ -339,30 +545,50 @@
   window.removeRow = function(btn) {
     const table = getTargetTable(btn);
     if (!table) return;
-    const rows = table.querySelectorAll('tbody tr');
-    if (rows.length > 1) { rows[rows.length - 1].remove(); window.notifyChange(); }
+
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    if (rows.length <= 1) return;
+
+    // Remove last removable row (skip group headers if they are last)
+    for (let i = rows.length - 1; i >= 0; i--) {
+      const r = rows[i];
+      if (r.querySelector('th.group-header')) continue;
+      tbody.removeChild(r);
+      window.notifyChange();
+      return;
+    }
   };
 
   window.addDeepdiveRow = function(btn) {
     const table = getTargetTable(btn);
     if (!table) return;
+
+    const colCount = getTableColumnCount(table);
+
+    // Try to insert after selected row within this table
     const selection = window.getSelection();
     let targetRow = null;
-    if (selection.rangeCount > 0) {
+
+    if (selection && selection.rangeCount > 0) {
       let node = selection.anchorNode;
       while (node && node !== document.body) {
         if (node.tagName && node.tagName.toLowerCase() === 'tr') { targetRow = node; break; }
         node = node.parentNode;
       }
     }
+
     const newRow = document.createElement('tr');
     newRow.className = 'no-break';
+
     newRow.innerHTML = `
-      <td colspan="5" style="background-color: var(--bg-gray); border-left: 3px solid var(--brand-color); padding: 15px;">
+      <td colspan="${colCount}" style="background-color: var(--bg-gray); border-left: 3px solid var(--brand-color); padding: 15px;">
         <strong style="color: var(--brand-color); font-size: 11px; text-transform: uppercase;">↳ Technical Deep Dive & Evidence</strong>
         <div contenteditable="true" style="margin-top: 8px; font-size: 11px; color: var(--text-main); margin-bottom: 12px;">
-           <strong>Brand / OEM:</strong> [Enter details]<br><br>
-           <strong>Technical Justification:</strong> [Enter detailed explanation here...]
+          <strong>Brand / OEM:</strong> [Enter details]<br><br>
+          <strong>Technical Justification:</strong> [Enter detailed explanation here...]
         </div>
         <div class="img-placeholder" onclick="promptImage(this)" style="max-width: 400px; margin: 0 auto; background: #fff;">
           <span>Click to insert technical diagram / photo</span>
@@ -370,11 +596,16 @@
         </div>
       </td>
     `;
+
+    const tbody = table.querySelector('tbody');
+    if (!tbody) return;
+
     if (targetRow && targetRow.closest('table') === table) {
       targetRow.parentNode.insertBefore(newRow, targetRow.nextSibling);
     } else {
-      table.querySelector('tbody').appendChild(newRow);
+      tbody.appendChild(newRow);
     }
+
     window.notifyChange();
   };
 
@@ -390,15 +621,15 @@
   };
 
   window.addImageBox = function(btn) {
-    const grid = btn.closest('.doc-controls-wrapper').previousElementSibling;
+    const grid = btn.closest('.doc-controls-wrapper')?.previousElementSibling;
     if (grid && grid.classList.contains('img-grid')) {
       const boxes = grid.querySelectorAll('.img-box');
       if (boxes.length > 0) {
         const newBox = boxes[boxes.length - 1].cloneNode(true);
         const img = newBox.querySelector('img');
-        if(img) { img.src = ''; img.style.display = 'none'; }
+        if (img) { img.src = ''; img.style.display = 'none'; }
         const span = newBox.querySelector('span');
-        if(span) { span.style.display = 'block'; }
+        if (span) { span.style.display = 'block'; }
         grid.appendChild(newBox);
         window.notifyChange();
       }
@@ -407,17 +638,28 @@
 
   window.addCertificate = function(btn) {
     const page = btn.closest('.page');
+    if (!page) return;
     const newPage = page.cloneNode(true);
     page.parentNode.insertBefore(newPage, page.nextSibling);
     window.notifyChange();
   };
 
   async function startApp() {
-    contentDiv.innerHTML = defaultHTML;
+    // Do NOT paint seed HTML first. Let snapshot load the true source of truth.
+    contentDiv.innerHTML = '';
+
     try {
       await signInAnonymously(auth);
-      onAuthStateChanged(auth, (user) => { if (user) startRealtimeListener(); });
-    } catch (e) { console.error('Auth failed.'); }
+      onAuthStateChanged(auth, (user) => {
+        if (user) startRealtimeListener();
+      });
+    } catch (e) {
+      console.error('Auth failed.', e);
+      // As a fallback only, show seed content locally so user can still work.
+      contentDiv.innerHTML = defaultHTML;
+      applyAutoFormatting();
+      setDirty(true);
+    }
   }
 
   startApp();
