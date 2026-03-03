@@ -18,14 +18,14 @@
       --text-muted: #5F6368;
       --border-color: #DADCE0;
       --bg-gray: #F8F9FA;
-      --app-bg: #1f2937;
+      --app-bg: #1f2937; /* Dark backdrop for web view */
     }
 
     /* 2. GLOBAL SETTINGS */
     body {
       font-family: 'Georama', sans-serif;
       margin: 0;
-      padding-top: 60px;
+      padding-top: 60px; /* Space for fixed toolbar */
       background: var(--app-bg);
       color: var(--text-main);
       line-height: 1.5;
@@ -33,7 +33,7 @@
       print-color-adjust: exact;
     }
 
-    /* 3. APP TOOLBAR */
+    /* 3. APP TOOLBAR (WEB UI) */
     .app-toolbar {
       position: fixed;
       top: 0;
@@ -64,8 +64,9 @@
       font-size: 13px;
       font-weight: 600;
       color: var(--text-muted);
+      transition: color 0.2s;
     }
-    .sync-status.dirty { color: #d97706; }
+    .sync-status.dirty { color: #d97706; } /* Warning Orange */
 
     .btn {
       background: #FFFFFF;
@@ -78,70 +79,104 @@
       text-transform: uppercase;
       border-radius: 6px;
       cursor: pointer;
+      transition: all 0.2s;
     }
     .btn:hover { background: var(--bg-gray); }
     .btn-primary { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
+    .btn-primary:hover { background: var(--brand-hover); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* 4. PAGE LAYOUT */
+    /* 4. DYNAMIC PAGE NUMBERING */
     body { counter-reset: sheet; }
     .page-num::after { counter-increment: sheet; content: "Page " counter(sheet); }
 
+    /* 5. LOGICAL PAGE LAYOUT (WEB) */
     @media screen {
       .page {
         width: 210mm;
-        min-height: 297mm;
+        min-height: 297mm; 
         margin: 30px auto;
         background: #FFFFFF;
         display: flex;
         flex-direction: column;
-        padding: 15mm 10mm;
+        padding: 15mm 10mm; 
+        box-sizing: border-box;
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         position: relative;
         border-radius: 4px;
       }
     }
 
+    /* 6. LOGICAL PAGE LAYOUT (PRINT) */
+    @page { size: A4; margin: 15mm 10mm; }
     @media print {
-      .app-toolbar, .doc-controls-wrapper, #remote-banner, #status-toast { display: none !important; }
+      .app-toolbar, .ui-controls, .doc-controls-wrapper, #remote-banner, #status-toast { display: none !important; }
       body { background: #FFFFFF; padding-top: 0; }
-      .page { margin: 0; box-shadow: none; width: 100%; height: 297mm; border-radius: 0; page-break-after: always; }
+      .page { 
+        margin: 0; box-shadow: none; display: flex; flex-direction: column; 
+        width: 100%; height: 297mm; border-radius: 0; page-break-after: always; padding: 0;
+      }
+      thead { display: table-header-group; }
+      tr, .no-break { page-break-inside: avoid; break-inside: avoid; }
+      h1, h2, h3, .main-heading, .sub-heading { page-break-after: avoid; }
       .page-footer { position: absolute; bottom: 0; width: 100%; }
     }
 
-    /* 5. TYPOGRAPHY */
+    /* 7. TYPOGRAPHY & HIERARCHY */
+    .page-content { flex: 1; display: flex; flex-direction: column; }
     .vol-identifier { font-size: 11.5px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; letter-spacing: 1px; padding: 0 0 6px 0; border-bottom: 3px solid var(--brand-color); margin-bottom: 16px; display: block; }
-    .main-heading { font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; text-transform: uppercase; }
-    p.para { font-size: 12px; color: var(--text-main); text-align: justify; margin: 0 0 14px 0; }
+    .main-heading { font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .sub-heading { font-size: 11px; font-weight: 700; color: var(--brand-color); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin: 24px 0 12px 0; }
+    p.para { font-size: 12px; color: var(--text-main); line-height: 1.45; margin: 0 0 14px 0; text-align: justify; }
+    p.para em { font-style: italic; color: var(--text-muted); font-size: 11px; display: inline-block; margin-top: 4px; }
+    p.para strong { font-weight: 800; color: var(--brand-color); }
 
-    /* 6. TABLES */
+    /* 8. TABLES */
     table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; }
     th, td { border-bottom: 0.5pt solid var(--border-color); padding: 10px 8px; text-align: left; vertical-align: top; }
-    th { background: var(--bg-gray); color: var(--text-muted); text-transform: uppercase; font-size: 10px; }
-    .group-header { background: #FFFFFF !important; font-weight: 800; color: var(--brand-color); text-transform: uppercase; border-bottom: 1.5pt solid var(--brand-color) !important; padding-top: 20px !important; }
+    th { background: var(--bg-gray); font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; border-bottom: 1pt solid var(--border-color); }
+    .group-header { background: #FFFFFF !important; text-align: left; font-weight: 800; color: var(--brand-color); text-transform: uppercase; font-size: 10px; letter-spacing: 1px; padding-top: 24px !important; padding-bottom: 6px !important; border-bottom: 1.5pt solid var(--brand-color) !important; }
+    tbody tr:last-child td { border-bottom: none; }
 
-    /* 7. CONTROLS */
+    /* 9. INLINE EDITOR UI CONTROLS */
     .doc-controls-wrapper {
       display: inline-flex;
       background: var(--bg-gray);
       border: 1px solid var(--border-color);
       border-radius: 6px;
+      overflow: hidden;
       opacity: 0.2;
-      transition: opacity 0.3s;
+      transition: all 0.3s ease;
       margin-bottom: 16px;
     }
-    .doc-controls-wrapper:hover { opacity: 1; }
+    .doc-controls-wrapper:hover, .doc-controls-wrapper:focus-within { opacity: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .doc-control {
       background: transparent; border: none; border-right: 1px solid var(--border-color);
       color: var(--text-muted); padding: 6px 12px; font-size: 10px; font-weight: 700;
-      text-transform: uppercase; cursor: pointer;
+      text-transform: uppercase; cursor: pointer; font-family: 'Georama', sans-serif; transition: background 0.2s;
     }
     .doc-control:last-child { border-right: none; }
+    .doc-control:hover { background: #e5e7eb; color: var(--text-main); }
 
-    .img-placeholder { border: 1px dashed var(--border-color); padding: 20px; border-radius: 4px; text-align: center; cursor: pointer; }
-    .img-placeholder img { width: 100%; max-height: 300px; object-fit: contain; }
+    /* 10. HEADER & FOOTER */
+    .header { flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 0 8px 0; border-bottom: 0.5pt solid var(--border-color); margin-bottom: 20px; }
+    .logo-container img { height: 28px; width: auto; object-fit: contain; }
+    .page-footer { flex-shrink: 0; margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 0.5pt solid var(--border-color); padding-top: 6px; }
+    .page-footer-text, .page-num { font-size: 7.5pt; color: var(--text-muted); font-weight: 600; white-space: nowrap; }
 
-    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; }
-    #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; display: none; z-index: 2000; }
+    /* 11. CONTENT BLOCKS */
+    .info-box { padding: 12px 16px; border-left: 4px solid var(--brand-color); background: var(--bg-gray); border-radius: 4px; font-size: 11px; margin: 16px 0; }
+    .info-box.critical { border-left-color: var(--brand-color); background: #FFF0F1; }
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 8px; }
+    .img-box { border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; background: #FFFFFF; text-align: center; }
+    .img-title { font-size: 10px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; margin-bottom: 4px; }
+    .img-placeholder { border: 1px dashed var(--border-color); padding: 30px 10px; border-radius: 4px; font-size: 10px; color: var(--text-muted); cursor: pointer; text-align: center; transition: background 0.2s; }
+    .img-placeholder:hover { background: var(--bg-gray); border-color: var(--text-muted); }
+    .img-placeholder img { width: 100%; max-height: 200px; object-fit: contain; }
+
+    /* TOASTS & BANNERS */
+    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; font-size: 13px; border-bottom: 1px solid #F59E0B; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; }
+    #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
   </style>
 </head>
 <body>
@@ -160,8 +195,8 @@
 
 <div id="remote-banner">
   ⚠️ Someone else saved a newer version while you were editing.
-  <button id="btn-accept-remote" type="button" class="btn" style="padding:4px 8px;">Load latest</button>
-  <button id="btn-keep-mine" type="button" class="btn" style="padding:4px 8px;">Keep mine</button>
+  <button id="btn-accept-remote" type="button" class="btn" style="margin-left:10px; padding:4px 8px;">Load latest</button>
+  <button id="btn-keep-mine" type="button" class="btn" style="margin-left:5px; padding:4px 8px;">Keep mine</button>
 </div>
 
 <div id="status-toast"></div>
@@ -169,74 +204,11 @@
 <div id="document-content" contenteditable="true" spellcheck="false"></div>
 
 <script type="module">
+  // FIREBASE CONFIG & SEED DATA 
+  import { defaultHTML } from './seed-data.js';
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
   import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
   import { getFirestore, doc, onSnapshot, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-  const defaultHTML = `
-<div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
-  <div style="width: 100%; height: 55mm; position: relative; background-color: var(--bg-gray); overflow: hidden;">
-    <img src="mevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#9ca3af; font-size:14px; font-weight:bold; background:#e5e7eb; position:absolute; top:0; left:0;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px;">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-      </svg>
-      [ HERO IMAGE PLACEHOLDER (WIDE) ]
-    </div>
-    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 8px; background-color: var(--brand-color);"></div>
-  </div>
-
-  <div style="padding: 60px 50px; background-color: #fff; flex-grow: 1; box-sizing: border-box;">
-    <div style="font-size: 14px; font-weight: 800; color: var(--brand-color); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;">Technical & Commercial Proposal</div>
-    <h1 style="font-size: 38px; font-weight: 800; color: var(--text-main); margin: 0 0 24px 0; line-height: 1.1; letter-spacing: -0.5px;">Polícia Militar do Estado do Espírito Santo</h1>
-    <div style="width: 60px; height: 4px; background-color: var(--brand-color); margin-bottom: 35px; border-radius: 2px;"></div>
-    <table style="width: 100%; border: none; font-size: 14px; margin-bottom: 0; box-shadow: none; border-radius: 0;">
-      <tr><td style="padding: 5px 0; font-weight: 700; color: var(--text-muted); width: 140px; border: none; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Auction No:</td><td style="padding: 5px 0; font-weight: 700; color: var(--text-main); border: none; font-size: 15px;">002/2026 – PMES</td></tr>
-      <tr><td style="padding: 5px 0; font-weight: 700; color: var(--text-muted); border: none; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Destination:</td><td style="padding: 5px 0; font-weight: 600; color: var(--text-main); border: none; font-size: 15px;">State of Espírito Santo, Brazil</td></tr>
-      <tr><td style="padding: 5px 0; font-weight: 700; color: var(--text-muted); border: none; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Bidder:</td><td style="padding: 5px 0; font-weight: 800; color: var(--brand-color); border: none; font-size: 16px;">Mahindra Emirates Vehicle Armouring FZ-LLC</td></tr>
-    </table>
-  </div>
-</div>
-
-<div class="page" id="index-page">
-  <div class="header">
-    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
-  </div>
-  <div class="page-content">
-    <div class="vol-identifier">MASTER DOCUMENT INDEX</div>
-    <div class="toc-container" contenteditable="false">
-      <a href="#part-a" class="toc-link">PART A - PRE-REQUISITES CHECK</a><br>
-      <a href="#part-b" class="toc-link">PART B - TECHNICAL REQUISITES</a><br>
-      <a href="#part-c" class="toc-link">PART C - ECONOMIC & FINANCIAL COMPLIANCE</a><br>
-      <a href="#part-d" class="toc-link">PART D - COMMERCIAL PROPOSAL</a><br>
-      <a href="#part-e" class="toc-link">PART E - TRAINING, WARRANTY & MAINTENANCE</a>
-    </div>
-  </div>
-  <div class="page-footer" contenteditable="false"><div class="page-footer-text">MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC | TENDER NO. 002/2026</div><div class="page-num"></div></div>
-</div>
-
-<div class="page" id="part-a">
-  <div class="header">
-    <div class="logo-container"><img src="meva.png" alt="MEVA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><span style="display:none; font-size:20px; color:var(--brand-color); font-weight:800;">MEVA</span></div>
-  </div>
-  <div class="page-content">
-    <div class="vol-identifier">PART A - PRE-REQUISITES CHECK</div>
-    <div class="main-heading">A1. Administrative & Legal Documents</div>
-    <table>
-      <thead><tr><th style="width: 8%;">Ref. No</th><th style="width: 36%;">Details</th><th style="width: 8%;">Comply</th><th style="width: 24%;">MEVA Response</th><th style="width: 24%;">Supporting Documents</th></tr></thead>
-      <tbody>
-        <tr><td>1.5 / 5.1</td><td>Foreign business entity authorization.</td><td class="col-exec col-exec-tbd">TBD</td><td>Valid UAE documents attached.</td><td>Annex 1.5</td></tr>
-      </tbody>
-    </table>
-    <div class="doc-controls-wrapper" contenteditable="false">
-      <button class="doc-control" onclick="addRow(this)">+ Add Row</button>
-      <button class="doc-control" onclick="removeRow(this)">- Remove Row</button>
-      <button class="doc-control" onclick="addDeepdiveRow(this)">+ Add Deep Dive</button>
-    </div>
-  </div>
-  <div class="page-footer" contenteditable="false"><div class="page-footer-text">MAHINDRA EMIRATES VEHICLE ARMOURING FZ-LLC | TENDER NO. 002/2026</div><div class="page-num"></div></div>
-</div>
-  `;
 
   const firebaseConfig = {
     apiKey: "AIzaSyAnkigLELyqqE8yHMrTF2RZ0IxbCoRhpAk",
@@ -257,7 +229,6 @@
   const toast = document.getElementById('status-toast');
 
   let currentRev = 0;
-  let remotePending = null;
   let dirty = false;
   let applyingRemote = false;
 
@@ -271,9 +242,11 @@
     dirty = isDirty;
     if (dirty) {
       syncStatus.textContent = "Unsaved changes";
+      syncStatus.classList.add('dirty');
       saveBtn.disabled = false;
     } else {
       syncStatus.textContent = "All changes saved";
+      syncStatus.classList.remove('dirty');
       saveBtn.disabled = true;
     }
   }
@@ -281,7 +254,22 @@
   contentDiv.addEventListener('input', () => {
     if (applyingRemote) return;
     setDirty(true);
+    applyAutoFormatting();
   });
+
+  const applyAutoFormatting = () => {
+    document.querySelectorAll('#document-content td').forEach(cell => {
+      if (cell.getAttribute('contenteditable') === 'false') return;
+      const text = cell.innerText.trim().toUpperCase();
+      if (text === 'COMPLY' || text === 'YES') {
+        cell.style.color = '#16a34a'; cell.style.fontWeight = '900';
+      } else if (text === 'TBD') {
+        cell.style.color = '#9ca3af'; cell.style.fontWeight = 'normal';
+      } else if (text === 'NO' || text === 'FAIL') {
+        cell.style.color = 'var(--brand-color)'; cell.style.fontWeight = '900';
+      }
+    });
+  };
 
   window.notifyChange = () => {
     contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
@@ -320,6 +308,7 @@
           contentDiv.innerHTML = data.htmlContent;
           applyingRemote = false;
           currentRev = nextRev;
+          applyAutoFormatting();
         } else {
           document.getElementById('remote-banner').style.display = 'block';
         }
@@ -369,7 +358,7 @@
     const newRow = document.createElement('tr');
     newRow.className = 'no-break';
     newRow.innerHTML = `
-      <td colspan="5" style="background-color: #f8fafc; border-left: 3px solid var(--brand-color); padding: 15px;">
+      <td colspan="5" style="background-color: var(--bg-gray); border-left: 3px solid var(--brand-color); padding: 15px;">
         <strong style="color: var(--brand-color); font-size: 11px; text-transform: uppercase;">↳ Technical Deep Dive & Evidence</strong>
         <div contenteditable="true" style="margin-top: 8px; font-size: 11px; color: var(--text-main); margin-bottom: 12px;">
            <strong>Brand / OEM:</strong> [Enter details]<br><br>
@@ -400,6 +389,22 @@
     }
   };
 
+  window.addImageBox = function(btn) {
+    const grid = btn.closest('.doc-controls-wrapper').previousElementSibling;
+    if (grid && grid.classList.contains('img-grid')) {
+      const boxes = grid.querySelectorAll('.img-box');
+      if (boxes.length > 0) {
+        const newBox = boxes[boxes.length - 1].cloneNode(true);
+        const img = newBox.querySelector('img');
+        if(img) { img.src = ''; img.style.display = 'none'; }
+        const span = newBox.querySelector('span');
+        if(span) { span.style.display = 'block'; }
+        grid.appendChild(newBox);
+        window.notifyChange();
+      }
+    }
+  };
+
   window.addCertificate = function(btn) {
     const page = btn.closest('.page');
     const newPage = page.cloneNode(true);
@@ -412,7 +417,7 @@
     try {
       await signInAnonymously(auth);
       onAuthStateChanged(auth, (user) => { if (user) startRealtimeListener(); });
-    } catch (e) { showToast('Auth failed. Local mode active.'); }
+    } catch (e) { console.error('Auth failed.'); }
   }
 
   startApp();
