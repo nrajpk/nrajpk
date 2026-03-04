@@ -38,73 +38,55 @@
     .app-brand { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
     .app-brand span { color: var(--brand-color); }
     .toolbar-actions { display: flex; align-items: center; gap: 12px; }
-/* Hero Image Header Support */
-.page > div:first-child {
-    height: 55mm;
-    background-color: var(--bg-gray);
-    position: relative;
-    overflow: hidden;
-}
 
-.page > div:first-child img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
+    /* 4. HERO HEADER SUPPORT (Bleed-to-Edge) */
+    .page > div:first-child {
+      height: 55mm;
+      background-color: #e5e7eb;
+      position: relative;
+      overflow: hidden;
+      margin: -15mm -10mm 15mm -10mm; /* Forces image to page edges */
+    }
+    .page > div:first-child img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* Page content area adjustment to prevent overlap */
-.page-content {
-    flex-grow: 1;
-    padding: 20px 0;
-}
-    /* 4. PAGE LAYOUT */
+    /* 5. PAGE LAYOUT (A4 Pro) */
     @media screen {
       .page {
         width: 210mm; min-height: 297mm; margin: 30px auto;
         background: #FFFFFF; padding: 15mm 10mm; box-sizing: border-box;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-radius: 4px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative;
+        display: flex; flex-direction: column; border-radius: 4px;
       }
     }
-    @page { size: A4; margin: 15mm 10mm; }
+    .page-content { flex-grow: 1; padding: 10px 0; }
+
+    @page { size: A4; margin: 0; }
     @media print {
       .app-toolbar, #remote-banner, #status-toast, .doc-controls-wrapper, .section-lock-btn { display: none !important; }
       body { background: #FFFFFF; padding-top: 0; }
-      .page { margin: 0; box-shadow: none; width: 100%; padding: 0; page-break-after: always; }
+      .page { margin: 0; box-shadow: none; width: 100%; padding: 15mm 10mm; page-break-after: always; }
+      .page > div:first-child { margin-top: -15mm; margin-left: -10mm; margin-right: -10mm; }
     }
 
-    /* 5. TYPOGRAPHY & TOC */
+    /* 6. TYPOGRAPHY & TABLES */
     .main-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
     .sub-heading { font-size: 11px; font-weight: 700; color: var(--brand-color); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin: 24px 0 12px 0; display: flex; align-items: center; justify-content: space-between; }
-    .toc-container { line-height: 2.2; margin: 20px 0; }
-    .toc-link { color: var(--text-main); text-decoration: none; font-weight: 800; font-size: 12px; }
-    .toc-sublink { color: var(--text-muted); text-decoration: none; font-weight: 700; font-size: 11px; margin-left: 18px; display: block; }
-    .toc-divider { height: 1px; background: var(--border-color); margin: 8px 0; }
-
-    /* 6. TABLES */
     table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; table-layout: fixed; }
     th, td { border: 1px solid var(--border-color); padding: 10px 8px; word-wrap: break-word; overflow: hidden; }
     th { background: var(--bg-gray); font-weight: 700; text-transform: uppercase; font-size: 10px; position: relative; }
     .group-header { background: #fff !important; color: var(--brand-color); font-weight: 800; border-bottom: 2px solid var(--brand-color) !important; padding-top: 20px !important; }
 
-    /* 7. IMAGES & GRIDS */
-    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
-    .img-box { border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; text-align: center; background: #fff; }
-    .img-placeholder { border: 1px dashed var(--border-color); padding: 25px; border-radius: 4px; color: var(--text-muted); cursor: pointer; text-align: center; font-size: 10px; font-weight: 700; }
-    #document-content img { max-width: 100%; height: auto; border-radius: 4px; cursor: zoom-in; }
-    .size-md { max-height: 250px !important; }
-    .size-lg { max-height: 450px !important; cursor: zoom-out; }
+    /* 7. FOOTER STYLING */
+    .page-footer { margin-top: auto; display: flex; justify-content: space-between; border-top: 1pt solid var(--border-color); padding-top: 8px; }
+    .page-footer-text, .page-num { font-size: 9px; color: var(--text-muted); font-weight: 600; }
+    .page-num::after { counter-increment: sheet; content: "Page " counter(sheet); }
 
     /* 8. UI COMPONENTS */
     .btn { background: #FFFFFF; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; font-family: 'Georama', sans-serif; font-weight: 800; font-size: 11px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-    .btn:hover { background: var(--bg-gray); }
     .btn-primary { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
-    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; border-bottom: 1px solid #F59E0B; }
     #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; }
-    .resizer { position: absolute; top: 0; right: 0; width: 5px; cursor: col-resize; height: 100%; z-index: 1; }
     .section-lock-btn { cursor:pointer; margin-left:10px; font-size:10px; opacity:0.5; padding:2px 8px; border-radius:10px; border:1px solid #ccc; font-weight: 800; }
     .section-lock-btn.is-locked { opacity:1; color:var(--brand-color); background:#fff0f1; border-color:var(--brand-color); }
-    .is-locked { border-left:4px solid var(--brand-color) !important; background:#fff0f1 !important; padding-left:10px !important; }
     #document-content { outline: none; }
   </style>
 </head>
@@ -113,39 +95,26 @@
 <div class="app-toolbar">
   <div class="app-brand">MEVA <span>Tender Builder</span></div>
   <div class="toolbar-actions">
-    <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">All changes saved</span>
+    <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">Sync Status: All Saved</span>
     <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button>
     <button class="btn" onclick="window.print()">🖨️ PDF</button>
     <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
   </div>
 </div>
 
-<div id="remote-banner">
-  ⚠️ Newer version detected.
-  <button id="btn-accept-remote" class="btn" style="margin-left:10px; padding:4px 8px;">Load Latest</button>
-  <button id="btn-keep-mine" class="btn" style="margin-left:5px; padding:4px 8px;">Force Overwrite</button>
-</div>
-
 <div id="status-toast"></div>
+<div id="document-content" contenteditable="true" spellcheck="false"></div>
 
-<div id="document-content" contenteditable="true" spellcheck="false">
-    </div>
 <script type="module">
-  // 1. LOCAL SKELETON (Replaces seed-data.js entirely)
+  // 1. HARDCODED SKELETON (Replaces seed-data.js)
   const MEVA_SKELETON = `
-    <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
-      <div style="width: 100%; height: 55mm; position: relative; background-color: var(--bg-gray); overflow: hidden;">
-        <img src="mevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#9ca3af; font-size:14px; font-weight:bold; background:#e5e7eb; position:absolute; top:0; left:0;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
-          <span>MEVA Hero Image Missing</span>
-        </div>
-      </div>
-      <div class="page-content" style="padding: 20px;">
+    <div class="page">
+      <div><img src="mevahero.jpeg" alt="MEVA Armored"></div>
+      <div class="page-content">
         <div class="main-heading">TECHNICAL SPECIFICATIONS</div>
-        <p style="color:var(--text-muted)">Initialize by typing or syncing...</p>
+        <p style="color:#5F6368">Click here to start editing or sync latest data...</p>
       </div>
-      <div class="page-footer" style="margin-top: auto; padding: 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between;">
+      <div class="page-footer">
         <div class="page-footer-text">Mahindra Emirates Vehicle Armouring</div>
         <div class="page-num"></div>
       </div>
@@ -172,9 +141,8 @@
   const contentDiv = document.getElementById('document-content');
   const saveBtn = document.getElementById('save-btn');
   const syncStatus = document.getElementById('sync-status');
-  const remoteBanner = document.getElementById('remote-banner');
 
-  let currentRev = 0, dirty = false, applyingRemote = false, pendingRemote = null, canSync = false, listenerUnsub = null;
+  let currentRev = 0, dirty = false, applyingRemote = false, canSync = false, listenerUnsub = null;
 
   function showToast(msg) { const t = document.getElementById('status-toast'); t.textContent = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2500); }
 
@@ -182,23 +150,18 @@
     if (applyingRemote) return;
     dirty = isDirty;
     syncStatus.textContent = dirty ? "Unsaved changes" : "All changes saved";
-    saveBtn.disabled = !canSync || !dirty || remoteBanner.style.display === 'block';
+    saveBtn.disabled = !canSync || !dirty;
   }
 
-  // --- RENDERING LOGIC (SMART WRAPPER) ---
   function renderFromRemote(html, rev) {
     applyingRemote = true;
-    
-    // If database is empty or data is raw, use Skeleton
     if (!html || html.trim() === "") {
         contentDiv.innerHTML = MEVA_SKELETON;
     } else if (!html.includes('class="page"')) {
-        // Self-heal: Wrap raw content in the skeleton if page div is missing
-        contentDiv.innerHTML = MEVA_SKELETON.replace('<p style="color:var(--text-muted)">Initialize by typing or syncing...</p>', html);
+        contentDiv.innerHTML = MEVA_SKELETON.replace('<p style="color:#5F6368">Click here to start editing or sync latest data...</p>', html);
     } else {
         contentDiv.innerHTML = html;
     }
-
     applyingRemote = false;
     currentRev = Number(rev || 0);
     setDirty(false);
@@ -208,7 +171,6 @@
     contentDiv.setAttribute('contenteditable', blocked ? 'false' : 'true');
     contentDiv.style.pointerEvents = blocked ? 'none' : 'auto';
     contentDiv.style.opacity = blocked ? '0.5' : '1';
-    contentDiv.querySelectorAll('div[contenteditable]').forEach(el => el.setAttribute('contenteditable', blocked ? 'false' : 'true'));
   }
 
   async function isAllowlistedEmail(user) {
@@ -223,7 +185,7 @@
     overlay.id = 'meva-login-overlay';
     overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center;`;
     overlay.innerHTML = `<div style="width:380px; background:#fff; border-radius:10px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
-      <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center; font-family:Georama;">MEVA SECURE LOGIN</div>
+      <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center;">MEVA SECURE LOGIN</div>
       <input id="m-email" type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
       <input id="m-pass" type="password" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
       <button id="m-btn" style="width:100%; padding:12px; background:var(--brand-color); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">SIGN IN</button>
@@ -242,20 +204,18 @@
     try {
       await runTransaction(db, async (tx) => {
         const snap = await tx.get(docRef);
-        const serverRev = snap.exists() ? Number(snap.data().rev || 0) : 0;
-        if (serverRev !== currentRev) throw new Error('REV_CONFLICT');
-        tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: serverRev + 1, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email });
-        currentRev = serverRev + 1;
+        const sRev = snap.exists() ? Number(snap.data().rev || 0) : 0;
+        if (sRev !== currentRev) throw new Error('CONFLICT');
+        tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: sRev + 1, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email });
+        currentRev = sRev + 1;
       });
-      setDirty(false); showToast('☁️ Saved to Cloud');
-    } catch (e) {
-      if (e.message === 'REV_CONFLICT') remoteBanner.style.display = 'block';
-      else showToast('Sync Failed');
-    } finally { saveBtn.textContent = '☁️ Sync to Cloud'; }
+      setDirty(false); showToast('☁️ Saved');
+    } catch { showToast('Sync Conflict! Please reload.'); }
+    finally { saveBtn.textContent = '☁️ Sync to Cloud'; }
   };
 
   window.takeSnapshot = async () => {
-    const name = prompt("Backup Name (e.g. Milestone 1):"); if (!name) return;
+    const name = prompt("Milestone Name:"); if (!name) return;
     try {
       await setDoc(doc(collection(db, 'tender_documents', 'meva_main_html', 'snapshots'), Date.now().toString()), {
         name, htmlContent: contentDiv.innerHTML, timestamp: Date.now(), createdBy: auth.currentUser.email
@@ -273,129 +233,25 @@
       document.getElementById('meva-login-overlay')?.remove(); canSync = true;
       listenerUnsub = onSnapshot(docRef, (snap) => {
         if (!snap.exists() || snap.metadata.hasPendingWrites) return;
-        const data = snap.data(), nRev = Number(data.rev || 0), nHtml = String(data.htmlContent || '');
-        if (currentRev === 0) { 
-            renderFromRemote(nHtml, nRev); 
-            setBlocked(false); 
-            return; 
-        }
-        if (nRev > currentRev) {
-          if (!dirty) { renderFromRemote(nHtml, nRev); }
-          else { pendingRemote = { htmlContent: nHtml, rev: nRev }; remoteBanner.style.display = 'block'; }
-        }
+        const data = snap.data();
+        if (currentRev === 0 || !dirty) renderFromRemote(data.htmlContent, data.rev);
       });
     });
   }
 
-  document.getElementById('btn-accept-remote').onclick = () => {
-    renderFromRemote(pendingRemote.htmlContent, pendingRemote.rev);
-    pendingRemote = null; remoteBanner.style.display = 'none';
-  };
-
-  document.getElementById('btn-keep-mine').onclick = () => {
-    if (confirm("⚠️ Force overwrite server version?")) { currentRev = pendingRemote.rev; remoteBanner.style.display = 'none'; pendingRemote = null; setDirty(true); }
-  };
-
-  // --- UTILS (MODERNIZED) ---
-  function getTargetTable(input) {
-    return input?.tagName?.toLowerCase() === 'table' ? input : input.closest('table');
-  }
-
-  window.addRow = (t) => {
-    const table = getTargetTable(t), tbody = table?.querySelector('tbody');
-    const rows = Array.from(tbody?.querySelectorAll('tr') || []).reverse();
-    const base = rows.find(r => r.querySelector('td') && !r.classList.contains('no-break'));
-    if (!base) return;
-    const nr = base.cloneNode(true);
-    nr.querySelectorAll('td').forEach(td => { if (td.colSpan <= 1) { td.innerHTML = ''; td.removeAttribute('style'); } });
-    tbody.appendChild(nr); setDirty(true);
-  };
-
-  window.removeRow = (t) => {
-    const tbody = getTargetTable(t)?.querySelector('tbody');
-    const rows = Array.from(tbody?.querySelectorAll('tr') || []).reverse();
-    const last = rows.find(r => r.querySelector('td') && !r.querySelector('th.group-header'));
-    if (last && rows.length > 1) { last.remove(); setDirty(true); }
-  };
-
-  window.addDeepdiveRow = (t) => {
-    const table = getTargetTable(t), sel = window.getSelection();
-    let targetRow = sel.anchorNode?.parentElement?.closest('tr');
-    const colCount = table.querySelector('tr').cells.length;
-    const nr = document.createElement('tr'); nr.className = 'no-break is-deepdive-row';
-    nr.innerHTML = `<td colspan="${colCount}" style="background:#F8F9FA; border-left:3px solid var(--brand-color); padding:15px;">
-      <strong style="color:var(--brand-color); font-size:11px;">↳ TECHNICAL DEEP DIVE</strong>
-      <div contenteditable="true" style="margin-top:8px; font-size:11px;">[Enter Details]</div>
-      <div class="img-placeholder" onclick="promptImage(this)" style="max-width:400px; margin:10px auto; background:#fff; border:1px dashed #ccc; padding:20px; text-align:center;">Click to insert diagram</div>
-    </td>`;
-    if (targetRow && targetRow.closest('table') === table) targetRow.after(nr);
-    else table.querySelector('tbody').appendChild(nr);
-    setDirty(true);
-  };
-
-  window.removeDeepdiveSafe = () => {
-    const row = window.getSelection().anchorNode?.parentElement?.closest('tr.is-deepdive-row');
-    if (row && confirm("Remove this section?")) { row.remove(); setDirty(true); }
-    else alert("Click inside a grey box first.");
-  };
-
-  window.promptImage = (el) => { const url = prompt("Enter Direct Image URL:"); if (url) { el.innerHTML = `<img src="${url}" style="width:100%; border-radius:4px;">`; setDirty(true); } };
-
-  function initResizers() {
-    contentDiv.querySelectorAll('th:not(.group-header)').forEach(th => {
-      if (!th.querySelector('.resizer')) {
-        const r = document.createElement('div'); r.className = 'resizer'; th.appendChild(r);
-        r.onmousedown = (e) => {
-          const startX = e.clientX, startW = th.offsetWidth;
-          document.onmousemove = (me) => th.style.width = (startW + (me.clientX - startX)) + 'px';
-          document.onmouseup = () => { document.onmousemove = document.onmouseup = null; setDirty(true); };
-        };
-      }
-    });
-  }
-  new MutationObserver(initResizers).observe(contentDiv, { childList: true, subtree: true });
+  contentDiv.addEventListener('input', () => setDirty(true));
   startApp();
 </script>
 
 <script>
 (function() {
-  const toolbar = document.querySelector('.toolbar-actions');
-  const getActiveTable = () => window.getSelection().anchorNode?.parentElement?.closest('table');
-  const makeBtn = (txt, title, cb) => { const b = document.createElement('button'); b.className='btn'; b.textContent=txt; b.title=title; b.onclick=cb; return b; };
+  const tb = document.querySelector('.toolbar-actions');
+  const makeBtn = (txt, cb) => { const b = document.createElement('button'); b.className='btn'; b.textContent=txt; b.onclick=cb; return b; };
   const g = document.createElement('div'); g.style.display='flex'; g.style.gap='5px';
-  g.append(makeBtn('+ Row', 'Add Row', () => { const t = getActiveTable(); if (t) window.addRow(t); }));
-  g.append(makeBtn('- Row', 'Remove Row', () => { const t = getActiveTable(); if (t) window.removeRow(t); }));
-  g.append(makeBtn('+ Dive', 'Add Dive', () => { const t = getActiveTable(); if (t) window.addDeepdiveRow(t); }));
-  g.append(makeBtn('- Dive', 'Remove Dive', () => window.removeDeepdiveSafe()));
-  g.append(makeBtn('B', 'Bold', () => document.execCommand('bold')));
-  toolbar.prepend(g);
-})();
-</script>
-
-<script>
-(function() {
-  const contentDiv = document.getElementById('document-content');
-  contentDiv.addEventListener('click', (e) => {
-    if (!e.target.classList.contains('section-lock-btn')) return;
-    const h = e.target.closest('.main-heading, .sub-heading'), locked = e.target.classList.toggle('is-locked');
-    e.target.textContent = locked ? '🔒 Locked' : '🔓 Unlocked';
-    let c = h.nextElementSibling;
-    while (c && !['MAIN-HEADING','SUB-HEADING'].includes(c.className.toUpperCase())) {
-      c.setAttribute('contenteditable', locked ? 'false' : 'true');
-      c.classList.toggle('is-locked', locked);
-      c = c.nextElementSibling;
-    }
-    setDirty(true);
-  });
-  function ensure() {
-    contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
-      if (h.querySelector('.section-lock-btn')) return;
-      const b = document.createElement('span'); b.className = 'section-lock-btn';
-      b.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒 Locked' : '🔓 Unlocked';
-      h.appendChild(b);
-    });
-  }
-  new MutationObserver(ensure).observe(contentDiv, { childList: true, subtree: true });
+  g.append(makeBtn('B', () => document.execCommand('bold')));
+  g.append(makeBtn('I', () => document.execCommand('italic')));
+  g.append(makeBtn('U', () => document.execCommand('underline')));
+  tb.prepend(g);
 })();
 </script>
 
