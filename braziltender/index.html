@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MEVA Collaborative Tender System</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,93 +23,69 @@
     /* 2. GLOBAL SETTINGS */
     body {
       font-family: 'Georama', sans-serif;
-      margin: 0;
-      padding-top: 60px;
-      background: var(--app-bg);
-      color: var(--text-main);
-      line-height: 1.5;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-      counter-reset: sheet;
+      margin: 0; padding-top: 60px;
+      background: var(--app-bg); color: var(--text-main);
+      line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
 
     /* 3. APP TOOLBAR */
     .app-toolbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: #ffffff;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed; top: 0; left: 0; right: 0; height: 60px;
+      background: #ffffff; border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     .app-brand { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
     .app-brand span { color: var(--brand-color); }
     .toolbar-actions { display: flex; align-items: center; gap: 12px; }
 
-    .sync-status { font-size: 13px; font-weight: 600; color: var(--text-muted); }
-    .sync-status.dirty { color: #d97706; }
-
-    .btn {
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 16px;
-      font-family: 'Georama', sans-serif;
-      font-weight: 800;
-      font-size: 11px;
-      text-transform: uppercase;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn:hover { background: var(--bg-gray); }
-    .btn-primary { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
-    .btn-primary:hover { background: var(--brand-hover); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
     /* 4. PAGE LAYOUT */
     @media screen {
       .page {
-        width: 210mm;
-        min-height: 297mm;
-        margin: 30px auto;
-        background: #FFFFFF;
-        padding: 15mm 10mm;
-        box-sizing: border-box;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        position: relative;
-        border-radius: 4px;
+        width: 210mm; min-height: 297mm; margin: 30px auto;
+        background: #FFFFFF; padding: 15mm 10mm; box-sizing: border-box;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-radius: 4px;
       }
     }
-
     @page { size: A4; margin: 15mm 10mm; }
     @media print {
-      .app-toolbar, #remote-banner, #status-toast, .doc-controls-wrapper { display: none !important; }
+      .app-toolbar, #remote-banner, #status-toast, .doc-controls-wrapper, .section-lock-btn { display: none !important; }
       body { background: #FFFFFF; padding-top: 0; }
-      .page { margin: 0; box-shadow: none; width: 100%; height: 297mm; padding: 0; page-break-after: always; }
+      .page { margin: 0; box-shadow: none; width: 100%; padding: 0; page-break-after: always; }
     }
 
-    /* 5. TABLES & CONTENT */
-    table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; }
-    th, td { border: 1px solid var(--border-color); padding: 10px 8px; }
+    /* 5. TYPOGRAPHY & TOC */
+    .main-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
+    .sub-heading { font-size: 11px; font-weight: 700; color: var(--brand-color); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin: 24px 0 12px 0; display: flex; align-items: center; justify-content: space-between; }
+    .toc-container { line-height: 2.2; margin: 20px 0; }
+    .toc-link { color: var(--text-main); text-decoration: none; font-weight: 800; font-size: 12px; }
+    .toc-sublink { color: var(--text-muted); text-decoration: none; font-weight: 700; font-size: 11px; margin-left: 18px; display: block; }
+    .toc-divider { height: 1px; background: var(--border-color); margin: 8px 0; }
+
+    /* 6. TABLES */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; table-layout: fixed; }
+    th, td { border: 1px solid var(--border-color); padding: 10px 8px; word-wrap: break-word; overflow: hidden; }
     th { background: var(--bg-gray); font-weight: 700; text-transform: uppercase; font-size: 10px; position: relative; }
-    
-    .resizer { position: absolute; top: 0; right: 0; width: 5px; cursor: col-resize; user-select: none; height: 100%; z-index: 1; }
-    .resizer:hover, .resizing { border-right: 2px solid var(--brand-color); }
+    .group-header { background: #fff !important; color: var(--brand-color); font-weight: 800; border-bottom: 2px solid var(--brand-color) !important; padding-top: 20px !important; }
 
-    #document-content td img { max-width: 100%; max-height: 140px; cursor: zoom-in; transition: max-height 0.2s; }
-    #document-content img.size-md { max-height: 250px !important; }
-    #document-content img.size-lg { max-height: 450px !important; cursor: zoom-out; }
+    /* 7. IMAGES & GRIDS */
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+    .img-box { border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; text-align: center; background: #fff; }
+    .img-placeholder { border: 1px dashed var(--border-color); padding: 25px; border-radius: 4px; color: var(--text-muted); cursor: pointer; text-align: center; font-size: 10px; font-weight: 700; }
+    #document-content img { max-width: 100%; height: auto; border-radius: 4px; cursor: zoom-in; }
+    .size-md { max-height: 250px !important; }
+    .size-lg { max-height: 450px !important; cursor: zoom-out; }
 
+    /* 8. UI COMPONENTS */
+    .btn { background: #FFFFFF; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; font-family: 'Georama', sans-serif; font-weight: 800; font-size: 11px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+    .btn:hover { background: var(--bg-gray); }
+    .btn-primary { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
     #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; border-bottom: 1px solid #F59E0B; }
     #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; }
+    .resizer { position: absolute; top: 0; right: 0; width: 5px; cursor: col-resize; height: 100%; z-index: 1; }
+    .section-lock-btn { cursor:pointer; margin-left:10px; font-size:10px; opacity:0.5; padding:2px 8px; border-radius:10px; border:1px solid #ccc; font-weight: 800; }
+    .section-lock-btn.is-locked { opacity:1; color:var(--brand-color); background:#fff0f1; border-color:var(--brand-color); }
+    .is-locked { border-left:4px solid var(--brand-color) !important; background:#fff0f1 !important; padding-left:10px !important; }
     #document-content { outline: none; }
   </style>
 </head>
@@ -119,15 +94,15 @@
 <div class="app-toolbar">
   <div class="app-brand">MEVA <span>Tender Builder</span></div>
   <div class="toolbar-actions">
-    <span id="sync-status" class="sync-status">All changes saved</span>
+    <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">All changes saved</span>
     <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button>
-    <button class="btn print-btn" onclick="window.print()">🖨️ PDF</button>
+    <button class="btn" onclick="window.print()">🖨️ PDF</button>
     <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
   </div>
 </div>
 
 <div id="remote-banner">
-  ⚠️ Newer version detected on server.
+  ⚠️ Newer version detected.
   <button id="btn-accept-remote" class="btn" style="margin-left:10px; padding:4px 8px;">Load Latest</button>
   <button id="btn-keep-mine" class="btn" style="margin-left:5px; padding:4px 8px;">Force Overwrite</button>
 </div>
@@ -158,18 +133,16 @@
   const contentDiv = document.getElementById('document-content');
   const saveBtn = document.getElementById('save-btn');
   const syncStatus = document.getElementById('sync-status');
-  const toast = document.getElementById('status-toast');
   const remoteBanner = document.getElementById('remote-banner');
 
   let currentRev = 0, dirty = false, applyingRemote = false, pendingRemote = null, canSync = false, listenerUnsub = null;
 
-  function showToast(msg) { toast.textContent = msg; toast.style.display = 'block'; setTimeout(() => { toast.style.display = 'none'; }, 2200); }
+  function showToast(msg) { const t = document.getElementById('status-toast'); t.textContent = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2500); }
 
   function setDirty(isDirty) {
     if (applyingRemote) return;
     dirty = isDirty;
     syncStatus.textContent = dirty ? "Unsaved changes" : "All changes saved";
-    syncStatus.classList.toggle('dirty', dirty);
     saveBtn.disabled = !canSync || !dirty || remoteBanner.style.display === 'block';
   }
 
@@ -178,21 +151,7 @@
     contentDiv.style.pointerEvents = blocked ? 'none' : 'auto';
     contentDiv.style.opacity = blocked ? '0.5' : '1';
     contentDiv.querySelectorAll('div[contenteditable]').forEach(el => el.setAttribute('contenteditable', blocked ? 'false' : 'true'));
-    saveBtn.disabled = blocked ? true : !dirty;
   }
-
-  function applyAutoFormatting() {
-    contentDiv.querySelectorAll('td').forEach(cell => {
-      if (cell.getAttribute('contenteditable') === 'false') return;
-      const text = (cell.innerText || '').trim().toUpperCase();
-      if (['COMPLY', 'YES'].includes(text)) { cell.style.color = '#16a34a'; cell.style.fontWeight = '900'; }
-      else if (text === 'TBD') { cell.style.color = '#9ca3af'; cell.style.fontWeight = 'normal'; }
-      else if (['NO', 'FAIL'].includes(text)) { cell.style.color = 'var(--brand-color)'; cell.style.fontWeight = '900'; }
-    });
-  }
-
-  contentDiv.addEventListener('input', () => { setDirty(true); applyAutoFormatting(); });
-  window.notifyChange = () => contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
 
   async function isAllowlistedEmail(user) {
     if (!user?.email) return false;
@@ -204,27 +163,24 @@
     if (document.getElementById('meva-login-overlay')) return;
     const overlay = document.createElement('div');
     overlay.id = 'meva-login-overlay';
-    overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; font-family:"Georama", sans-serif;`;
-    overlay.innerHTML = `<div style="width:400px; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
-      <div style="padding:18px; background:var(--bg-gray); border-bottom:1px solid var(--border-color); font-weight:900; color:var(--brand-color);">MEVA SECURE ACCESS</div>
-      <div style="padding:18px; display:flex; flex-direction:column; gap:10px;">
-        <input id="meva-email" type="email" placeholder="Email" style="padding:10px; border:1px solid var(--border-color); border-radius:6px;">
-        <input id="meva-pass" type="password" placeholder="Password" style="padding:10px; border:1px solid var(--border-color); border-radius:6px;">
-        <button id="meva-login-btn" style="padding:12px; background:var(--brand-color); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">SIGN IN</button>
-        <div id="meva-msg" style="font-size:12px; color:var(--brand-color); font-weight:700;"></div>
-      </div>
+    overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center;`;
+    overlay.innerHTML = `<div style="width:380px; background:#fff; border-radius:10px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+      <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center;">MEVA SECURE LOGIN</div>
+      <input id="m-email" type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
+      <input id="m-pass" type="password" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
+      <button id="m-btn" style="width:100%; padding:12px; background:var(--brand-color); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">SIGN IN</button>
+      <div id="m-msg" style="color:red; font-size:11px; margin-top:10px; text-align:center;"></div>
     </div>`;
     document.body.appendChild(overlay);
-    overlay.querySelector('#meva-login-btn').onclick = async () => {
-      const email = document.getElementById('meva-email').value, pass = document.getElementById('meva-pass').value;
-      try { await signInWithEmailAndPassword(auth, email, pass); }
-      catch (e) { document.getElementById('meva-msg').textContent = "Invalid credentials."; }
+    overlay.querySelector('#m-btn').onclick = async () => {
+      const e = document.getElementById('m-email').value, p = document.getElementById('m-pass').value;
+      try { await signInWithEmailAndPassword(auth, e, p); } catch { document.getElementById('m-msg').textContent = "Access Denied."; }
     };
   }
 
   window.saveData = async () => {
-    if (!canSync || !dirty || remoteBanner.style.display === 'block') return;
-    saveBtn.textContent = '⏳ Syncing...'; saveBtn.disabled = true;
+    if (!canSync || !dirty) return;
+    saveBtn.textContent = '⏳ Syncing...';
     try {
       await runTransaction(db, async (tx) => {
         const snap = await tx.get(docRef);
@@ -233,23 +189,21 @@
         tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: serverRev + 1, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email });
         currentRev = serverRev + 1;
       });
-      setDirty(false); showToast('☁️ Synced');
+      setDirty(false); showToast('☁️ Saved');
     } catch (e) {
-      if (e.message === 'REV_CONFLICT') { remoteBanner.style.display = 'block'; showToast('Conflict detected'); }
-      else showToast('Sync failed');
+      if (e.message === 'REV_CONFLICT') remoteBanner.style.display = 'block';
+      else showToast('Sync Failed');
     } finally { saveBtn.textContent = '☁️ Sync to Cloud'; }
   };
 
   window.takeSnapshot = async () => {
-    const name = prompt("Name this backup:");
-    if (!name) return;
+    const name = prompt("Backup Name:"); if (!name) return;
     try {
-      showToast("📸 Capturing...");
       await setDoc(doc(collection(db, 'tender_documents', 'meva_main_html', 'snapshots'), Date.now().toString()), {
         name, htmlContent: contentDiv.innerHTML, timestamp: Date.now(), createdBy: auth.currentUser.email
       });
-      showToast("✅ Saved to Firebase");
-    } catch (e) { showToast("❌ Backup failed"); }
+      showToast("✅ Cloud Snapshot Created");
+    } catch { showToast("❌ Backup Failed"); }
   };
 
   async function startApp() {
@@ -261,62 +215,72 @@
       document.getElementById('meva-login-overlay')?.remove(); canSync = true;
       listenerUnsub = onSnapshot(docRef, (snap) => {
         if (!snap.exists() || snap.metadata.hasPendingWrites) return;
-        const data = snap.data(), nextRev = Number(data.rev || 0), nextHtml = String(data.htmlContent || '');
-        if (currentRev === 0) { applyingRemote = true; contentDiv.innerHTML = nextHtml; currentRev = nextRev; applyingRemote = false; setBlocked(false); applyAutoFormatting(); return; }
-        if (nextRev > currentRev) {
-          if (!dirty) { applyingRemote = true; contentDiv.innerHTML = nextHtml; currentRev = nextRev; applyingRemote = false; applyAutoFormatting(); }
-          else { pendingRemote = { htmlContent: nextHtml, rev: nextRev }; remoteBanner.style.display = 'block'; saveBtn.disabled = true; }
+        const data = snap.data(), nRev = Number(data.rev || 0), nHtml = String(data.htmlContent || '');
+        if (currentRev === 0) { applyingRemote = true; contentDiv.innerHTML = nHtml; currentRev = nRev; applyingRemote = false; setBlocked(false); return; }
+        if (nRev > currentRev) {
+          if (!dirty) { applyingRemote = true; contentDiv.innerHTML = nHtml; currentRev = nRev; applyingRemote = false; }
+          else { pendingRemote = { htmlContent: nHtml, rev: nRev }; remoteBanner.style.display = 'block'; }
         }
       });
     });
   }
 
   document.getElementById('btn-accept-remote').onclick = () => {
-    applyingRemote = true; contentDiv.innerHTML = pendingRemote.htmlContent; currentRev = pendingRemote.rev; 
-    applyingRemote = false; pendingRemote = null; remoteBanner.style.display = 'none'; setDirty(false); applyAutoFormatting();
+    applyingRemote = true; contentDiv.innerHTML = pendingRemote.htmlContent; currentRev = pendingRemote.rev;
+    applyingRemote = false; pendingRemote = null; remoteBanner.style.display = 'none'; setDirty(false);
   };
 
   document.getElementById('btn-keep-mine').onclick = () => {
-    if (confirm("⚠️ FORCE OVERWRITE: Destroy server version?")) {
-      currentRev = pendingRemote.rev; remoteBanner.style.display = 'none'; pendingRemote = null; setDirty(true);
-    }
+    if (confirm("⚠️ Force overwrite server version?")) { currentRev = pendingRemote.rev; remoteBanner.style.display = 'none'; pendingRemote = null; setDirty(true); }
   };
 
-  // --- MODERNIZED TABLE LOGIC ---
+  // --- MODERNIZED UTILS ---
   function getTargetTable(input) {
     if (input?.tagName?.toLowerCase() === 'table') return input;
     let el = input.closest?.('.doc-controls-wrapper');
     while (el?.previousElementSibling) { el = el.previousElementSibling; if (el.tagName?.toLowerCase() === 'table') return el; }
-    return null;
+    return input.closest('table');
   }
 
   window.addRow = (t) => {
-    const table = getTargetTable(t), tbody = table?.querySelector('tbody'), rows = Array.from(tbody?.querySelectorAll('tr') || []);
-    const base = rows.reverse().find(r => r.querySelector('td') && !r.classList.contains('no-break'));
+    const table = getTargetTable(t), tbody = table?.querySelector('tbody');
+    const rows = Array.from(tbody?.querySelectorAll('tr') || []).reverse();
+    const base = rows.find(r => r.querySelector('td') && !r.classList.contains('no-break'));
     if (!base) return;
-    const newRow = base.cloneNode(true);
-    newRow.querySelectorAll('td').forEach(td => { if (td.colSpan <= 1) { td.innerHTML = ''; td.removeAttribute('style'); } });
-    tbody.appendChild(newRow); window.notifyChange();
+    const nr = base.cloneNode(true);
+    nr.querySelectorAll('td').forEach(td => { if (td.colSpan <= 1) { td.innerHTML = ''; td.removeAttribute('style'); } });
+    tbody.appendChild(nr); setDirty(true);
   };
 
   window.removeRow = (t) => {
-    const tbody = getTargetTable(t)?.querySelector('tbody'), rows = Array.from(tbody?.querySelectorAll('tr') || []);
-    const last = rows.reverse().find(r => r.querySelector('td') && !r.querySelector('th.group-header'));
-    if (last && rows.length > 1) { last.remove(); window.notifyChange(); }
+    const tbody = getTargetTable(t)?.querySelector('tbody');
+    const rows = Array.from(tbody?.querySelectorAll('tr') || []).reverse();
+    const last = rows.find(r => r.querySelector('td') && !r.querySelector('th.group-header'));
+    if (last && rows.length > 1) { last.remove(); setDirty(true); }
   };
 
   window.addDeepdiveRow = (t) => {
-    const table = getTargetTable(t), colCount = Array.from(table?.querySelector('thead tr')?.children || []).length || 5;
-    const newRow = document.createElement('tr'); newRow.className = 'no-break';
-    newRow.innerHTML = `<td colspan="${colCount}" style="background:#F8F9FA; border-left:3px solid var(--brand-color); padding:15px;">
+    const table = getTargetTable(t), sel = window.getSelection();
+    let targetRow = sel.anchorNode?.parentElement?.closest('tr');
+    const colCount = table.querySelector('tr').cells.length;
+    const nr = document.createElement('tr'); nr.className = 'no-break is-deepdive-row';
+    nr.innerHTML = `<td colspan="${colCount}" style="background:#F8F9FA; border-left:3px solid var(--brand-color); padding:15px;">
       <strong style="color:var(--brand-color); font-size:11px;">↳ TECHNICAL DEEP DIVE</strong>
-      <div contenteditable="true" style="margin-top:8px; font-size:11px;">[Details here]</div>
-      <div class="img-placeholder" onclick="promptImage(this)" style="max-width:400px; margin:0 auto; background:#fff; border:1px dashed #ccc; padding:20px; text-align:center;">Click to insert diagram</div>
+      <div contenteditable="true" style="margin-top:8px; font-size:11px;">[Enter Details]</div>
+      <div class="img-placeholder" onclick="promptImage(this)" style="max-width:400px; margin:10px auto; background:#fff; border:1px dashed #ccc; padding:20px; text-align:center;">Click to insert diagram</div>
     </td>`;
-    table.querySelector('tbody').appendChild(newRow); window.notifyChange();
+    if (targetRow && targetRow.closest('table') === table) targetRow.after(nr);
+    else table.querySelector('tbody').appendChild(nr);
+    setDirty(true);
   };
 
-  window.promptImage = (el) => { const url = prompt("Image URL:"); if (url) { el.innerHTML = `<img src="${url}" style="width:100%; border-radius:4px;">`; window.notifyChange(); } };
+  window.removeDeepdiveSafe = () => {
+    const row = window.getSelection().anchorNode?.parentElement?.closest('tr.is-deepdive-row');
+    if (row && confirm("Remove this section?")) { row.remove(); setDirty(true); }
+    else alert("Click inside a grey box first.");
+  };
+
+  window.promptImage = (el) => { const url = prompt("URL:"); if (url) { el.innerHTML = `<img src="${url}" style="width:100%;">`; setDirty(true); } };
 
   function initResizers() {
     contentDiv.querySelectorAll('th:not(.group-header)').forEach(th => {
@@ -324,32 +288,28 @@
         const r = document.createElement('div'); r.className = 'resizer'; th.appendChild(r);
         r.onmousedown = (e) => {
           const startX = e.clientX, startW = th.offsetWidth;
-          document.onmousemove = (me) => { th.style.width = (startW + (me.clientX - startX)) + 'px'; };
-          document.onmouseup = () => { document.onmousemove = document.onmouseup = null; setDirty(true); window.notifyChange(); };
+          document.onmousemove = (me) => th.style.width = (startW + (me.clientX - startX)) + 'px';
+          document.onmouseup = () => { document.onmousemove = document.onmouseup = null; setDirty(true); };
         };
       }
     });
   }
-
-  const observer = new MutationObserver(initResizers);
-  observer.observe(contentDiv, { childList: true, subtree: true });
+  new MutationObserver(initResizers).observe(contentDiv, { childList: true, subtree: true });
   startApp();
 </script>
 
 <script>
 (function() {
   const toolbar = document.querySelector('.toolbar-actions');
-  const getActiveTable = () => { const sel = window.getSelection(); return sel?.anchorNode?.parentElement?.closest('table'); };
+  const getActiveTable = () => window.getSelection().anchorNode?.parentElement?.closest('table');
   const makeBtn = (txt, title, cb) => { const b = document.createElement('button'); b.className='btn'; b.textContent=txt; b.title=title; b.onclick=cb; return b; };
-  
-  const group = document.createElement('div'); group.style.display='flex'; group.style.gap='5px';
-  group.append(makeBtn('+ Row', 'Add Row', () => { const t = getActiveTable(); if (t) window.addRow(t); else alert('Click table first'); }));
-  group.append(makeBtn('- Row', 'Remove Row', () => { const t = getActiveTable(); if (t) window.removeRow(t); }));
-  group.append(makeBtn('+ Deepdive', 'Add Deep Dive', () => { const t = getActiveTable(); if (t) window.addDeepdiveRow(t); }));
-  group.append(makeBtn('B', 'Bold', () => document.execCommand('bold')));
-  group.append(makeBtn('I', 'Italic', () => document.execCommand('italic')));
-  
-  toolbar.prepend(group);
+  const g = document.createElement('div'); g.style.display='flex'; g.style.gap='5px';
+  g.append(makeBtn('+ Row', 'Add Row', () => { const t = getActiveTable(); if (t) window.addRow(t); }));
+  g.append(makeBtn('- Row', 'Remove Row', () => { const t = getActiveTable(); if (t) window.removeRow(t); }));
+  g.append(makeBtn('+ Dive', 'Add Dive', () => { const t = getActiveTable(); if (t) window.addDeepdiveRow(t); }));
+  g.append(makeBtn('- Dive', 'Remove Dive', () => window.removeDeepdiveSafe()));
+  g.append(makeBtn('B', 'Bold', () => document.execCommand('bold')));
+  toolbar.prepend(g);
 })();
 </script>
 
@@ -360,32 +320,25 @@
     if (!e.target.classList.contains('section-lock-btn')) return;
     const h = e.target.closest('.main-heading, .sub-heading'), locked = e.target.classList.toggle('is-locked');
     e.target.textContent = locked ? '🔒 Locked' : '🔓 Unlocked';
-    let curr = h.nextElementSibling;
-    while (curr && !['MAIN-HEADING','SUB-HEADING'].includes(curr.className.toUpperCase())) {
-      curr.setAttribute('contenteditable', locked ? 'false' : 'true');
-      curr.classList.toggle('is-locked', locked);
-      curr = curr.nextElementSibling;
+    let c = h.nextElementSibling;
+    while (c && !['MAIN-HEADING','SUB-HEADING'].includes(c.className.toUpperCase())) {
+      c.setAttribute('contenteditable', locked ? 'false' : 'true');
+      c.classList.toggle('is-locked', locked);
+      c = c.nextElementSibling;
     }
-    window.notifyChange();
+    setDirty(true);
   });
-
-  function ensureLocks() {
+  function ensure() {
     contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
       if (h.querySelector('.section-lock-btn')) return;
-      const btn = document.createElement('span'); btn.className = 'section-lock-btn';
-      btn.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒 Locked' : '🔓 Unlocked';
-      h.appendChild(btn);
+      const b = document.createElement('span'); b.className = 'section-lock-btn';
+      b.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒 Locked' : '🔓 Unlocked';
+      h.appendChild(b);
     });
   }
-  new MutationObserver(ensureLocks).observe(contentDiv, { childList: true, subtree: true });
+  new MutationObserver(ensure).observe(contentDiv, { childList: true, subtree: true });
 })();
 </script>
-
-<style>
-  .section-lock-btn { cursor:pointer; margin-left:10px; font-size:10px; opacity:0.5; padding:2px 8px; border-radius:10px; border:1px solid #ccc; }
-  .section-lock-btn.is-locked { opacity:1; color:var(--brand-color); background:#fff0f1; border-color:var(--brand-color); }
-  .is-locked { border-left:4px solid var(--brand-color); background:#fff0f1 !important; padding-left:10px; }
-</style>
 
 </body>
 </html>
