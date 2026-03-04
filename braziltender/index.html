@@ -1025,6 +1025,110 @@
   document.head.appendChild(style);
 })();
 </script>
-  
+  <script>
+(function() {
+  const contentDiv = document.getElementById('document-content');
+  if (!contentDiv) return;
+
+  // Prevent duplicate injection
+  if (window.__mevaSectionLockApplied) return;
+  window.__mevaSectionLockApplied = true;
+
+  // 1) Inject CSS (scoped safely to editor only)
+  const style = document.createElement('style');
+  style.textContent = `
+    .section-lock-btn {
+      cursor: pointer;
+      margin-left: 12px;
+      font-size: 14px;
+      user-select: none;
+      opacity: 0.5;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+    .section-lock-btn:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* Scope to editor only so it doesn't affect other UI bits like resizers */
+    #document-content [contenteditable="false"] {
+      background-color: #fcfcfc;
+    }
+
+    @media print { .section-lock-btn { display: none !important; } }
+  `;
+  document.head.appendChild(style);
+
+  // 2) Click handler (delegated)
+  contentDiv.addEventListener('click', (e) => {
+    if (!e.target.classList || !e.target.classList.contains('section-lock-btn')) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const btn = e.target;
+    const heading = btn.closest('.main-heading, .sub-heading');
+    if (!heading) return;
+
+    const isLocked = btn.textContent.includes('🔒');
+    const willLock = !isLocked;
+
+    btn.textContent = willLock ? '🔒' : '🔓';
+    btn.title = willLock ? 'Unlock section' : 'Lock section';
+
+    // Lock/unlock until next heading or footer
+    let curr = heading.nextElementSibling;
+    while (curr &&
+           !curr.classList.contains('main-heading') &&
+           !curr.classList.contains('sub-heading') &&
+           !curr.classList.contains('page-footer')) {
+      curr.setAttribute('contenteditable', willLock ? 'false' : 'true');
+      curr = curr.nextElementSibling;
+    }
+
+    // Mark dirty so sync button enables and next sync carries it
+    if (typeof window.notifyChange === 'function') {
+      window.notifyChange();
+    } else {
+      contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  });
+
+  // 3) Auto-inject lock icons (debounced)
+  let scheduled = false;
+
+  function ensureButtons() {
+    scheduled = false;
+    const headings = contentDiv.querySelectorAll('.main-heading, .sub-heading');
+
+    headings.forEach(h => {
+      if (h.querySelector('.section-lock-btn')) return;
+
+      const firstSib = h.nextElementSibling;
+      const sibLocked = firstSib && firstSib.getAttribute('contenteditable') === 'false';
+
+      const btn = document.createElement('span');
+      btn.className = 'section-lock-btn';
+      btn.contentEditable = 'false';
+      btn.textContent = sibLocked ? '🔒' : '🔓';
+      btn.title = sibLocked ? 'Unlock section' : 'Lock section';
+
+      h.appendChild(btn);
+    });
+  }
+
+  const observer = new MutationObserver(() => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(ensureButtons);
+  });
+
+  observer.observe(contentDiv, { childList: true, subtree: true });
+
+  // Run once on load
+  ensureButtons();
+})();
+</script>
 </body>
 </html>
