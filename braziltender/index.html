@@ -1,22 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MEVA Collaborative Tender System</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* 1. BRAND TOKENS */
+    :root {
+      --brand-color: #E41837;
+      --brand-hover: #c91430;
+      --text-main: #1A1A1B;
+      --text-muted: #5F6368;
+      --border-color: #DADCE0;
+      --bg-gray: #F8F9FA;
+      --app-bg: #1f2937;
+    }
+
+    /* 2. GLOBAL SETTINGS */
+    body {
+      font-family: 'Georama', sans-serif;
+      margin: 0;
+      padding-top: 60px;
+      background: var(--app-bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      counter-reset: sheet;
+    }
+
+    /* 3. APP TOOLBAR */
+    .app-toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .app-brand { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+    .app-brand span { color: var(--brand-color); }
+    .toolbar-actions { display: flex; align-items: center; gap: 12px; }
+
+    .sync-status { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+    .sync-status.dirty { color: #d97706; }
+
+    .btn {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 16px;
+      font-family: 'Georama', sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--bg-gray); }
+    .btn-primary { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
+    .btn-primary:hover { background: var(--brand-hover); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* 4. PAGE LAYOUT */
+    @media screen {
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 30px auto;
+        background: #FFFFFF;
+        padding: 15mm 10mm;
+        box-sizing: border-box;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        position: relative;
+        border-radius: 4px;
+      }
+    }
+
+    @page { size: A4; margin: 15mm 10mm; }
+    @media print {
+      .app-toolbar, #remote-banner, #status-toast, .doc-controls-wrapper { display: none !important; }
+      body { background: #FFFFFF; padding-top: 0; }
+      .page { margin: 0; box-shadow: none; width: 100%; height: 297mm; padding: 0; page-break-after: always; }
+    }
+
+    /* 5. TABLES & CONTENT */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; }
+    th, td { border: 1px solid var(--border-color); padding: 10px 8px; }
+    th { background: var(--bg-gray); font-weight: 700; text-transform: uppercase; font-size: 10px; position: relative; }
+    
+    .resizer { position: absolute; top: 0; right: 0; width: 5px; cursor: col-resize; user-select: none; height: 100%; z-index: 1; }
+    .resizer:hover, .resizing { border-right: 2px solid var(--brand-color); }
+
+    #document-content td img { max-width: 100%; max-height: 140px; cursor: zoom-in; transition: max-height 0.2s; }
+    #document-content img.size-md { max-height: 250px !important; }
+    #document-content img.size-lg { max-height: 450px !important; cursor: zoom-out; }
+
+    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; border-bottom: 1px solid #F59E0B; }
+    #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; }
+    #document-content { outline: none; }
+  </style>
+</head>
+<body>
+
+<div class="app-toolbar">
+  <div class="app-brand">MEVA <span>Tender Builder</span></div>
+  <div class="toolbar-actions">
+    <span id="sync-status" class="sync-status">All changes saved</span>
+    <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button>
+    <button class="btn print-btn" onclick="window.print()">🖨️ PDF</button>
+    <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
+  </div>
+</div>
+
+<div id="remote-banner">
+  ⚠️ Newer version detected on server.
+  <button id="btn-accept-remote" class="btn" style="margin-left:10px; padding:4px 8px;">Load Latest</button>
+  <button id="btn-keep-mine" class="btn" style="margin-left:5px; padding:4px 8px;">Force Overwrite</button>
+</div>
+
+<div id="status-toast"></div>
+<div id="document-content" contenteditable="true" spellcheck="false"></div>
+
 <script type="module">
   import { defaultHTML } from './seed-data.js';
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import {
-    getAuth,
-    setPersistence,
-    browserLocalPersistence,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-  import {
-    getFirestore,
-    doc,
-    getDoc,
-    onSnapshot,
-    runTransaction,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, onSnapshot, runTransaction, serverTimestamp, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAnkigLELyqqE8yHMrTF2RZ0IxbCoRhpAk",
@@ -36,905 +159,233 @@
   const saveBtn = document.getElementById('save-btn');
   const syncStatus = document.getElementById('sync-status');
   const toast = document.getElementById('status-toast');
-
   const remoteBanner = document.getElementById('remote-banner');
-  const btnAcceptRemote = document.getElementById('btn-accept-remote');
-  const btnKeepMine = document.getElementById('btn-keep-mine');
 
-  let currentRev = 0;
-  let dirty = false;
-  let applyingRemote = false;
-  let pendingRemote = null;
+  let currentRev = 0, dirty = false, applyingRemote = false, pendingRemote = null, canSync = false, listenerUnsub = null;
 
-  // --- SECURITY STATE ---
-  let canSync = false; 
-  let listenerUnsub = null;
-
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2200);
-  }
+  function showToast(msg) { toast.textContent = msg; toast.style.display = 'block'; setTimeout(() => { toast.style.display = 'none'; }, 2200); }
 
   function setDirty(isDirty) {
     if (applyingRemote) return;
     dirty = isDirty;
-    if (dirty) {
-      syncStatus.textContent = "Unsaved changes";
-      syncStatus.classList.add('dirty');
-    } else {
-      syncStatus.textContent = "All changes saved";
-      syncStatus.classList.remove('dirty');
-    }
+    syncStatus.textContent = dirty ? "Unsaved changes" : "All changes saved";
+    syncStatus.classList.toggle('dirty', dirty);
     saveBtn.disabled = !canSync || !dirty || remoteBanner.style.display === 'block';
   }
 
-  // --- AGGRESSIVE UI LOCKDOWN ---
   function setBlocked(blocked) {
-    // Lock the parent container
     contentDiv.setAttribute('contenteditable', blocked ? 'false' : 'true');
     contentDiv.style.pointerEvents = blocked ? 'none' : 'auto';
     contentDiv.style.opacity = blocked ? '0.5' : '1';
-    
-    // Recursively hunt down and lock all explicit child nodes
-    const nestedEditables = contentDiv.querySelectorAll('div[contenteditable]');
-    nestedEditables.forEach(el => {
-      el.setAttribute('contenteditable', blocked ? 'false' : 'true');
-    });
-
+    contentDiv.querySelectorAll('div[contenteditable]').forEach(el => el.setAttribute('contenteditable', blocked ? 'false' : 'true'));
     saveBtn.disabled = blocked ? true : !dirty;
   }
 
   function applyAutoFormatting() {
-    document.querySelectorAll('#document-content td').forEach(cell => {
+    contentDiv.querySelectorAll('td').forEach(cell => {
       if (cell.getAttribute('contenteditable') === 'false') return;
       const text = (cell.innerText || '').trim().toUpperCase();
-      if (text === 'COMPLY' || text === 'YES') {
-        cell.style.color = '#16a34a';
-        cell.style.fontWeight = '900';
-      } else if (text === 'TBD') {
-        cell.style.color = '#9ca3af';
-        cell.style.fontWeight = 'normal';
-      } else if (text === 'NO' || text === 'FAIL') {
-        cell.style.color = 'var(--brand-color)';
-        cell.style.fontWeight = '900';
-      }
+      if (['COMPLY', 'YES'].includes(text)) { cell.style.color = '#16a34a'; cell.style.fontWeight = '900'; }
+      else if (text === 'TBD') { cell.style.color = '#9ca3af'; cell.style.fontWeight = 'normal'; }
+      else if (['NO', 'FAIL'].includes(text)) { cell.style.color = 'var(--brand-color)'; cell.style.fontWeight = '900'; }
     });
   }
 
-  contentDiv.addEventListener('input', () => {
-    if (applyingRemote) return;
-    setDirty(true);
-    applyAutoFormatting();
-  });
+  contentDiv.addEventListener('input', () => { setDirty(true); applyAutoFormatting(); });
+  window.notifyChange = () => contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
 
-  window.notifyChange = () => {
-    contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
-  };
-
-  // --- ALLOWLIST CHECK ---
   async function isAllowlistedEmail(user) {
-    const email = user?.email || null;
-    if (!email) return false;
-    const allowRef = doc(db, 'allowlist_emails', email);
-    const allowSnap = await getDoc(allowRef);
-    return allowSnap.exists() && allowSnap.data()?.enabled === true;
+    if (!user?.email) return false;
+    const snap = await getDoc(doc(db, 'allowlist_emails', user.email));
+    return snap.exists() && snap.data()?.enabled === true;
   }
 
-  // --- LOGIN MODAL ---
   function ensureLoginModal() {
     if (document.getElementById('meva-login-overlay')) return;
-
     const overlay = document.createElement('div');
     overlay.id = 'meva-login-overlay';
-    overlay.style.cssText = `
-      position:fixed; inset:0; z-index:10000;
-      background:rgba(0,0,0,0.8);
-      display:flex; align-items:center; justify-content:center;
-      font-family:"Georama", sans-serif;
-    `;
-
-    overlay.innerHTML = `
-      <div style="width:420px; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
-        <div style="padding:16px 18px; background:var(--bg-gray); border-bottom:1px solid var(--border-color);">
-          <div style="font-weight:900; color:var(--brand-color); text-transform:uppercase;">MEVA Secure Access</div>
-          <div style="margin-top:6px; font-size:12px; color:var(--text-muted); font-weight:600;">Authorized personnel only. Please sign in to write.</div>
-        </div>
-        <div style="padding:18px;">
-          <div style="display:flex; flex-direction:column; gap:10px;">
-            <input id="meva-login-email" type="email" placeholder="Email Address" style="padding:10px; border:1px solid var(--border-color); border-radius:6px;">
-            <input id="meva-login-pass" type="password" placeholder="Password" style="padding:10px; border:1px solid var(--border-color); border-radius:6px;">
-            <button id="meva-login-btn" style="padding:10px; border:none; border-radius:6px; background:var(--brand-color); color:#fff; font-weight:800; cursor:pointer;">Sign in</button>
-            <div id="meva-login-msg" style="min-height:16px; font-size:12px; color:#E41837; font-weight:700;"></div>
-          </div>
-        </div>
+    overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; font-family:"Georama", sans-serif;`;
+    overlay.innerHTML = `<div style="width:400px; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+      <div style="padding:18px; background:var(--bg-gray); border-bottom:1px solid var(--border-color); font-weight:900; color:var(--brand-color);">MEVA SECURE ACCESS</div>
+      <div style="padding:18px; display:flex; flex-direction:column; gap:10px;">
+        <input id="meva-email" type="email" placeholder="Email" style="padding:10px; border:1px solid var(--border-color); border-radius:6px;">
+        <input id="meva-pass" type="password" placeholder="Password" style="padding:10px; border:1px solid var(--border-color); border-radius:6px;">
+        <button id="meva-login-btn" style="padding:12px; background:var(--brand-color); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">SIGN IN</button>
+        <div id="meva-msg" style="font-size:12px; color:var(--brand-color); font-weight:700;"></div>
       </div>
-    `;
-
+    </div>`;
     document.body.appendChild(overlay);
-
-    const btn = overlay.querySelector('#meva-login-btn');
-    const msg = overlay.querySelector('#meva-login-msg');
-
-    btn.addEventListener('click', async () => {
-      msg.textContent = '';
-      const email = overlay.querySelector('#meva-login-email').value.trim();
-      const pass = overlay.querySelector('#meva-login-pass').value;
-
-      if (!email || !pass) return msg.textContent = 'Email and password are required.';
-
-      btn.disabled = true;
-      btn.textContent = 'Authenticating...';
-
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-      } catch (e) {
-        msg.textContent = 'Invalid credentials or access not enabled.';
-        btn.disabled = false;
-        btn.textContent = 'Sign in';
-      }
-    });
+    overlay.querySelector('#meva-login-btn').onclick = async () => {
+      const email = document.getElementById('meva-email').value, pass = document.getElementById('meva-pass').value;
+      try { await signInWithEmailAndPassword(auth, email, pass); }
+      catch (e) { document.getElementById('meva-msg').textContent = "Invalid credentials."; }
+    };
   }
 
-  function hideLoginModal() {
-    const overlay = document.getElementById('meva-login-overlay');
-    if (overlay) overlay.remove();
-  }
-
-  // --- SECURE SAVE DATA ---
   window.saveData = async () => {
-    if (!canSync) return showToast('Error: Sign in required to write.');
-    if (remoteBanner.style.display === 'block') return showToast('Resolve conflict before saving.');
-    if (!dirty) return;
-
-    saveBtn.textContent = '⏳ Syncing...';
-    saveBtn.disabled = true;
-
+    if (!canSync || !dirty || remoteBanner.style.display === 'block') return;
+    saveBtn.textContent = '⏳ Syncing...'; saveBtn.disabled = true;
     try {
       await runTransaction(db, async (tx) => {
         const snap = await tx.get(docRef);
         const serverRev = snap.exists() ? Number(snap.data().rev || 0) : 0;
-
-        if (serverRev !== currentRev) {
-          throw new Error('REV_CONFLICT');
-        }
-
-        const newRev = serverRev + 1;
-        tx.set(docRef, {
-          htmlContent: contentDiv.innerHTML,
-          rev: newRev,
-          updatedAt: serverTimestamp(),
-          updatedBy: auth.currentUser?.email || 'Unknown User'
-        });
-
-        currentRev = newRev;
+        if (serverRev !== currentRev) throw new Error('REV_CONFLICT');
+        tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: serverRev + 1, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email });
+        currentRev = serverRev + 1;
       });
-
-      setDirty(false);
-      showToast('☁️ Synced to Cloud');
-
+      setDirty(false); showToast('☁️ Synced');
     } catch (e) {
-      console.error(e);
-      if (String(e.message || '').includes('REV_CONFLICT')) {
-        showToast('Conflict: load latest or keep yours');
-        remoteBanner.style.display = 'block';
-      } else {
-        showToast('Sync failed. Check permissions.');
-      }
-    } finally {
-      saveBtn.textContent = '☁️ Sync to Cloud';
-      saveBtn.disabled = !dirty || !canSync || remoteBanner.style.display === 'block';
+      if (e.message === 'REV_CONFLICT') { remoteBanner.style.display = 'block'; showToast('Conflict detected'); }
+      else showToast('Sync failed');
+    } finally { saveBtn.textContent = '☁️ Sync to Cloud'; }
+  };
+
+  window.takeSnapshot = async () => {
+    const name = prompt("Name this backup:");
+    if (!name) return;
+    try {
+      showToast("📸 Capturing...");
+      await setDoc(doc(collection(db, 'tender_documents', 'meva_main_html', 'snapshots'), Date.now().toString()), {
+        name, htmlContent: contentDiv.innerHTML, timestamp: Date.now(), createdBy: auth.currentUser.email
+      });
+      showToast("✅ Saved to Firebase");
+    } catch (e) { showToast("❌ Backup failed"); }
+  };
+
+  async function startApp() {
+    setBlocked(true); await setPersistence(auth, browserLocalPersistence);
+    onAuthStateChanged(auth, async (user) => {
+      if (listenerUnsub) listenerUnsub();
+      if (!user) { canSync = false; setBlocked(true); ensureLoginModal(); return; }
+      if (!(await isAllowlistedEmail(user))) { await signOut(auth); return; }
+      document.getElementById('meva-login-overlay')?.remove(); canSync = true;
+      listenerUnsub = onSnapshot(docRef, (snap) => {
+        if (!snap.exists() || snap.metadata.hasPendingWrites) return;
+        const data = snap.data(), nextRev = Number(data.rev || 0), nextHtml = String(data.htmlContent || '');
+        if (currentRev === 0) { applyingRemote = true; contentDiv.innerHTML = nextHtml; currentRev = nextRev; applyingRemote = false; setBlocked(false); applyAutoFormatting(); return; }
+        if (nextRev > currentRev) {
+          if (!dirty) { applyingRemote = true; contentDiv.innerHTML = nextHtml; currentRev = nextRev; applyingRemote = false; applyAutoFormatting(); }
+          else { pendingRemote = { htmlContent: nextHtml, rev: nextRev }; remoteBanner.style.display = 'block'; saveBtn.disabled = true; }
+        }
+      });
+    });
+  }
+
+  document.getElementById('btn-accept-remote').onclick = () => {
+    applyingRemote = true; contentDiv.innerHTML = pendingRemote.htmlContent; currentRev = pendingRemote.rev; 
+    applyingRemote = false; pendingRemote = null; remoteBanner.style.display = 'none'; setDirty(false); applyAutoFormatting();
+  };
+
+  document.getElementById('btn-keep-mine').onclick = () => {
+    if (confirm("⚠️ FORCE OVERWRITE: Destroy server version?")) {
+      currentRev = pendingRemote.rev; remoteBanner.style.display = 'none'; pendingRemote = null; setDirty(true);
     }
   };
 
-  function renderFromRemote(html, rev) {
-    applyingRemote = true;
-    contentDiv.innerHTML = html;
-    applyingRemote = false;
-    currentRev = Number(rev || 0);
-    setDirty(false);
-    applyAutoFormatting();
-  }
-
-  async function seedCloudIfMissing() {
-    await runTransaction(db, async (tx) => {
-      const snap = await tx.get(docRef);
-      if (snap.exists()) return;
-      tx.set(docRef, {
-        htmlContent: defaultHTML,
-        rev: 1,
-        updatedAt: serverTimestamp()
-      });
-    });
-  }
-
-  // --- INITIALIZATION ---
-  async function startApp() {
-    contentDiv.innerHTML = '';
-    setDirty(false);
-    
-    setBlocked(true);
-    canSync = false;
-
-    await setPersistence(auth, browserLocalPersistence);
-
-    onAuthStateChanged(auth, async (user) => {
-      if (typeof listenerUnsub === 'function') {
-        listenerUnsub();
-        listenerUnsub = null;
-      }
-      pendingRemote = null;
-      remoteBanner.style.display = 'none';
-
-      if (!user) {
-        canSync = false;
-        setBlocked(true);
-        ensureLoginModal();
-        return;
-      }
-
-      try {
-        const ok = await isAllowlistedEmail(user);
-        
-        if (!ok) {
-          canSync = false;
-          setBlocked(true);
-          ensureLoginModal();
-          
-          const loginBtn = document.getElementById('meva-login-btn');
-          const loginMsg = document.getElementById('meva-login-msg');
-          if (loginBtn) {
-            loginBtn.disabled = false;
-            loginBtn.textContent = 'Sign in';
-          }
-          if (loginMsg) loginMsg.textContent = 'Access denied. Email not on allowlist.';
-          
-          await signOut(auth);
-          return;
-        }
-
-        // ACCESS GRANTED
-        hideLoginModal();
-        canSync = true;
-
-        listenerUnsub = onSnapshot(docRef, async (snap) => {
-          if (!snap.exists()) {
-            try { await seedCloudIfMissing(); } catch (e) { console.error(e); }
-            return;
-          }
-
-          if (snap.metadata.hasPendingWrites) return;
-
-          const data = snap.data() || {};
-          const nextRev = Number(data.rev || 0);
-          const nextHtml = String(data.htmlContent || '');
-
-          if (currentRev === 0) {
-            renderFromRemote(nextHtml, nextRev);
-            setBlocked(false); 
-            return;
-          }
-
-          if (nextRev > currentRev) {
-            if (!dirty) {
-              renderFromRemote(nextHtml, nextRev);
-            } else {
-              pendingRemote = { htmlContent: nextHtml, rev: nextRev };
-              remoteBanner.style.display = 'block';
-              saveBtn.disabled = true;
-            }
-          }
-        });
-
-      } catch (e) {
-        console.error(e);
-        canSync = false;
-        setBlocked(true);
-        ensureLoginModal();
-      }
-    });
-  }
-
-  // --- BANNER ACTIONS ---
-  btnAcceptRemote.addEventListener('click', () => {
-    if (!pendingRemote) return;
-    remoteBanner.style.display = 'none';
-    renderFromRemote(pendingRemote.htmlContent, pendingRemote.rev);
-    pendingRemote = null;
-    showToast('Loaded latest');
-  });
-
-  btnKeepMine.addEventListener('click', () => {
-    if (!pendingRemote) return;
-    
-    if (confirm("⚠️ FORCE OVERWRITE: Are you sure you want to overwrite the server's newer version with your current screen?\n\nThis cannot be undone.")) {
-      currentRev = pendingRemote.rev; 
-      remoteBanner.style.display = 'none';
-      pendingRemote = null;
-      
-      setDirty(true); 
-      saveBtn.disabled = false; 
-      showToast('Ready to force sync');
-    }
-  });
-
-  // ==========================================
-  // UI CONTROLS: MODERNIZED TABLE TARGETING
-  // ==========================================
+  // --- MODERNIZED TABLE LOGIC ---
   function getTargetTable(input) {
-    if (input && input.tagName && input.tagName.toLowerCase() === 'table') {
-      return input;
-    }
-    let el = input.closest ? input.closest('.doc-controls-wrapper') : null;
-    while (el && el.previousElementSibling) {
-      el = el.previousElementSibling;
-      if (el.tagName && el.tagName.toLowerCase() === 'table') return el;
-    }
+    if (input?.tagName?.toLowerCase() === 'table') return input;
+    let el = input.closest?.('.doc-controls-wrapper');
+    while (el?.previousElementSibling) { el = el.previousElementSibling; if (el.tagName?.toLowerCase() === 'table') return el; }
     return null;
   }
 
-  function getTableColumnCount(table) {
-    const headerRow = table.querySelector('thead tr');
-    if (!headerRow) {
-      const firstBodyRow = table.querySelector('tbody tr');
-      if (!firstBodyRow) return 1;
-      return Array.from(firstBodyRow.children).reduce((sum, cell) => sum + (cell.colSpan || 1), 0);
-    }
-    return Array.from(headerRow.children).reduce((sum, cell) => sum + (cell.colSpan || 1), 0);
-  }
-
-  function findLastDataRow(tbody) {
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    for (let i = rows.length - 1; i >= 0; i--) {
-      const r = rows[i];
-      if (r.querySelector('th.group-header')) continue;
-      if ((r.className || '').includes('no-break') && r.querySelector('td[colspan]')) continue;
-      if (r.querySelector('td')) return r;
-    }
-    return rows.find(r => r.querySelector('td')) || null;
-  }
-
-  window.addRow = function(target) {
-    const table = getTargetTable(target);
-    if (!table) return;
-    const tbody = table.querySelector('tbody');
-    if (!tbody) return;
-    const baseRow = findLastDataRow(tbody);
-    if (!baseRow) return;
-
-    const newRow = baseRow.cloneNode(true);
-    newRow.querySelectorAll('td').forEach(td => {
-      if (td.colSpan && td.colSpan > 1) return;
-      td.innerHTML = '';
-      td.removeAttribute('style');
-    });
-
-    tbody.appendChild(newRow);
-    window.notifyChange();
+  window.addRow = (t) => {
+    const table = getTargetTable(t), tbody = table?.querySelector('tbody'), rows = Array.from(tbody?.querySelectorAll('tr') || []);
+    const base = rows.reverse().find(r => r.querySelector('td') && !r.classList.contains('no-break'));
+    if (!base) return;
+    const newRow = base.cloneNode(true);
+    newRow.querySelectorAll('td').forEach(td => { if (td.colSpan <= 1) { td.innerHTML = ''; td.removeAttribute('style'); } });
+    tbody.appendChild(newRow); window.notifyChange();
   };
 
-  window.removeRow = function(target) {
-    const table = getTargetTable(target);
-    if (!table) return;
-    const tbody = table.querySelector('tbody');
-    if (!tbody) return;
-
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    if (rows.length <= 1) return;
-
-    for (let i = rows.length - 1; i >= 0; i--) {
-      const r = rows[i];
-      if (r.querySelector('th.group-header')) continue;
-      tbody.removeChild(r);
-      window.notifyChange();
-      return;
-    }
+  window.removeRow = (t) => {
+    const tbody = getTargetTable(t)?.querySelector('tbody'), rows = Array.from(tbody?.querySelectorAll('tr') || []);
+    const last = rows.reverse().find(r => r.querySelector('td') && !r.querySelector('th.group-header'));
+    if (last && rows.length > 1) { last.remove(); window.notifyChange(); }
   };
 
-  window.addDeepdiveRow = function(target) {
-    const table = getTargetTable(target);
-    if (!table) return;
+  window.addDeepdiveRow = (t) => {
+    const table = getTargetTable(t), colCount = Array.from(table?.querySelector('thead tr')?.children || []).length || 5;
+    const newRow = document.createElement('tr'); newRow.className = 'no-break';
+    newRow.innerHTML = `<td colspan="${colCount}" style="background:#F8F9FA; border-left:3px solid var(--brand-color); padding:15px;">
+      <strong style="color:var(--brand-color); font-size:11px;">↳ TECHNICAL DEEP DIVE</strong>
+      <div contenteditable="true" style="margin-top:8px; font-size:11px;">[Details here]</div>
+      <div class="img-placeholder" onclick="promptImage(this)" style="max-width:400px; margin:0 auto; background:#fff; border:1px dashed #ccc; padding:20px; text-align:center;">Click to insert diagram</div>
+    </td>`;
+    table.querySelector('tbody').appendChild(newRow); window.notifyChange();
+  };
 
-    const colCount = getTableColumnCount(table);
-    const selection = window.getSelection();
-    let targetRow = null;
+  window.promptImage = (el) => { const url = prompt("Image URL:"); if (url) { el.innerHTML = `<img src="${url}" style="width:100%; border-radius:4px;">`; window.notifyChange(); } };
 
-    if (selection && selection.rangeCount > 0) {
-      let node = selection.anchorNode;
-      while (node && node !== document.body) {
-        if (node.tagName && node.tagName.toLowerCase() === 'tr') { targetRow = node; break; }
-        node = node.parentNode;
+  function initResizers() {
+    contentDiv.querySelectorAll('th:not(.group-header)').forEach(th => {
+      if (!th.querySelector('.resizer')) {
+        const r = document.createElement('div'); r.className = 'resizer'; th.appendChild(r);
+        r.onmousedown = (e) => {
+          const startX = e.clientX, startW = th.offsetWidth;
+          document.onmousemove = (me) => { th.style.width = (startW + (me.clientX - startX)) + 'px'; };
+          document.onmouseup = () => { document.onmousemove = document.onmouseup = null; setDirty(true); window.notifyChange(); };
+        };
       }
-    }
-
-    const newRow = document.createElement('tr');
-    newRow.className = 'no-break';
-    newRow.innerHTML = `
-      <td colspan="${colCount}" style="background-color: var(--bg-gray); border-left: 3px solid var(--brand-color); padding: 15px;">
-        <strong style="color: var(--brand-color); font-size: 11px; text-transform: uppercase;">↳ Technical Deep Dive & Evidence</strong>
-        <div contenteditable="true" style="margin-top: 8px; font-size: 11px; color: var(--text-main); margin-bottom: 12px;">
-          <strong>Brand / OEM:</strong> [Enter details]<br><br>
-          <strong>Technical Justification:</strong> [Enter detailed explanation here...]
-        </div>
-        <div class="img-placeholder" onclick="promptImage(this)" style="max-width: 400px; margin: 0 auto; background: #fff;">
-          <span>Click to insert technical diagram / photo</span>
-          <img src="" alt="" style="display:none; width: 100%; border-radius: 4px;">
-        </div>
-      </td>
-    `;
-
-    const tbody = table.querySelector('tbody');
-    if (!tbody) return;
-
-    if (targetRow && targetRow.closest('table') === table) {
-      targetRow.parentNode.insertBefore(newRow, targetRow.nextSibling);
-    } else {
-      tbody.appendChild(newRow);
-    }
-    window.notifyChange();
-  };
-
-  window.promptImage = function(el) {
-    const url = prompt("Enter the direct URL for the image:");
-    if (url) {
-      const img = el.querySelector('img');
-      const span = el.querySelector('span');
-      if (img) { img.src = url; img.style.display = 'block'; }
-      if (span) span.style.display = 'none';
-      window.notifyChange();
-    }
-  };
-
-  // --- MODERNIZED IMAGE BOX TARGETING ---
-  function getActiveGrid() {
-    const sel = window.getSelection();
-    if (!sel || sel.rangeCount === 0) return null;
-    let node = sel.anchorNode;
-    let el = node.nodeType === 1 ? node : node.parentElement;
-    return el ? el.closest('.img-grid') : null;
-  }
-
-  window.addImageBox = function(target) {
-    let grid = null;
-    if (target && target.classList && target.classList.contains('img-grid')) {
-      grid = target;
-    } else {
-      grid = getActiveGrid();
-    }
-
-    if (!grid && target && target.closest) {
-      grid = target.closest('.doc-controls-wrapper')?.previousElementSibling;
-    }
-
-    if (grid && grid.classList.contains('img-grid')) {
-      const boxes = grid.querySelectorAll('.img-box');
-      if (boxes.length > 0) {
-        const newBox = boxes[boxes.length - 1].cloneNode(true);
-        const img = newBox.querySelector('img');
-        if (img) { img.src = ''; img.style.display = 'none'; }
-        const span = newBox.querySelector('span');
-        if (span) { span.style.display = 'block'; }
-        grid.appendChild(newBox);
-        window.notifyChange();
-      }
-    } else {
-      alert('Please click inside an existing image grid first.');
-    }
-  };
-
-  window.addCertificate = function(btn) {
-    const page = btn.closest('.page');
-    if (!page) return;
-    const newPage = page.cloneNode(true);
-    page.parentNode.insertBefore(newPage, page.nextSibling);
-    window.notifyChange();
-  };
-
-  // --- CLICK TO RESIZE IMAGES ---
-  contentDiv.addEventListener('click', (e) => {
-    if (e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
-      const img = e.target;
-      if (!img.classList.contains('size-md') && !img.classList.contains('size-lg')) {
-        img.classList.add('size-md');
-      } else if (img.classList.contains('size-md')) {
-        img.classList.remove('size-md');
-        img.classList.add('size-lg');
-      } else {
-        img.classList.remove('size-lg');
-      }
-      setDirty(true);
-      window.notifyChange();
-    }
-  });
-
-  // --- COLUMN RESIZING LOGIC ---
-  function initTableResizers() {
-    const tables = document.querySelectorAll('#document-content table');
-    tables.forEach(table => {
-      const headers = table.querySelectorAll('th');
-      headers.forEach(th => {
-        if (th.classList.contains('group-header') || th.colSpan > 1) return;
-        if (!th.querySelector('.resizer')) {
-          const resizer = document.createElement('div');
-          resizer.classList.add('resizer');
-          resizer.contentEditable = "false";
-          th.appendChild(resizer);
-          createResizableColumn(th, resizer);
-        }
-      });
     });
   }
 
-  function createResizableColumn(col, resizer) {
-    let x = 0;
-    let w = 0;
-
-    const mouseDownHandler = function(e) {
-      x = e.clientX;
-      const styles = window.getComputedStyle(col);
-      w = parseInt(styles.width, 10);
-      document.addEventListener('mousemove', mouseMoveHandler);
-      document.addEventListener('mouseup', mouseUpHandler);
-      resizer.classList.add('resizing');
-    };
-
-    const mouseMoveHandler = function(e) {
-      const dx = e.clientX - x;
-      col.style.width = `${w + dx}px`;
-    };
-
-    const mouseUpHandler = function() {
-      resizer.classList.remove('resizing');
-      document.removeEventListener('mousemove', mouseMoveHandler);
-      document.removeEventListener('mouseup', mouseUpHandler);
-      setDirty(true);
-      window.notifyChange();
-    };
-    resizer.addEventListener('mousedown', mouseDownHandler);
-  }
-
-  const observer = new MutationObserver(() => {
-    initTableResizers();
-  });
-  observer.observe(document.getElementById('document-content'), { childList: true, subtree: true });
-
-  // FINALLY, START THE APP
+  const observer = new MutationObserver(initResizers);
+  observer.observe(contentDiv, { childList: true, subtree: true });
   startApp();
 </script>
 
 <script>
-(function () {
+(function() {
   const toolbar = document.querySelector('.toolbar-actions');
-  const editor = document.getElementById('document-content');
-  if (!toolbar || !editor) return;
-
-  if (document.getElementById('top-format-controls')) return;
-
-  function selectionInsideEditor() {
-    const sel = window.getSelection && window.getSelection();
-    if (!sel || sel.rangeCount === 0) return false;
-    const node = sel.anchorNode;
-    if (!node) return false;
-    const el = node.nodeType === 1 ? node : node.parentElement;
-    return !!(el && el.closest && el.closest('#document-content'));
-  }
-
-  function exec(cmd, value = null) {
-    if (!selectionInsideEditor()) {
-      alert('Select text inside the document first.');
-      return;
-    }
-    editor.focus();
-    try {
-      document.execCommand(cmd, false, value);
-      if (typeof window.notifyChange === 'function') window.notifyChange();
-    } catch (e) {
-      console.warn('Formatting failed:', e);
-    }
-  }
-
-  function makeBtn(label, title, onClick) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'btn';
-    b.title = title;
-    b.textContent = label;
-    b.addEventListener('click', (e) => { e.preventDefault(); onClick(); });
-    return b;
-  }
-
-  function makeSelect(title, options, onChange) {
-    const s = document.createElement('select');
-    s.className = 'btn';
-    s.title = title;
-
-    options.forEach(o => {
-      const opt = document.createElement('option');
-      opt.value = o.value;
-      opt.textContent = o.label;
-      s.appendChild(opt);
-    });
-
-    s.addEventListener('change', () => {
-      if (!selectionInsideEditor()) { s.value = ''; return; }
-      if (s.value) onChange(s.value);
-      s.value = '';
-    });
-
-    return s;
-  }
-
-  const group = document.createElement('div');
-  group.id = 'top-format-controls';
-  group.style.display = 'inline-flex';
-  group.style.gap = '6px';
-  group.style.alignItems = 'center';
-  group.style.marginRight = '10px';
-
-  group.appendChild(makeBtn('B', 'Bold', () => exec('bold')));
-  group.appendChild(makeBtn('I', 'Italic', () => exec('italic')));
-  group.appendChild(makeBtn('U', 'Underline', () => exec('underline')));
-  group.appendChild(makeBtn('Clear', 'Clear formatting', () => exec('removeFormat')));
-
-  const colors = [
-    { value: '', label: 'Text color' },
-    { value: '#1A1A1B', label: 'Black' },
-    { value: '#5F6368', label: 'Grey' },
-    { value: '#E41837', label: 'MEVA Red' }
-  ];
-  group.appendChild(makeSelect('Text color', colors, (v) => exec('foreColor', v)));
-
-  toolbar.insertBefore(group, toolbar.firstChild);
-
-  const style = document.createElement('style');
-  style.textContent = `@media print { #top-format-controls { display: none !important; } }`;
-  document.head.appendChild(style);
-})();
-</script>
-
-<script>
-(function () {
-  const toolbar = document.querySelector('.toolbar-actions');
-  const contentDiv = document.getElementById('document-content');
-  if (!toolbar || !contentDiv) return;
-
-  if (document.getElementById('top-table-controls')) return;
-
-  function getActiveElementInEditor() {
-    const sel = window.getSelection && window.getSelection();
-    if (!sel || sel.rangeCount === 0) return null;
-
-    const node = sel.anchorNode;
-    if (!node) return null;
-
-    const el = node.nodeType === 1 ? node : node.parentElement;
-    if (!el || !el.closest) return null;
-
-    if (!el.closest('#document-content')) return null;
-    return el;
-  }
-
-  function getActiveTable() {
-    const el = getActiveElementInEditor();
-    return el ? el.closest('table') : null;
-  }
-
-  function callTableAction(fnName) {
-    const fn = window[fnName];
-    if (typeof fn !== 'function') return;
-
-    const table = getActiveTable();
-    if (!table) {
-      alert('Click inside a table cell first, then use the row controls.');
-      return;
-    }
-
-    // Direct execution using the table, bypassing the old wrapper lookup
-    fn(table);
-  }
-
-  function removeDeepdiveSafe() {
-    const el = getActiveElementInEditor();
-    if (!el) {
-      alert('Click inside the Deep Dive row you want to remove.');
-      return;
-    }
-
-    const row = el.closest('tr');
-    if (!row) {
-      alert('Click inside the Deep Dive row you want to remove.');
-      return;
-    }
-
-    if (!row.classList.contains('no-break')) {
-      alert('This is not a Deep Dive row. Click inside a Deep Dive row (grey box) and try again.');
-      return;
-    }
-
-    const label = row.querySelector('strong');
-    const labelText = (label ? label.textContent : '').trim();
-
-    if (!labelText.includes('Technical Deep Dive') && !row.innerText.includes('↳ Technical Deep Dive')) {
-      alert('This is not a Deep Dive row created by the system. Not removing.');
-      return;
-    }
-
-    row.remove();
-
-    if (typeof window.notifyChange === 'function') {
-      window.notifyChange();
-    } else {
-      contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-  }
-
-  function makeBtn(label, title, onClick) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'btn';
-    b.textContent = label;
-    b.title = title;
-    b.addEventListener('click', (e) => {
-      e.preventDefault();
-      onClick();
-    });
-    return b;
-  }
-
-  const group = document.createElement('div');
-  group.id = 'top-table-controls';
-  group.style.display = 'inline-flex';
-  group.style.gap = '6px';
-  group.style.alignItems = 'center';
-  group.style.marginRight = '10px';
-
-  group.appendChild(makeBtn('+ Row', 'Add row to active table', () => callTableAction('addRow')));
-  group.appendChild(makeBtn('- Row', 'Remove last row from active table', () => callTableAction('removeRow')));
-  group.appendChild(makeBtn('+ Deepdive', 'Add deepdive row to active table', () => callTableAction('addDeepdiveRow')));
-  group.appendChild(makeBtn('- Deepdive', 'Remove the deepdive row you clicked in', removeDeepdiveSafe));
-
-  toolbar.insertBefore(group, toolbar.firstChild);
-
-  const style = document.createElement('style');
-  style.textContent = `@media print { #top-table-controls { display: none !important; } }`;
-  document.head.appendChild(style);
+  const getActiveTable = () => { const sel = window.getSelection(); return sel?.anchorNode?.parentElement?.closest('table'); };
+  const makeBtn = (txt, title, cb) => { const b = document.createElement('button'); b.className='btn'; b.textContent=txt; b.title=title; b.onclick=cb; return b; };
+  
+  const group = document.createElement('div'); group.style.display='flex'; group.style.gap='5px';
+  group.append(makeBtn('+ Row', 'Add Row', () => { const t = getActiveTable(); if (t) window.addRow(t); else alert('Click table first'); }));
+  group.append(makeBtn('- Row', 'Remove Row', () => { const t = getActiveTable(); if (t) window.removeRow(t); }));
+  group.append(makeBtn('+ Deepdive', 'Add Deep Dive', () => { const t = getActiveTable(); if (t) window.addDeepdiveRow(t); }));
+  group.append(makeBtn('B', 'Bold', () => document.execCommand('bold')));
+  group.append(makeBtn('I', 'Italic', () => document.execCommand('italic')));
+  
+  toolbar.prepend(group);
 })();
 </script>
 
 <script>
 (function() {
   const contentDiv = document.getElementById('document-content');
-  if (!contentDiv) return;
-
-  if (window.__mevaSectionLockApplied) return;
-  window.__mevaSectionLockApplied = true;
-
-  const style = document.createElement('style');
-  style.textContent = `
-    .section-lock-btn{
-      cursor:pointer;
-      margin-left:10px;
-      font-size:12px;
-      font-weight:800;
-      user-select:none;
-      opacity:.45;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:2px 10px;
-      border:1px solid transparent;
-      border-radius:999px;
-      transition:all .15s ease;
-      vertical-align:middle;
-    }
-    .section-lock-btn:hover{
-      opacity:1;
-      border-color: var(--border-color);
-      background: var(--bg-gray);
-      transform:none;
-    }
-    .section-lock-btn.is-locked{
-      opacity:1;
-      color: var(--brand-color);
-      border-color: rgba(228,24,55,.25);
-      background:#fff0f1;
-    }
-
-    #document-content .lock-scope.is-locked{
-      border-left:4px solid var(--brand-color);
-      background:#fff0f1;
-      padding-left:10px;
-      border-radius:4px;
-    }
-
-    #document-content [contenteditable="false"]{
-      background-color:#fcfcfc;
-    }
-
-    @media print { .section-lock-btn { display:none !important; } }
-  `;
-  document.head.appendChild(style);
-
-  function isHeading(el){
-    return el && el.classList && (el.classList.contains('main-heading') || el.classList.contains('sub-heading'));
-  }
-
-  function isFooter(el){
-    return el && el.classList && el.classList.contains('page-footer');
-  }
-
   contentDiv.addEventListener('click', (e) => {
-    const t = e.target;
-    if (!t || !t.classList || !t.classList.contains('section-lock-btn')) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    const heading = t.closest('.main-heading, .sub-heading');
-    if (!heading) return;
-
-    const currentlyLocked = t.classList.contains('is-locked');
-    const willLock = !currentlyLocked;
-
-    t.textContent = willLock ? '🔒 Locked' : '🔓 Unlocked';
-    t.title = willLock ? 'Unlock section' : 'Lock section';
-    t.classList.toggle('is-locked', willLock);
-
-    let curr = heading.nextElementSibling;
-    while (curr && !isHeading(curr) && !isFooter(curr)) {
-      curr.setAttribute('contenteditable', willLock ? 'false' : 'true');
-      curr.classList.add('lock-scope');
-      curr.classList.toggle('is-locked', willLock);
+    if (!e.target.classList.contains('section-lock-btn')) return;
+    const h = e.target.closest('.main-heading, .sub-heading'), locked = e.target.classList.toggle('is-locked');
+    e.target.textContent = locked ? '🔒 Locked' : '🔓 Unlocked';
+    let curr = h.nextElementSibling;
+    while (curr && !['MAIN-HEADING','SUB-HEADING'].includes(curr.className.toUpperCase())) {
+      curr.setAttribute('contenteditable', locked ? 'false' : 'true');
+      curr.classList.toggle('is-locked', locked);
       curr = curr.nextElementSibling;
     }
-
-    if (typeof window.notifyChange === 'function') {
-      window.notifyChange();
-    } else {
-      contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
-    }
+    window.notifyChange();
   });
 
-  let scheduled = false;
-
-  function ensureButtons() {
-    scheduled = false;
-
-    const headings = contentDiv.querySelectorAll('.main-heading, .sub-heading');
-    headings.forEach(h => {
+  function ensureLocks() {
+    contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
       if (h.querySelector('.section-lock-btn')) return;
-
-      const firstSib = h.nextElementSibling;
-      const sibLocked = firstSib && firstSib.getAttribute('contenteditable') === 'false';
-
-      const btn = document.createElement('span');
-      btn.className = 'section-lock-btn';
-      btn.contentEditable = 'false';
-      btn.textContent = sibLocked ? '🔒 Locked' : '🔓 Unlocked';
-      btn.title = sibLocked ? 'Unlock section' : 'Lock section';
-      btn.classList.toggle('is-locked', !!sibLocked);
-
+      const btn = document.createElement('span'); btn.className = 'section-lock-btn';
+      btn.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒 Locked' : '🔓 Unlocked';
       h.appendChild(btn);
-
-      let curr = h.nextElementSibling;
-      while (curr && !isHeading(curr) && !isFooter(curr)) {
-        curr.classList.add('lock-scope');
-        curr.classList.toggle('is-locked', curr.getAttribute('contenteditable') === 'false');
-        curr = curr.nextElementSibling;
-      }
     });
   }
-
-  const observer = new MutationObserver(() => {
-    if (scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(ensureButtons);
-  });
-
-  observer.observe(contentDiv, { childList: true, subtree: true });
-
-  ensureButtons();
+  new MutationObserver(ensureLocks).observe(contentDiv, { childList: true, subtree: true });
 })();
 </script>
+
+<style>
+  .section-lock-btn { cursor:pointer; margin-left:10px; font-size:10px; opacity:0.5; padding:2px 8px; border-radius:10px; border:1px solid #ccc; }
+  .section-lock-btn.is-locked { opacity:1; color:var(--brand-color); background:#fff0f1; border-color:var(--brand-color); }
+  .is-locked { border-left:4px solid var(--brand-color); background:#fff0f1 !important; padding-left:10px; }
+</style>
+
 </body>
 </html>
