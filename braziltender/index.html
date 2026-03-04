@@ -130,9 +130,27 @@
 
 <div id="document-content" contenteditable="true" spellcheck="false">
     </div>
-
 <script type="module">
-  import { defaultHTML } from './seed-data.js';
+  // 1. LOCAL SKELETON (Replaces seed-data.js entirely)
+  const MEVA_SKELETON = `
+    <div class="page" style="padding: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 8px;">
+      <div style="width: 100%; height: 55mm; position: relative; background-color: var(--bg-gray); overflow: hidden;">
+        <img src="mevahero.jpeg" alt="MEVA Armored Vehicles" style="width: 100%; height: 100%; object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; width:100%; height:100%; align-items:center; justify-content:center; flex-direction:column; color:#9ca3af; font-size:14px; font-weight:bold; background:#e5e7eb; position:absolute; top:0; left:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
+          <span>MEVA Hero Image Missing</span>
+        </div>
+      </div>
+      <div class="page-content" style="padding: 20px;">
+        <div class="main-heading">TECHNICAL SPECIFICATIONS</div>
+        <p style="color:var(--text-muted)">Initialize by typing or syncing...</p>
+      </div>
+      <div class="page-footer" style="margin-top: auto; padding: 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between;">
+        <div class="page-footer-text">Mahindra Emirates Vehicle Armouring</div>
+        <div class="page-num"></div>
+      </div>
+    </div>`;
+
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
   import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc, onSnapshot, runTransaction, serverTimestamp, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -167,6 +185,25 @@
     saveBtn.disabled = !canSync || !dirty || remoteBanner.style.display === 'block';
   }
 
+  // --- RENDERING LOGIC (SMART WRAPPER) ---
+  function renderFromRemote(html, rev) {
+    applyingRemote = true;
+    
+    // If database is empty or data is raw, use Skeleton
+    if (!html || html.trim() === "") {
+        contentDiv.innerHTML = MEVA_SKELETON;
+    } else if (!html.includes('class="page"')) {
+        // Self-heal: Wrap raw content in the skeleton if page div is missing
+        contentDiv.innerHTML = MEVA_SKELETON.replace('<p style="color:var(--text-muted)">Initialize by typing or syncing...</p>', html);
+    } else {
+        contentDiv.innerHTML = html;
+    }
+
+    applyingRemote = false;
+    currentRev = Number(rev || 0);
+    setDirty(false);
+  }
+
   function setBlocked(blocked) {
     contentDiv.setAttribute('contenteditable', blocked ? 'false' : 'true');
     contentDiv.style.pointerEvents = blocked ? 'none' : 'auto';
@@ -186,7 +223,7 @@
     overlay.id = 'meva-login-overlay';
     overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center;`;
     overlay.innerHTML = `<div style="width:380px; background:#fff; border-radius:10px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
-      <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center;">MEVA SECURE LOGIN</div>
+      <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center; font-family:Georama;">MEVA SECURE LOGIN</div>
       <input id="m-email" type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
       <input id="m-pass" type="password" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
       <button id="m-btn" style="width:100%; padding:12px; background:var(--brand-color); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">SIGN IN</button>
@@ -210,7 +247,7 @@
         tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: serverRev + 1, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email });
         currentRev = serverRev + 1;
       });
-      setDirty(false); showToast('☁️ Saved');
+      setDirty(false); showToast('☁️ Saved to Cloud');
     } catch (e) {
       if (e.message === 'REV_CONFLICT') remoteBanner.style.display = 'block';
       else showToast('Sync Failed');
@@ -218,7 +255,7 @@
   };
 
   window.takeSnapshot = async () => {
-    const name = prompt("Backup Name:"); if (!name) return;
+    const name = prompt("Backup Name (e.g. Milestone 1):"); if (!name) return;
     try {
       await setDoc(doc(collection(db, 'tender_documents', 'meva_main_html', 'snapshots'), Date.now().toString()), {
         name, htmlContent: contentDiv.innerHTML, timestamp: Date.now(), createdBy: auth.currentUser.email
@@ -237,9 +274,13 @@
       listenerUnsub = onSnapshot(docRef, (snap) => {
         if (!snap.exists() || snap.metadata.hasPendingWrites) return;
         const data = snap.data(), nRev = Number(data.rev || 0), nHtml = String(data.htmlContent || '');
-        if (currentRev === 0) { applyingRemote = true; contentDiv.innerHTML = nHtml; currentRev = nRev; applyingRemote = false; setBlocked(false); return; }
+        if (currentRev === 0) { 
+            renderFromRemote(nHtml, nRev); 
+            setBlocked(false); 
+            return; 
+        }
         if (nRev > currentRev) {
-          if (!dirty) { applyingRemote = true; contentDiv.innerHTML = nHtml; currentRev = nRev; applyingRemote = false; }
+          if (!dirty) { renderFromRemote(nHtml, nRev); }
           else { pendingRemote = { htmlContent: nHtml, rev: nRev }; remoteBanner.style.display = 'block'; }
         }
       });
@@ -247,20 +288,17 @@
   }
 
   document.getElementById('btn-accept-remote').onclick = () => {
-    applyingRemote = true; contentDiv.innerHTML = pendingRemote.htmlContent; currentRev = pendingRemote.rev;
-    applyingRemote = false; pendingRemote = null; remoteBanner.style.display = 'none'; setDirty(false);
+    renderFromRemote(pendingRemote.htmlContent, pendingRemote.rev);
+    pendingRemote = null; remoteBanner.style.display = 'none';
   };
 
   document.getElementById('btn-keep-mine').onclick = () => {
     if (confirm("⚠️ Force overwrite server version?")) { currentRev = pendingRemote.rev; remoteBanner.style.display = 'none'; pendingRemote = null; setDirty(true); }
   };
 
-  // --- MODERNIZED UTILS ---
+  // --- UTILS (MODERNIZED) ---
   function getTargetTable(input) {
-    if (input?.tagName?.toLowerCase() === 'table') return input;
-    let el = input.closest?.('.doc-controls-wrapper');
-    while (el?.previousElementSibling) { el = el.previousElementSibling; if (el.tagName?.toLowerCase() === 'table') return el; }
-    return input.closest('table');
+    return input?.tagName?.toLowerCase() === 'table' ? input : input.closest('table');
   }
 
   window.addRow = (t) => {
@@ -301,7 +339,7 @@
     else alert("Click inside a grey box first.");
   };
 
-  window.promptImage = (el) => { const url = prompt("URL:"); if (url) { el.innerHTML = `<img src="${url}" style="width:100%;">`; setDirty(true); } };
+  window.promptImage = (el) => { const url = prompt("Enter Direct Image URL:"); if (url) { el.innerHTML = `<img src="${url}" style="width:100%; border-radius:4px;">`; setDirty(true); } };
 
   function initResizers() {
     contentDiv.querySelectorAll('th:not(.group-header)').forEach(th => {
