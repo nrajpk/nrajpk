@@ -26,6 +26,7 @@
       margin: 0; padding-top: 60px;
       background: var(--app-bg); color: var(--text-main);
       line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      counter-reset: sheet;
     }
 
     /* 3. APP TOOLBAR */
@@ -39,17 +40,17 @@
     .app-brand span { color: var(--brand-color); }
     .toolbar-actions { display: flex; align-items: center; gap: 12px; }
 
-    /* 4. HERO HEADER SUPPORT (Bleed-to-Edge) */
+    /* 4. HERO HEADER (Bleed Support) */
     .page > div:first-child {
       height: 55mm;
-      background-color: #e5e7eb;
+      background-color: var(--bg-gray);
       position: relative;
       overflow: hidden;
-      margin: -15mm -10mm 15mm -10mm; /* Forces image to page edges */
+      margin: -15mm -10mm 15mm -10mm;
     }
     .page > div:first-child img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* 5. PAGE LAYOUT (A4 Pro) */
+    /* 5. PAGE LAYOUT */
     @media screen {
       .page {
         width: 210mm; min-height: 297mm; margin: 30px auto;
@@ -58,7 +59,7 @@
         display: flex; flex-direction: column; border-radius: 4px;
       }
     }
-    .page-content { flex-grow: 1; padding: 10px 0; }
+    .page-content { flex-grow: 1; padding: 20px 0; }
 
     @page { size: A4; margin: 0; }
     @media print {
@@ -68,7 +69,7 @@
       .page > div:first-child { margin-top: -15mm; margin-left: -10mm; margin-right: -10mm; }
     }
 
-    /* 6. TYPOGRAPHY & TABLES */
+    /* 6. TABLES & TYPOGRAPHY */
     .main-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
     .sub-heading { font-size: 11px; font-weight: 700; color: var(--brand-color); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin: 24px 0 12px 0; display: flex; align-items: center; justify-content: space-between; }
     table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; table-layout: fixed; }
@@ -95,7 +96,7 @@
 <div class="app-toolbar">
   <div class="app-brand">MEVA <span>Tender Builder</span></div>
   <div class="toolbar-actions">
-    <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">Sync Status: All Saved</span>
+    <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">Status: Ready</span>
     <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button>
     <button class="btn" onclick="window.print()">🖨️ PDF</button>
     <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
@@ -109,10 +110,10 @@
   // 1. HARDCODED SKELETON (Replaces seed-data.js)
   const MEVA_SKELETON = `
     <div class="page">
-      <div><img src="mevahero.jpeg" alt="MEVA Armored"></div>
+      <div><img src="mevahero.jpeg" alt="MEVA Armored" onerror="this.style.display='none'"></div>
       <div class="page-content">
         <div class="main-heading">TECHNICAL SPECIFICATIONS</div>
-        <p style="color:#5F6368">Click here to start editing or sync latest data...</p>
+        <p style="color:#5F6368">Click here to start editing spec tables...</p>
       </div>
       <div class="page-footer">
         <div class="page-footer-text">Mahindra Emirates Vehicle Armouring</div>
@@ -158,7 +159,7 @@
     if (!html || html.trim() === "") {
         contentDiv.innerHTML = MEVA_SKELETON;
     } else if (!html.includes('class="page"')) {
-        contentDiv.innerHTML = MEVA_SKELETON.replace('<p style="color:#5F6368">Click here to start editing or sync latest data...</p>', html);
+        contentDiv.innerHTML = MEVA_SKELETON.replace('<p style="color:#5F6368">Click here to start editing spec tables...</p>', html);
     } else {
         contentDiv.innerHTML = html;
     }
@@ -183,7 +184,7 @@
     if (document.getElementById('meva-login-overlay')) return;
     const overlay = document.createElement('div');
     overlay.id = 'meva-login-overlay';
-    overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center;`;
+    overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; font-family:Georama, sans-serif;`;
     overlay.innerHTML = `<div style="width:380px; background:#fff; border-radius:10px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
       <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center;">MEVA SECURE LOGIN</div>
       <input id="m-email" type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
@@ -245,13 +246,28 @@
 
 <script>
 (function() {
-  const tb = document.querySelector('.toolbar-actions');
-  const makeBtn = (txt, cb) => { const b = document.createElement('button'); b.className='btn'; b.textContent=txt; b.onclick=cb; return b; };
-  const g = document.createElement('div'); g.style.display='flex'; g.style.gap='5px';
-  g.append(makeBtn('B', () => document.execCommand('bold')));
-  g.append(makeBtn('I', () => document.execCommand('italic')));
-  g.append(makeBtn('U', () => document.execCommand('underline')));
-  tb.prepend(g);
+  const contentDiv = document.getElementById('document-content');
+  contentDiv.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('section-lock-btn')) return;
+    const h = e.target.closest('.main-heading, .sub-heading'), locked = e.target.classList.toggle('is-locked');
+    e.target.textContent = locked ? '🔒 Locked' : '🔓 Unlocked';
+    let c = h.nextElementSibling;
+    while (c && !['MAIN-HEADING','SUB-HEADING'].includes(c.className.toUpperCase())) {
+      c.setAttribute('contenteditable', locked ? 'false' : 'true');
+      c.classList.toggle('is-locked', locked);
+      c = c.nextElementSibling;
+    }
+    setDirty(true);
+  });
+  function ensure() {
+    contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
+      if (h.querySelector('.section-lock-btn')) return;
+      const b = document.createElement('span'); b.className = 'section-lock-btn';
+      b.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒 Locked' : '🔓 Unlocked';
+      h.appendChild(b);
+    });
+  }
+  new MutationObserver(ensure).observe(contentDiv, { childList: true, subtree: true });
 })();
 </script>
 
