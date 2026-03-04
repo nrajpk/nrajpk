@@ -38,7 +38,26 @@
     .app-brand { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
     .app-brand span { color: var(--brand-color); }
     .toolbar-actions { display: flex; align-items: center; gap: 12px; }
+/* Hero Image Header Support */
+.page > div:first-child {
+    height: 55mm;
+    background-color: var(--bg-gray);
+    position: relative;
+    overflow: hidden;
+}
 
+.page > div:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Page content area adjustment to prevent overlap */
+.page-content {
+    flex-grow: 1;
+    padding: 20px 0;
+}
     /* 4. PAGE LAYOUT */
     @media screen {
       .page {
