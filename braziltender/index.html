@@ -320,6 +320,8 @@
 
     /* EDITABLE ROOT */
     #document-content { outline: none; }
+  
+  
   </style>
 </head>
 <body>
@@ -1025,7 +1027,7 @@
   document.head.appendChild(style);
 })();
 </script>
-  <script>
+ <script>
 (function() {
   const contentDiv = document.getElementById('document-content');
   if (!contentDiv) return;
@@ -1034,56 +1036,88 @@
   if (window.__mevaSectionLockApplied) return;
   window.__mevaSectionLockApplied = true;
 
-  // 1) Inject CSS (scoped safely to editor only)
+  // 1) Inject CSS (scoped safely)
   const style = document.createElement('style');
   style.textContent = `
-    .section-lock-btn {
-      cursor: pointer;
-      margin-left: 12px;
-      font-size: 14px;
-      user-select: none;
-      opacity: 0.5;
-      display: inline-block;
-      transition: all 0.2s;
+    .section-lock-btn{
+      cursor:pointer;
+      margin-left:10px;
+      font-size:12px;
+      font-weight:800;
+      user-select:none;
+      opacity:.45;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:2px 10px;
+      border:1px solid transparent;
+      border-radius:999px;
+      transition:all .15s ease;
+      vertical-align:middle;
     }
-    .section-lock-btn:hover {
-      opacity: 1;
-      transform: scale(1.1);
+    .section-lock-btn:hover{
+      opacity:1;
+      border-color: var(--border-color);
+      background: var(--bg-gray);
+      transform:none;
+    }
+    .section-lock-btn.is-locked{
+      opacity:1;
+      color: var(--brand-color);
+      border-color: rgba(228,24,55,.25);
+      background:#fff0f1;
     }
 
-    /* Scope to editor only so it doesn't affect other UI bits like resizers */
-    #document-content [contenteditable="false"] {
-      background-color: #fcfcfc;
+    /* Scope visuals to editor only */
+    #document-content .lock-scope.is-locked{
+      border-left:4px solid var(--brand-color);
+      background:#fff0f1;
+      padding-left:10px;
+      border-radius:4px;
     }
 
-    @media print { .section-lock-btn { display: none !important; } }
+    /* Keep non-editable subtle without affecting other UI like resizers */
+    #document-content [contenteditable="false"]{
+      background-color:#fcfcfc;
+    }
+
+    @media print { .section-lock-btn { display:none !important; } }
   `;
   document.head.appendChild(style);
 
+  function isHeading(el){
+    return el && el.classList && (el.classList.contains('main-heading') || el.classList.contains('sub-heading'));
+  }
+
+  function isFooter(el){
+    return el && el.classList && el.classList.contains('page-footer');
+  }
+
   // 2) Click handler (delegated)
   contentDiv.addEventListener('click', (e) => {
-    if (!e.target.classList || !e.target.classList.contains('section-lock-btn')) return;
+    const t = e.target;
+    if (!t || !t.classList || !t.classList.contains('section-lock-btn')) return;
 
     e.preventDefault();
     e.stopPropagation();
 
-    const btn = e.target;
-    const heading = btn.closest('.main-heading, .sub-heading');
+    const heading = t.closest('.main-heading, .sub-heading');
     if (!heading) return;
 
-    const isLocked = btn.textContent.includes('🔒');
-    const willLock = !isLocked;
+    const currentlyLocked = t.classList.contains('is-locked');
+    const willLock = !currentlyLocked;
 
-    btn.textContent = willLock ? '🔒' : '🔓';
-    btn.title = willLock ? 'Unlock section' : 'Lock section';
+    // Button UI
+    t.textContent = willLock ? '🔒 Locked' : '🔓 Unlocked';
+    t.title = willLock ? 'Unlock section' : 'Lock section';
+    t.classList.toggle('is-locked', willLock);
 
     // Lock/unlock until next heading or footer
     let curr = heading.nextElementSibling;
-    while (curr &&
-           !curr.classList.contains('main-heading') &&
-           !curr.classList.contains('sub-heading') &&
-           !curr.classList.contains('page-footer')) {
+    while (curr && !isHeading(curr) && !isFooter(curr)) {
       curr.setAttribute('contenteditable', willLock ? 'false' : 'true');
+      curr.classList.add('lock-scope');
+      curr.classList.toggle('is-locked', willLock);
       curr = curr.nextElementSibling;
     }
 
@@ -1100,8 +1134,8 @@
 
   function ensureButtons() {
     scheduled = false;
-    const headings = contentDiv.querySelectorAll('.main-heading, .sub-heading');
 
+    const headings = contentDiv.querySelectorAll('.main-heading, .sub-heading');
     headings.forEach(h => {
       if (h.querySelector('.section-lock-btn')) return;
 
@@ -1111,10 +1145,19 @@
       const btn = document.createElement('span');
       btn.className = 'section-lock-btn';
       btn.contentEditable = 'false';
-      btn.textContent = sibLocked ? '🔒' : '🔓';
+      btn.textContent = sibLocked ? '🔒 Locked' : '🔓 Unlocked';
       btn.title = sibLocked ? 'Unlock section' : 'Lock section';
+      btn.classList.toggle('is-locked', !!sibLocked);
 
       h.appendChild(btn);
+
+      // Apply visuals to currently locked siblings (so state looks consistent on load)
+      let curr = h.nextElementSibling;
+      while (curr && !isHeading(curr) && !isFooter(curr)) {
+        curr.classList.add('lock-scope');
+        curr.classList.toggle('is-locked', curr.getAttribute('contenteditable') === 'false');
+        curr = curr.nextElementSibling;
+      }
     });
   }
 
@@ -1126,7 +1169,6 @@
 
   observer.observe(contentDiv, { childList: true, subtree: true });
 
-  // Run once on load
   ensureButtons();
 })();
 </script>
