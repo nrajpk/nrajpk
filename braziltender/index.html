@@ -794,13 +794,104 @@
 <script>
 (function () {
   const toolbar = document.querySelector('.toolbar-actions');
+  const editor = document.getElementById('document-content');
+  if (!toolbar || !editor) return;
+
+  // Prevent duplicate injection
+  if (document.getElementById('top-format-controls')) return;
+
+  function selectionInsideEditor() {
+    const sel = window.getSelection && window.getSelection();
+    if (!sel || sel.rangeCount === 0) return false;
+    const node = sel.anchorNode;
+    if (!node) return false;
+    const el = node.nodeType === 1 ? node : node.parentElement;
+    return !!(el && el.closest && el.closest('#document-content'));
+  }
+
+  function exec(cmd, value = null) {
+    if (!selectionInsideEditor()) {
+      alert('Select text inside the document first.');
+      return;
+    }
+    editor.focus();
+    try {
+      document.execCommand(cmd, false, value);
+      if (typeof window.notifyChange === 'function') window.notifyChange();
+    } catch (e) {
+      console.warn('Formatting failed:', e);
+    }
+  }
+
+  function makeBtn(label, title, onClick) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn';
+    b.title = title;
+    b.textContent = label;
+    b.addEventListener('click', (e) => { e.preventDefault(); onClick(); });
+    return b;
+  }
+
+  function makeSelect(title, options, onChange) {
+    const s = document.createElement('select');
+    s.className = 'btn';
+    s.title = title;
+
+    options.forEach(o => {
+      const opt = document.createElement('option');
+      opt.value = o.value;
+      opt.textContent = o.label;
+      s.appendChild(opt);
+    });
+
+    s.addEventListener('change', () => {
+      if (!selectionInsideEditor()) { s.value = ''; return; }
+      if (s.value) onChange(s.value);
+      s.value = '';
+    });
+
+    return s;
+  }
+
+  const group = document.createElement('div');
+  group.id = 'top-format-controls';
+  group.style.display = 'inline-flex';
+  group.style.gap = '6px';
+  group.style.alignItems = 'center';
+  group.style.marginRight = '10px';
+
+  group.appendChild(makeBtn('B', 'Bold', () => exec('bold')));
+  group.appendChild(makeBtn('I', 'Italic', () => exec('italic')));
+  group.appendChild(makeBtn('U', 'Underline', () => exec('underline')));
+  group.appendChild(makeBtn('Clear', 'Clear formatting', () => exec('removeFormat')));
+
+  const colors = [
+    { value: '', label: 'Text color' },
+    { value: '#1A1A1B', label: 'Black' },
+    { value: '#5F6368', label: 'Grey' },
+    { value: '#E41837', label: 'MEVA Red' }
+  ];
+  group.appendChild(makeSelect('Text color', colors, (v) => exec('foreColor', v)));
+
+  toolbar.insertBefore(group, toolbar.firstChild);
+
+  // Hide only formatting controls in print
+  const style = document.createElement('style');
+  style.textContent = `@media print { #top-format-controls { display: none !important; } }`;
+  document.head.appendChild(style);
+})();
+</script>
+  <script>
+(function () {
+  const toolbar = document.querySelector('.toolbar-actions');
   const contentDiv = document.getElementById('document-content');
   if (!toolbar || !contentDiv) return;
 
   // Prevent duplicate injection
   if (document.getElementById('top-table-controls')) return;
 
-  function getActiveTable() {
+  function getActiveElementInEditor() {
     const sel = window.getSelection && window.getSelection();
     if (!sel || sel.rangeCount === 0) return null;
 
@@ -810,23 +901,24 @@
     const el = node.nodeType === 1 ? node : node.parentElement;
     if (!el || !el.closest) return null;
 
-    // Only operate inside the editor
     if (!el.closest('#document-content')) return null;
+    return el;
+  }
 
-    return el.closest('table');
+  function getActiveTable() {
+    const el = getActiveElementInEditor();
+    return el ? el.closest('table') : null;
   }
 
   function findControlsWrapperForTable(table) {
     if (!table) return null;
 
-    // Wrapper is typically right after the table
     let n = table.nextElementSibling;
     for (let i = 0; i < 6 && n; i++) {
       if (n.classList && n.classList.contains('doc-controls-wrapper')) return n;
       n = n.nextElementSibling;
     }
 
-    // Fallback: nearest wrapper after table within same page
     const page = table.closest('.page') || table.parentElement;
     if (!page) return null;
 
@@ -834,7 +926,6 @@
     for (const w of wrappers) {
       if (table.compareDocumentPosition(w) & Node.DOCUMENT_POSITION_FOLLOWING) return w;
     }
-
     return null;
   }
 
@@ -854,12 +945,52 @@
       return;
     }
 
-    // Proxy "btn" so your existing functions run unchanged
     const proxyBtn = {
       closest: (sel) => (sel === '.doc-controls-wrapper' ? wrapper : null)
     };
 
     fn(proxyBtn);
+  }
+
+  // SAFE REMOVE DEEPDIVE:
+  // Only removes if the clicked/selected row is a deepdive row created by your template.
+  function removeDeepdiveSafe() {
+    const el = getActiveElementInEditor();
+    if (!el) {
+      alert('Click inside the Deep Dive row you want to remove.');
+      return;
+    }
+
+    const row = el.closest('tr');
+    if (!row) {
+      alert('Click inside the Deep Dive row you want to remove.');
+      return;
+    }
+
+    // Must be your deepdive row type
+    if (!row.classList.contains('no-break')) {
+      alert('This is not a Deep Dive row. Click inside a Deep Dive row (grey box) and try again.');
+      return;
+    }
+
+    // Must contain the unique label from your template
+    const label = row.querySelector('strong');
+    const labelText = (label ? label.textContent : '').trim();
+
+    if (!labelText.includes('Technical Deep Dive') && !row.innerText.includes('↳ Technical Deep Dive')) {
+      alert('This is not a Deep Dive row created by the system. Not removing.');
+      return;
+    }
+
+    // Remove and mark dirty
+    row.remove();
+
+    if (typeof window.notifyChange === 'function') {
+      window.notifyChange();
+    } else {
+      // Fallback: at least trigger a normal input event
+      contentDiv.dispatchEvent(new Event('input', { bubbles: true }));
+    }
   }
 
   function makeBtn(label, title, onClick) {
@@ -875,7 +1006,6 @@
     return b;
   }
 
-  // Controls group
   const group = document.createElement('div');
   group.id = 'top-table-controls';
   group.style.display = 'inline-flex';
@@ -886,11 +1016,10 @@
   group.appendChild(makeBtn('+ Row', 'Add row to active table', () => callTableAction('addRow')));
   group.appendChild(makeBtn('- Row', 'Remove last row from active table', () => callTableAction('removeRow')));
   group.appendChild(makeBtn('+ Deepdive', 'Add deepdive row to active table', () => callTableAction('addDeepdiveRow')));
+  group.appendChild(makeBtn('- Deepdive', 'Remove the deepdive row you clicked in', removeDeepdiveSafe));
 
-  // Add to toolbar
   toolbar.insertBefore(group, toolbar.firstChild);
 
-  // Hide only these controls in print (do not alter existing print behavior)
   const style = document.createElement('style');
   style.textContent = `@media print { #top-table-controls { display: none !important; } }`;
   document.head.appendChild(style);
