@@ -48,7 +48,20 @@
       overflow: hidden;
       margin: -15mm -10mm 15mm -10mm;
     }
-    
+    /* HERO BAND (explicit, safe) */
+.hero-band {
+  height: 55mm;
+  background-color: var(--bg-gray);
+  position: relative;
+  overflow: hidden;
+  margin: -15mm -10mm 15mm -10mm;
+}
+.hero-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
     /* 5. PAGE LAYOUT */
     @media screen {
@@ -110,7 +123,9 @@
   // 1. HARDCODED SKELETON (Replaces seed-data.js)
   const MEVA_SKELETON = `
     <div class="page">
-      <div><img src="mevahero.jpeg" alt="MEVA Armored" onerror="this.style.display='none'"></div>
+      <div class="hero-band">
+  <img src="mevahero.jpeg" alt="MEVA Armored" onerror="this.style.display='none'">
+</div>
       <div class="page-content">
         <div class="main-heading">TECHNICAL SPECIFICATIONS</div>
         <p style="color:#5F6368">Click here to start editing spec tables...</p>
