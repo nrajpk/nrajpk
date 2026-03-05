@@ -389,11 +389,7 @@
 <div class="app-toolbar">
   <div class="app-brand">MEVA <span>Tender Builder</span></div>
   <div class="toolbar-actions">
-    <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">Status: Ready</span>
-    <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button>
-    <button class="btn" onclick="window.print()">🖨️ PDF</button>
-    <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
-<div class="doc-controls-wrapper" id="meva-toolbar" style="opacity:1; margin:0;">
+    <div class="doc-controls-wrapper" id="meva-toolbar" style="opacity:1; margin:0;">
   <!-- Text -->
   <button class="doc-control" type="button" data-act="bold" title="Bold"><b>B</b></button>
   <button class="doc-control" type="button" data-act="italic" title="Italic"><i>I</i></button>
@@ -414,6 +410,11 @@
   <button class="doc-control" type="button" data-act="deepdive" title="Deep Dive Row">Deep Dive</button>
 </div>
     
+    <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">Status: Ready</span>
+  <!--  <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button> -->
+    <button class="btn" onclick="window.print()">🖨️ PDF</button>
+    <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
+
   </div>
 </div>
 
