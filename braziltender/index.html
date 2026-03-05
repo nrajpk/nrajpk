@@ -455,7 +455,10 @@
       if (listenerUnsub) listenerUnsub();
       if (!user) { canSync = false; setBlocked(true); ensureLoginModal(); return; }
       if (!(await isAllowlistedEmail(user))) { await signOut(auth); return; }
-      document.getElementById('meva-login-overlay')?.remove(); canSync = true;
+      document.getElementById('meva-login-overlay')?.remove();
+canSync = true;
+setBlocked(false);
+
       listenerUnsub = onSnapshot(docRef, (snap) => {
         if (!snap.exists() || snap.metadata.hasPendingWrites) return;
         const data = snap.data();
