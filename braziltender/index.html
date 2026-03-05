@@ -509,7 +509,7 @@ window.doc = doc;
   contentDiv.addEventListener('click', (e) => {
     if (!e.target.classList.contains('section-lock-btn')) return;
     const h = e.target.closest('.main-heading, .sub-heading'), locked = e.target.classList.toggle('is-locked');
-    e.target.textContent = locked ? '🔒 Locked' : '🔓 Unlocked';
+    e.target.textContent = locked ? '🔒' : '✍️';
     let c = h.nextElementSibling;
     while (c && !['MAIN-HEADING','SUB-HEADING'].includes(c.className.toUpperCase())) {
       c.setAttribute('contenteditable', locked ? 'false' : 'true');
@@ -522,7 +522,7 @@ window.doc = doc;
     contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
       if (h.querySelector('.section-lock-btn')) return;
       const b = document.createElement('span'); b.className = 'section-lock-btn';
-      b.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒 Locked' : '🔓 Unlocked';
+      b.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒' : '✍️';
       h.appendChild(b);
     });
   }
