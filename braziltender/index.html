@@ -9,7 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 
-/* ===== BRAND TOKENS ===== */
+/* =====================================================
+   BRAND TOKENS
+===================================================== */
+
 :root {
   --brand-color: #E41837;
   --brand-hover: #c91430;
@@ -20,13 +23,132 @@
   --app-bg: #1f2937;
 }
 
-/* ===== GLOBAL TYPOGRAPHY ===== */
+/* =====================================================
+   PDF VIEWER SIMULATION
+===================================================== */
+
+body {
+  background-color: #525659;
+  margin: 0;
+  padding: 20px;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-family: "Georama", sans-serif;
+  line-height: 1.4;
+  color: var(--text-main);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.pdf-page {
+  background: white;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 45px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+/* =====================================================
+   TYPOGRAPHY
+===================================================== */
+
 * {
-  font-family: 'Georama', sans-serif;
+  font-family: "Georama", sans-serif;
   box-sizing: border-box;
 }
 
-/* ===== APP TOOLBAR (EDITOR UI) ===== */
+.section {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 3px;
+}
+
+.value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.value-strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+}
+
+.rule {
+  border-bottom: 2px solid var(--brand-color);
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* =====================================================
+   WATERMARK
+===================================================== */
+
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  text-align: center;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.watermark-text {
+  font-size: 50pt;
+  font-weight: 800;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 20px;
+  white-space: nowrap;
+}
+
+.content-layer {
+  position: relative;
+  z-index: 10;
+}
+
+/* =====================================================
+   HEADER / FOOTER
+===================================================== */
+
+.page-header-mock {
+  border-bottom: 0.5pt solid var(--border-color);
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.page-footer-mock {
+  position: absolute;
+  bottom: 45px;
+  left: 45px;
+  right: 45px;
+  border-top: 0.5pt solid var(--border-color);
+  padding-top: 6px;
+  font-size: 7.5pt;
+  color: var(--text-muted);
+}
+
+/* =====================================================
+   APP TOOLBAR
+===================================================== */
+
 .app-toolbar {
   position: fixed;
   top: 0;
@@ -47,13 +169,6 @@
   font-size: 16px;
   font-weight: 800;
   color: var(--text-main);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.app-brand span {
-  color: var(--brand-color);
 }
 
 .toolbar-actions {
@@ -72,7 +187,10 @@
   color: #d97706;
 }
 
-/* ===== BUTTONS ===== */
+/* =====================================================
+   BUTTONS
+===================================================== */
+
 .btn {
   background: #FFFFFF;
   border: 1px solid var(--border-color);
@@ -83,11 +201,6 @@
   text-transform: uppercase;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn:hover {
-  background: var(--bg-gray);
 }
 
 .btn-primary {
@@ -100,39 +213,9 @@
   background: var(--brand-hover);
 }
 
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ===== DOCUMENT TYPOGRAPHY ===== */
-
-.main-heading {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.sub-heading {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--brand-color);
-  text-transform: uppercase;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 6px;
-  margin: 24px 0 12px 0;
-}
-
-p.para {
-  font-size: 12px;
-  line-height: 1.45;
-  margin: 0 0 14px 0;
-  text-align: justify;
-}
-
-/* ===== TABLES ===== */
+/* =====================================================
+   TABLES
+===================================================== */
 
 table {
   width: 100%;
@@ -157,7 +240,7 @@ th {
 }
 
 .group-header {
-  background: #FFFFFF !important;
+  background: #fff !important;
   text-align: left;
   font-weight: 800;
   color: var(--brand-color);
@@ -169,7 +252,22 @@ th {
   border-bottom: 1.5pt solid var(--brand-color) !important;
 }
 
-/* ===== EDITOR CONTROLS ===== */
+/* =====================================================
+   TABLE RESIZING
+===================================================== */
+
+.resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  cursor: col-resize;
+  height: 100%;
+}
+
+/* =====================================================
+   INLINE EDITOR CONTROLS
+===================================================== */
 
 .doc-controls-wrapper {
   display: inline-flex;
@@ -198,11 +296,9 @@ th {
   cursor: pointer;
 }
 
-.doc-control:last-child {
-  border-right: none;
-}
-
-/* ===== IMAGE HANDLING ===== */
+/* =====================================================
+   IMAGE HANDLING
+===================================================== */
 
 #document-content td img {
   max-width: 100%;
@@ -211,7 +307,9 @@ th {
   border-radius: 4px;
 }
 
-/* ===== CONTENT BLOCKS ===== */
+/* =====================================================
+   CONTENT BLOCKS
+===================================================== */
 
 .info-box {
   padding: 12px 16px;
@@ -228,20 +326,49 @@ th {
   gap: 15px;
 }
 
-/* ===== PAGE BREAK SUPPORT ===== */
+/* =====================================================
+   LISTS
+===================================================== */
+
+ul.check-list {
+  margin: 0 0 12px 18px;
+  font-size: 11px;
+}
+
+/* =====================================================
+   TOASTS
+===================================================== */
+
+#remote-banner {
+  display: none;
+}
+
+#status-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* =====================================================
+   LOCK BUTTON
+===================================================== */
+
+.section-lock-btn {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+}
+
+/* =====================================================
+   PAGE BREAK CONTROL
+===================================================== */
 
 .page-break {
   break-before: page;
 }
 
-/* ===== PRINT SETTINGS ===== */
-
-@page {
-  size: A4;
-  margin: 45px;
-}
-
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4 {
   break-after: avoid;
 }
 
@@ -251,6 +378,15 @@ h1, h2, h3, h4, h5 {
 
 ul, ol {
   break-inside: avoid;
+}
+
+/* =====================================================
+   PRINT SETTINGS
+===================================================== */
+
+@page {
+  size: A4;
+  margin: 45px;
 }
 
 @media print {
@@ -270,6 +406,15 @@ ul, ol {
     padding: 0 !important;
   }
 
+  .pdf-page {
+    width: auto;
+    min-height: auto;
+    box-shadow: none;
+    padding: 45px;
+    margin: 0;
+    page-break-after: always;
+  }
+
   table {
     page-break-inside: auto;
   }
@@ -284,6 +429,11 @@ ul, ol {
 
   tfoot {
     display: table-footer-group;
+  }
+
+  .page-footer-mock {
+    position: static;
+    margin-top: 20px;
   }
 
 }
