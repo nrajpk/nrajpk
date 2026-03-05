@@ -319,7 +319,39 @@
       display: none;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
+.section-lock-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:22px;
+  height:22px;
+  margin-left:10px;
+  border-radius:999px;
+  cursor:pointer;
+  user-select:none;
+  font-size:13px;
+  line-height:1;
+  color: var(--text-muted);
+  opacity:.75;
+  transition: transform .15s ease, opacity .15s ease, background-color .15s ease, box-shadow .15s ease;
+}
 
+.section-lock-btn:hover{
+  opacity:1;
+  transform: translateY(-1px);
+  background: rgba(0,0,0,.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,.08);
+}
+
+/* locked */
+.section-lock-btn.is-locked{
+  opacity:1;
+  background: rgba(228,24,55,.10);
+  box-shadow: 0 6px 14px rgba(228,24,55,.10);
+}
+.section-lock-btn.is-locked:hover{
+  background: rgba(228,24,55,.14);
+}
  
 
 
