@@ -530,7 +530,7 @@ tbody tr:last-child td{
     applyingRemote = true;
     if (!html || html.trim() === "") {
         contentDiv.innerHTML = MEVA_SKELETON;
-    } else if (!html.includes('class="page"')) {
+    } else if (!html.includes('class="pdf-page"')) {
         contentDiv.innerHTML = MEVA_SKELETON.replace('<p style="color:#5F6368">Click here to start editing spec tables...</p>', html);
     } else {
         contentDiv.innerHTML = html;
