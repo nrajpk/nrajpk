@@ -394,18 +394,21 @@
   <button class="doc-control" type="button" data-act="bold" title="Bold"><b>B</b></button>
   <button class="doc-control" type="button" data-act="italic" title="Italic"><i>I</i></button>
   <button class="doc-control" type="button" data-act="underline" title="Underline"><u>U</u></button>
-  <button class="doc-control" type="button" data-act="ul" title="Bullets">• List</button>
-  <button class="doc-control" type="button" data-act="ol" title="Numbered">1. List</button>
-
+      <button class="doc-control" type="button" id="color-btn" title="Text Color">A🎨</button>
+<input type="color" id="color-picker" style="display:none;">
+ <!--   <button class="doc-control" type="button" data-act="ul" title="Bullets">• List</button> -->
+ <!--   <button class="doc-control" type="button" data-act="ol" title="Numbered">1. List</button> -->
+      <button class="doc-control" type="button" data-act="clear">Clear</button>
+<div>
   <!-- Table -->
-  <button class="doc-control" type="button" data-act="row-above" title="Row Above">+Row ↑</button>
-  <button class="doc-control" type="button" data-act="row-below" title="Row Below">+Row ↓</button>
+  <button class="doc-control" type="button" data-act="row-above" title="Row Above">Row ↑</button>
+  <button class="doc-control" type="button" data-act="row-below" title="Row Below">Row ↓</button>
   <button class="doc-control" type="button" data-act="row-del" title="Delete Row">−Row</button>
 
   <button class="doc-control" type="button" data-act="col-left" title="Column Left">+Col ←</button>
   <button class="doc-control" type="button" data-act="col-right" title="Column Right">+Col →</button>
   <button class="doc-control" type="button" data-act="col-del" title="Delete Column">−Col</button>
-
+</div>
   <!-- Deep Dive -->
   <button class="doc-control" type="button" data-act="deepdive" title="Deep Dive Row">Deep Dive</button>
 </div>
@@ -656,7 +659,7 @@ window.doc = doc;
     else if (act === 'underline') document.execCommand('underline');
     else if (act === 'ul') document.execCommand('insertUnorderedList');
     else if (act === 'ol') document.execCommand('insertOrderedList');
-
+  else if (act === 'clear') document.execCommand('removeFormat');
     window.setDirty?.(true);
   }
 
@@ -772,7 +775,20 @@ window.doc = doc;
 
     window.setDirty?.(true);
   }
+// ---------- TEXT COLOR (hook up UI) ----------
+const colorBtn = document.getElementById('color-btn');
+const colorPicker = document.getElementById('color-picker');
 
+if (colorBtn && colorPicker) {
+  colorBtn.onclick = () => colorPicker.click();
+
+  colorPicker.oninput = function () {
+    if (!inEditorSelection()) return toast('Place cursor inside the document.');
+    root.focus();
+    document.execCommand('foreColor', false, this.value);
+    window.setDirty?.(true);
+  };
+}
   // ---------- dispatcher ----------
   toolbar.addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-act]');
@@ -782,7 +798,7 @@ window.doc = doc;
     const act = btn.getAttribute('data-act');
 
     // text
-    if (['bold','italic','underline','ul','ol'].includes(act)) return fmt(act);
+    if (['bold','italic','underline','ul','ol','clear'].includes(act)) return fmt(act);
 
     // table
     if (act === 'row-above') return rowAbove();
