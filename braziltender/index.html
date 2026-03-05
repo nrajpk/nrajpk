@@ -93,24 +93,24 @@
     .page-num::after { counter-increment: sheet; content: "Page " counter(sheet); }
 
     /* 5. LOGICAL PAGE LAYOUT (WEB) */
-    @media screen {
-      .page {
-        width: 210mm;
-        min-height: 297mm;
-        margin: 30px auto;
-        background: #FFFFFF;
-        display: flex;
-        flex-direction: column;
-        padding: 15mm 10mm;
-        box-sizing: border-box;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        position: relative;
-        border-radius: 4px;
-      }
-    }
+@media screen {
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 30px auto;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 15mm 10mm;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    border-radius: 4px;
+  }
 
-    /* 6. LOGICAL PAGE LAYOUT (PRINT) */
-    @page { size: A4; margin: 15mm 10mm; }
+  /* Hide footer only in web view */
+  .page-footer { display: none !important; }
+}
     @media print {
   .app-toolbar, .ui-controls, .doc-controls-wrapper, #remote-banner, #status-toast { display: none !important; }
   body { background: #FFFFFF; padding-top: 0; }
