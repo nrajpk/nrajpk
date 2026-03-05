@@ -231,18 +231,42 @@
       if (listenerUnsub) listenerUnsub();
       if (!user) { canSync = false; setBlocked(true); ensureLoginModal(); return; }
       if (!(await isAllowlistedEmail(user))) { await signOut(auth); return; }
-      document.getElementById('meva-login-overlay')?.remove(); canSync = true;
-      listenerUnsub = onSnapshot(docRef, (snap) => {
-        if (!snap.exists() || snap.metadata.hasPendingWrites) return;
-        const data = snap.data();
-        if (currentRev === 0 || !dirty) renderFromRemote(data.htmlContent, data.rev);
+      document.getElementById('meva-login-overlay')?.remove();
+canSync = true;
+
+// IMPORTANT: remove grey overlay after successful allowlist
+setBlocked(false);
+
+listenerUnsub = onSnapshot(docRef, async (snap) => {
+  if (snap.metadata.hasPendingWrites) return;
+
+  // If doc doesn't exist yet, seed it once with your skeleton
+  if (!snap.exists()) {
+    try {
+      await setDoc(docRef, {
+        htmlContent: MEVA_SKELETON,
+        rev: 1,
+        updatedAt: serverTimestamp(),
+        updatedBy: auth.currentUser.email
       });
+      // Snapshot will fire again with the new data
+    } catch (e) {
+      console.error(e);
+      // Even if seeding fails, at least show something locally
+      renderFromRemote(MEVA_SKELETON, 0);
+    }
+    return;
+  }
+
+  const data = snap.data();
+  if (currentRev === 0 || !dirty) renderFromRemote(data.htmlContent, data.rev);
+});
     });
   }
 
   contentDiv.addEventListener('input', () => setDirty(true));
   startApp();
-
+window.setDirty = setDirty;
 window.auth = auth;
 window.db = db;
 window.getDoc = getDoc;
@@ -264,7 +288,7 @@ window.doc = doc;
       c.classList.toggle('is-locked', locked);
       c = c.nextElementSibling;
     }
-    setDirty(true);
+    if (window.setDirty) window.setDirty(true);
   });
   function ensure() {
     contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
