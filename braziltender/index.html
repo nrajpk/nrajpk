@@ -224,7 +224,32 @@
       user-select: none;
     }
     .doc-controls-wrapper:hover, .doc-controls-wrapper:focus-within { opacity: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-    .doc-control {
+   /* Top bar controls look consistent */
+#meva-toolbar.doc-controls-wrapper{
+  opacity: 1 !important;
+  margin: 0 !important;
+  gap: 0;
+}
+#meva-toolbar .doc-control{
+  padding: 6px 10px;
+  font-size: 10px;
+}
+#meva-toolbar .doc-control:active{
+  transform: translateY(1px);
+}
+
+/* Deep dive row styling */
+#document-content tr.deepdive-row td{
+  background: #f8fafc;
+  border-left: 3px solid rgba(228,24,55,.35);
+  padding: 12px 10px;
+}
+#document-content tr.deepdive-row td:empty:before{
+  content: "Deep dive notes…";
+  color: #94a3b8;
+  font-weight: 600;
+}
+     .doc-control {
       background: transparent;
       border: none;
       border-right: 1px solid var(--border-color);
@@ -368,6 +393,27 @@
     <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button>
     <button class="btn" onclick="window.print()">🖨️ PDF</button>
     <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
+<div class="doc-controls-wrapper" id="meva-toolbar" style="opacity:1; margin:0;">
+  <!-- Text -->
+  <button class="doc-control" type="button" data-act="bold" title="Bold"><b>B</b></button>
+  <button class="doc-control" type="button" data-act="italic" title="Italic"><i>I</i></button>
+  <button class="doc-control" type="button" data-act="underline" title="Underline"><u>U</u></button>
+  <button class="doc-control" type="button" data-act="ul" title="Bullets">• List</button>
+  <button class="doc-control" type="button" data-act="ol" title="Numbered">1. List</button>
+
+  <!-- Table -->
+  <button class="doc-control" type="button" data-act="row-above" title="Row Above">+Row ↑</button>
+  <button class="doc-control" type="button" data-act="row-below" title="Row Below">+Row ↓</button>
+  <button class="doc-control" type="button" data-act="row-del" title="Delete Row">−Row</button>
+
+  <button class="doc-control" type="button" data-act="col-left" title="Column Left">+Col ←</button>
+  <button class="doc-control" type="button" data-act="col-right" title="Column Right">+Col →</button>
+  <button class="doc-control" type="button" data-act="col-del" title="Delete Column">−Col</button>
+
+  <!-- Deep Dive -->
+  <button class="doc-control" type="button" data-act="deepdive" title="Deep Dive Row">Deep Dive</button>
+</div>
+    
   </div>
 </div>
 
