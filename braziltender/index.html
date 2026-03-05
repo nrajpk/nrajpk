@@ -527,18 +527,18 @@ tbody tr:last-child td{
   }
 
   function renderFromRemote(html, rev) {
-    applyingRemote = true;
-    if (!html || html.trim() === "") {
-        contentDiv.innerHTML = MEVA_SKELETON;
-    } else if (!html.includes('class="pdf-page"')) {
-        contentDiv.innerHTML = MEVA_SKELETON.replace('<p style="color:#5F6368">Click here to start editing spec tables...</p>', html);
-    } else {
-        contentDiv.innerHTML = html;
-    }
-    applyingRemote = false;
-    currentRev = Number(rev || 0);
-    setDirty(false);
+  applyingRemote = true;
+
+  if (!html || html.trim() === "") {
+      contentDiv.innerHTML = MEVA_SKELETON;
+  } else {
+      contentDiv.innerHTML = html;
   }
+
+  applyingRemote = false;
+  currentRev = Number(rev || 0);
+  setDirty(false);
+}
 
   function setBlocked(blocked) {
     contentDiv.setAttribute('contenteditable', blocked ? 'false' : 'true');
