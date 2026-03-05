@@ -522,7 +522,7 @@ window.doc = doc;
     contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
       if (h.querySelector('.section-lock-btn')) return;
       const b = document.createElement('span'); b.className = 'section-lock-btn';
-      b.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒' : '✍️';
+      b.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒 Locked' : '✍️ Unlocked';
       h.appendChild(b);
     });
   }
