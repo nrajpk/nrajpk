@@ -4,12 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MEVA Collaborative Tender System</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <style>
+  <style>
     /* 1. BRAND TOKENS */
     :root {
       --brand-color: #E41837;
@@ -27,6 +26,7 @@
       margin: 0; padding-top: 60px;
       background: var(--app-bg); color: var(--text-main);
       line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      counter-reset: sheet;
     }
 
     /* 3. APP TOOLBAR */
@@ -39,355 +39,235 @@
     .app-brand { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
     .app-brand span { color: var(--brand-color); }
     .toolbar-actions { display: flex; align-items: center; gap: 12px; }
-/* Hero Image Header Support */
-.page > div:first-child {
-    height: 55mm;
-    background-color: var(--bg-gray);
-    position: relative;
-    overflow: hidden;
-}
 
-.page > div:first-child img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
+    /* 4. HERO HEADER (Bleed Support) */
+    .page > div:first-child {
+      height: 55mm;
+      background-color: var(--bg-gray);
+      position: relative;
+      overflow: hidden;
+      margin: -15mm -10mm 15mm -10mm;
+    }
+    .page > div:first-child img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* Page content area adjustment to prevent overlap */
-.page-content {
-    flex-grow: 1;
-    padding: 20px 0;
-}
-    /* 4. PAGE LAYOUT */
+    /* 5. PAGE LAYOUT */
     @media screen {
       .page {
         width: 210mm; min-height: 297mm; margin: 30px auto;
         background: #FFFFFF; padding: 15mm 10mm; box-sizing: border-box;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-radius: 4px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative;
+        display: flex; flex-direction: column; border-radius: 4px;
       }
     }
-    @page { size: A4; margin: 15mm 10mm; }
+    .page-content { flex-grow: 1; padding: 20px 0; }
+
+    @page { size: A4; margin: 0; }
     @media print {
       .app-toolbar, #remote-banner, #status-toast, .doc-controls-wrapper, .section-lock-btn { display: none !important; }
       body { background: #FFFFFF; padding-top: 0; }
-      .page { margin: 0; box-shadow: none; width: 100%; padding: 0; page-break-after: always; }
+      .page { margin: 0; box-shadow: none; width: 100%; padding: 15mm 10mm; page-break-after: always; }
+      .page > div:first-child { margin-top: -15mm; margin-left: -10mm; margin-right: -10mm; }
     }
 
-    /* 5. TYPOGRAPHY & TOC */
+    /* 6. TABLES & TYPOGRAPHY */
     .main-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
     .sub-heading { font-size: 11px; font-weight: 700; color: var(--brand-color); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin: 24px 0 12px 0; display: flex; align-items: center; justify-content: space-between; }
-    .toc-container { line-height: 2.2; margin: 20px 0; }
-    .toc-link { color: var(--text-main); text-decoration: none; font-weight: 800; font-size: 12px; }
-    .toc-sublink { color: var(--text-muted); text-decoration: none; font-weight: 700; font-size: 11px; margin-left: 18px; display: block; }
-    .toc-divider { height: 1px; background: var(--border-color); margin: 8px 0; }
-
-    /* 6. TABLES */
     table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; table-layout: fixed; }
     th, td { border: 1px solid var(--border-color); padding: 10px 8px; word-wrap: break-word; overflow: hidden; }
     th { background: var(--bg-gray); font-weight: 700; text-transform: uppercase; font-size: 10px; position: relative; }
     .group-header { background: #fff !important; color: var(--brand-color); font-weight: 800; border-bottom: 2px solid var(--brand-color) !important; padding-top: 20px !important; }
 
-    /* 7. IMAGES & GRIDS */
-    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
-    .img-box { border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; text-align: center; background: #fff; }
-    .img-placeholder { border: 1px dashed var(--border-color); padding: 25px; border-radius: 4px; color: var(--text-muted); cursor: pointer; text-align: center; font-size: 10px; font-weight: 700; }
-    #document-content img { max-width: 100%; height: auto; border-radius: 4px; cursor: zoom-in; }
-    .size-md { max-height: 250px !important; }
-    .size-lg { max-height: 450px !important; cursor: zoom-out; }
+    /* 7. FOOTER STYLING */
+    .page-footer { margin-top: auto; display: flex; justify-content: space-between; border-top: 1pt solid var(--border-color); padding-top: 8px; }
+    .page-footer-text, .page-num { font-size: 9px; color: var(--text-muted); font-weight: 600; }
+    .page-num::after { counter-increment: sheet; content: "Page " counter(sheet); }
 
     /* 8. UI COMPONENTS */
     .btn { background: #FFFFFF; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; font-family: 'Georama', sans-serif; font-weight: 800; font-size: 11px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-    .btn:hover { background: var(--bg-gray); }
     .btn-primary { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
-    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; border-bottom: 1px solid #F59E0B; }
     #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; }
-    .resizer { position: absolute; top: 0; right: 0; width: 5px; cursor: col-resize; height: 100%; z-index: 1; }
     .section-lock-btn { cursor:pointer; margin-left:10px; font-size:10px; opacity:0.5; padding:2px 8px; border-radius:10px; border:1px solid #ccc; font-weight: 800; }
     .section-lock-btn.is-locked { opacity:1; color:var(--brand-color); background:#fff0f1; border-color:var(--brand-color); }
-    .is-locked { border-left:4px solid var(--brand-color) !important; background:#fff0f1 !important; padding-left:10px !important; }
     #document-content { outline: none; }
-      </style>
+  </style>
 </head>
-
 <body>
-  <div class="app-toolbar">
-    <div class="app-brand">MEVA <span>Tender Builder</span></div>
-    <div class="toolbar-actions">
-      <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">Status: Ready</span>
-      <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button>
-      <button class="btn" onclick="window.print()">🖨️ PDF</button>
-      <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
-    </div>
+
+<div class="app-toolbar">
+  <div class="app-brand">MEVA <span>Tender Builder</span></div>
+  <div class="toolbar-actions">
+    <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">Status: Ready</span>
+    <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button>
+    <button class="btn" onclick="window.print()">🖨️ PDF</button>
+    <button class="btn btn-primary" id="save-btn" onclick="saveData()" disabled>☁️ Sync to Cloud</button>
   </div>
+</div>
 
-  <div id="status-toast"></div>
-  <div id="document-content" contenteditable="true" spellcheck="false"></div>
+<div id="status-toast"></div>
+<div id="document-content" contenteditable="true" spellcheck="false"></div>
 
-  <script type="module">
-    // Fallback ONLY (does not overwrite Firestore)
-    const MEVA_SKELETON = `
-      <div class="page">
-        <div class="page-content">
-          <div class="main-heading">Document loading...</div>
-          <p style="color:#5F6368">If this stays here, your Firestore doc may be empty or access is blocked.</p>
-        </div>
-      </div>
+<script type="module">
+  // 1. HARDCODED SKELETON (Replaces seed-data.js)
+  const MEVA_SKELETON = `
+    
     `;
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import {
-      getAuth,
-      setPersistence,
-      browserLocalPersistence,
-      signInWithEmailAndPassword,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      getDoc,
-      setDoc,
-      onSnapshot,
-      runTransaction,
-      serverTimestamp,
-      collection
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, onSnapshot, runTransaction, serverTimestamp, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAnkigLELyqqE8yHMrTF2RZ0IxbCoRhpAk",
-      authDomain: "brazil-tender-6d171.firebaseapp.com",
-      projectId: "brazil-tender-6d171",
-      storageBucket: "brazil-tender-6d171.firebasestorage.app",
-      messagingSenderId: "645077728018",
-      appId: "1:645077728018:web:13a6fe63f85442e35e91cb",
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyAnkigLELyqqE8yHMrTF2RZ0IxbCoRhpAk",
+    authDomain: "brazil-tender-6d171.firebaseapp.com",
+    projectId: "brazil-tender-6d171",
+    storageBucket: "brazil-tender-6d171.firebasestorage.app",
+    messagingSenderId: "645077728018",
+    appId: "1:645077728018:web:13a6fe63f85442e35e91cb",
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const docRef = doc(db, "tender_documents", "meva_main_html");
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const docRef = doc(db, 'tender_documents', 'meva_main_html');
 
-    const contentDiv = document.getElementById("document-content");
-    const saveBtn = document.getElementById("save-btn");
-    const syncStatus = document.getElementById("sync-status");
+  const contentDiv = document.getElementById('document-content');
+  const saveBtn = document.getElementById('save-btn');
+  const syncStatus = document.getElementById('sync-status');
 
-    let currentRev = 0;
-    let dirty = false;
-    let applyingRemote = false;
-    let canSync = false;
-    let listenerUnsub = null;
+  let currentRev = 0, dirty = false, applyingRemote = false, canSync = false, listenerUnsub = null;
 
-    function showToast(msg) {
-      const t = document.getElementById("status-toast");
-      t.textContent = msg;
-      t.style.display = "block";
-      setTimeout(() => (t.style.display = "none"), 2500);
-    }
+  function showToast(msg) { const t = document.getElementById('status-toast'); t.textContent = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2500); }
 
-    function setDirty(isDirty) {
-      if (applyingRemote) return;
-      dirty = isDirty;
-      syncStatus.textContent = dirty ? "Unsaved changes" : "All changes saved";
-      saveBtn.disabled = !canSync || !dirty;
-    }
+  function setDirty(isDirty) {
+    if (applyingRemote) return;
+    dirty = isDirty;
+    syncStatus.textContent = dirty ? "Unsaved changes" : "All changes saved";
+    saveBtn.disabled = !canSync || !dirty;
+  }
 
-    function renderFromRemote(html, rev) {
-      applyingRemote = true;
-
-      if (!html || String(html).trim() === "") {
-        // show fallback only; DO NOT seed / overwrite Firestore
+  function renderFromRemote(html, rev) {
+    applyingRemote = true;
+    if (!html || html.trim() === "") {
         contentDiv.innerHTML = MEVA_SKELETON;
-      } else {
+    } else if (!html.includes('class="page"')) {
+        contentDiv.innerHTML = MEVA_SKELETON.replace('<p style="color:#5F6368">Click here to start editing spec tables...</p>', html);
+    } else {
         contentDiv.innerHTML = html;
-      }
-
-      applyingRemote = false;
-      currentRev = Number(rev || 0);
-      setDirty(false);
     }
+    applyingRemote = false;
+    currentRev = Number(rev || 0);
+    setDirty(false);
+  }
 
-    function setBlocked(blocked) {
-      contentDiv.setAttribute("contenteditable", blocked ? "false" : "true");
-      contentDiv.style.pointerEvents = blocked ? "none" : "auto";
-      contentDiv.style.opacity = blocked ? "0.5" : "1";
-    }
+  function setBlocked(blocked) {
+    contentDiv.setAttribute('contenteditable', blocked ? 'false' : 'true');
+    contentDiv.style.pointerEvents = blocked ? 'none' : 'auto';
+    contentDiv.style.opacity = blocked ? '0.5' : '1';
+  }
 
-    async function isAllowlistedEmail(user) {
-      if (!user?.email) return false;
-      const snap = await getDoc(doc(db, "allowlist_emails", user.email));
-      return snap.exists() && snap.data()?.enabled === true;
-    }
+  async function isAllowlistedEmail(user) {
+    if (!user?.email) return false;
+    const snap = await getDoc(doc(db, 'allowlist_emails', user.email));
+    return snap.exists() && snap.data()?.enabled === true;
+  }
 
-    function ensureLoginModal() {
-      if (document.getElementById("meva-login-overlay")) return;
-
-      const overlay = document.createElement("div");
-      overlay.id = "meva-login-overlay";
-      overlay.style.cssText =
-        "position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; font-family:Georama, sans-serif;";
-
-      overlay.innerHTML = `
-        <div style="width:380px; background:#fff; border-radius:10px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
-          <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center;">MEVA SECURE LOGIN</div>
-          <input id="m-email" type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
-          <input id="m-pass" type="password" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
-          <button id="m-btn" style="width:100%; padding:12px; background:var(--brand-color); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">SIGN IN</button>
-          <div id="m-msg" style="color:red; font-size:11px; margin-top:10px; text-align:center;"></div>
-        </div>
-      `;
-      document.body.appendChild(overlay);
-
-      overlay.querySelector("#m-btn").onclick = async () => {
-        const e = document.getElementById("m-email").value;
-        const p = document.getElementById("m-pass").value;
-        try {
-          await signInWithEmailAndPassword(auth, e, p);
-        } catch {
-          document.getElementById("m-msg").textContent = "Access Denied.";
-        }
-      };
-    }
-
-    // Save keeps your “team editing + conflict safety”
-    window.saveData = async () => {
-      if (!canSync || !dirty) return;
-      saveBtn.textContent = "⏳ Syncing...";
-
-      try {
-        await runTransaction(db, async (tx) => {
-          const snap = await tx.get(docRef);
-          const sRev = snap.exists() ? Number(snap.data().rev || 0) : 0;
-
-          // If remote changed since you loaded, block overwrite
-          if (sRev !== currentRev) throw new Error("CONFLICT");
-
-          tx.set(docRef, {
-            htmlContent: contentDiv.innerHTML,
-            rev: sRev + 1,
-            updatedAt: serverTimestamp(),
-            updatedBy: auth.currentUser.email,
-          });
-
-          currentRev = sRev + 1;
-        });
-
-        setDirty(false);
-        showToast("☁️ Saved");
-      } catch {
-        showToast("Sync Conflict! Please reload.");
-      } finally {
-        saveBtn.textContent = "☁️ Sync to Cloud";
-      }
+  function ensureLoginModal() {
+    if (document.getElementById('meva-login-overlay')) return;
+    const overlay = document.createElement('div');
+    overlay.id = 'meva-login-overlay';
+    overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; font-family:Georama, sans-serif;`;
+    overlay.innerHTML = `<div style="width:380px; background:#fff; border-radius:10px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+      <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center;">MEVA SECURE LOGIN</div>
+      <input id="m-email" type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
+      <input id="m-pass" type="password" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
+      <button id="m-btn" style="width:100%; padding:12px; background:var(--brand-color); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">SIGN IN</button>
+      <div id="m-msg" style="color:red; font-size:11px; margin-top:10px; text-align:center;"></div>
+    </div>`;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#m-btn').onclick = async () => {
+      const e = document.getElementById('m-email').value, p = document.getElementById('m-pass').value;
+      try { await signInWithEmailAndPassword(auth, e, p); } catch { document.getElementById('m-msg').textContent = "Access Denied."; }
     };
+  }
 
-    window.takeSnapshot = async () => {
-      const name = prompt("Milestone Name:");
-      if (!name) return;
-
-      try {
-        await setDoc(
-          doc(collection(db, "tender_documents", "meva_main_html", "snapshots"), Date.now().toString()),
-          {
-            name,
-            htmlContent: contentDiv.innerHTML,
-            timestamp: Date.now(),
-            createdBy: auth.currentUser.email,
-          }
-        );
-        showToast("✅ Cloud Snapshot Created");
-      } catch {
-        showToast("❌ Backup Failed");
-      }
-    };
-
-    async function startApp() {
-      setBlocked(true);
-      contentDiv.innerHTML = MEVA_SKELETON;
-
-      await setPersistence(auth, browserLocalPersistence);
-
-      onAuthStateChanged(auth, async (user) => {
-        if (listenerUnsub) listenerUnsub();
-
-        if (!user) {
-          canSync = false;
-          setBlocked(true);
-          ensureLoginModal();
-          return;
-        }
-
-        if (!(await isAllowlistedEmail(user))) {
-          await signOut(auth);
-          return;
-        }
-
-        document.getElementById("meva-login-overlay")?.remove();
-        canSync = true;
-        setBlocked(false);
-        saveBtn.disabled = !dirty;
-
-        listenerUnsub = onSnapshot(docRef, (snap) => {
-          if (snap.metadata.hasPendingWrites) return;
-
-          // IMPORTANT: we are NOT seeding. Only loading.
-          if (!snap.exists()) {
-            renderFromRemote("", 0);
-            showToast("No Firestore doc found. Ask admin to restore backup.");
-            return;
-          }
-
-          const data = snap.data();
-          if (currentRev === 0 || !dirty) {
-            renderFromRemote(data.htmlContent, data.rev);
-          }
-        });
+  window.saveData = async () => {
+    if (!canSync || !dirty) return;
+    saveBtn.textContent = '⏳ Syncing...';
+    try {
+      await runTransaction(db, async (tx) => {
+        const snap = await tx.get(docRef);
+        const sRev = snap.exists() ? Number(snap.data().rev || 0) : 0;
+        if (sRev !== currentRev) throw new Error('CONFLICT');
+        tx.set(docRef, { htmlContent: contentDiv.innerHTML, rev: sRev + 1, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email });
+        currentRev = sRev + 1;
       });
+      setDirty(false); showToast('☁️ Saved');
+    } catch { showToast('Sync Conflict! Please reload.'); }
+    finally { saveBtn.textContent = '☁️ Sync to Cloud'; }
+  };
+
+  window.takeSnapshot = async () => {
+    const name = prompt("Milestone Name:"); if (!name) return;
+    try {
+      await setDoc(doc(collection(db, 'tender_documents', 'meva_main_html', 'snapshots'), Date.now().toString()), {
+        name, htmlContent: contentDiv.innerHTML, timestamp: Date.now(), createdBy: auth.currentUser.email
+      });
+      showToast("✅ Cloud Snapshot Created");
+    } catch { showToast("❌ Backup Failed"); }
+  };
+
+  async function startApp() {
+    setBlocked(true); await setPersistence(auth, browserLocalPersistence);
+    onAuthStateChanged(auth, async (user) => {
+      if (listenerUnsub) listenerUnsub();
+      if (!user) { canSync = false; setBlocked(true); ensureLoginModal(); return; }
+      if (!(await isAllowlistedEmail(user))) { await signOut(auth); return; }
+      document.getElementById('meva-login-overlay')?.remove(); canSync = true;
+      listenerUnsub = onSnapshot(docRef, (snap) => {
+        if (!snap.exists() || snap.metadata.hasPendingWrites) return;
+        const data = snap.data();
+        if (currentRev === 0 || !dirty) renderFromRemote(data.htmlContent, data.rev);
+      });
+    });
+  }
+
+  contentDiv.addEventListener('input', () => setDirty(true));
+  startApp();
+
+window.auth = auth;
+window.db = db;
+window.getDoc = getDoc;
+window.doc = doc;
+  window.setDoc = setDoc; // Ensure this is there
+  window.serverTimestamp = serverTimestamp; // ADD THIS LINE
+</script>
+
+<script>
+(function() {
+  const contentDiv = document.getElementById('document-content');
+  contentDiv.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('section-lock-btn')) return;
+    const h = e.target.closest('.main-heading, .sub-heading'), locked = e.target.classList.toggle('is-locked');
+    e.target.textContent = locked ? '🔒 Locked' : '🔓 Unlocked';
+    let c = h.nextElementSibling;
+    while (c && !['MAIN-HEADING','SUB-HEADING'].includes(c.className.toUpperCase())) {
+      c.setAttribute('contenteditable', locked ? 'false' : 'true');
+      c.classList.toggle('is-locked', locked);
+      c = c.nextElementSibling;
     }
+    setDirty(true);
+  });
+  function ensure() {
+    contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
+      if (h.querySelector('.section-lock-btn')) return;
+      const b = document.createElement('span'); b.className = 'section-lock-btn';
+      b.textContent = h.nextElementSibling?.getAttribute('contenteditable') === 'false' ? '🔒 Locked' : '🔓 Unlocked';
+      h.appendChild(b);
+    });
+  }
+  new MutationObserver(ensure).observe(contentDiv, { childList: true, subtree: true });
+})();
+</script>
 
-    contentDiv.addEventListener("input", () => setDirty(true));
-    startApp();
-
-    // expose for your other scripts if needed
-    window.setDirty = setDirty;
-  </script>
-
-  <!-- Section Lock Script (kept) -->
-  <script>
-    (function () {
-      const contentDiv = document.getElementById("document-content");
-
-      contentDiv.addEventListener("click", (e) => {
-        if (!e.target.classList.contains("section-lock-btn")) return;
-
-        const h = e.target.closest(".main-heading, .sub-heading");
-        if (!h) return;
-
-        const locked = e.target.classList.toggle("is-locked");
-        e.target.textContent = locked ? "🔒 Locked" : "🔓 Unlocked";
-
-        let c = h.nextElementSibling;
-        while (c && !c.classList?.contains("main-heading") && !c.classList?.contains("sub-heading")) {
-          c.setAttribute("contenteditable", locked ? "false" : "true");
-          c = c.nextElementSibling;
-        }
-
-        if (window.setDirty) window.setDirty(true);
-      });
-
-      function ensureButtons() {
-        contentDiv.querySelectorAll(".main-heading, .sub-heading").forEach((h) => {
-          if (h.querySelector(".section-lock-btn")) return;
-          const b = document.createElement("span");
-          b.className = "section-lock-btn";
-          b.textContent = "🔓 Unlocked";
-          h.appendChild(b);
-        });
-      }
-
-      new MutationObserver(ensureButtons).observe(contentDiv, { childList: true, subtree: true });
-    })();
-  </script>
 </body>
 </html>
