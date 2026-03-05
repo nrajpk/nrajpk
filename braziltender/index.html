@@ -8,10 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-
-
-
-   <style>
+<style>
     /* 1. BRAND TOKENS */
     :root {
       --brand-color: #E41837;
@@ -38,52 +35,17 @@
 
     /* 3. APP TOOLBAR (WEB UI) */
     .app-toolbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: #ffffff;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed; top: 0; left: 0; right: 0; height: 60px;
+      background: #ffffff; border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .app-brand {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .app-brand { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
     .app-brand span { color: var(--brand-color); }
     .toolbar-actions { display: flex; align-items: center; gap: 16px; }
-
-    .sync-status {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
+    .sync-status { font-size: 13px; font-weight: 600; color: var(--text-muted); transition: color 0.2s; }
     .sync-status.dirty { color: #d97706; }
-
-    .btn {
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 16px;
-      font-family: 'Georama', sans-serif;
-      font-weight: 800;
-      font-size: 12px;
-      text-transform: uppercase;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+    .btn { background: #FFFFFF; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; font-family: 'Georama', sans-serif; font-weight: 800; font-size: 12px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
     .btn:hover { background: var(--bg-gray); }
     .btn-primary { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
     .btn-primary:hover { background: var(--brand-hover); }
@@ -92,55 +54,116 @@
     /* 4. DYNAMIC PAGE NUMBERING */
     .page-num::after { counter-increment: sheet; content: "Page " counter(sheet); }
 
-    /* 5. LOGICAL PAGE LAYOUT (WEB) */
-@media screen {
-  .page {
-    width: 210mm;
-    min-height: 297mm;
-    margin: 30px auto;
-    background: #FFFFFF;
-    display: flex;
-    flex-direction: column;
-    padding: 15mm 10mm;
-    box-sizing: border-box;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    position: relative;
-    border-radius: 4px;
-  }
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       5. SCREEN LAYOUT
+       Each .page is an A4 canvas. height:auto so it grows with
+       content on screen. Footer hidden on screen (shown on print).
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    @media screen {
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        height: auto;
+        margin: 30px auto;
+        background: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+        padding: 15mm 10mm;
+        box-sizing: border-box;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        position: relative;
+        border-radius: 4px;
+      }
+      .page-footer { display: none !important; }
+    }
 
-  /* Hide footer only in web view */
-  .page-footer { display: none !important; }
-}
+    /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+       6. PRINT = WHAT YOU SEE ON SCREEN
+       Key rules:
+       - @page margin: 0  â†’  browser adds zero extra margins
+       - .page padding: 15mm 10mm  â†’  same as screen
+       - .page height: auto  â†’  page grows to fit all its content
+       - page-break-after: always  â†’  each .page div = one PDF page
+       - table rows NEVER cut: break-inside: avoid on tr
+       - thead repeats on every print page: display:table-header-group
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
     @media print {
-  .app-toolbar, .ui-controls, .doc-controls-wrapper, #remote-banner, #status-toast { display: none !important; }
-  body { background: #FFFFFF; padding-top: 0; }
+      /* Hide all UI */
+      .app-toolbar, .ui-controls, .doc-controls-wrapper,
+      #remote-banner, #status-toast, .section-lock-btn,
+      .resizer { display: none !important; }
 
-  .page {
-    margin: 0;
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 297mm;
-    height: auto;
-    border-radius: 0;
-    page-break-after: always;
-    padding: 0;
-    position: relative; /* important because footer is absolute */
-  }
+      html, body {
+        background: #FFFFFF !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 210mm;
+      }
 
-  /* reserve space so content never goes under the footer */
-  .page-content {
-    padding-bottom: 18mm;
-    box-sizing: border-box;
-  }
+      /* Each .page = one A4 page, same padding as screen */
+      .page {
+        width: 210mm !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 15mm 10mm !important;
+        box-sizing: border-box !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        position: relative !important;
+        /* Force a new PDF page after every .page div */
+        page-break-after: always !important;
+        break-after: page !important;
+        /* Never let the .page div itself break mid-content */
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
 
-  thead { display: table-header-group; }
-  tr { page-break-inside: avoid !important; break-inside: avoid !important; }
-  h1, h2, h3, .main-heading, .sub-heading { page-break-after: avoid; }
+      /* Space at bottom so content clears the footer */
+      .page-content {
+        padding-bottom: 18mm !important;
+        box-sizing: border-box !important;
+        flex: 1 !important;
+      }
 
-  .page-footer { position: absolute; bottom: 0; width: 100%; }
-}
+      /* Footer visible and pinned to bottom */
+      .page-footer {
+        display: flex !important;
+        position: absolute !important;
+        bottom: 10mm !important;
+        left: 10mm !important;
+        right: 10mm !important;
+        width: auto !important;
+      }
+
+      /* â”€â”€ TABLE RULES: prevent rows being cut â”€â”€ */
+      /* thead repeats at the top of every printed page */
+      thead { display: table-header-group !important; }
+      /* tfoot repeats at the bottom of every printed page */
+      tfoot { display: table-footer-group !important; }
+      /* Never cut a row in half across a page boundary */
+      tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      /* Never cut a deep-dive row */
+      tr.deepdive-row {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      /* Headings stay with their content */
+      .main-heading, .sub-heading, .vol-identifier, .group-header {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+    }
 
     /* 7. TYPOGRAPHY & HIERARCHY */
     .page-content { flex: 1; display: flex; flex-direction: column; }
@@ -159,144 +182,49 @@
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 6px; margin: 24px 0 12px 0;
     }
-    p.para {
-      font-size: 12px; color: var(--text-main);
-      line-height: 1.45; margin: 0 0 14px 0; text-align: justify;
-    }
+    p.para { font-size: 12px; color: var(--text-main); line-height: 1.45; margin: 0 0 14px 0; text-align: justify; }
     p.para em { font-style: italic; color: var(--text-muted); font-size: 11px; display: inline-block; margin-top: 4px; }
     p.para strong { font-weight: 800; color: var(--brand-color); }
 
-  
-   /* 8. TABLES */
-    table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      margin-bottom: 8px; 
-      font-size: 11px; 
-    }
-    th, td { 
-      border: 1px solid var(--border-color); /* This adds the full grid lines (top, bottom, left, right) */
-      padding: 10px 8px; 
-      text-align: left; 
-      vertical-align: top; 
-    }
-    th { 
-      background: var(--bg-gray); 
-      font-weight: 700; 
-      color: var(--text-muted); 
-      text-transform: uppercase; 
-      letter-spacing: 0.5px; 
-      font-size: 10px; 
-    }
-    .group-header { 
-      background: #FFFFFF !important; 
-      text-align: left; 
-      font-weight: 800; 
-      color: var(--brand-color); 
-      text-transform: uppercase; 
-      font-size: 10px; 
-      letter-spacing: 1px; 
-      padding-top: 24px !important; 
-      padding-bottom: 6px !important; 
+    /* 8. TABLES */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; }
+    th, td { border: 1px solid var(--border-color); padding: 10px 8px; text-align: left; vertical-align: top; }
+    th { background: var(--bg-gray); font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; position: relative; }
+    .group-header {
+      background: #FFFFFF !important; text-align: left; font-weight: 800;
+      color: var(--brand-color); text-transform: uppercase; font-size: 10px;
+      letter-spacing: 1px; padding-top: 24px !important; padding-bottom: 6px !important;
       border: 1px solid var(--border-color) !important;
-      border-bottom: 1.5pt solid var(--brand-color) !important; /* Keeps your nice thick red line for sub-sections */
+      border-bottom: 1.5pt solid var(--brand-color) !important;
     }
     tbody tr:last-child td { border-bottom: none; }
-/* --- TABLE RESIZING (EXCEL STYLE) --- */
-    th {
-      position: relative; /* Required for the drag handle */
-    }
-    .resizer {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 5px;
-      cursor: col-resize;
-      user-select: none;
-      height: 100%;
-      z-index: 1;
-    }
-    .resizer:hover, .resizing {
-      border-right: 2px solid var(--brand-color);
-    }
-    @media print {
-      .resizer { display: none !important; }
-    }
+
+    /* TABLE RESIZING */
+    .resizer { position: absolute; top: 0; right: 0; width: 5px; cursor: col-resize; user-select: none; height: 100%; z-index: 1; }
+    .resizer:hover, .resizing { border-right: 2px solid var(--brand-color); }
+
     /* 9. INLINE EDITOR UI CONTROLS */
     .doc-controls-wrapper {
-      display: inline-flex;
-      background: var(--bg-gray);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      overflow: hidden;
-      opacity: 0.2;
-      transition: all 0.3s ease;
-      margin-bottom: 16px;
-      user-select: none;
+      display: inline-flex; background: var(--bg-gray); border: 1px solid var(--border-color);
+      border-radius: 6px; overflow: hidden; opacity: 0.2; transition: all 0.3s ease;
+      margin-bottom: 16px; user-select: none;
     }
     .doc-controls-wrapper:hover, .doc-controls-wrapper:focus-within { opacity: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-   /* Top bar controls look consistent */
-#meva-toolbar.doc-controls-wrapper{
-  opacity: 1 !important;
-  margin: 0 !important;
-  gap: 0;
-}
-#meva-toolbar .doc-control{
-  padding: 6px 10px;
-  font-size: 10px;
-}
-#meva-toolbar .doc-control:active{
-  transform: translateY(1px);
-}
-
-/* Deep dive row styling */
-#document-content tr.deepdive-row td{
-  background: #f8fafc;
-  border-left: 3px solid rgba(228,24,55,.35);
-  padding: 12px 10px;
-}
-#document-content tr.deepdive-row td:empty:before{
-  content: "Deep dive notes…";
-  color: #94a3b8;
-  font-weight: 600;
-}
-     .doc-control {
-      background: transparent;
-      border: none;
-      border-right: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 6px 12px;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      cursor: pointer;
-      font-family: 'Georama', sans-serif;
-      transition: background 0.2s;
-    }
+    #meva-toolbar.doc-controls-wrapper { opacity: 1 !important; margin: 0 !important; gap: 0; }
+    #meva-toolbar .doc-control { padding: 6px 10px; font-size: 10px; }
+    #meva-toolbar .doc-control:active { transform: translateY(1px); }
+    #document-content tr.deepdive-row td { background: #f8fafc; border-left: 3px solid rgba(228,24,55,.35); padding: 12px 10px; }
+    #document-content tr.deepdive-row td:empty:before { content: "Deep dive notesâ€¦"; color: #94a3b8; font-weight: 600; }
+    .doc-control { background: transparent; border: none; border-right: 1px solid var(--border-color); color: var(--text-muted); padding: 6px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; cursor: pointer; font-family: 'Georama', sans-serif; transition: background 0.2s; }
     .doc-control:last-child { border-right: none; }
     .doc-control:hover { background: #e5e7eb; color: var(--text-main); }
-/* --- IMAGE SIZING CONTROLS --- */
-    /* 1. Auto-constrain any image pasted into a normal table cell */
-    #document-content td img {
-      max-width: 100%;
-      max-height: 140px; /* Default small size so rows don't get huge */
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border-radius: 4px;
-      margin-top: 6px;
-      cursor: zoom-in; /* Tells the user they can click it */
-      transition: max-height 0.2s ease;
-    }
 
-    /* 2. Allow Deep Dive rows to have larger images by default */
-    #document-content td[colspan="5"] img {
-      max-height: 300px;
-    }
-
-    /* 3. Utility classes for manual click-to-resize */
+    /* IMAGE CONTROLS */
+    #document-content td img { max-width: 100%; max-height: 140px; width: auto; height: auto; object-fit: contain; border-radius: 4px; margin-top: 6px; cursor: zoom-in; transition: max-height 0.2s ease; }
+    #document-content td[colspan="5"] img { max-height: 300px; }
     #document-content img.size-md { max-height: 250px !important; cursor: zoom-in; }
     #document-content img.size-lg { max-height: 450px !important; cursor: zoom-out; }
+
     /* 10. HEADER & FOOTER */
     .header { flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 0 8px 0; border-bottom: 0.5pt solid var(--border-color); margin-bottom: 20px; }
     .logo-container img { height: 28px; width: auto; object-fit: contain; }
@@ -313,7 +241,7 @@
     .img-placeholder:hover { background: var(--bg-gray); border-color: var(--text-muted); }
     .img-placeholder img { width: 100%; max-height: 200px; object-fit: contain; }
 
-    /* TOC SUPPORT */
+    /* TOC */
     .toc-container { line-height: 1.9; }
     .toc-link, .toc-sublink { color: var(--text-main); text-decoration: none; font-weight: 800; }
     .toc-sublink { font-weight: 700; color: var(--text-muted); margin-left: 12px; display: inline-block; }
@@ -325,75 +253,18 @@
     ul.check-list li { margin: 0 0 6px 0; }
 
     /* TOASTS & BANNERS */
-    #remote-banner {
-      display: none;
-      background: #FEF3C7;
-      color: #92400E;
-      padding: 12px;
-      text-align: center;
-      font-weight: 800;
-      font-size: 13px;
-      border-bottom: 1px solid #F59E0B;
-      position: fixed;
-      top: 60px;
-      left: 0;
-      right: 0;
-      z-index: 999;
-    }
-    #status-toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1A1A1B;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 700;
-      z-index: 2000;
-      display: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-.section-lock-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:22px;
-  height:22px;
-  margin-left:10px;
-  border-radius:999px;
-  cursor:pointer;
-  user-select:none;
-  font-size:13px;
-  line-height:1;
-  color: var(--text-muted);
-  opacity:.75;
-  transition: transform .15s ease, opacity .15s ease, background-color .15s ease, box-shadow .15s ease;
-}
+    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; font-size: 13px; border-bottom: 1px solid #F59E0B; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; }
+    #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 
-.section-lock-btn:hover{
-  opacity:1;
-  transform: translateY(-1px);
-  background: rgba(0,0,0,.05);
-  box-shadow: 0 6px 14px rgba(0,0,0,.08);
-}
-
-/* locked */
-.section-lock-btn.is-locked{
-  opacity:1;
-  background: rgba(228,24,55,.10);
-  box-shadow: 0 6px 14px rgba(228,24,55,.10);
-}
-.section-lock-btn.is-locked:hover{
-  background: rgba(228,24,55,.14);
-}
- 
-
+    /* LOCK BUTTON */
+    .section-lock-btn { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; margin-left: 10px; border-radius: 999px; cursor: pointer; user-select: none; font-size: 13px; line-height: 1; color: var(--text-muted); opacity: .75; transition: transform .15s ease, opacity .15s ease, background-color .15s ease, box-shadow .15s ease; }
+    .section-lock-btn:hover { opacity: 1; transform: translateY(-1px); background: rgba(0,0,0,.05); box-shadow: 0 6px 14px rgba(0,0,0,.08); }
+    .section-lock-btn.is-locked { opacity: 1; background: rgba(228,24,55,.10); box-shadow: 0 6px 14px rgba(228,24,55,.10); }
+    .section-lock-btn.is-locked:hover { background: rgba(228,24,55,.14); }
 
     /* EDITABLE ROOT */
     #document-content { outline: none; }
-  </style>
+</style>
 </head>
 <body>
 
