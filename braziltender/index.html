@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
 
+    <style>
 /* =====================================================
 1. BRAND TOKENS
 ===================================================== */
@@ -445,6 +445,55 @@ tbody tr:last-child td{
   white-space:nowrap;
 }
 
+/* =====================================================
+12. FUNCTIONAL UI (Added for JS compatibility)
+===================================================== */
+#status-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--text-main);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.is-locked {
+  background-color: #f1f5f9;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.section-lock-btn {
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 14px;
+  opacity: 0.4;
+  pointer-events: auto; /* allow unlocking */
+  transition: opacity 0.2s;
+}
+
+.section-lock-btn:hover {
+  opacity: 1;
+}
+
+.deepdive-row td {
+  background-color: #f8fafc;
+  border-left: 3px solid var(--brand-color);
+  padding: 15px;
+}
+
+.deepdive-row td:empty::before {
+  content: "✍️ Enter deep dive technical justification here...";
+  color: #94a3b8;
+  font-style: italic;
+  pointer-events: none;
+}
 </style>
 </head>
 <body>
