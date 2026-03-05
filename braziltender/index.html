@@ -586,6 +586,211 @@ window.doc = doc;
   ensure();
 })();
 </script>
+  <script>
+(function(){
+  const root = document.getElementById('document-content');
+  const toolbar = document.getElementById('meva-toolbar');
+  if (!root || !toolbar) return;
+
+  // ---------- helpers ----------
+  function toast(msg){
+    const t = document.getElementById('status-toast');
+    if (!t) return alert(msg);
+    t.textContent = msg;
+    t.style.display = 'block';
+    setTimeout(()=> t.style.display='none', 2200);
+  }
+
+  function inEditorSelection(){
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return null;
+    const node = sel.anchorNode?.nodeType === 1 ? sel.anchorNode : sel.anchorNode?.parentElement;
+    if (!node) return null;
+    return root.contains(node) ? node : null;
+  }
+
+  function getCellFromSelection(){
+    const node = inEditorSelection();
+    if (!node) return null;
+    return node.closest?.('td,th') || null;
+  }
+
+  function getCtx(){
+    const cell = getCellFromSelection();
+    if (!cell) return null;
+    const row = cell.parentElement?.closest('tr');
+    const table = cell.closest('table');
+    if (!row || !table) return null;
+
+    // Determine column index safely
+    const colIndex = cell.cellIndex;
+
+    // Determine max columns in this table by scanning rows
+    let maxCols = 0;
+    table.querySelectorAll('tr').forEach(tr => { maxCols = Math.max(maxCols, tr.children.length); });
+
+    return { table, row, cell, colIndex, maxCols };
+  }
+
+  function makeCellLike(existingCell){
+    const tag = existingCell?.tagName === 'TH' ? 'th' : 'td';
+    const c = document.createElement(tag);
+    c.innerHTML = '&nbsp;';
+    return c;
+  }
+
+  // ---------- TEXT FORMATTING ----------
+  function fmt(act){
+    // Keep actions inside editor only
+    if (!inEditorSelection()) return toast('Place cursor inside the document.');
+    root.focus();
+
+    // execCommand is the most compatible for contenteditable formatting
+    if (act === 'bold') document.execCommand('bold');
+    else if (act === 'italic') document.execCommand('italic');
+    else if (act === 'underline') document.execCommand('underline');
+    else if (act === 'ul') document.execCommand('insertUnorderedList');
+    else if (act === 'ol') document.execCommand('insertOrderedList');
+
+    window.setDirty?.(true);
+  }
+
+  // ---------- TABLE OPS ----------
+  function rowAbove(){
+    const ctx = getCtx();
+    if (!ctx) return toast('Place cursor inside a table cell.');
+    const { row } = ctx;
+
+    const newRow = document.createElement('tr');
+    const cells = Array.from(row.children);
+    if (!cells.length) return;
+
+    cells.forEach(c => newRow.appendChild(makeCellLike(c)));
+    row.parentNode.insertBefore(newRow, row);
+    window.setDirty?.(true);
+  }
+
+  function rowBelow(){
+    const ctx = getCtx();
+    if (!ctx) return toast('Place cursor inside a table cell.');
+    const { row } = ctx;
+
+    const newRow = document.createElement('tr');
+    const cells = Array.from(row.children);
+    if (!cells.length) return;
+
+    cells.forEach(c => newRow.appendChild(makeCellLike(c)));
+    row.parentNode.insertBefore(newRow, row.nextSibling);
+    window.setDirty?.(true);
+  }
+
+  function rowDel(){
+    const ctx = getCtx();
+    if (!ctx) return toast('Place cursor inside a table cell.');
+    const { row, table } = ctx;
+
+    const allRows = table.querySelectorAll('tbody tr, thead tr');
+    if (allRows.length <= 1) return toast('Cannot delete the last row.');
+    row.remove();
+    window.setDirty?.(true);
+  }
+
+  function colLeft(){
+    const ctx = getCtx();
+    if (!ctx) return toast('Place cursor inside a table cell.');
+    const { table, colIndex } = ctx;
+
+    table.querySelectorAll('tr').forEach(tr => {
+      // Only touch rows that have at least the target position
+      const ref = tr.children[colIndex] || null;
+      const newCell = makeCellLike(ref || tr.children[tr.children.length - 1]);
+      tr.insertBefore(newCell, ref);
+    });
+    window.setDirty?.(true);
+  }
+
+  function colRight(){
+    const ctx = getCtx();
+    if (!ctx) return toast('Place cursor inside a table cell.');
+    const { table, colIndex } = ctx;
+
+    table.querySelectorAll('tr').forEach(tr => {
+      const ref = tr.children[colIndex + 1] || null;
+      const base = tr.children[colIndex] || tr.children[tr.children.length - 1];
+      const newCell = makeCellLike(base);
+      tr.insertBefore(newCell, ref);
+    });
+    window.setDirty?.(true);
+  }
+
+  function colDel(){
+    const ctx = getCtx();
+    if (!ctx) return toast('Place cursor inside a table cell.');
+    const { table, colIndex } = ctx;
+
+    // Guard: don't delete last column
+    let minCols = Infinity;
+    table.querySelectorAll('tr').forEach(tr => { minCols = Math.min(minCols, tr.children.length); });
+    if (minCols <= 1) return toast('Cannot delete the last column.');
+
+    table.querySelectorAll('tr').forEach(tr => {
+      const cell = tr.children[colIndex];
+      if (cell) cell.remove();
+    });
+    window.setDirty?.(true);
+  }
+
+  // ---------- DEEP DIVE ----------
+  function deepDive(){
+    const ctx = getCtx();
+    if (!ctx) return toast('Place cursor inside a table cell.');
+    const { row, maxCols } = ctx;
+
+    const tr = document.createElement('tr');
+    tr.className = 'deepdive-row';
+    const td = document.createElement('td');
+    td.colSpan = Math.max(1, maxCols);
+    td.innerHTML = ''; // empty placeholder handled by CSS :empty:before
+    td.setAttribute('contenteditable', 'true');
+    tr.appendChild(td);
+
+    row.parentNode.insertBefore(tr, row.nextSibling);
+
+    // place caret inside deep dive cell
+    td.focus();
+    const r = document.createRange();
+    r.selectNodeContents(td);
+    r.collapse(true);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+
+    window.setDirty?.(true);
+  }
+
+  // ---------- dispatcher ----------
+  toolbar.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    e.preventDefault();
+
+    const act = btn.getAttribute('data-act');
+
+    // text
+    if (['bold','italic','underline','ul','ol'].includes(act)) return fmt(act);
+
+    // table
+    if (act === 'row-above') return rowAbove();
+    if (act === 'row-below') return rowBelow();
+    if (act === 'row-del') return rowDel();
+    if (act === 'col-left') return colLeft();
+    if (act === 'col-right') return colRight();
+    if (act === 'col-del') return colDel();
+    if (act === 'deepdive') return deepDive();
+  });
+
+})();
+</script>
 
 </body>
 </html>
