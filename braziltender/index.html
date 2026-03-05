@@ -388,7 +388,7 @@
 
 <div class="app-toolbar">
   <div class="app-brand">MEVA <span>Tender Builder</span></div>
-  <div class="toolbar-actions">
+  
     <div class="doc-controls-wrapper" id="meva-toolbar" style="opacity:1; margin:0;">
   <!-- Text -->
   <button class="doc-control" type="button" data-act="bold" title="Bold"><b>B</b></button>
@@ -409,7 +409,7 @@
   <!-- Deep Dive -->
   <button class="doc-control" type="button" data-act="deepdive" title="Deep Dive Row">Deep Dive</button>
 </div>
-    
+    <div class="toolbar-actions">
     <span id="sync-status" style="font-size:12px; font-weight:600; color:var(--text-muted);">Status: Ready</span>
   <!--  <button class="btn" onclick="window.takeSnapshot()">📸 Snapshot</button> -->
     <button class="btn" onclick="window.print()">🖨️ PDF</button>
@@ -492,7 +492,11 @@
     overlay.id = 'meva-login-overlay';
     overlay.style.cssText = `position:fixed; inset:0; z-index:10000; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; font-family:Georama, sans-serif;`;
     overlay.innerHTML = `<div style="width:380px; background:#fff; border-radius:10px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
-      <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center;">MEVA SECURE LOGIN</div>
+      <div style="font-weight:900; color:var(--brand-color); margin-bottom:15px; text-align:center;">MEVA TENDER DOC BUILDER</div>
+      <div style="font-size:11px; color:#6b7280; text-align:center; margin-bottom:12px;">
+  Username / Email: Official Email ID<br>
+  Password: meva2026
+</div>
       <input id="m-email" type="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
       <input id="m-pass" type="password" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px; box-sizing:border-box;">
       <button id="m-btn" style="width:100%; padding:12px; background:var(--brand-color); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">SIGN IN</button>
