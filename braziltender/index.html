@@ -128,10 +128,10 @@
 
       /* Space at bottom so content clears the footer */
       .page-content {
+        display: block !important;
+        overflow: visible !important;
         padding-bottom: 18mm !important;
         box-sizing: border-box !important;
-        flex: 1 !important;
-        display: block !important;  /* block in print too â€” rows must flow naturally */
       }
 
       /* Footer visible and pinned to bottom */
@@ -167,13 +167,14 @@
     }
 
     /* 7. TYPOGRAPHY & HIERARCHY */
-    /* CRITICAL: page-content must NOT constrain height on screen.
-       flex:1 inside a flex column with height:auto causes content clipping. */
+    /* CRITICAL: page-content must NEVER clip or constrain.
+       display:block lets it grow naturally with its children.
+       overflow:visible ensures nothing is ever hidden. */
     .page-content {
-      flex: 1;
-      display: block;        /* NOT flex â€” block allows natural height growth */
-      overflow: visible;     /* never clip */
+      display: block;
+      overflow: visible;
       box-sizing: border-box;
+      padding-bottom: 18mm;  /* space for footer */
     }
     .vol-identifier {
       font-size: 11.5px; font-weight: 800; color: var(--brand-color);
