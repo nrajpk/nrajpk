@@ -9,76 +9,105 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- STYLE IS INTENTIONALLY MINIMAL (we’ll add your full CSS later) -->
-  <style>
+    <style>
+    /* 1. BRAND TOKENS */
     :root {
       --brand-color: #E41837;
+      --brand-hover: #c91430;
       --text-main: #1A1A1B;
       --text-muted: #5F6368;
       --border-color: #DADCE0;
       --bg-gray: #F8F9FA;
       --app-bg: #1f2937;
     }
+
+    /* 2. GLOBAL SETTINGS */
     body {
       font-family: 'Georama', sans-serif;
-      margin: 0;
-      padding-top: 60px;
-      background: var(--app-bg);
-      color: var(--text-main);
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+      margin: 0; padding-top: 60px;
+      background: var(--app-bg); color: var(--text-main);
+      line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
+
+    /* 3. APP TOOLBAR */
     .app-toolbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 60px;
-      background: #fff;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      z-index: 1000;
+      position: fixed; top: 0; left: 0; right: 0; height: 60px;
+      background: #ffffff; border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .app-brand { font-size: 16px; font-weight: 800; display:flex; gap:10px; align-items:center; }
+    .app-brand { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
     .app-brand span { color: var(--brand-color); }
-    .toolbar-actions { display:flex; gap:12px; align-items:center; }
-    .btn {
-      background: #fff;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 8px 16px;
-      font-family: 'Georama', sans-serif;
-      font-weight: 800;
-      font-size: 11px;
-      text-transform: uppercase;
-      border-radius: 6px;
-      cursor: pointer;
+    .toolbar-actions { display: flex; align-items: center; gap: 12px; }
+/* Hero Image Header Support */
+.page > div:first-child {
+    height: 55mm;
+    background-color: var(--bg-gray);
+    position: relative;
+    overflow: hidden;
+}
+
+.page > div:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Page content area adjustment to prevent overlap */
+.page-content {
+    flex-grow: 1;
+    padding: 20px 0;
+}
+    /* 4. PAGE LAYOUT */
+    @media screen {
+      .page {
+        width: 210mm; min-height: 297mm; margin: 30px auto;
+        background: #FFFFFF; padding: 15mm 10mm; box-sizing: border-box;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-radius: 4px;
+      }
     }
-    .btn-primary { background: var(--brand-color); color:#fff; border-color: var(--brand-color); }
-    .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
-
-    #status-toast {
-      position: fixed;
-      bottom: 30px; left: 50%;
-      transform: translateX(-50%);
-      background: #1A1A1B;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 700;
-      z-index: 2000;
-      display: none;
+    @page { size: A4; margin: 15mm 10mm; }
+    @media print {
+      .app-toolbar, #remote-banner, #status-toast, .doc-controls-wrapper, .section-lock-btn { display: none !important; }
+      body { background: #FFFFFF; padding-top: 0; }
+      .page { margin: 0; box-shadow: none; width: 100%; padding: 0; page-break-after: always; }
     }
 
-    /* document area */
-    #document-content { outline: none; min-height: calc(100vh - 90px); padding: 16px; background: #fff; margin: 16px auto; max-width: 1100px; border-radius: 8px; }
+    /* 5. TYPOGRAPHY & TOC */
+    .main-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; }
+    .sub-heading { font-size: 11px; font-weight: 700; color: var(--brand-color); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin: 24px 0 12px 0; display: flex; align-items: center; justify-content: space-between; }
+    .toc-container { line-height: 2.2; margin: 20px 0; }
+    .toc-link { color: var(--text-main); text-decoration: none; font-weight: 800; font-size: 12px; }
+    .toc-sublink { color: var(--text-muted); text-decoration: none; font-weight: 700; font-size: 11px; margin-left: 18px; display: block; }
+    .toc-divider { height: 1px; background: var(--border-color); margin: 8px 0; }
 
-    /* section lock button minimal */
-    .section-lock-btn { cursor:pointer; margin-left:10px; font-size:10px; opacity:0.6; padding:2px 8px; border-radius:10px; border:1px solid #ccc; font-weight: 800; user-select:none; }
+    /* 6. TABLES */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 11px; table-layout: fixed; }
+    th, td { border: 1px solid var(--border-color); padding: 10px 8px; word-wrap: break-word; overflow: hidden; }
+    th { background: var(--bg-gray); font-weight: 700; text-transform: uppercase; font-size: 10px; position: relative; }
+    .group-header { background: #fff !important; color: var(--brand-color); font-weight: 800; border-bottom: 2px solid var(--brand-color) !important; padding-top: 20px !important; }
+
+    /* 7. IMAGES & GRIDS */
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+    .img-box { border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; text-align: center; background: #fff; }
+    .img-placeholder { border: 1px dashed var(--border-color); padding: 25px; border-radius: 4px; color: var(--text-muted); cursor: pointer; text-align: center; font-size: 10px; font-weight: 700; }
+    #document-content img { max-width: 100%; height: auto; border-radius: 4px; cursor: zoom-in; }
+    .size-md { max-height: 250px !important; }
+    .size-lg { max-height: 450px !important; cursor: zoom-out; }
+
+    /* 8. UI COMPONENTS */
+    .btn { background: #FFFFFF; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; font-family: 'Georama', sans-serif; font-weight: 800; font-size: 11px; text-transform: uppercase; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+    .btn:hover { background: var(--bg-gray); }
+    .btn-primary { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
+    #remote-banner { display: none; background: #FEF3C7; color: #92400E; padding: 12px; text-align: center; font-weight: 800; position: fixed; top: 60px; left: 0; right: 0; z-index: 999; border-bottom: 1px solid #F59E0B; }
+    #status-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1A1A1B; color: white; padding: 10px 20px; border-radius: 30px; font-size: 12px; font-weight: 700; z-index: 2000; display: none; }
+    .resizer { position: absolute; top: 0; right: 0; width: 5px; cursor: col-resize; height: 100%; z-index: 1; }
+    .section-lock-btn { cursor:pointer; margin-left:10px; font-size:10px; opacity:0.5; padding:2px 8px; border-radius:10px; border:1px solid #ccc; font-weight: 800; }
     .section-lock-btn.is-locked { opacity:1; color:var(--brand-color); background:#fff0f1; border-color:var(--brand-color); }
-  </style>
+    .is-locked { border-left:4px solid var(--brand-color) !important; background:#fff0f1 !important; padding-left:10px !important; }
+    #document-content { outline: none; }
+      </style>
 </head>
 
 <body>
