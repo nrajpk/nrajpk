@@ -112,24 +112,35 @@
     /* 6. LOGICAL PAGE LAYOUT (PRINT) */
     @page { size: A4; margin: 15mm 10mm; }
     @media print {
-      .app-toolbar, .ui-controls, .doc-controls-wrapper, #remote-banner, #status-toast { display: none !important; }
-      body { background: #FFFFFF; padding-top: 0; }
-      .page {
-        margin: 0;
-        box-shadow: none;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 297mm;
-        border-radius: 0;
-        page-break-after: always;
-        padding: 0;
-      }
-      thead { display: table-header-group; }
-      tr, .no-break { page-break-inside: avoid; break-inside: avoid; }
-      h1, h2, h3, .main-heading, .sub-heading { page-break-after: avoid; }
-      .page-footer { position: absolute; bottom: 0; width: 100%; }
-    }
+  .app-toolbar, .ui-controls, .doc-controls-wrapper, #remote-banner, #status-toast { display: none !important; }
+  body { background: #FFFFFF; padding-top: 0; }
+
+  .page {
+    margin: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 297mm;
+    height: auto;
+    border-radius: 0;
+    page-break-after: always;
+    padding: 0;
+    position: relative; /* important because footer is absolute */
+  }
+
+  /* reserve space so content never goes under the footer */
+  .page-content {
+    padding-bottom: 18mm;
+    box-sizing: border-box;
+  }
+
+  thead { display: table-header-group; }
+  tr, .no-break { page-break-inside: avoid; break-inside: avoid; }
+  h1, h2, h3, .main-heading, .sub-heading { page-break-after: avoid; }
+
+  .page-footer { position: absolute; bottom: 0; width: 100%; }
+}
 
     /* 7. TYPOGRAPHY & HIERARCHY */
     .page-content { flex: 1; display: flex; flex-direction: column; }
