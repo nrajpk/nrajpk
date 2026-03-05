@@ -494,7 +494,7 @@ window.doc = doc;
       c.classList.toggle('is-locked', locked);
       c = c.nextElementSibling;
     }
-    setDirty(true);
+    window.setDirty?.(true);
   });
   function ensure() {
     contentDiv.querySelectorAll('.main-heading, .sub-heading').forEach(h => {
