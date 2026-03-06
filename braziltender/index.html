@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>
+
     <style>
 /* =====================================================
 1. BRAND TOKENS
@@ -532,7 +532,7 @@ tbody tr:last-child td{
   <div class="app-brand">MEVA <span>Tender Builder</span></div>
   
     <div class="doc-controls-wrapper" id="meva-toolbar" style="opacity:1; margin:0;">
-      <button class="doc-control" type="button" id="onedrive-btn" title="Insert from OneDrive">☁️ OneDrive</button>
+     
   <!-- Text -->
   <button class="doc-control" type="button" data-act="bold" title="Bold"><b>B</b></button>
   <button class="doc-control" type="button" data-act="italic" title="Italic"><i>I</i></button>
@@ -1035,71 +1035,7 @@ if (colorBtn && colorPicker) {
   });
 
 
-  // ---------- ONEDRIVE INTEGRATION ----------
-  const onedriveBtn = document.getElementById('onedrive-btn');
-  if (onedriveBtn) {
-    onedriveBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      // 1. Ensure the user has clicked inside the editor and save that exact spot
-      const sel = window.getSelection();
-      if (!sel || sel.rangeCount === 0 || !root.contains(sel.anchorNode)) {
-        return toast('Please click inside the document where you want the image first.');
-      }
-      const savedRange = sel.getRangeAt(0).cloneRange();
-
-      // 2. Open the Microsoft OneDrive File Picker
-      OneDrive.open({
-        clientId: "5b300546-06a0-4d0d-b961-3e72c4829528", // <-- Put your ID here
-        action: "download", 
-        multiSelect: false,
-        advanced: {
-          filter: ".jpg,.jpeg,.png,.gif" // Only show images
-        },
-        success: function(files) {
-          // 3. Extract the direct image URL from Microsoft's response
-          const file = files.value[0];
-          const imgUrl = file["@microsoft.graph.downloadUrl"];
-
-          // 4. Create the image element
-          const img = document.createElement('img');
-          img.src = imgUrl;
-
-          // Apply your existing image sizing classes
-          const node = savedRange.startContainer.nodeType === 1 ? savedRange.startContainer : savedRange.startContainer.parentElement;
-          if (node && node.closest('.certificate-page')) {
-            img.className = 'certificate-image';
-            img.alt = 'Certificate';
-          } else {
-            img.className = 'pasted-image';
-            img.alt = 'OneDrive Image';
-          }
-
-          // 5. Restore the cursor to the exact spot and insert the image
-          sel.removeAllRanges();
-          sel.addRange(savedRange);
-          savedRange.deleteContents();
-          savedRange.insertNode(img);
-
-          // Move the cursor immediately after the newly inserted image
-          savedRange.setStartAfter(img);
-          savedRange.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(savedRange);
-
-          // Trigger the save sync
-          window.setDirty?.(true);
-        },
-        cancel: function() {
-          console.log("OneDrive picker closed by user.");
-        },
-        error: function(e) {
-          console.error("OneDrive error: ", e);
-          toast("Failed to load from OneDrive.");
-        }
-      });
-    });
-  }
+  
 })();
 </script>
 </body>
