@@ -445,6 +445,36 @@ tbody tr:last-child td{
   white-space:nowrap;
 }
 
+
+/* =====================================================
+13. PASTED IMAGES + CERTIFICATE PAGES
+===================================================== */
+
+.pasted-image{
+  display:block;
+  max-width:100%;
+  height:auto;
+  margin:10px 0;
+}
+
+.certificate-page{
+  width:210mm;
+  min-height:297mm;
+  box-sizing:border-box;
+}
+
+.certificate-page .certificate-image,
+.certificate-image{
+  display:block;
+  width:190mm;
+  max-width:100%;
+  height:auto;
+  max-height:267mm;
+  object-fit:contain;
+  margin:0 auto;
+}
+      
+
 /* =====================================================
 12. FUNCTIONAL UI (Added for JS compatibility)
 ===================================================== */
@@ -924,6 +954,85 @@ if (colorBtn && colorPicker) {
 
 })();
 </script>
+<script>
+(function(){
+  const root = document.getElementById('document-content');
+  if (!root) return;
 
+  function getEditorRange(){
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return null;
+    const range = sel.getRangeAt(0);
+    const node = sel.anchorNode?.nodeType === 1 ? sel.anchorNode : sel.anchorNode?.parentElement;
+    if (!node || !root.contains(node)) return null;
+    return range;
+  }
+
+  function insertNodeAtCursor(node){
+    const range = getEditorRange();
+    if (!range) {
+      root.appendChild(node);
+      window.setDirty?.(true);
+      return;
+    }
+
+    range.deleteContents();
+    range.insertNode(node);
+
+    const newRange = document.createRange();
+    newRange.setStartAfter(node);
+    newRange.collapse(true);
+
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(newRange);
+
+    window.setDirty?.(true);
+  }
+
+  function isInsideCertificatePage(){
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return false;
+    const node = sel.anchorNode?.nodeType === 1 ? sel.anchorNode : sel.anchorNode?.parentElement;
+    if (!node) return false;
+    return !!node.closest('.certificate-page');
+  }
+
+  function insertImageFromFile(file){
+    if (!file || !file.type.startsWith('image/')) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const img = document.createElement('img');
+      img.src = e.target.result;
+
+      if (isInsideCertificatePage()) {
+        img.className = 'certificate-image';
+        img.alt = 'Certificate';
+      } else {
+        img.className = 'pasted-image';
+        img.alt = 'Pasted Image';
+      }
+
+      insertNodeAtCursor(img);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  root.addEventListener('paste', function(e){
+    const items = e.clipboardData?.items;
+    if (!items || !items.length) return;
+
+    for (const item of items) {
+      if (item.type && item.type.startsWith('image/')) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        insertImageFromFile(file);
+        return;
+      }
+    }
+  });
+})();
+</script>
 </body>
 </html>
