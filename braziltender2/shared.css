@@ -1,0 +1,522 @@
+/* =====================================================
+1. BRAND TOKENS
+===================================================== */
+
+:root {
+  --brand-color: #E41837;
+  --brand-hover: #c91430;
+  --text-main: #1A1A1B;
+  --text-muted: #5F6368;
+  --border-color: #DADCE0;
+  --bg-gray: #F8F9FA;
+  --app-bg: #1f2937;
+}
+
+
+/* =====================================================
+2. GLOBAL SETTINGS
+===================================================== */
+
+body{
+  font-family:'Georama',sans-serif;
+  margin:0;
+  padding-top:60px;
+  background:var(--app-bg);
+  color:var(--text-main);
+  line-height:1.5;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+  counter-reset:sheet;
+}
+
+
+/* =====================================================
+3. APP TOOLBAR
+===================================================== */
+
+.app-toolbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:60px;
+  background:#fff;
+  border-bottom:1px solid var(--border-color);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
+  z-index:1000;
+  box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+
+.app-brand{
+  font-size:16px;
+  font-weight:800;
+  color:var(--text-main);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.app-brand span{
+  color:var(--brand-color);
+}
+
+.toolbar-actions{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.sync-status{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text-muted);
+  transition:color .2s;
+}
+
+.sync-status.dirty{
+  color:#d97706;
+}
+
+
+/* =====================================================
+4. BUTTONS
+===================================================== */
+
+.btn{
+  background:#fff;
+  border:1px solid var(--border-color);
+  color:var(--text-main);
+  padding:8px 16px;
+  font-family:'Georama',sans-serif;
+  font-weight:800;
+  font-size:12px;
+  text-transform:uppercase;
+  border-radius:6px;
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.btn:hover{
+  background:var(--bg-gray);
+}
+
+.btn-primary{
+  background:var(--brand-color);
+  color:#fff;
+  border-color:var(--brand-color);
+}
+
+.btn-primary:hover{
+  background:var(--brand-hover);
+}
+
+.btn-primary:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+
+/* =====================================================
+5. WEB PAGE PREVIEW
+===================================================== */
+
+@media screen{
+
+  .pdf-page{
+    width:210mm;
+    min-height:297mm;
+    margin:30px auto;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    padding:15mm 10mm;
+    box-sizing:border-box;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    position:relative;
+    border-radius:4px;
+  }
+
+  .page-footer{
+    display:none !important;
+  }
+
+}
+
+
+/* =====================================================
+6. PRINT LAYOUT
+===================================================== */
+
+@page{
+  size:A4;
+  margin:0;
+}
+
+@media print{
+
+  .app-toolbar,
+  .ui-controls,
+  .doc-controls-wrapper,
+  #remote-banner,
+  #status-toast,
+  .section-lock-btn,
+  .resizer{
+    display:none !important;
+  }
+
+  html,body{
+    background:#fff !important;
+    padding:0 !important;
+    margin:0 !important;
+  }
+
+  .pdf-page{
+    width:210mm !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:15mm 10mm !important;
+    box-sizing:border-box !important;
+    box-shadow:none !important;
+    border-radius:0 !important;
+    display:block !important;
+    page-break-after:always !important;
+    break-after:page !important;
+  }
+
+  .page-content{
+    display:block !important;
+    padding-bottom:18mm !important;
+    box-sizing:border-box !important;
+  }
+
+  .page-footer{
+    display:flex !important;
+    position:fixed !important;
+    bottom:10mm !important;
+    left:10mm !important;
+    right:10mm !important;
+  }
+
+  thead{
+    display:table-header-group !important;
+  }
+
+  tr{
+    page-break-inside:avoid !important;
+    break-inside:avoid !important;
+  }
+
+  .main-heading,
+  .sub-heading,
+  .vol-identifier{
+    page-break-after:avoid !important;
+    break-after:avoid !important;
+  }
+
+}
+
+
+/* =====================================================
+7. TYPOGRAPHY
+===================================================== */
+
+.page-content{
+  display:block;
+  overflow:visible;
+  box-sizing:border-box;
+  padding-bottom:4mm;
+}
+
+.vol-identifier{
+  font-size:11.5px;
+  font-weight:800;
+  color:var(--brand-color);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  padding:0 0 6px 0;
+  border-bottom:3px solid var(--brand-color);
+  margin-bottom:16px;
+  display:block;
+}
+
+.main-heading{
+  font-size:14px;
+  font-weight:800;
+  color:var(--text-main);
+  margin-bottom:12px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+.sub-heading{
+  font-size:11px;
+  font-weight:700;
+  color:var(--brand-color);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  border-bottom:1px solid var(--border-color);
+  padding-bottom:6px;
+  margin:24px 0 12px 0;
+}
+
+p.para{
+  font-size:12px;
+  color:var(--text-main);
+  line-height:1.45;
+  margin:0 0 14px 0;
+  text-align:justify;
+}
+
+p.para em{
+  font-style:italic;
+  color:var(--text-muted);
+  font-size:11px;
+  display:inline-block;
+  margin-top:4px;
+}
+
+p.para strong{
+  font-weight:800;
+  color:var(--brand-color);
+}
+
+
+/* =====================================================
+8. TABLES
+===================================================== */
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:8px;
+  font-size:11px;
+}
+
+th,td{
+  border:1px solid var(--border-color);
+  padding:10px 8px;
+  text-align:left;
+  vertical-align:top;
+}
+
+th{
+  background:var(--bg-gray);
+  font-weight:700;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  font-size:10px;
+}
+
+.group-header{
+  background:#fff !important;
+  text-align:left;
+  font-weight:800;
+  color:var(--brand-color);
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:1px;
+  padding-top:24px !important;
+  padding-bottom:6px !important;
+  border:1px solid var(--border-color) !important;
+  border-bottom:1.5pt solid var(--brand-color) !important;
+}
+
+tbody tr:last-child td{
+  border-bottom:none;
+}
+
+
+/* =====================================================
+9. TABLE RESIZER
+===================================================== */
+
+.resizer{
+  position:absolute;
+  top:0;
+  right:0;
+  width:5px;
+  cursor:col-resize;
+  user-select:none;
+  height:100%;
+  z-index:1;
+}
+
+.resizer:hover,
+.resizing{
+  border-right:2px solid var(--brand-color);
+}
+
+
+/* =====================================================
+10. EDITOR UI
+===================================================== */
+
+.doc-controls-wrapper{
+  display:inline-flex;
+  background:var(--bg-gray);
+  border:1px solid var(--border-color);
+  border-radius:6px;
+  overflow:hidden;
+  opacity:.2;
+  transition:all .3s ease;
+  margin-bottom:16px;
+  user-select:none;
+}
+
+.doc-controls-wrapper:hover,
+.doc-controls-wrapper:focus-within{
+  opacity:1;
+}
+
+.doc-control{
+  background:transparent;
+  border:none;
+  border-right:1px solid var(--border-color);
+  color:var(--text-muted);
+  padding:6px 12px;
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+
+.doc-control:last-child{
+  border-right:none;
+}
+
+.doc-control:hover{
+  background:#e5e7eb;
+  color:var(--text-main);
+}
+
+
+/* =====================================================
+11. HEADER + FOOTER
+===================================================== */
+
+.header{
+  flex-shrink:0;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  padding:0 0 8px 0;
+  border-bottom:.5pt solid var(--border-color);
+  margin-bottom:20px;
+}
+
+.logo-container img{
+  height:28px;
+  width:auto;
+  object-fit:contain;
+}
+
+.page-footer{
+  flex-shrink:0;
+  margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-top:.5pt solid var(--border-color);
+  padding-top:6px;
+}
+
+.page-footer-text,
+.page-num{
+  font-size:7.5pt;
+  color:var(--text-muted);
+  font-weight:600;
+  white-space:nowrap;
+}
+
+
+/* =====================================================
+13. PASTED IMAGES + CERTIFICATE PAGES
+===================================================== */
+
+.pasted-image{
+  display:block;
+  max-width:100%;
+  height:auto;
+  margin:10px 0;
+}
+
+.certificate-page{
+  width:210mm;
+  min-height:297mm;
+  box-sizing:border-box;
+}
+
+.certificate-page .certificate-image,
+.certificate-image{
+  display:block;
+  width:190mm;
+  max-width:100%;
+  height:auto;
+  max-height:267mm;
+  object-fit:contain;
+  margin:0 auto;
+}
+      
+
+/* =====================================================
+12. FUNCTIONAL UI (Added for JS compatibility)
+===================================================== */
+#status-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--text-main);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.is-locked {
+  background-color: #f1f5f9;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.section-lock-btn {
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 14px;
+  opacity: 0.4;
+  pointer-events: auto; /* allow unlocking */
+  transition: opacity 0.2s;
+}
+
+.section-lock-btn:hover {
+  opacity: 1;
+}
+
+.deepdive-row td {
+  background-color: #f8fafc;
+  border-left: 3px solid var(--brand-color);
+  padding: 15px;
+}
+
+.deepdive-row td:empty::before {
+  content: "✍️ Enter deep dive technical justification here...";
+  color: #94a3b8;
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* Standalone/shared-folder compatibility overrides */
+body.standalone-doc{padding-top:0;background:var(--app-bg);}
+body.standalone-doc .pdf-page{margin:30px auto;}
+body.master-doc{padding-top:0;background:var(--app-bg);}
+body.master-doc .pdf-page{margin:30px auto;}
+@media print{body.standalone-doc, body.master-doc{padding-top:0;background:#fff;} body.standalone-doc .pdf-page, body.master-doc .pdf-page{margin:0 auto;}}
