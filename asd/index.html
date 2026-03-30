@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikhil Raj PK | Systems Led Growth Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-paper: #F2F1EF;
+            --bg-surface: #FFFFFF;
+            --zapier-orange: #FF4F00;
+            --text-primary: #171715;
+            --text-secondary: #5E5E5A;
+        }
+
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-paper);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .serif { font-family: 'Instrument Serif', serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Subtle Noise Background */
+        .noise-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+
+        /* Premium Bento Card Styles */
+        .bento-card {
+            background: var(--bg-surface);
+            border: 1px solid rgba(0,0,0,0.04);
+            border-radius: 32px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.02), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bento-card:hover {
+            box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+            transform: translateY(-4px) scale(1.005);
+            border-color: rgba(0,0,0,0.08);
+        }
+
+        .bento-dark {
+            background: #151514;
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        
+        .bento-dark:hover {
+            box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        /* Glass Nav */
+        .nav-blur {
+            background: rgba(242, 241, 239, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Animations */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(20px); 
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        /* Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+
+        /* Custom Gradients for visual flair */
+        .glow-orange {
+            position: absolute;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255,79,0,0.15) 0%, rgba(255,79,0,0) 70%);
+            top: -100px; right: -100px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .glow-dark {
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 70%);
+            bottom: -150px; left: -100px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="selection:bg-orange-200 selection:text-orange-900 noise-bg">
+
+    <header class="fixed top-0 w-full z-50 nav-blur transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="font-bold text-xl tracking-tight text-stone-900 flex items-center gap-1">
+                nrajpk<span class="text-[var(--zapier-orange)] text-2xl leading-none">.</span>
+            </a>
+            
+            <a href="mailto:nrajpk@outlook.com" class="text-[11px] font-bold uppercase tracking-[0.2em] text-white bg-stone-900 px-6 py-3 rounded-full hover:bg-[var(--zapier-orange)] transition-all duration-300 shadow-lg active:scale-95">
+                Start a Dialogue
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 md:px-6 pt-32 pb-32 space-y-4 md:space-y-6">
+
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
+            
+            <div class="lg:col-span-8 bento-card bento-dark p-8 md:p-14 flex flex-col justify-between reveal group">
+                <div class="glow-dark"></div>
+                <div class="mb-12">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full border border-white/10 mb-8 backdrop-blur-sm">
+                        <div class="h-1.5 w-1.5 rounded-full bg-[var(--zapier-orange)] animate-pulse"></div>
+                        <span class="mono text-[10px] font-bold text-stone-300 uppercase tracking-widest">Growth Architect</span>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-[1.05] tracking-tight text-white">
+                        Growth usually drifts <span class="serif italic font-normal text-stone-400">quietly</span>.
+                    </h1>
+                </div>
+                <div class="max-w-xl">
+                    <p class="text-xl md:text-2xl text-stone-400 font-medium leading-relaxed">
+                        Metrics slip out of sync, sales questions lead quality, and reporting starts slowing decisions. <span class="text-white">These are early signals—not failure.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 bento-card bg-orange-50/50 p-8 md:p-12 flex flex-col justify-center reveal group border-orange-100">
+                <div class="glow-orange"></div>
+                <h2 class="text-3xl font-bold text-stone-900 mb-6 leading-tight relative z-10">
+                    That’s rarely about effort. It’s a <span class="text-[var(--zapier-orange)]">systems opportunity</span>.
+                </h2>
+                <p class="text-lg text-stone-600 font-medium leading-relaxed relative z-10">
+                    Creativity shapes marketing. Systems make it repeatable. As demand scales, systems get tested before revenue reflects it.
+                </p>
+                <div class="mt-8 flex items-center gap-4 relative z-10">
+                    <img src="IMG_6010.png" alt="Nikhil Raj PK" class="h-12 w-12 rounded-full border-2 border-white shadow-sm object-cover bg-stone-200" onerror="this.src='https://ui-avatars.com/api/?name=Nikhil+Raj&background=FF4F00&color=fff'"/>
+                    <span class="mono text-xs font-bold text-stone-500 uppercase tracking-widest">Nikhil Raj PK</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
+            
+            <div class="lg:col-span-5 bento-card p-8 md:p-12 reveal">
+                <span class="mono text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-6 block">Foundation</span>
+                <h3 class="text-3xl font-bold tracking-tight text-stone-900 mb-6">Why I start with systems</h3>
+                <div class="space-y-4 text-stone-600 font-medium text-lg leading-relaxed">
+                    <p>When tracking, CRM logic, and automation are aligned, teams move faster and decisions get simpler.</p>
+                    <p>My instinct is to trace the signal end-to-end, find the friction point, and ship a clean fix—fast.</p>
+                </div>
+                <div class="mt-10 p-6 bg-stone-50 rounded-2xl border border-stone-100">
+                    <p class="text-stone-900 font-bold italic serif text-xl">"When systems are designed well, demand scales cleanly—and insight compounds."</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 bento-card p-8 md:p-12 bg-stone-900 text-white reveal group">
+                <div class="glow-dark"></div>
+                <h3 class="mono text-[10px] font-bold text-[var(--zapier-orange)] uppercase tracking-[0.2em] mb-10 pb-4 border-b border-white/10">How Growth Breaks at Scale</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="space-y-3 relative z-10">
+                        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[var(--zapier-orange)] mb-6">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <p class="text-xl font-bold">Attribution Drifts</p>
+                        <p class="text-sm text-stone-400 font-medium">Signal clarity erodes quietly without obvious or immediate failure.</p>
+                    </div>
+                    <div class="space-y-3 relative z-10">
+                        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[var(--zapier-orange)] mb-6">
+                            <i class="fa-solid fa-filter-circle-xmark"></i>
+                        </div>
+                        <p class="text-xl font-bold">Quality Decays</p>
+                        <p class="text-sm text-stone-400 font-medium">Lead quality starts to degrade well before sales engages.</p>
+                    </div>
+                    <div class="space-y-3 relative z-10">
+                        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[var(--zapier-orange)] mb-6">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <p class="text-xl font-bold">Logic Fragments</p>
+                        <p class="text-sm text-stone-400 font-medium">CRM logic becomes inconsistent across teams and regions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
+            
+            <div class="lg:col-span-7 bento-card p-8 md:p-12 reveal">
+                <span class="mono text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-6 block">Execution</span>
+                <h3 class="serif text-4xl mb-6 italic text-stone-700">Intent Engineering</h3>
+                <p class="text-lg text-stone-600 font-medium leading-relaxed mb-8">
+                    Every channel, audience, and message is mapped to how buyers actually move through the funnel. I design demand with strict intent.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100 hover:border-stone-200 transition-colors">
+                        <i class="fa-solid fa-crosshairs text-[var(--zapier-orange)] mb-4 text-xl"></i>
+                        <h4 class="font-bold text-stone-900 mb-1">Paid Acquisition</h4>
+                        <p class="text-sm text-stone-500">LinkedIn, Google, Meta mapped to behavior.</p>
+                    </div>
+                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100 hover:border-stone-200 transition-colors">
+                        <i class="fa-solid fa-map text-[var(--zapier-orange)] mb-4 text-xl"></i>
+                        <h4 class="font-bold text-stone-900 mb-1">Audience Mapping</h4>
+                        <p class="text-sm text-stone-500">Targeting based on signals, not just demographics.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 flex flex-col gap-4 md:gap-6 reveal">
+                
+                <div class="bento-card p-8 md:p-10 flex-grow bg-stone-900 bento-dark group">
+                    <h3 class="serif text-3xl mb-4 italic text-white">The Merge Point</h3>
+                    <p class="text-stone-400 font-medium mb-8">At scale, traffic isn’t separate from CRM logic. They operate as one continuous loop.</p>
+                    
+                    <div class="flex items-center justify-between mono text-[10px] font-bold text-white bg-white/5 p-4 rounded-xl border border-white/10">
+                        <span>INTENT</span>
+                        <i class="fa-solid fa-arrow-right text-stone-600"></i>
+                        <span>DATA</span>
+                        <i class="fa-solid fa-arrow-right text-stone-600"></i>
+                        <span class="text-[var(--zapier-orange)]">REVENUE</span>
+                    </div>
+                </div>
+
+                <div class="bento-card py-8 flex items-center overflow-hidden bg-white">
+                    <div class="marquee-track">
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-brands fa-linkedin text-2xl"></i><span class="mono text-[10px] font-bold uppercase">LinkedIn</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-brands fa-google text-2xl"></i><span class="mono text-[10px] font-bold uppercase">Google Ads</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-brands fa-salesforce text-2xl"></i><span class="mono text-[10px] font-bold uppercase">Salesforce</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-brands fa-python text-2xl"></i><span class="mono text-[10px] font-bold uppercase">Python</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-solid fa-database text-2xl"></i><span class="mono text-[10px] font-bold uppercase">CRM Logic</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-brands fa-linkedin text-2xl"></i><span class="mono text-[10px] font-bold uppercase">LinkedIn</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-brands fa-google text-2xl"></i><span class="mono text-[10px] font-bold uppercase">Google Ads</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-brands fa-salesforce text-2xl"></i><span class="mono text-[10px] font-bold uppercase">Salesforce</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-brands fa-python text-2xl"></i><span class="mono text-[10px] font-bold uppercase">Python</span></div>
+                        <div class="flex items-center gap-2 mx-6 opacity-40 hover:opacity-100 hover:text-[var(--zapier-orange)] transition-all grayscale hover:grayscale-0 cursor-default"><i class="fa-solid fa-database text-2xl"></i><span class="mono text-[10px] font-bold uppercase">CRM Logic</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 gap-4 md:gap-6">
+            <div class="bento-card p-8 md:p-14 bg-stone-900 bento-dark reveal relative overflow-hidden group">
+                <div class="glow-orange opacity-50" style="top: -50px; right: 10%;"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+                    <div>
+                        <span class="mono text-[10px] font-bold text-[var(--zapier-orange)] uppercase tracking-[0.3em] mb-4 block">Pressure-Tested Reality</span>
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-tight">High-Ticket B2B Manufacturing</h2>
+                        <p class="text-lg text-stone-400 font-medium leading-relaxed mb-8">
+                            In multi-source demand environments, growth isn’t constrained by interest—it’s unlocked through <span class="text-white border-b border-[var(--zapier-orange)]">coherence</span>. When volume scales, systems must preserve clarity and accountability.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                                <i class="fa-solid fa-check text-[var(--zapier-orange)]"></i>
+                                <span class="text-stone-300 font-medium text-sm">Unified tracking definitions across regions</span>
+                            </div>
+                            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                                <i class="fa-solid fa-check text-[var(--zapier-orange)]"></i>
+                                <span class="text-stone-300 font-medium text-sm">Standardized lead intake logic</span>
+                            </div>
+                            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+                                <i class="fa-solid fa-check text-[var(--zapier-orange)]"></i>
+                                <span class="text-stone-300 font-medium text-sm">Automated exception handling</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col justify-center">
+                        <div class="p-8 md:p-10 bg-black/40 rounded-[2rem] border border-white/10 backdrop-blur-md">
+                            <h3 class="serif text-3xl text-white mb-6 italic leading-relaxed">“Conversations moved from ‘which number is right?’ to ‘what should we do next?’”</h3>
+                            <p class="text-stone-400 text-sm font-medium">In high-stakes, long-cycle environments, clarity isn’t a nice-to-have — it’s what growth depends on. That’s why I start with systems before I scale demand.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
+            
+            <div class="lg:col-span-8 bento-card p-8 md:p-12 reveal bg-white">
+                <span class="mono text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-6 block">Philosophy</span>
+                <h2 class="text-4xl font-bold tracking-tight text-stone-900 mb-8">Understanding <span class="serif italic font-normal text-stone-400">over Spend</span></h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100">
+                        <p class="text-sm font-bold text-stone-800">Simple tracking<br><span class="text-stone-400 font-normal">over bloated tracking</span></p>
+                    </div>
+                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100">
+                        <p class="text-sm font-bold text-stone-800">Clean CRM logic<br><span class="text-stone-400 font-normal">over advanced features</span></p>
+                    </div>
+                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100">
+                        <p class="text-sm font-bold text-stone-800">Resilient automation<br><span class="text-stone-400 font-normal">over fragile workflows</span></p>
+                    </div>
+                </div>
+                
+                <p class="text-lg text-stone-600 font-medium leading-relaxed">
+                    Growth marketing isn’t about channels, hacks, or tools. It’s about <span class="text-stone-900 font-bold underline decoration-[var(--zapier-orange)] decoration-2">making demand repeatable</span>.
+                </p>
+            </div>
+
+            <div class="lg:col-span-4 flex flex-col gap-4 md:gap-6 reveal">
+                
+                <div class="bento-card p-8 flex-grow bg-[var(--zapier-orange)] text-white border-none group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <h3 class="text-2xl font-bold mb-4 relative z-10">Who I work best with</h3>
+                    <p class="text-orange-100 font-medium mb-6 text-sm relative z-10">Teams with real traction—and growing operational friction.</p>
+                    <ul class="space-y-3 relative z-10">
+                        <li class="text-sm font-bold bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm">Multi-Market Ops</li>
+                        <li class="text-sm font-bold bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm">Long B2B Sales Cycles</li>
+                        <li class="text-sm font-bold bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm">Scaling Friction</li>
+                    </ul>
+                </div>
+
+                <div class="bento-card p-8 bg-white border border-stone-200">
+                    <span class="mono text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-4 block">Tenure</span>
+                    <div class="space-y-6">
+                        <div>
+                            <p class="mono text-[10px] font-bold text-[var(--zapier-orange)] mb-1">2023 - NOW</p>
+                            <p class="font-bold text-stone-900 text-sm">Mahindra Emirates Armouring</p>
+                            <p class="text-stone-500 text-xs mt-1">Digital Transformation Mgr</p>
+                        </div>
+                        <div class="h-px w-full bg-stone-100"></div>
+                        <div>
+                            <p class="mono text-[10px] font-bold text-stone-400 mb-1">2016 - 2023</p>
+                            <p class="font-bold text-stone-900 text-sm">Consultancy & Specialist</p>
+                            <p class="text-stone-500 text-xs mt-1">Coach2Reach · ChalksnSlate</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-20 px-6 mt-12 border-t border-stone-200 bg-white">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <h2 class="text-4xl font-bold tracking-tight mb-6 text-stone-900">Growth isn’t mysterious.</h2>
+            <p class="text-xl font-medium leading-relaxed max-w-2xl mx-auto mb-12 text-stone-500">
+                It’s a system under load. I help teams build that system and scale it with confidence.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-20">
+                <a href="mailto:nrajpk@outlook.com" class="text-xs font-bold uppercase tracking-widest text-white bg-stone-900 px-10 py-4 rounded-2xl hover:bg-[var(--zapier-orange)] transition-all shadow-lg active:scale-95">
+                    Email Me
+                </a>
+                <a href="https://linkedin.com/in/nrajpk" target="_blank" class="text-xs font-bold uppercase tracking-widest text-stone-600 border border-stone-200 bg-stone-50 px-10 py-4 rounded-2xl hover:bg-stone-100 transition-all">
+                    LinkedIn Profile
+                </a>
+            </div>
+
+            <div class="pt-10 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <span class="mono text-[10px] text-stone-400 font-bold uppercase tracking-widest">© 2025 Nikhil Raj PK · Abu Dhabi</span>
+                <span class="mono text-[10px] text-stone-400 font-bold uppercase tracking-widest">Systems-Led Architect</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for smooth reveal animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
